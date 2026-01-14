@@ -1,0 +1,4974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueprint Mapper | NGA Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        :root {
+            --bg-void: #050508;
+            --bg-deep: #0a0a12;
+            --bg-panel: rgba(12, 12, 20, 0.85);
+            --glass-border: rgba(255, 215, 0, 0.15);
+            --glass-glow: rgba(255, 215, 0, 0.05);
+            --neon-gold: #ffd700;
+            --neon-gold-dim: #b8860b;
+            --neon-cyan: #00e5ff;
+            --neon-cyan-dim: #0097a7;
+            --neon-violet: #bf00ff;
+            --neon-violet-dim: #7b1fa2;
+            --neon-green: #00ff88;
+            --neon-red: #ff3366;
+            --neon-orange: #ff9500;
+            --text-primary: #e8e8f0;
+            --text-secondary: #8888a0;
+            --text-dim: #555568;
+            --approved-color: #00ff88;
+            --rejected-color: #ff3366;
+            --pending-color: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-void);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Background Grid Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(90deg, rgba(255, 215, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(rgba(255, 215, 0, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            z-index: 100;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            fill: var(--neon-gold);
+            filter: drop-shadow(0 0 8px var(--neon-gold));
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--neon-gold);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .logo-sub {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Menu Bar */
+        .menu-bar {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .menu-item {
+            position: relative;
+        }
+
+        .menu-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+        }
+
+        .menu-btn:hover {
+            color: var(--neon-gold);
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--glass-border);
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.5rem;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .menu-item:hover .menu-dropdown {
+            display: block;
+            animation: fadeIn 0.15s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--neon-gold);
+        }
+
+        .dropdown-item svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            opacity: 0.7;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: var(--glass-border);
+            margin: 0.5rem 0;
+        }
+
+        .shortcut {
+            margin-left: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-dot.approved {
+            background: var(--approved-color);
+            box-shadow: 0 0 10px var(--approved-color);
+        }
+
+        .status-dot.rejected {
+            background: var(--rejected-color);
+            box-shadow: 0 0 10px var(--rejected-color);
+        }
+
+        .status-dot.pending {
+            background: var(--pending-color);
+            box-shadow: 0 0 10px var(--pending-color);
+        }
+
+        /* Main Layout */
+        .main-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Canvas Container */
+        .canvas-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg-deep);
+        }
+
+        #blueprint-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: crosshair;
+        }
+
+        .canvas-overlay {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .zoom-control {
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .zoom-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--neon-gold);
+            border-color: var(--neon-gold);
+        }
+
+        .zoom-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .zoom-level {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--neon-cyan);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        /* Empty State */
+        .empty-state {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            fill: var(--text-dim);
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.manager-panel {
+            border-left: none;
+            border-right: 1px solid var(--glass-border);
+        }
+
+        .sidebar.list-panel {
+            width: 340px;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(100%);
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .sidebar-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--neon-gold);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .filter-select {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-select:hover,
+        .filter-select:focus {
+            border-color: var(--neon-gold);
+            outline: none;
+        }
+
+        .filter-select option {
+            background: var(--bg-deep);
+        }
+
+        .filter-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .checkbox-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 3px;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked {
+            background: var(--neon-gold);
+            border-color: var(--neon-gold);
+        }
+
+        .checkbox-item input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            width: 5px;
+            height: 9px;
+            border: solid var(--bg-deep);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .selection-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0.6rem 0.75rem;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .selection-count {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .selection-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Region List */
+        .region-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .region-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .region-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .region-list::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 3px;
+        }
+
+        .zone-region-list {
+            max-height: 180px;
+            overflow-y: auto;
+            padding: 0.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .zone-region-item {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding: 0.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .zone-region-item:last-child {
+            border-bottom: none;
+        }
+
+        .image-library-list {
+            max-height: 320px;
+            overflow-y: auto;
+            padding: 0.25rem;
+        }
+
+        .image-library-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            margin-bottom: 0.5rem;
+        }
+
+        .image-library-item.active {
+            border-color: var(--neon-gold);
+            box-shadow: 0 0 18px rgba(255, 215, 0, 0.15);
+        }
+
+        .image-library-thumb {
+            width: 42px;
+            height: 42px;
+            border-radius: 6px;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .image-library-name {
+            flex: 1;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            padding: 0.35rem 0.5rem;
+        }
+
+        .region-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .region-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: var(--glass-border);
+        }
+
+        .region-item.selected {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--neon-gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+
+        .region-item.approved {
+            border-left: 3px solid var(--approved-color);
+        }
+
+        .region-item.rejected {
+            border-left: 3px solid var(--rejected-color);
+            opacity: 0.5;
+        }
+
+        .region-item.pending {
+            border-left: 3px solid var(--pending-color);
+        }
+
+        .region-status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .region-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .region-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .region-meta {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .region-zone {
+            color: var(--neon-cyan);
+        }
+
+        .region-actions {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .action-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: white;
+        }
+
+        .action-btn.approve {
+            background: var(--approved-color);
+        }
+
+        .action-btn.approve:hover {
+            box-shadow: 0 0 15px var(--approved-color);
+            transform: scale(1.1);
+        }
+
+        .action-btn.reject {
+            background: var(--rejected-color);
+        }
+
+        .action-btn.reject:hover {
+            box-shadow: 0 0 15px var(--rejected-color);
+            transform: scale(1.1);
+        }
+
+        /* Zone List (alternate sidebar view) */
+        .zone-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .zone-item:hover {
+            background: rgba(0, 229, 255, 0.05);
+            border-color: var(--neon-cyan);
+        }
+
+        .zone-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .zone-name {
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .zone-count {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+            border: 1px solid var(--neon-gold);
+            color: var(--neon-gold);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.2));
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: var(--glass-border);
+            color: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal {
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-width: 400px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--neon-gold);
+            letter-spacing: 1px;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 51, 102, 0.2);
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+        }
+
+        .modal-close svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            padding: 0.6rem 0.75rem;
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--neon-gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* UID Picker Styles */
+        .uid-picker {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .uid-picker-search {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .uid-picker-search input {
+            flex: 1;
+        }
+
+        .uid-list {
+            max-height: 150px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            padding: 0.25rem;
+        }
+
+        .uid-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .uid-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .uid-item.assigned {
+            background: rgba(0, 255, 136, 0.15);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .uid-item .uid-text {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+            font-size: 0.75rem;
+        }
+
+        .uid-item .uid-dash {
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+
+        .uid-item .uid-material {
+            color: var(--text-secondary);
+            margin-left: 0.5rem;
+        }
+
+        .uid-item .uid-action {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--neon-gold);
+            border: none;
+            cursor: pointer;
+        }
+
+        .uid-item .uid-action.remove {
+            background: rgba(255, 51, 102, 0.2);
+            color: var(--neon-red);
+        }
+
+        .assigned-uids {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .assigned-uid-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(0, 229, 255, 0.15);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 4px;
+            padding: 0.2rem 0.4rem;
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .assigned-uid-tag .remove-uid {
+            width: 14px;
+            height: 14px;
+            background: transparent;
+            border: none;
+            color: var(--neon-red);
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .parts-status-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .parts-status-bar .status-loaded {
+            color: var(--approved-color);
+        }
+
+        .parts-status-bar .status-count {
+            color: var(--text-secondary);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toast {
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 250px;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.success {
+            border-left: 3px solid var(--approved-color);
+        }
+
+        .toast.error {
+            border-left: 3px solid var(--rejected-color);
+        }
+
+        .toast.info {
+            border-left: 3px solid var(--neon-cyan);
+        }
+
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+        }
+
+        .toast.success .toast-icon {
+            fill: var(--approved-color);
+        }
+
+        .toast.error .toast-icon {
+            fill: var(--rejected-color);
+        }
+
+        .toast.info .toast-icon {
+            fill: var(--neon-cyan);
+        }
+
+        .toast-message {
+            flex: 1;
+            font-size: 0.85rem;
+        }
+
+        /* Mode Indicator */
+        .mode-indicator {
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--neon-violet);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--neon-violet);
+            display: none;
+            z-index: 10;
+            box-shadow: 0 0 30px rgba(191, 0, 255, 0.3);
+        }
+
+        .mode-indicator.active {
+            display: block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(191, 0, 255, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(191, 0, 255, 0.5);
+            }
+        }
+
+        /* Detection Settings Panel */
+        .detection-panel {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1rem;
+            width: 280px;
+            display: none;
+            z-index: 10;
+        }
+
+        .detection-panel.active {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .detection-panel h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .slider-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .slider-value {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--neon-gold);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            background: var(--glass-border);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--neon-gold);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--neon-gold);
+        }
+
+        /* Sidebar toggle button */
+        .sidebar-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 80px;
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px 0 0 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--neon-gold);
+        }
+
+        .sidebar-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-toggle.open svg {
+            transform: rotate(180deg);
+        }
+
+        /* Context Menu */
+        .context-menu {
+            position: fixed;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 0.5rem;
+            min-width: 180px;
+            z-index: 2000;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .context-menu.active {
+            display: block;
+            animation: fadeIn 0.1s ease;
+        }
+
+        .context-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .context-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--neon-gold);
+        }
+
+        .context-item svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                z-index: 50;
+            }
+
+            .sidebar.list-panel {
+                right: 0;
+            }
+
+            .sidebar.manager-panel {
+                left: 0;
+            }
+
+            .sidebar.hidden {
+                transform: translateX(100%);
+            }
+
+            .sidebar.manager-panel.hidden {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <svg class="logo-icon" viewBox="0 0 24 24">
+                <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h6v2H7v-2z" />
+            </svg>
+            <div>
+                <div class="logo-text">BLUEPRINT MAPPER</div>
+                <div class="logo-sub">NGA Edition</div>
+            </div>
+        </div>
+
+        <!-- Menu Bar -->
+        <nav class="menu-bar">
+            <div class="menu-item">
+                <button class="menu-btn">File</button>
+                <div class="menu-dropdown">
+                    <div class="dropdown-item" onclick="openImage()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
+                        </svg>
+                        Open Image...
+                        <span class="shortcut">Ctrl+O</span>
+                    </div>
+                    <div class="dropdown-item" onclick="openImageLibrary()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M4 6h2V4h12v2h2V4c0-1.1-.9-2-2-2H6C4.9 2 4 2.9 4 4v2zm16 2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H4V10h16v10z" />
+                        </svg>
+                        Image Library
+                    </div>
+                    <div class="dropdown-item" onclick="saveProject()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
+                        </svg>
+                        Save Project
+                        <span class="shortcut">Ctrl+S</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="exportJSON()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                        </svg>
+                        Export JSON
+                    </div>
+                    <div class="dropdown-item" onclick="exportBlueprintMapV2()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                        </svg>
+                        Export Blueprint Map V2
+                    </div>
+                    <div class="dropdown-item" onclick="importJSON()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z" />
+                        </svg>
+                        Import JSON
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="loadMasterPartsV2()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z" />
+                        </svg>
+                        Load Master Parts V2
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <button class="menu-btn">Edit</button>
+                <div class="menu-dropdown">
+                    <div class="dropdown-item" onclick="undo()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+                        </svg>
+                        Undo
+                        <span class="shortcut">Ctrl+Z</span>
+                    </div>
+                    <div class="dropdown-item" onclick="startEditMode()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                        Edit Region Boundary
+                        <span class="shortcut">E</span>
+                    </div>
+                    <div class="dropdown-item" onclick="renameRegion()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z" />
+                        </svg>
+                        Rename Region
+                        <span class="shortcut">F2</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="duplicateRegion()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                        </svg>
+                        Duplicate Region
+                        <span class="shortcut">Ctrl+D</span>
+                    </div>
+                    <div class="dropdown-item" onclick="duplicateOpposite()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M15 21h2v-2h-2v2zm4-12h2V7h-2v2zM3 5v14c0 1.1.9 2 2 2h14v-2H5V5H3zm16 0h2V3h-2v2zm-8 16h2v-2h-2v2zm8-8h2v-2h-2v2zm0 8c1.1 0 2-.9 2-2h-2v2zM7 3v2h2V3H7zm12 0v2h2V3h-2zm-8 18h2v-2h-2v2zm-4-4c-1.1 0-2-.9-2-2H3v2c0 1.1.9 2 2 2v-2zm6-14h2V3h-2v2zM5 7H3v2h2V7zM3 9h2v2H3V9zm2 4H3v2h2v-2zm-2 4h2v-2H3v2z" />
+                        </svg>
+                        Duplicate Opposite
+                        <span class="shortcut">Ctrl+Shift+D</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="startDrawMode()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                        Draw New Region
+                        <span class="shortcut">N</span>
+                    </div>
+                    <div class="dropdown-item" onclick="deleteRegion()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                        </svg>
+                        Delete Region
+                        <span class="shortcut">Del</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <button class="menu-btn">Zones</button>
+                <div class="menu-dropdown">
+                    <div class="dropdown-item" onclick="createZone()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                        Create New Zone
+                    </div>
+                    <div class="dropdown-item" onclick="assignZone()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                        </svg>
+                        Assign to Zone
+                        <span class="shortcut">Z</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="editZoneBoundary()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                        </svg>
+                        Edit Zone Boundary
+                    </div>
+                    <div class="dropdown-item" onclick="openZoneEditPrompt()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1 5h2v6h-2V7zm0 8h2v2h-2v-2z" />
+                        </svg>
+                        Zone Details
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <button class="menu-btn">View</button>
+                <div class="menu-dropdown">
+                    <div class="dropdown-item" onclick="resetView()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </svg>
+                        Reset View
+                        <span class="shortcut">Home</span>
+                    </div>
+                    <div class="dropdown-item" onclick="redetectRegions()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+                        </svg>
+                        Re-detect Regions
+                        <span class="shortcut">F5</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="toggleDetectionPanel()">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+                        </svg>
+                        Detection Settings
+                    </div>
+                    <div class="dropdown-item" onclick="toggleSidebar()">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+                        </svg>
+                        Toggle Sidebar
+                        <span class="shortcut">Tab</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-dot approved"></span>
+                <span id="approved-count">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-dot rejected"></span>
+                <span id="rejected-count">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-dot pending"></span>
+                <span id="pending-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Manager Panel -->
+        <aside class="sidebar manager-panel" id="manager-panel">
+            <div class="sidebar-header">
+                <div class="sidebar-title">REGION MANAGER</div>
+
+                <div class="filter-row">
+                    <div style="flex: 1;">
+                        <div class="filter-label">Zone Filter</div>
+                        <select class="filter-select" id="zone-filter" onchange="applyFilters()">
+                            <option value="">All Zones</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="filter-label">View</div>
+                        <select class="filter-select" id="sidebar-view" onchange="changeSidebarView()">
+                            <option value="regions">Regions</option>
+                            <option value="zones">Zones</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div style="flex: 1;">
+                        <div class="filter-label">Show Mode</div>
+                        <select class="filter-select" id="render-mode" onchange="applyFilters()">
+                            <option value="status">Status</option>
+                            <option value="zones">Zones</option>
+                            <option value="groups">Groups</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="filter-label">Filter</div>
+                        <select class="filter-select" id="render-filter" onchange="applyFilters()">
+                            <option value="">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="checkbox-row">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="show-boundaries" checked onchange="redraw()">
+                        Show Boundaries
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="boundary-view" onchange="applyFilters()">
+                        Boundary View
+                    </label>
+                </div>
+                <div class="checkbox-row" style="margin-top: 0.5rem;">
+                    <label class="checkbox-item" title="Press S to toggle">
+                        <input type="checkbox" id="show-selected-only" onchange="redraw()">
+                        Show Selected Only (S)
+                    </label>
+                    <label class="checkbox-item" title="Press L to toggle">
+                        <input type="checkbox" id="hide-labels" onchange="redraw()">
+                        Hide Labels (L)
+                    </label>
+                </div>
+            </div>
+
+            <div class="selection-bar">
+                <div class="selection-count"><span id="selected-count">0</span> selected</div>
+                <div class="selection-actions">
+                    <button class="btn btn-secondary btn-sm" id="assign-selected-zone" onclick="assignSelectedToZone()"
+                        disabled>Assign Selected to Zone</button>
+                    <button class="btn btn-secondary btn-sm" id="assign-selected-group"
+                        onclick="assignSelectedToGroup()" disabled>Assign Selected to Group</button>
+                    <button class="btn btn-secondary btn-sm" id="clear-selection" onclick="clearSelection()"
+                        disabled>Clear Selection</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Canvas Container -->
+        <div class="canvas-container" id="canvas-container">
+            <canvas id="blueprint-canvas"></canvas>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state">
+                <svg class="empty-icon" viewBox="0 0 24 24">
+                    <path
+                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
+                </svg>
+                <div class="empty-title">NO IMAGE LOADED</div>
+                <div class="empty-text">Open a blueprint image to begin mapping regions</div>
+                <button class="btn" onclick="openImage()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
+                    </svg>
+                    Open Image
+                </button>
+            </div>
+
+            <!-- Zoom Controls -->
+            <div class="canvas-overlay" id="zoom-controls" style="display: none;">
+                <div class="zoom-control">
+                    <button class="zoom-btn" id="undo-btn" onclick="undo()" title="Undo (Ctrl+Z)" disabled>
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" />
+                        </svg>
+                    </button>
+                    <button class="zoom-btn" onclick="zoomIn()" title="Zoom In">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </button>
+                    <span class="zoom-level" id="zoom-level">100%</span>
+                    <button class="zoom-btn" onclick="zoomOut()" title="Zoom Out">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 13H5v-2h14v2z" />
+                        </svg>
+                    </button>
+                    <button class="zoom-btn" onclick="resetView()" title="Reset View">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mode Indicator -->
+            <div class="mode-indicator" id="mode-indicator"></div>
+
+            <!-- Detection Settings Panel -->
+            <div class="detection-panel" id="detection-panel">
+                <h3>DETECTION SETTINGS</h3>
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span>Canny Low</span>
+                        <span class="slider-value" id="canny-low-value">30</span>
+                    </div>
+                    <input type="range" id="canny-low" min="0" max="255" value="30" oninput="updateSlider('canny-low')">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span>Canny High</span>
+                        <span class="slider-value" id="canny-high-value">100</span>
+                    </div>
+                    <input type="range" id="canny-high" min="0" max="255" value="100"
+                        oninput="updateSlider('canny-high')">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span>Min Area</span>
+                        <span class="slider-value" id="min-area-value">100</span>
+                    </div>
+                    <input type="range" id="min-area" min="10" max="5000" value="100"
+                        oninput="updateSlider('min-area')">
+                </div>
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <span>Close Size</span>
+                        <span class="slider-value" id="close-size-value">5</span>
+                    </div>
+                    <input type="range" id="close-size" min="1" max="20" value="5" oninput="updateSlider('close-size')">
+                </div>
+                <div style="margin-top: 1rem; display:flex; flex-direction:column; gap:0.5rem;">
+                    <button class="btn btn-sm" onclick="redetectRegions()">Apply &amp; Re-detect</button>
+                    <button class="btn btn-secondary btn-sm" onclick="loadPreprocessorPreset()">Load Preprocessor
+                        Preset</button>
+                    <button class="btn btn-secondary btn-sm" onclick="applyMapperBoostDetectPreset()">Mapper Boost
+                        Preset</button>
+                </div>
+            </div>
+
+            <!-- Sidebar Toggle -->
+            <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- List Panel -->
+        <aside class="sidebar list-panel" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title" id="list-title">REGIONS</div>
+            </div>
+
+            <div class="region-list" id="region-list">
+                <!-- Region items will be populated here -->
+            </div>
+        </aside>
+    </main>
+
+    <!-- Region Modal -->
+    <div class="modal-overlay" id="region-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">REGION DETAILS</h2>
+                <button class="modal-close" onclick="closeRegionModal()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Region ID</label>
+                <input type="text" class="form-input" id="modal-region-id" readonly>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-input" id="modal-region-name" placeholder="Enter region name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Zone</label>
+                <select class="form-input" id="modal-region-zone">
+                    <option value="">(None)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Group</label>
+                <select class="form-input" id="modal-region-group">
+                    <option value="">(None)</option>
+                    <option value="__new__">+ New Group...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Status</label>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+                    <span id="modal-status-badge"
+                        style="padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.8rem; text-transform: uppercase;"></span>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn"
+                    style="background: var(--approved-color); border-color: var(--approved-color); color: #000;"
+                    onclick="approveFromModal()">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                    </svg>
+                    Approve
+                </button>
+                <button class="btn" style="background: var(--rejected-color); border-color: var(--rejected-color);"
+                    onclick="rejectFromModal()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                    Reject
+                </button>
+                <button class="btn btn-secondary" onclick="editBoundaryFromModal()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                    </svg>
+                    Edit
+                </button>
+                <button class="btn btn-secondary" onclick="applyModalChanges()">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zone Modal -->
+    <div class="modal-overlay" id="zone-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">CREATE ZONE</h2>
+                <button class="modal-close" onclick="closeZoneModal()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Zone Name</label>
+                <input type="text" class="form-input" id="zone-name-input" placeholder="e.g., Zone 1">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Color</label>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.25rem;" id="zone-color-picker">
+                    <!-- Color swatches will be added by JS -->
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn" onclick="confirmCreateZone()">Create Zone</button>
+                <button class="btn btn-secondary" onclick="closeZoneModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zone Edit Modal -->
+    <div class="modal-overlay" id="zone-edit-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="zone-edit-title">ZONE DETAILS</h2>
+                <button class="modal-close" onclick="closeZoneEditModal()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Zone Name</label>
+                <input type="text" class="form-input" id="zone-edit-name" placeholder="Zone name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Color</label>
+                <div class="form-input" id="zone-edit-color" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span id="zone-edit-color-swatch" style="width: 18px; height: 18px; border-radius: 4px;"></span>
+                    <span id="zone-edit-color-label"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Boundary</label>
+                <div class="form-input" id="zone-edit-boundary-info">No boundary</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Regions In Zone</label>
+                <div class="zone-region-list" id="zone-edit-region-list"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Linked UIDs (Parts)</label>
+                <div class="uid-picker" id="zone-uid-picker">
+                    <div class="assigned-uids" id="zone-assigned-uids">
+                        <span style="color: var(--text-dim); font-size: 0.8rem;">No UIDs linked</span>
+                    </div>
+                    <div class="uid-picker-search">
+                        <input type="text" class="form-input" id="uid-search-input"
+                            placeholder="Search dash or material..." oninput="filterUidList()">
+                    </div>
+                    <div class="uid-list" id="uid-picker-list">
+                        <div style="color: var(--text-dim); font-size: 0.8rem; padding: 0.5rem;">Load
+                            master_parts_v2.json from File menu</div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" style="margin-top: 0.5rem;"
+                        onclick="autoLinkUidsToZone(state.selectedZoneId)">Auto-link by Zone</button>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-secondary btn-sm" onclick="startZoneEditBoundaryFromModal()">Edit
+                    Boundary</button>
+                <button class="btn btn-secondary btn-sm" onclick="autoDrawZoneBoundaryFromModal()">Auto
+                    Boundary</button>
+                <button class="btn btn-secondary btn-sm" onclick="resetZoneBoundaryFromModal()">Reset Boundary</button>
+                <button class="btn btn-secondary btn-sm" onclick="clearZoneRegionsFromModal()">Clear Regions</button>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn" onclick="applyZoneEditsFromModal()">Apply</button>
+                <button class="btn btn-secondary" onclick="deleteZoneFromModal()">Delete Zone</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Library Modal -->
+    <div class="modal-overlay" id="image-library-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">IMAGE LIBRARY</h2>
+                <button class="modal-close" onclick="closeImageLibrary()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="form-group">
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary btn-sm" onclick="openImage()">Add Image</button>
+                    <button class="btn btn-secondary btn-sm" onclick="clearImageLibrary()">Clear Library</button>
+                </div>
+            </div>
+
+            <div class="image-library-list" id="image-library-list"></div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeImageLibrary()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="context-menu">
+        <div class="context-item" onclick="renameRegion()">
+            <svg viewBox="0 0 24 24">
+                <path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z" />
+            </svg>
+            Rename
+        </div>
+        <div class="context-item" onclick="duplicateRegion()">
+            <svg viewBox="0 0 24 24">
+                <path
+                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+            </svg>
+            Duplicate
+        </div>
+        <div class="context-item" onclick="duplicateOpposite()">
+            <svg viewBox="0 0 24 24">
+                <path d="M15 21h2v-2h-2v2zm4-12h2V7h-2v2zM3 5v14c0 1.1.9 2 2 2h14v-2H5V5H3z" />
+            </svg>
+            Duplicate Opposite
+        </div>
+        <div class="context-item" onclick="assignZone()">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+            </svg>
+            Assign to Zone
+        </div>
+        <div class="context-item" onclick="startEditMode()">
+            <svg viewBox="0 0 24 24">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" />
+            </svg>
+            Edit Boundary
+        </div>
+        <div class="context-item" style="color: var(--rejected-color);" onclick="deleteRegion()">
+            <svg viewBox="0 0 24 24">
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+            </svg>
+            Delete
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Hidden File Input -->
+    <input type="file" id="file-input" accept="image/*" style="display: none;" onchange="handleFileSelect(event)">
+    <input type="file" id="json-import-input" accept=".json" style="display: none;" onchange="handleJSONImport(event)">
+    <input type="file" id="master-parts-input" accept=".json" style="display: none;"
+        onchange="handleMasterPartsLoad(event)">
+
+    <script>
+        // =============================================
+        // STATE MANAGEMENT
+        // =============================================
+        const state = {
+            image: null,
+            imageData: null,
+            project: {
+                images: [],
+                activeImageId: null
+            },
+            regions: [],
+            zones: {},
+            groups: {},
+            selectedRegionId: null,
+            selectedRegionIds: [],
+            selectedZoneId: null,
+
+            // View state
+            zoom: 1,
+            panX: 0,
+            panY: 0,
+
+            // Interaction state
+            isPanning: false,
+            panStartX: 0,
+            panStartY: 0,
+
+            // Edit modes
+            editMode: null, // null | 'edit' | 'draw' | 'zone-draw' | 'zone-edit'
+            editPoints: [], // Each point: {x, y, type: 'corner'|'curve', cp1x, cp1y, cp2x, cp2y}
+            editingRegionId: null,
+            editingZoneId: null,
+            selectedPointIndex: -1,
+            draggingHandle: null,
+
+            // Detection params
+            detectParams: {
+                cannyLow: 30,
+                cannyHigh: 100,
+                minArea: 100,
+                closeSize: 5
+            },
+
+            // Zone colors
+            zoneColors: [
+                '#ff3366', '#00e5ff', '#00ff88', '#ff9500',
+                '#bf00ff', '#ffd700', '#00bcd4', '#ff6b9d'
+            ],
+
+            // Master parts V2 (from table_extractor)
+            masterParts: [],  // Array of {uid, dash, material, description, zone, ...}
+
+            // Zone to UIDs mapping
+            zoneUids: {}  // { zoneId: [uid1, uid2, ...] }
+        };
+
+        const undoStack = [];
+        const redoStack = [];
+        const UNDO_LIMIT = 50;
+        const AUTO_SAVE_DELAY = 800;
+        let autoSaveTimer = null;
+
+        // =============================================
+        // CANVAS & RENDERING
+        // =============================================
+        const canvas = document.getElementById('blueprint-canvas');
+        const ctx = canvas.getContext('2d');
+        const container = document.getElementById('canvas-container');
+
+        function resizeCanvas() {
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            redraw();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function redraw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!state.image) return;
+
+            ctx.save();
+            ctx.translate(state.panX, state.panY);
+            ctx.scale(state.zoom, state.zoom);
+
+            // Draw image
+            ctx.drawImage(state.image, 0, 0);
+
+            // Get visible regions
+            let visibleRegions = getVisibleRegions();
+
+            // If "Show Selected Only" is checked and we have a selection, only show selected regions
+            const showSelectedOnly = document.getElementById('show-selected-only').checked;
+            const selectedIds = getSelectedRegionIds();
+            if (showSelectedOnly && selectedIds.length > 0) {
+                visibleRegions = visibleRegions.filter(r => selectedIds.includes(r.id));
+            }
+
+            // Draw regions
+            visibleRegions.forEach(region => {
+                drawRegion(region, isRegionSelected(region.id));
+            });
+
+            // Draw zone boundaries
+            if (document.getElementById('show-boundaries').checked) {
+                drawZoneBoundaries();
+            }
+
+            // Draw edit points if in edit mode
+            if (state.editMode && state.editPoints.length > 0) {
+                drawEditPoints();
+            }
+
+            ctx.restore();
+
+            // Update zoom display
+            document.getElementById('zoom-level').textContent = Math.round(state.zoom * 100) + '%';
+        }
+
+        function drawRegion(region, isSelected) {
+            if (!region.contour || region.contour.length < 3) return;
+
+            const style = getRegionStyle(region);
+
+            ctx.beginPath();
+            const hasCurves = region.contour.some(p => p && p.type === 'curve');
+
+            if (hasCurves) {
+                drawCurvedPath(region.contour, true);
+            } else {
+                const points = region.contour.map(p => Array.isArray(p)
+                    ? p
+                    : [p.x !== undefined ? p.x : p[0], p.y !== undefined ? p.y : p[1]]);
+                ctx.moveTo(points[0][0], points[0][1]);
+                for (let i = 1; i < points.length; i++) {
+                    ctx.lineTo(points[i][0], points[i][1]);
+                }
+                ctx.closePath();
+            }
+
+            // Fill
+            ctx.fillStyle = style.fill;
+            ctx.fill();
+
+            // Stroke
+            ctx.strokeStyle = style.stroke;
+            ctx.lineWidth = isSelected ? 4 : 2;
+            ctx.stroke();
+
+            // Add glow for selected
+            if (isSelected) {
+                ctx.shadowColor = style.stroke;
+                ctx.shadowBlur = 20;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            }
+
+            // Draw label (unless hidden)
+            const hideLabels = document.getElementById('hide-labels').checked;
+            if (!hideLabels) {
+                const name = region.name || region.id;
+                const bbox = region.bbox || calculateBBox(region.contour);
+
+                ctx.font = '12px Rajdhani';
+                const textWidth = ctx.measureText(name).width;
+                const textX = bbox.x;
+                const textY = Math.max(20, bbox.y - 8);
+
+                // Label background
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                ctx.fillRect(textX - 4, textY - 14, textWidth + 8, 18);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(textX - 4, textY - 14, textWidth + 8, 18);
+
+                // Label text
+                ctx.fillStyle = '#fff';
+                ctx.fillText(name, textX, textY);
+            }
+        }
+
+        function drawCurvedPath(points, closePath = true) {
+            if (points.length < 2) return;
+
+            const first = Array.isArray(points[0]) ? { x: points[0][0], y: points[0][1] } : points[0];
+            ctx.moveTo(first.x, first.y);
+
+            for (let i = 0; i < points.length; i++) {
+                const currRaw = points[i];
+                const nextRaw = points[(i + 1) % points.length];
+                const curr = Array.isArray(currRaw) ? { x: currRaw[0], y: currRaw[1], type: 'corner' } : currRaw;
+                const next = Array.isArray(nextRaw) ? { x: nextRaw[0], y: nextRaw[1], type: 'corner' } : nextRaw;
+
+                if (i === points.length - 1 && !closePath) break;
+
+                if (curr.type === 'curve' || next.type === 'curve') {
+                    const cp1x = curr.cp2x !== undefined ? curr.cp2x : curr.x;
+                    const cp1y = curr.cp2y !== undefined ? curr.cp2y : curr.y;
+                    const cp2x = next.cp1x !== undefined ? next.cp1x : next.x;
+                    const cp2y = next.cp1y !== undefined ? next.cp1y : next.y;
+                    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, next.x, next.y);
+                } else {
+                    ctx.lineTo(next.x, next.y);
+                }
+            }
+
+            if (closePath) {
+                ctx.closePath();
+            }
+        }
+
+        function getRegionStyle(region) {
+            const renderMode = document.getElementById('render-mode').value;
+
+            const colors = {
+                approved: { fill: 'rgba(0, 255, 136, 0.2)', stroke: '#00ff88' },
+                rejected: { fill: 'rgba(255, 51, 102, 0.2)', stroke: '#ff3366' },
+                pending: { fill: 'rgba(255, 215, 0, 0.2)', stroke: '#ffd700' }
+            };
+
+            if (renderMode === 'status') {
+                return colors[region.status] || colors.pending;
+            } else if (renderMode === 'zones') {
+                if (region.zone && state.zones[region.zone]) {
+                    const zoneColor = state.zones[region.zone].color;
+                    return {
+                        fill: hexToRgba(zoneColor, 0.2),
+                        stroke: zoneColor
+                    };
+                }
+                return { fill: 'rgba(0, 229, 255, 0.2)', stroke: '#00e5ff' };
+            } else if (renderMode === 'groups') {
+                return { fill: 'rgba(191, 0, 255, 0.2)', stroke: '#bf00ff' };
+            }
+
+            return colors.pending;
+        }
+
+        function drawZoneBoundaries() {
+            const zoneFilterEl = document.getElementById('zone-filter');
+            const zoneFilter = zoneFilterEl ? zoneFilterEl.value : '';
+            const entries = (zoneFilter && state.zones[zoneFilter])
+                ? [[zoneFilter, state.zones[zoneFilter]]]
+                : Object.entries(state.zones);
+
+            entries.forEach(([zoneId, zone]) => {
+                if (!zone.contour || zone.contour.length < 3) return;
+
+                ctx.beginPath();
+                const hasCurves = zone.contour.some(p => p && p.type === 'curve');
+                if (hasCurves) {
+                    drawCurvedPath(zone.contour, true);
+                } else {
+                    const first = zone.contour[0];
+                    const startX = Array.isArray(first) ? first[0] : first.x;
+                    const startY = Array.isArray(first) ? first[1] : first.y;
+                    ctx.moveTo(startX, startY);
+
+                    for (let i = 1; i < zone.contour.length; i++) {
+                        const p = zone.contour[i];
+                        const px = Array.isArray(p) ? p[0] : p.x;
+                        const py = Array.isArray(p) ? p[1] : p.y;
+                        ctx.lineTo(px, py);
+                    }
+                    ctx.closePath();
+                }
+
+                ctx.strokeStyle = zone.color;
+                ctx.lineWidth = 3;
+                ctx.setLineDash([10, 5]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            });
+        }
+
+        function drawEditPoints() {
+            if (state.editPoints.length >= 2) {
+                ctx.beginPath();
+
+                const hasCurves = state.editPoints.some(p => p.type === 'curve');
+
+                if (hasCurves && state.editMode !== 'draw' && state.editMode !== 'zone-draw') {
+                    drawCurvedPath(state.editPoints, true);
+                } else {
+                    ctx.moveTo(state.editPoints[0].x, state.editPoints[0].y);
+                    for (let i = 1; i < state.editPoints.length; i++) {
+                        ctx.lineTo(state.editPoints[i].x, state.editPoints[i].y);
+                    }
+                    if (state.editMode !== 'draw' && state.editMode !== 'zone-draw') {
+                        ctx.closePath();
+                    }
+                }
+                ctx.strokeStyle = '#bf00ff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                if (state.editMode !== 'draw' && state.editMode !== 'zone-draw') {
+                    ctx.fillStyle = 'rgba(191, 0, 255, 0.2)';
+                    ctx.fill();
+                }
+            }
+
+            state.editPoints.forEach((point) => {
+                if (point.type === 'curve') {
+                    ctx.strokeStyle = 'rgba(0, 229, 255, 0.6)';
+                    ctx.lineWidth = 1;
+
+                    if (point.cp1x !== undefined) {
+                        ctx.beginPath();
+                        ctx.moveTo(point.x, point.y);
+                        ctx.lineTo(point.cp1x, point.cp1y);
+                        ctx.stroke();
+
+                        ctx.beginPath();
+                        ctx.arc(point.cp1x, point.cp1y, 4, 0, Math.PI * 2);
+                        ctx.fillStyle = '#00e5ff';
+                        ctx.fill();
+                    }
+
+                    if (point.cp2x !== undefined) {
+                        ctx.beginPath();
+                        ctx.moveTo(point.x, point.y);
+                        ctx.lineTo(point.cp2x, point.cp2y);
+                        ctx.stroke();
+
+                        ctx.beginPath();
+                        ctx.arc(point.cp2x, point.cp2y, 4, 0, Math.PI * 2);
+                        ctx.fillStyle = '#00e5ff';
+                        ctx.fill();
+                    }
+                }
+            });
+
+            state.editPoints.forEach((point, i) => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = point.type === 'curve' ? '#00e5ff' : '#bf00ff';
+                ctx.fill();
+
+                if (i === state.selectedPointIndex) {
+                    ctx.strokeStyle = '#ffd700';
+                    ctx.lineWidth = 3;
+                } else {
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                }
+                ctx.stroke();
+            });
+        }
+
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function calculateBBox(contour) {
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            contour.forEach(p => {
+                const x = Array.isArray(p) ? p[0] : (p.x !== undefined ? p.x : p[0]);
+                const y = Array.isArray(p) ? p[1] : (p.y !== undefined ? p.y : p[1]);
+                minX = Math.min(minX, x);
+                minY = Math.min(minY, y);
+                maxX = Math.max(maxX, x);
+                maxY = Math.max(maxY, y);
+            });
+            return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
+        }
+
+        // =============================================
+        // IMAGE LOADING & REGION DETECTION
+        // =============================================
+        function openImage() {
+            document.getElementById('file-input').click();
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const defaultName = file.name.replace(/\.[^/.]+$/, '') || 'Untitled';
+                    const name = prompt('Name this image:', defaultName);
+                    if (name === null) {
+                        return;
+                    }
+
+                    const entry = {
+                        id: `img_${Date.now()}_${Math.random().toString(16).slice(2, 8)}`,
+                        name: name.trim() || defaultName,
+                        dataUrl: e.target.result,
+                        regions: [],
+                        zones: {},
+                        groups: {},
+                        detectParams: { ...state.detectParams }
+                    };
+
+                    syncActiveImageEntry();
+                    state.project.images.push(entry);
+                    state.project.activeImageId = entry.id;
+
+                    state.image = img;
+                    state.regions = [];
+                    state.zones = {};
+                    state.groups = {};
+                    state.selectedRegionId = null;
+                    state.selectedRegionIds = [];
+                    state.selectedZoneId = null;
+
+                    // Center and fit image
+                    const scaleX = container.clientWidth / img.width;
+                    const scaleY = container.clientHeight / img.height;
+                    state.zoom = Math.min(scaleX, scaleY) * 0.9;
+                    state.panX = (container.clientWidth - img.width * state.zoom) / 2;
+                    state.panY = (container.clientHeight - img.height * state.zoom) / 2;
+
+                    document.getElementById('empty-state').style.display = 'none';
+                    document.getElementById('zoom-controls').style.display = 'flex';
+
+                    // Detect regions
+                    applyPreprocessorPresetIfAvailable();
+                    resetUndoHistory();
+                    detectRegions();
+
+                    showToast('Image loaded successfully', 'success');
+                    renderImageLibraryList();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        }
+
+        function detectRegions() {
+            if (!state.image) return;
+
+            pushUndoState();
+
+            // Create temp canvas for image processing
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = state.image.width;
+            tempCanvas.height = state.image.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.drawImage(state.image, 0, 0);
+
+            const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+            const data = imageData.data;
+            const width = tempCanvas.width;
+            const height = tempCanvas.height;
+
+            // Convert to grayscale
+            const gray = new Uint8Array(width * height);
+            for (let i = 0; i < width * height; i++) {
+                const idx = i * 4;
+                gray[i] = Math.round(0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2]);
+            }
+
+            // Detect edges using Sobel operator
+            const edges = new Uint8Array(width * height);
+            const gradientX = new Int16Array(width * height);
+            const gradientY = new Int16Array(width * height);
+
+            for (let y = 1; y < height - 1; y++) {
+                for (let x = 1; x < width - 1; x++) {
+                    const idx = y * width + x;
+
+                    const gx = -gray[(y - 1) * width + x - 1] - 2 * gray[y * width + x - 1] - gray[(y + 1) * width + x - 1]
+                        + gray[(y - 1) * width + x + 1] + 2 * gray[y * width + x + 1] + gray[(y + 1) * width + x + 1];
+
+                    const gy = -gray[(y - 1) * width + x - 1] - 2 * gray[(y - 1) * width + x] - gray[(y - 1) * width + x + 1]
+                        + gray[(y + 1) * width + x - 1] + 2 * gray[(y + 1) * width + x] + gray[(y + 1) * width + x + 1];
+
+                    gradientX[idx] = gx;
+                    gradientY[idx] = gy;
+
+                    const magnitude = Math.sqrt(gx * gx + gy * gy);
+                    edges[idx] = magnitude > state.detectParams.cannyLow ? 255 : 0;
+                }
+            }
+
+            // Dilate edges to close small gaps
+            const dilatedEdges = dilateEdges(edges, width, height, 2);
+
+            // Find closed regions using flood fill and contour tracing
+            const visited = new Uint8Array(width * height);
+            const regions = [];
+            let regionId = 0;
+
+            for (let y = 5; y < height - 5; y += 3) {
+                for (let x = 5; x < width - 5; x += 3) {
+                    const idx = y * width + x;
+                    if (visited[idx] || dilatedEdges[idx] === 255) continue;
+
+                    const regionPixels = floodFillRegion(dilatedEdges, visited, width, height, x, y);
+
+                    if (regionPixels.length < state.detectParams.minArea) continue;
+                    if (regionPixels.length > width * height * 0.7) continue;
+
+                    const contour = traceContour(regionPixels, width, height);
+                    if (contour.length < 4) continue;
+
+                    const simplified = douglasPeucker(contour, 3);
+                    if (simplified.length < 3) continue;
+
+                    regionId++;
+                    const bbox = calculateBBox(simplified);
+                    const center = calculateCentroid(simplified);
+                    const imgArea = width * height;
+                    const touchesBorder = bbox.x <= 1 || bbox.y <= 1 ||
+                        (bbox.x + bbox.width) >= width - 2 ||
+                        (bbox.y + bbox.height) >= height - 2;
+                    if (touchesBorder && regionPixels.length > imgArea * 0.4) {
+                        continue;
+                    }
+
+                    regions.push({
+                        id: `region_${String(regionId).padStart(3, '0')}`,
+                        contour: simplified,
+                        bbox: bbox,
+                        center: center,
+                        area: regionPixels.length,
+                        status: 'pending',
+                        zone: null,
+                        group: null,
+                        name: null
+                    });
+                }
+            }
+
+            state.regions = filterDuplicateRegions(regions);
+            state.regions.sort((a, b) => b.area - a.area);
+            state.regions = state.regions.slice(0, 200);
+
+            updateUI();
+            redraw();
+            showToast(`Detected ${state.regions.length} regions`, 'info');
+        }
+
+        function dilateEdges(edges, width, height, iterations) {
+            let current = new Uint8Array(edges);
+
+            for (let iter = 0; iter < iterations; iter++) {
+                const next = new Uint8Array(current);
+
+                for (let y = 1; y < height - 1; y++) {
+                    for (let x = 1; x < width - 1; x++) {
+                        const idx = y * width + x;
+                        if (current[idx] === 255) continue;
+
+                        if (current[(y - 1) * width + x - 1] === 255 ||
+                            current[(y - 1) * width + x] === 255 ||
+                            current[(y - 1) * width + x + 1] === 255 ||
+                            current[y * width + x - 1] === 255 ||
+                            current[y * width + x + 1] === 255 ||
+                            current[(y + 1) * width + x - 1] === 255 ||
+                            current[(y + 1) * width + x] === 255 ||
+                            current[(y + 1) * width + x + 1] === 255) {
+                            next[idx] = 255;
+                        }
+                    }
+                }
+                current = next;
+            }
+
+            return current;
+        }
+
+        function floodFillRegion(edges, visited, width, height, startX, startY) {
+            const pixels = [];
+            const stack = [[startX, startY]];
+            const startIdx = startY * width + startX;
+
+            if (visited[startIdx] || edges[startIdx] === 255) return pixels;
+
+            while (stack.length > 0) {
+                const [x, y] = stack.pop();
+                const idx = y * width + x;
+
+                if (x < 0 || x >= width || y < 0 || y >= height) continue;
+                if (visited[idx] || edges[idx] === 255) continue;
+
+                visited[idx] = 1;
+                pixels.push([x, y]);
+
+                stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
+            }
+
+            return pixels;
+        }
+
+        function traceContour(regionPixels, width, height) {
+            if (regionPixels.length === 0) return [];
+
+            const mask = new Uint8Array(width * height);
+            regionPixels.forEach(([x, y]) => {
+                mask[y * width + x] = 1;
+            });
+
+            let startX = -1, startY = -1;
+            outer: for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    if (mask[y * width + x] === 1) {
+                        if (isBoundaryPixel(mask, width, height, x, y)) {
+                            startX = x;
+                            startY = y;
+                            break outer;
+                        }
+                    }
+                }
+            }
+
+            if (startX === -1) return [];
+
+            const contour = [];
+            const directions = [
+                [1, 0], [1, 1], [0, 1], [-1, 1],
+                [-1, 0], [-1, -1], [0, -1], [1, -1]
+            ];
+
+            let x = startX, y = startY;
+            let dir = 7;
+            const firstX = startX, firstY = startY;
+            let iterations = 0;
+            const maxIterations = regionPixels.length * 4;
+            const visited = new Set();
+
+            do {
+                const key = `${x},${y}`;
+                if (!visited.has(key)) {
+                    contour.push([x, y]);
+                    visited.add(key);
+                }
+
+                let found = false;
+                for (let i = 0; i < 8; i++) {
+                    const newDir = (dir + 6 + i) % 8;
+                    const nx = x + directions[newDir][0];
+                    const ny = y + directions[newDir][1];
+
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                        if (mask[ny * width + nx] === 1 && isBoundaryPixel(mask, width, height, nx, ny)) {
+                            x = nx;
+                            y = ny;
+                            dir = newDir;
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!found) break;
+                iterations++;
+
+            } while ((x !== firstX || y !== firstY) && iterations < maxIterations);
+
+            if (contour.length > 1000) {
+                const step = Math.ceil(contour.length / 500);
+                return contour.filter((_, i) => i % step === 0);
+            }
+
+            return contour;
+        }
+
+        function isBoundaryPixel(mask, width, height, x, y) {
+            const neighbors = [
+                [x - 1, y - 1], [x, y - 1], [x + 1, y - 1],
+                [x - 1, y], [x + 1, y],
+                [x - 1, y + 1], [x, y + 1], [x + 1, y + 1]
+            ];
+
+            for (const [nx, ny] of neighbors) {
+                if (nx < 0 || nx >= width || ny < 0 || ny >= height) return true;
+                if (mask[ny * width + nx] === 0) return true;
+            }
+            return false;
+        }
+
+        function douglasPeucker(points, epsilon) {
+            if (points.length <= 2) return points;
+
+            let maxDist = 0;
+            let maxIdx = 0;
+
+            const [x1, y1] = points[0];
+            const [x2, y2] = points[points.length - 1];
+
+            for (let i = 1; i < points.length - 1; i++) {
+                const dist = perpendicularDistance(points[i], [x1, y1], [x2, y2]);
+                if (dist > maxDist) {
+                    maxDist = dist;
+                    maxIdx = i;
+                }
+            }
+
+            if (maxDist > epsilon) {
+                const left = douglasPeucker(points.slice(0, maxIdx + 1), epsilon);
+                const right = douglasPeucker(points.slice(maxIdx), epsilon);
+                return left.slice(0, -1).concat(right);
+            }
+            return [points[0], points[points.length - 1]];
+        }
+
+        function perpendicularDistance(point, lineStart, lineEnd) {
+            const [x, y] = point;
+            const [x1, y1] = lineStart;
+            const [x2, y2] = lineEnd;
+
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+
+            if (dx === 0 && dy === 0) {
+                return Math.sqrt((x - x1) ** 2 + (y - y1) ** 2);
+            }
+
+            const t = Math.max(0, Math.min(1, ((x - x1) * dx + (y - y1) * dy) / (dx * dx + dy * dy)));
+            const projX = x1 + t * dx;
+            const projY = y1 + t * dy;
+
+            return Math.sqrt((x - projX) ** 2 + (y - projY) ** 2);
+        }
+
+        function filterDuplicateRegions(regions) {
+            const filtered = [];
+
+            for (const region of regions) {
+                const isDuplicate = filtered.some(existing => {
+                    const dx = existing.center[0] - region.center[0];
+                    const dy = existing.center[1] - region.center[1];
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    return dist < 25;
+                });
+
+                if (!isDuplicate) {
+                    filtered.push(region);
+                }
+            }
+
+            return filtered;
+        }
+
+        function calculateConvexHull(points) {
+            if (points.length < 3) return points;
+
+            // Simplified convex hull using bounding box corners + some edge points
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            points.forEach(p => {
+                minX = Math.min(minX, p[0]);
+                minY = Math.min(minY, p[1]);
+                maxX = Math.max(maxX, p[0]);
+                maxY = Math.max(maxY, p[1]);
+            });
+
+            // Find edge points
+            const edgePoints = [];
+            const step = Math.max(1, Math.floor(points.length / 50));
+
+            // Top edge
+            for (let x = minX; x <= maxX; x += step) {
+                let topY = maxY;
+                points.forEach(p => {
+                    if (Math.abs(p[0] - x) < step && p[1] < topY) topY = p[1];
+                });
+                if (topY < maxY) edgePoints.push([x, topY]);
+            }
+
+            // Right edge
+            for (let y = minY; y <= maxY; y += step) {
+                let rightX = minX;
+                points.forEach(p => {
+                    if (Math.abs(p[1] - y) < step && p[0] > rightX) rightX = p[0];
+                });
+                if (rightX > minX) edgePoints.push([rightX, y]);
+            }
+
+            // Bottom edge
+            for (let x = maxX; x >= minX; x -= step) {
+                let bottomY = minY;
+                points.forEach(p => {
+                    if (Math.abs(p[0] - x) < step && p[1] > bottomY) bottomY = p[1];
+                });
+                if (bottomY > minY) edgePoints.push([x, bottomY]);
+            }
+
+            // Left edge
+            for (let y = maxY; y >= minY; y -= step) {
+                let leftX = maxX;
+                points.forEach(p => {
+                    if (Math.abs(p[1] - y) < step && p[0] < leftX) leftX = p[0];
+                });
+                if (leftX < maxX) edgePoints.push([leftX, y]);
+            }
+
+            // Simplify to reduce points
+            return simplifyPolygon(edgePoints, 5);
+        }
+
+        function computeConvexHull(points) {
+            if (points.length < 3) return points;
+
+            const pts = points.map(p => [p[0], p[1]]).sort((a, b) => {
+                if (a[0] === b[0]) return a[1] - b[1];
+                return a[0] - b[0];
+            });
+
+            const unique = [];
+            for (const p of pts) {
+                const last = unique[unique.length - 1];
+                if (!last || last[0] !== p[0] || last[1] !== p[1]) {
+                    unique.push(p);
+                }
+            }
+
+            if (unique.length < 3) return unique;
+
+            const cross = (o, a, b) =>
+                (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+
+            const lower = [];
+            for (const p of unique) {
+                while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) {
+                    lower.pop();
+                }
+                lower.push(p);
+            }
+
+            const upper = [];
+            for (let i = unique.length - 1; i >= 0; i--) {
+                const p = unique[i];
+                while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) {
+                    upper.pop();
+                }
+                upper.push(p);
+            }
+
+            lower.pop();
+            upper.pop();
+            return lower.concat(upper);
+        }
+
+        function simplifyPolygon(points, tolerance) {
+            if (points.length <= 4) return points;
+
+            const result = [points[0]];
+            let lastPoint = points[0];
+
+            for (let i = 1; i < points.length; i++) {
+                const dist = Math.sqrt(
+                    Math.pow(points[i][0] - lastPoint[0], 2) +
+                    Math.pow(points[i][1] - lastPoint[1], 2)
+                );
+                if (dist >= tolerance) {
+                    result.push(points[i]);
+                    lastPoint = points[i];
+                }
+            }
+
+            return result;
+        }
+
+        function calculateCentroid(contour) {
+            let cx = 0, cy = 0;
+            contour.forEach(p => {
+                const x = Array.isArray(p) ? p[0] : (p.x !== undefined ? p.x : p[0]);
+                const y = Array.isArray(p) ? p[1] : (p.y !== undefined ? p.y : p[1]);
+                cx += x;
+                cy += y;
+            });
+            return [cx / contour.length, cy / contour.length];
+        }
+
+        function redetectRegions() {
+            detectRegions();
+        }
+
+        function applyDetectPresetToUI(p) {
+            if (!p || !p.detectParams) return false;
+            const dp = p.detectParams;
+
+            const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v | 0));
+
+            state.detectParams.cannyLow = clamp(dp.cannyLow ?? state.detectParams.cannyLow, 0, 255);
+            state.detectParams.cannyHigh = clamp(dp.cannyHigh ?? state.detectParams.cannyHigh, 0, 255);
+            state.detectParams.minArea = clamp(dp.minArea ?? state.detectParams.minArea, 1, 999999999);
+            state.detectParams.closeSize = clamp(dp.closeSize ?? state.detectParams.closeSize, 1, 50);
+
+            const setSlider = (id, val) => {
+                const el = document.getElementById(id);
+                const label = document.getElementById(id + '-value');
+                if (el) el.value = String(val);
+                if (label) label.textContent = String(val);
+            };
+
+            setSlider('canny-low', state.detectParams.cannyLow);
+            setSlider('canny-high', state.detectParams.cannyHigh);
+            setSlider('min-area', state.detectParams.minArea);
+            setSlider('close-size', state.detectParams.closeSize);
+
+            scheduleAutoSave();
+            return true;
+        }
+
+        function loadPreprocessorPreset() {
+            let raw = null;
+            try {
+                raw = localStorage.getItem('blueprintMapper:importPreset');
+            } catch (e) { }
+            if (!raw) {
+                showToast('No preprocessor preset found. Use Preprocessor -> Export for Mapper.', 'info');
+                return;
+            }
+
+            try {
+                const preset = JSON.parse(raw);
+                const ageMs = Date.now() - (preset.createdAt || 0);
+                if (preset.createdAt && ageMs > 12 * 60 * 60 * 1000) {
+                    showToast('Preprocessor preset is old (12h+). Still applied.', 'info');
+                }
+
+                const ok = applyDetectPresetToUI(preset);
+                if (ok) {
+                    showToast('Loaded preprocessor preset', 'success');
+                    redetectRegions();
+                } else {
+                    showToast('Preset was invalid/missing detectParams', 'error');
+                }
+            } catch (e) {
+                showToast('Failed to parse preprocessor preset', 'error');
+            }
+        }
+
+        function applyMapperBoostDetectPreset() {
+            const preset = {
+                detectParams: { cannyLow: 35, cannyHigh: 110, minArea: 220, closeSize: 5 }
+            };
+            applyDetectPresetToUI(preset);
+            showToast('Mapper Boost preset applied', 'success');
+        }
+
+        function applyPreprocessorPresetIfAvailable() {
+            let raw = null;
+            try {
+                raw = localStorage.getItem('blueprintMapper:importPreset');
+            } catch (e) { }
+            if (!raw) return false;
+            try {
+                const preset = JSON.parse(raw);
+                return applyDetectPresetToUI(preset);
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // =============================================
+        // UI UPDATES
+        // =============================================
+        function updateUI() {
+            updateRegionList();
+            updateStatusCounts();
+            updateZoneFilter();
+            updateSelectionUI();
+            const zoneEditModal = document.getElementById('zone-edit-modal');
+            if (zoneEditModal && zoneEditModal.classList.contains('active') && state.selectedZoneId) {
+                updateZoneEditModalInfo(state.selectedZoneId);
+            }
+            const libraryModal = document.getElementById('image-library-modal');
+            if (libraryModal && libraryModal.classList.contains('active')) {
+                renderImageLibraryList();
+            }
+            scheduleAutoSave();
+        }
+
+        function updateRegionList() {
+            const listEl = document.getElementById('region-list');
+            const view = document.getElementById('sidebar-view').value;
+            const listTitle = document.getElementById('list-title');
+
+            if (listTitle) {
+                listTitle.textContent = view === 'zones' ? 'ZONES' : 'REGIONS';
+            }
+
+            if (view === 'zones') {
+                updateZoneList();
+                return;
+            }
+
+            const visibleRegions = getVisibleRegions();
+
+            listEl.innerHTML = visibleRegions.map(region => `
+                <div class="region-item ${region.status} ${isRegionSelected(region.id) ? 'selected' : ''}"
+                     data-id="${region.id}"
+                     onclick="handleRegionListClick(event, '${region.id}')"
+                     ondblclick="openRegionModal('${region.id}')"
+                     oncontextmenu="showContextMenu(event, '${region.id}')">
+                    <div class="region-status-indicator" style="background: var(--${region.status === 'approved' ? 'approved' : region.status === 'rejected' ? 'rejected' : 'pending'}-color); box-shadow: 0 0 8px var(--${region.status === 'approved' ? 'approved' : region.status === 'rejected' ? 'rejected' : 'pending'}-color);"></div>
+                    <div class="region-info">
+                        <div class="region-name">${region.name || region.id}</div>
+                        <div class="region-meta">
+                            ${region.zone ? `<span class="region-zone">${state.zones[region.zone]?.name || region.zone}</span>` : ''}
+                            <span>Area: ${region.area}</span>
+                        </div>
+                    </div>
+                    <div class="region-actions">
+                        <button class="action-btn approve" onclick="event.stopPropagation(); approveRegion('${region.id}')" title="Approve">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        </button>
+                        <button class="action-btn reject" onclick="event.stopPropagation(); rejectRegion('${region.id}')" title="Reject">
+                            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateZoneList() {
+            const listEl = document.getElementById('region-list');
+
+            listEl.innerHTML = Object.entries(state.zones).map(([zoneId, zone]) => {
+                const count = state.regions.filter(r => r.zone === zoneId).length;
+                return `
+                    <div class="zone-item" data-id="${zoneId}" onclick="filterByZone('${zoneId}')" ondblclick="openZoneEditModal('${zoneId}')">
+                        <div class="zone-color" style="background: ${zone.color}; box-shadow: 0 0 10px ${zone.color};"></div>
+                        <div class="zone-name">${zone.name}</div>
+                        <div class="zone-count">${count} regions</div>
+                    </div>
+                `;
+            }).join('') || '<div style="padding: 1rem; color: var(--text-dim); text-align: center;">No zones created yet</div>';
+        }
+
+        function updateStatusCounts() {
+            const approved = state.regions.filter(r => r.status === 'approved').length;
+            const rejected = state.regions.filter(r => r.status === 'rejected').length;
+            const pending = state.regions.filter(r => r.status === 'pending').length;
+
+            document.getElementById('approved-count').textContent = approved;
+            document.getElementById('rejected-count').textContent = rejected;
+            document.getElementById('pending-count').textContent = pending;
+        }
+
+        function updateZoneFilter() {
+            const filterEl = document.getElementById('zone-filter');
+            const modalZoneEl = document.getElementById('modal-region-zone');
+            const currentFilter = filterEl ? filterEl.value : '';
+            const currentModal = modalZoneEl ? modalZoneEl.value : '';
+
+            const zoneOptions = '<option value="">All Zones</option>' +
+                Object.entries(state.zones).map(([id, zone]) =>
+                    `<option value="${id}">${zone.name}</option>`
+                ).join('');
+
+            filterEl.innerHTML = zoneOptions;
+            modalZoneEl.innerHTML = '<option value="">(None)</option>' +
+                Object.entries(state.zones).map(([id, zone]) =>
+                    `<option value="${id}">${zone.name}</option>`
+                ).join('');
+
+            if (currentFilter && filterEl.querySelector(`option[value="${currentFilter}"]`)) {
+                filterEl.value = currentFilter;
+            }
+            if (currentModal && modalZoneEl.querySelector(`option[value="${currentModal}"]`)) {
+                modalZoneEl.value = currentModal;
+            }
+        }
+
+        function getVisibleRegions() {
+            let regions = [...state.regions];
+
+            const zoneFilter = document.getElementById('zone-filter').value;
+            const renderMode = document.getElementById('render-mode').value;
+            const renderFilter = document.getElementById('render-filter').value;
+            const boundaryView = document.getElementById('boundary-view').checked;
+
+            // Zone filter
+            if (zoneFilter) {
+                if (boundaryView && state.zones[zoneFilter]?.contour) {
+                    // Filter by point-in-polygon
+                    regions = regions.filter(r => isPointInPolygon(r.center, state.zones[zoneFilter].contour));
+                } else {
+                    regions = regions.filter(r => r.zone === zoneFilter);
+                }
+            }
+
+            // Render mode filter
+            if (renderMode === 'status' && renderFilter) {
+                regions = regions.filter(r => r.status === renderFilter);
+            } else if (renderMode === 'zones' && renderFilter) {
+                regions = regions.filter(r => r.zone === renderFilter);
+            } else if (renderMode === 'groups' && renderFilter) {
+                regions = regions.filter(r => r.group === renderFilter);
+            }
+
+            // Sort by Y position (top to bottom)
+            return regions.sort((a, b) => a.center[1] - b.center[1]);
+        }
+
+        function isPointInPolygon(point, polygon) {
+            let inside = false;
+            for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+                const pi = polygon[i];
+                const pj = polygon[j];
+                const xi = Array.isArray(pi) ? pi[0] : pi.x;
+                const yi = Array.isArray(pi) ? pi[1] : pi.y;
+                const xj = Array.isArray(pj) ? pj[0] : pj.x;
+                const yj = Array.isArray(pj) ? pj[1] : pj.y;
+
+                if (((yi > point[1]) !== (yj > point[1])) &&
+                    (point[0] < (xj - xi) * (point[1] - yi) / (yj - yi) + xi)) {
+                    inside = !inside;
+                }
+            }
+            return inside;
+        }
+
+        function getSelectedRegionIds() {
+            if (state.selectedRegionIds && state.selectedRegionIds.length > 0) {
+                return [...state.selectedRegionIds];
+            }
+            return state.selectedRegionId ? [state.selectedRegionId] : [];
+        }
+
+        function isRegionSelected(id) {
+            return getSelectedRegionIds().includes(id);
+        }
+
+        function getRegionAtPoint(x, y) {
+            const hits = state.regions.filter(r => r.contour && r.contour.length >= 3 &&
+                isPointInPolygon([x, y], r.contour));
+            if (hits.length === 0) return null;
+            hits.sort((a, b) => (a.area || 0) - (b.area || 0));
+            return hits[0];
+        }
+
+        function updateSelectionUI() {
+            const selected = getSelectedRegionIds();
+            const count = selected.length;
+
+            const countEl = document.getElementById('selected-count');
+            if (countEl) countEl.textContent = String(count);
+
+            const zoneBtn = document.getElementById('assign-selected-zone');
+            const groupBtn = document.getElementById('assign-selected-group');
+            const clearBtn = document.getElementById('clear-selection');
+            if (zoneBtn) zoneBtn.disabled = count === 0;
+            if (groupBtn) groupBtn.disabled = count === 0;
+            if (clearBtn) clearBtn.disabled = count === 0;
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function snapshotState() {
+            return {
+                regions: JSON.parse(JSON.stringify(state.regions)),
+                zones: JSON.parse(JSON.stringify(state.zones)),
+                groups: JSON.parse(JSON.stringify(state.groups)),
+                detectParams: { ...state.detectParams },
+                selectedRegionId: state.selectedRegionId,
+                selectedRegionIds: [...state.selectedRegionIds],
+                selectedZoneId: state.selectedZoneId
+            };
+        }
+
+        function applySnapshot(snapshot) {
+            state.regions = snapshot.regions || [];
+            state.zones = snapshot.zones || {};
+            state.groups = snapshot.groups || {};
+            state.detectParams = snapshot.detectParams || { ...state.detectParams };
+            state.selectedRegionId = snapshot.selectedRegionId || null;
+            state.selectedRegionIds = snapshot.selectedRegionIds || [];
+            state.selectedZoneId = snapshot.selectedZoneId || null;
+            applyDetectPresetToUI({ detectParams: state.detectParams });
+            updateUI();
+            redraw();
+            updateUndoUI();
+        }
+
+        function pushUndoState() {
+            undoStack.push(snapshotState());
+            if (undoStack.length > UNDO_LIMIT) {
+                undoStack.shift();
+            }
+            redoStack.length = 0;
+            updateUndoUI();
+        }
+
+        function updateUndoUI() {
+            const undoBtn = document.getElementById('undo-btn');
+            if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+        }
+
+        function undo() {
+            if (undoStack.length === 0) {
+                showToast('Nothing to undo', 'info');
+                return;
+            }
+            const snapshot = undoStack.pop();
+            redoStack.push(snapshotState());
+            applySnapshot(snapshot);
+            scheduleAutoSave();
+            showToast('Undid last action', 'info');
+        }
+
+        function toEditablePoints(contour) {
+            return contour.map(p => {
+                if (Array.isArray(p)) {
+                    return { x: p[0], y: p[1], type: 'corner' };
+                }
+                if (p && typeof p === 'object') {
+                    const point = {
+                        x: p.x !== undefined ? p.x : p[0],
+                        y: p.y !== undefined ? p.y : p[1],
+                        type: p.type || 'corner'
+                    };
+                    if (p.cp1x !== undefined) point.cp1x = p.cp1x;
+                    if (p.cp1y !== undefined) point.cp1y = p.cp1y;
+                    if (p.cp2x !== undefined) point.cp2x = p.cp2x;
+                    if (p.cp2y !== undefined) point.cp2y = p.cp2y;
+                    return point;
+                }
+                return { x: 0, y: 0, type: 'corner' };
+            });
+        }
+
+        function cloneContourWithOffset(contour, dx, dy) {
+            return contour.map(p => {
+                if (Array.isArray(p)) {
+                    return [p[0] + dx, p[1] + dy];
+                }
+                const point = {
+                    x: (p.x !== undefined ? p.x : p[0]) + dx,
+                    y: (p.y !== undefined ? p.y : p[1]) + dy,
+                    type: p.type || 'corner'
+                };
+                if (p.cp1x !== undefined) point.cp1x = p.cp1x + dx;
+                if (p.cp1y !== undefined) point.cp1y = p.cp1y + dy;
+                if (p.cp2x !== undefined) point.cp2x = p.cp2x + dx;
+                if (p.cp2y !== undefined) point.cp2y = p.cp2y + dy;
+                return point;
+            });
+        }
+
+        function mirrorContourHorizontally(contour, imgWidth) {
+            return contour.map(p => {
+                if (Array.isArray(p)) {
+                    return [imgWidth - p[0], p[1]];
+                }
+                const point = {
+                    x: imgWidth - (p.x !== undefined ? p.x : p[0]),
+                    y: p.y !== undefined ? p.y : p[1],
+                    type: p.type || 'corner'
+                };
+                if (p.cp1x !== undefined) point.cp1x = imgWidth - p.cp1x;
+                if (p.cp1y !== undefined) point.cp1y = p.cp1y;
+                if (p.cp2x !== undefined) point.cp2x = imgWidth - p.cp2x;
+                if (p.cp2y !== undefined) point.cp2y = p.cp2y;
+                return point;
+            });
+        }
+
+        function getActiveImageEntry() {
+            if (!state.project || !state.project.activeImageId) return null;
+            return state.project.images.find(img => img.id === state.project.activeImageId) || null;
+        }
+
+        function syncActiveImageEntry() {
+            const entry = getActiveImageEntry();
+            if (!entry) return;
+            entry.regions = JSON.parse(JSON.stringify(state.regions));
+            entry.zones = JSON.parse(JSON.stringify(state.zones));
+            entry.groups = JSON.parse(JSON.stringify(state.groups));
+            entry.detectParams = { ...state.detectParams };
+        }
+
+        function resetUndoHistory() {
+            undoStack.length = 0;
+            redoStack.length = 0;
+            updateUndoUI();
+        }
+
+        function loadImageFromLibrary(imageId, options = {}) {
+            const entry = state.project.images.find(img => img.id === imageId);
+            if (!entry) return;
+
+            if (!options.skipSync && state.image) {
+                syncActiveImageEntry();
+            }
+            state.project.activeImageId = imageId;
+
+            const img = new Image();
+            img.onload = () => {
+                state.image = img;
+                state.regions = entry.regions || [];
+                state.zones = entry.zones || {};
+                state.groups = entry.groups || {};
+                state.detectParams = entry.detectParams || { ...state.detectParams };
+                state.selectedRegionId = null;
+                state.selectedRegionIds = [];
+                state.selectedZoneId = null;
+
+                const scaleX = container.clientWidth / img.width;
+                const scaleY = container.clientHeight / img.height;
+                state.zoom = Math.min(scaleX, scaleY) * 0.9;
+                state.panX = (container.clientWidth - img.width * state.zoom) / 2;
+                state.panY = (container.clientHeight - img.height * state.zoom) / 2;
+
+                document.getElementById('empty-state').style.display = 'none';
+                document.getElementById('zoom-controls').style.display = 'flex';
+
+                applyDetectPresetToUI({ detectParams: state.detectParams });
+                resetUndoHistory();
+                updateUI();
+                redraw();
+
+                if (options.detect) {
+                    applyPreprocessorPresetIfAvailable();
+                    detectRegions();
+                }
+
+                if (!options.silent) {
+                    showToast(`Loaded ${entry.name}`, 'success');
+                }
+                renderImageLibraryList();
+            };
+            img.src = entry.dataUrl;
+        }
+
+        function openImageLibrary() {
+            renderImageLibraryList();
+            document.getElementById('image-library-modal').classList.add('active');
+        }
+
+        function closeImageLibrary() {
+            document.getElementById('image-library-modal').classList.remove('active');
+        }
+
+        function renderImageLibraryList() {
+            const list = document.getElementById('image-library-list');
+            if (!list) return;
+
+            list.innerHTML = state.project.images.map(img => {
+                const isActive = img.id === state.project.activeImageId;
+                const safeName = escapeHtml(img.name || 'Untitled');
+                return `
+                    <div class="image-library-item ${isActive ? 'active' : ''}">
+                        <div class="image-library-thumb" style="background-image: url('${img.dataUrl}')"></div>
+                        <input class="image-library-name" value="${safeName}"
+                               onblur="renameImageEntry('${img.id}', this.value)"
+                               onkeydown="if (event.key === 'Enter') this.blur()">
+                        <button class="btn btn-secondary btn-sm" onclick="loadImageFromLibrary('${img.id}')">Load</button>
+                        <button class="btn btn-secondary btn-sm" onclick="removeImageEntry('${img.id}')">Remove</button>
+                    </div>
+                `;
+            }).join('') || '<div style="padding: 0.75rem; color: var(--text-dim);">No images yet</div>';
+        }
+
+        function renameImageEntry(imageId, newName) {
+            const entry = state.project.images.find(img => img.id === imageId);
+            if (!entry) return;
+            const name = (newName || '').trim();
+            if (!name) return;
+            entry.name = name;
+            syncActiveImageEntry();
+            saveToLocalStorage();
+            renderImageLibraryList();
+        }
+
+        function removeImageEntry(imageId) {
+            const idx = state.project.images.findIndex(img => img.id === imageId);
+            if (idx === -1) return;
+            const entry = state.project.images[idx];
+            if (!confirm(`Remove "${entry.name}" from library?`)) return;
+
+            if (state.project.activeImageId === imageId) {
+                state.image = null;
+                state.regions = [];
+                state.zones = {};
+                state.groups = {};
+                state.selectedRegionId = null;
+                state.selectedRegionIds = [];
+                state.project.activeImageId = null;
+                state.selectedZoneId = null;
+                resetUndoHistory();
+                document.getElementById('empty-state').style.display = 'block';
+                document.getElementById('zoom-controls').style.display = 'none';
+            }
+
+            state.project.images.splice(idx, 1);
+            saveToLocalStorage();
+            renderImageLibraryList();
+            updateUI();
+        }
+
+        function clearImageLibrary() {
+            if (!confirm('Clear all images from the library?')) return;
+            state.project.images = [];
+            state.project.activeImageId = null;
+            state.image = null;
+            state.regions = [];
+            state.zones = {};
+            state.groups = {};
+            state.selectedRegionId = null;
+            state.selectedRegionIds = [];
+            state.selectedZoneId = null;
+            resetUndoHistory();
+            document.getElementById('empty-state').style.display = 'block';
+            document.getElementById('zoom-controls').style.display = 'none';
+            saveToLocalStorage();
+            renderImageLibraryList();
+            updateUI();
+        }
+
+        function applyFilters() {
+            updateRegionList();
+            redraw();
+        }
+
+        function changeSidebarView() {
+            updateRegionList();
+        }
+
+        // =============================================
+        // REGION OPERATIONS
+        // =============================================
+        function selectRegion(id, mode = 'single') {
+            if (!id) {
+                clearSelection();
+                return;
+            }
+
+            const current = getSelectedRegionIds();
+            let next = [];
+
+            if (mode === 'toggle') {
+                next = current.includes(id) ? current.filter(rid => rid !== id) : [...current, id];
+            } else if (mode === 'add') {
+                next = current.includes(id) ? current : [...current, id];
+            } else {
+                next = [id];
+            }
+
+            state.selectedRegionIds = next;
+            state.selectedRegionId = next.includes(id) ? id : (next[0] || null);
+            updateRegionList();
+            redraw();
+            updateSelectionUI();
+        }
+
+        function handleRegionListClick(event, id) {
+            if (!event) {
+                selectRegion(id);
+                return;
+            }
+
+            if (event.ctrlKey || event.metaKey) {
+                selectRegion(id, 'toggle');
+            } else if (event.shiftKey) {
+                selectRegion(id, 'add');
+            } else {
+                selectRegion(id, 'single');
+            }
+        }
+
+        function clearSelection() {
+            state.selectedRegionIds = [];
+            state.selectedRegionId = null;
+            updateRegionList();
+            redraw();
+            updateSelectionUI();
+        }
+
+        function assignSelectedToZone() {
+            const selected = getSelectedRegionIds();
+            if (selected.length === 0) {
+                showToast('Select regions first', 'error');
+                return;
+            }
+
+            const zoneNames = Object.values(state.zones).map(z => z.name);
+            if (zoneNames.length === 0) {
+                showToast('Create a zone first', 'error');
+                return;
+            }
+
+            const choice = prompt('Enter zone name:\n' + zoneNames.join(', '));
+            if (!choice) return;
+
+            const zoneId = Object.keys(state.zones).find(id => state.zones[id].name.toLowerCase() === choice.toLowerCase());
+            if (!zoneId) {
+                showToast('Zone not found', 'error');
+                return;
+            }
+
+            pushUndoState();
+            selected.forEach(id => {
+                const region = state.regions.find(r => r.id === id);
+                if (region) region.zone = zoneId;
+            });
+
+            updateUI();
+            redraw();
+            saveToLocalStorage();
+            showToast(`Assigned ${selected.length} region(s) to ${state.zones[zoneId].name}`, 'success');
+        }
+
+        function assignSelectedToGroup() {
+            const selected = getSelectedRegionIds();
+            if (selected.length === 0) {
+                showToast('Select regions first', 'error');
+                return;
+            }
+
+            const groupNames = Object.keys(state.groups);
+            const promptText = groupNames.length
+                ? 'Enter group name:\n' + groupNames.join(', ')
+                : 'Enter new group name:';
+            const choice = prompt(promptText);
+            if (!choice) return;
+
+            const groupName = choice.trim();
+            if (!groupName) return;
+
+            pushUndoState();
+            state.groups[groupName] = state.groups[groupName] || [];
+            selected.forEach(id => {
+                const region = state.regions.find(r => r.id === id);
+                if (region) region.group = groupName;
+            });
+
+            updateUI();
+            redraw();
+            saveToLocalStorage();
+            showToast(`Assigned ${selected.length} region(s) to group "${groupName}"`, 'success');
+        }
+
+        function approveRegion(id) {
+            const region = state.regions.find(r => r.id === id);
+            if (region) {
+                pushUndoState();
+                region.status = 'approved';
+                updateUI();
+                redraw();
+                showToast(`Approved: ${region.name || id}`, 'success');
+                saveToLocalStorage();
+            }
+        }
+
+        function rejectRegion(id) {
+            const region = state.regions.find(r => r.id === id);
+            if (region) {
+                pushUndoState();
+                region.status = 'rejected';
+                updateUI();
+                redraw();
+                showToast(`Rejected: ${region.name || id}`, 'error');
+                saveToLocalStorage();
+            }
+        }
+
+        function renameRegion() {
+            const region = state.regions.find(r => r.id === state.selectedRegionId);
+            if (!region) {
+                showToast('Select a region first', 'error');
+                return;
+            }
+
+            const newName = prompt('Enter new name:', region.name || region.id);
+            if (newName !== null) {
+                pushUndoState();
+                region.name = newName.trim() || null;
+                updateUI();
+                redraw();
+                saveToLocalStorage();
+            }
+        }
+
+        function duplicateRegion() {
+            const region = state.regions.find(r => r.id === state.selectedRegionId);
+            if (!region) {
+                showToast('Select a region first', 'error');
+                return;
+            }
+
+            pushUndoState();
+            const newId = `region_${String(state.regions.length + 1).padStart(3, '0')}`;
+            const newRegion = {
+                ...JSON.parse(JSON.stringify(region)),
+                id: newId,
+                name: (region.name || region.id) + ' (copy)',
+                status: 'pending'
+            };
+
+            // Offset slightly
+            newRegion.contour = cloneContourWithOffset(region.contour, 20, 20);
+            newRegion.center = calculateCentroid(newRegion.contour);
+            newRegion.bbox = calculateBBox(newRegion.contour);
+
+            state.regions.push(newRegion);
+            state.selectedRegionId = newId;
+            state.selectedRegionIds = [newId];
+            updateUI();
+            redraw();
+            showToast('Region duplicated', 'success');
+            saveToLocalStorage();
+        }
+
+        function duplicateOpposite() {
+            const region = state.regions.find(r => r.id === state.selectedRegionId);
+            if (!region || !state.image) {
+                showToast('Select a region first', 'error');
+                return;
+            }
+
+            pushUndoState();
+            const imgWidth = state.image.width;
+            const newId = `region_${String(state.regions.length + 1).padStart(3, '0')}`;
+
+            // Mirror contour horizontally
+            const newContour = mirrorContourHorizontally(region.contour, imgWidth);
+            const newCenter = calculateCentroid(newContour);
+
+            // Swap hand terms in name
+            let newName = region.name || region.id;
+            newName = newName.replace(/Right/gi, '__RIGHT__').replace(/Left/gi, '__LEFT__')
+                .replace(/R\/H/gi, '__RH__').replace(/L\/H/gi, '__LH__')
+                .replace(/__RIGHT__/g, 'Left').replace(/__LEFT__/g, 'Right')
+                .replace(/__RH__/g, 'L/H').replace(/__LH__/g, 'R/H');
+
+            if (newName === (region.name || region.id)) {
+                newName += ' (opposite)';
+            }
+
+            const newRegion = {
+                ...JSON.parse(JSON.stringify(region)),
+                id: newId,
+                name: newName,
+                contour: newContour,
+                center: newCenter,
+                status: 'pending'
+            };
+            newRegion.bbox = calculateBBox(newContour);
+
+            state.regions.push(newRegion);
+            state.selectedRegionId = newId;
+            state.selectedRegionIds = [newId];
+            updateUI();
+            redraw();
+            showToast('Opposite region created', 'success');
+            saveToLocalStorage();
+        }
+
+        function deleteRegion() {
+            if (!state.selectedRegionId) {
+                showToast('Select a region first', 'error');
+                return;
+            }
+
+            if (confirm('Delete this region?')) {
+                pushUndoState();
+                state.regions = state.regions.filter(r => r.id !== state.selectedRegionId);
+                state.selectedRegionId = null;
+                state.selectedRegionIds = [];
+                updateUI();
+                redraw();
+                showToast('Region deleted', 'success');
+                saveToLocalStorage();
+            }
+        }
+
+        // =============================================
+        // EDIT MODES
+        // =============================================
+        function startEditMode() {
+            const region = state.regions.find(r => r.id === state.selectedRegionId);
+            if (!region) {
+                showToast('Select a region first', 'error');
+                return;
+            }
+
+            state.editMode = 'edit';
+            state.editingRegionId = region.id;
+            state.editPoints = toEditablePoints(region.contour);
+            state.selectedPointIndex = -1;
+
+            setModeIndicator('EDIT MODE: Click to move | Shift+Click to add | Ctrl+Click to delete | C to toggle curve | Enter to finish | Esc to cancel');
+            redraw();
+        }
+
+        function startDrawMode() {
+            if (!state.image) {
+                showToast('Load an image first', 'error');
+                return;
+            }
+
+            state.editMode = 'draw';
+            state.editPoints = [];
+            state.selectedPointIndex = -1;
+
+            setModeIndicator('DRAW MODE: Click to add points | C to toggle last point curve | Enter to finish | Esc to cancel');
+            redraw();
+        }
+
+        function finishEditMode() {
+            if (!state.editMode) return;
+
+            if (state.editPoints.length < 3) {
+                showToast('Need at least 3 points', 'error');
+                return;
+            }
+
+            pushUndoState();
+            if (state.editMode === 'edit') {
+                const region = state.regions.find(r => r.id === state.editingRegionId);
+                if (region) {
+                    region.contour = state.editPoints;
+                    region.center = calculateCentroid(state.editPoints);
+                    region.bbox = calculateBBox(state.editPoints);
+                }
+            } else if (state.editMode === 'draw') {
+                const newId = `region_${String(state.regions.length + 1).padStart(3, '0')}`;
+                const name = prompt('Enter region name (or leave blank):', '');
+
+                state.regions.push({
+                    id: newId,
+                    name: name || null,
+                    contour: state.editPoints,
+                    center: calculateCentroid(state.editPoints),
+                    bbox: calculateBBox(state.editPoints),
+                    area: state.editPoints.length * 10,
+                    status: 'pending',
+                    zone: null,
+                    group: null
+                });
+                state.selectedRegionId = newId;
+                state.selectedRegionIds = [newId];
+            } else if (state.editMode === 'zone-draw' || state.editMode === 'zone-edit') {
+                if (state.editingZoneId && state.zones[state.editingZoneId]) {
+                    state.zones[state.editingZoneId].contour = state.editPoints;
+                }
+            }
+
+            cancelEditMode();
+            updateUI();
+            saveToLocalStorage();
+            showToast('Changes saved', 'success');
+        }
+
+        function cancelEditMode() {
+            state.editMode = null;
+            state.editPoints = [];
+            state.editingRegionId = null;
+            state.editingZoneId = null;
+            state.selectedPointIndex = -1;
+            state.draggingHandle = null;
+            setModeIndicator(null);
+            redraw();
+        }
+
+        function setModeIndicator(text) {
+            const el = document.getElementById('mode-indicator');
+            if (text) {
+                el.textContent = text;
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
+        }
+
+        // =============================================
+        // ZONE MANAGEMENT
+        // =============================================
+        let selectedZoneColor = '#ff3366';
+
+        function createZone() {
+            document.getElementById('zone-name-input').value = '';
+
+            // Populate color picker
+            const colorPicker = document.getElementById('zone-color-picker');
+            colorPicker.innerHTML = state.zoneColors.map(color => `
+                <div style="width: 32px; height: 32px; background: ${color}; border-radius: 4px; cursor: pointer; border: 2px solid ${color === selectedZoneColor ? '#fff' : 'transparent'}; box-shadow: 0 0 10px ${color};"
+                     onclick="selectZoneColor('${color}', this)"></div>
+            `).join('');
+
+            document.getElementById('zone-modal').classList.add('active');
+        }
+
+        function selectZoneColor(color, el) {
+            selectedZoneColor = color;
+            document.querySelectorAll('#zone-color-picker > div').forEach(d => {
+                d.style.borderColor = 'transparent';
+            });
+            el.style.borderColor = '#fff';
+        }
+
+        function confirmCreateZone() {
+            const name = document.getElementById('zone-name-input').value.trim();
+            if (!name) {
+                showToast('Enter a zone name', 'error');
+                return;
+            }
+
+            const zoneId = name.toLowerCase().replace(/\s+/g, '_');
+            if (state.zones[zoneId]) {
+                showToast('Zone already exists', 'error');
+                return;
+            }
+
+            pushUndoState();
+            state.zones[zoneId] = {
+                name: name,
+                color: selectedZoneColor,
+                contour: null,
+                visible: true
+            };
+
+            closeZoneModal();
+            updateUI();
+            saveToLocalStorage();
+            showToast(`Zone "${name}" created`, 'success');
+        }
+
+        function closeZoneModal() {
+            document.getElementById('zone-modal').classList.remove('active');
+        }
+
+        function assignZone() {
+            const region = state.regions.find(r => r.id === state.selectedRegionId);
+            if (!region) {
+                showToast('Select a region first', 'error');
+                return;
+            }
+
+            const zoneNames = Object.values(state.zones).map(z => z.name);
+            if (zoneNames.length === 0) {
+                showToast('Create a zone first', 'error');
+                return;
+            }
+
+            const choice = prompt('Enter zone name:\n' + zoneNames.join(', '));
+            if (choice) {
+                const zoneId = Object.keys(state.zones).find(id => state.zones[id].name.toLowerCase() === choice.toLowerCase());
+                if (zoneId) {
+                    pushUndoState();
+                    region.zone = zoneId;
+                    updateUI();
+                    redraw();
+                    saveToLocalStorage();
+                    showToast(`Assigned to ${state.zones[zoneId].name}`, 'success');
+                } else {
+                    showToast('Zone not found', 'error');
+                }
+            }
+        }
+
+        function filterByZone(zoneId) {
+            document.getElementById('zone-filter').value = zoneId;
+            applyFilters();
+        }
+
+        function editZoneBoundary() {
+            const zoneNames = Object.values(state.zones).map(z => z.name);
+            if (zoneNames.length === 0) {
+                showToast('Create a zone first', 'error');
+                return;
+            }
+
+            const choice = prompt('Enter zone name to edit:\n' + zoneNames.join(', '));
+            if (choice) {
+                const zoneId = Object.keys(state.zones).find(id => state.zones[id].name.toLowerCase() === choice.toLowerCase());
+                if (zoneId) {
+                    editZoneBoundaryById(zoneId);
+                }
+            }
+        }
+
+        function openZoneEditPrompt() {
+            const zoneNames = Object.values(state.zones).map(z => z.name);
+            if (zoneNames.length === 0) {
+                showToast('Create a zone first', 'error');
+                return;
+            }
+
+            const choice = prompt('Enter zone name:\n' + zoneNames.join(', '));
+            if (choice) {
+                const zoneId = Object.keys(state.zones).find(id => state.zones[id].name.toLowerCase() === choice.toLowerCase());
+                if (zoneId) {
+                    openZoneEditModal(zoneId);
+                } else {
+                    showToast('Zone not found', 'error');
+                }
+            }
+        }
+
+        function editZoneBoundaryById(zoneId) {
+            const zone = state.zones[zoneId];
+            if (!zone) return;
+
+            state.editingZoneId = zoneId;
+            state.selectedPointIndex = -1;
+
+            if (zone.contour && zone.contour.length >= 3) {
+                state.editMode = 'zone-edit';
+                state.editPoints = toEditablePoints(zone.contour);
+            } else {
+                state.editMode = 'zone-draw';
+                state.editPoints = zone.contour && zone.contour.length > 0 ? toEditablePoints(zone.contour) : [];
+            }
+
+            setModeIndicator(`ZONE ${zone.name.toUpperCase()}: Click to add/move | C to toggle curve | Enter to finish | Esc to cancel`);
+            redraw();
+        }
+
+        function openZoneEditModal(zoneId) {
+            const zone = state.zones[zoneId];
+            if (!zone) return;
+
+            state.selectedZoneId = zoneId;
+            document.getElementById('zone-edit-title').textContent = zone.name.toUpperCase();
+            document.getElementById('zone-edit-name').value = zone.name;
+
+            const boundaryToggle = document.getElementById('show-boundaries');
+            if (boundaryToggle && !boundaryToggle.checked) {
+                boundaryToggle.checked = true;
+            }
+
+            updateZoneEditModalInfo(zoneId);
+            renderUidPicker(zoneId);
+            document.getElementById('zone-edit-modal').classList.add('active');
+            redraw();
+        }
+
+        function updateZoneEditModalInfo(zoneId) {
+            const zone = state.zones[zoneId];
+            if (!zone) return;
+
+            const swatch = document.getElementById('zone-edit-color-swatch');
+            const label = document.getElementById('zone-edit-color-label');
+            swatch.style.background = zone.color;
+            swatch.style.boxShadow = `0 0 10px ${zone.color}`;
+            label.textContent = zone.color;
+
+            const boundaryInfo = document.getElementById('zone-edit-boundary-info');
+            const pointCount = zone.contour ? zone.contour.length : 0;
+            if (pointCount === 1) {
+                boundaryInfo.textContent = '1 point (start)';
+            } else if (pointCount >= 3) {
+                boundaryInfo.textContent = `${pointCount} points`;
+            } else {
+                boundaryInfo.textContent = 'No boundary';
+            }
+
+            const list = document.getElementById('zone-edit-region-list');
+            const regions = state.regions.filter(r => r.zone === zoneId);
+            list.innerHTML = regions.length
+                ? regions.map(r => `<div class="zone-region-item">${escapeHtml(r.name || r.id)}</div>`).join('')
+                : '<div class="zone-region-item" style="color: var(--text-dim);">No regions assigned</div>';
+        }
+
+        function closeZoneEditModal() {
+            document.getElementById('zone-edit-modal').classList.remove('active');
+        }
+
+        function startZoneEditBoundaryFromModal() {
+            if (!state.selectedZoneId) return;
+            closeZoneEditModal();
+            editZoneBoundaryById(state.selectedZoneId);
+        }
+
+        function autoDrawZoneBoundaryFromModal() {
+            if (!state.selectedZoneId) return;
+            const zoneId = state.selectedZoneId;
+            const regions = state.regions.filter(r => r.zone === zoneId);
+            const points = [];
+            const margin = 6;
+            const imgW = state.image ? state.image.width : null;
+            const imgH = state.image ? state.image.height : null;
+            const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+            regions.forEach(region => {
+                const bbox = region.bbox || (region.contour ? calculateBBox(region.contour) : null);
+                if (!bbox) return;
+                let x1 = bbox.x - margin;
+                let y1 = bbox.y - margin;
+                let x2 = bbox.x + bbox.width + margin;
+                let y2 = bbox.y + bbox.height + margin;
+
+                if (imgW !== null && imgH !== null) {
+                    x1 = clamp(x1, 0, imgW);
+                    x2 = clamp(x2, 0, imgW);
+                    y1 = clamp(y1, 0, imgH);
+                    y2 = clamp(y2, 0, imgH);
+                }
+
+                points.push([x1, y1], [x2, y1], [x2, y2], [x1, y2]);
+            });
+
+            if (points.length < 3) {
+                showToast('Need at least one region with points', 'error');
+                return;
+            }
+
+            const hull = computeConvexHull(points);
+            if (hull.length < 3) {
+                showToast('Auto boundary failed to build a valid outline', 'error');
+                return;
+            }
+            pushUndoState();
+            state.zones[zoneId].contour = toEditablePoints(hull);
+            updateUI();
+            redraw();
+            updateZoneEditModalInfo(zoneId);
+            saveToLocalStorage();
+            showToast('Zone boundary auto-drawn', 'success');
+        }
+
+        function resetZoneBoundaryFromModal() {
+            if (!state.selectedZoneId) return;
+            const zoneId = state.selectedZoneId;
+            const regions = state.regions.filter(r => r.zone === zoneId);
+            let cx = 0;
+            let cy = 0;
+
+            if (regions.length > 0) {
+                regions.forEach(r => {
+                    cx += r.center[0];
+                    cy += r.center[1];
+                });
+                cx /= regions.length;
+                cy /= regions.length;
+            } else if (state.image) {
+                cx = state.image.width / 2;
+                cy = state.image.height / 2;
+            }
+
+            pushUndoState();
+            state.zones[zoneId].contour = [{
+                x: Math.round(cx),
+                y: Math.round(cy),
+                type: 'corner'
+            }];
+
+            updateUI();
+            redraw();
+            updateZoneEditModalInfo(zoneId);
+            saveToLocalStorage();
+            showToast('Zone boundary reset', 'success');
+        }
+
+        function clearZoneRegionsFromModal() {
+            if (!state.selectedZoneId) return;
+            const zoneId = state.selectedZoneId;
+            pushUndoState();
+            state.regions.forEach(r => {
+                if (r.zone === zoneId) r.zone = null;
+            });
+            updateUI();
+            redraw();
+            updateZoneEditModalInfo(zoneId);
+            saveToLocalStorage();
+            showToast('Zone regions cleared', 'success');
+        }
+
+        function applyZoneEditsFromModal() {
+            if (!state.selectedZoneId) return;
+            const zoneId = state.selectedZoneId;
+            const zone = state.zones[zoneId];
+            if (!zone) return;
+
+            pushUndoState();
+            const newName = document.getElementById('zone-edit-name').value.trim();
+            if (newName) {
+                zone.name = newName;
+            }
+
+            updateUI();
+            redraw();
+            updateZoneEditModalInfo(zoneId);
+            saveToLocalStorage();
+            showToast('Zone updated', 'success');
+        }
+
+        function deleteZoneFromModal() {
+            if (!state.selectedZoneId) return;
+            const zoneId = state.selectedZoneId;
+            const zone = state.zones[zoneId];
+            if (!zone) return;
+
+            if (!confirm(`Delete zone "${zone.name}"?`)) return;
+
+            pushUndoState();
+            state.regions.forEach(r => {
+                if (r.zone === zoneId) r.zone = null;
+            });
+            delete state.zones[zoneId];
+            closeZoneEditModal();
+            updateUI();
+            redraw();
+            saveToLocalStorage();
+            showToast('Zone deleted', 'success');
+        }
+
+        // =============================================
+        // REGION MODAL
+        // =============================================
+        function openRegionModal(id) {
+            const region = state.regions.find(r => r.id === id);
+            if (!region) return;
+
+            selectRegion(id, 'single');
+
+            document.getElementById('modal-title').textContent = region.name || region.id;
+            document.getElementById('modal-region-id').value = region.id;
+            document.getElementById('modal-region-name').value = region.name || '';
+            document.getElementById('modal-region-zone').value = region.zone || '';
+
+            // Update group dropdown
+            const groupSelect = document.getElementById('modal-region-group');
+            groupSelect.innerHTML = '<option value="">(None)</option><option value="__new__">+ New Group...</option>';
+            Object.keys(state.groups).forEach(g => {
+                groupSelect.innerHTML += `<option value="${g}">${g}</option>`;
+            });
+            groupSelect.value = region.group || '';
+
+            // Status badge
+            const badge = document.getElementById('modal-status-badge');
+            badge.textContent = region.status;
+            badge.style.background = region.status === 'approved' ? 'var(--approved-color)' :
+                region.status === 'rejected' ? 'var(--rejected-color)' : 'var(--pending-color)';
+            badge.style.color = region.status === 'pending' ? '#000' : '#fff';
+
+            document.getElementById('region-modal').classList.add('active');
+        }
+
+        function closeRegionModal() {
+            document.getElementById('region-modal').classList.remove('active');
+        }
+
+        function applyModalChanges() {
+            const region = state.regions.find(r => r.id === state.selectedRegionId);
+            if (!region) return;
+
+            pushUndoState();
+            region.name = document.getElementById('modal-region-name').value.trim() || null;
+            region.zone = document.getElementById('modal-region-zone').value || null;
+
+            let group = document.getElementById('modal-region-group').value;
+            if (group === '__new__') {
+                group = prompt('Enter new group name:');
+                if (group) {
+                    state.groups[group] = state.groups[group] || [];
+                }
+            }
+            region.group = group || null;
+
+            closeRegionModal();
+            updateUI();
+            redraw();
+            saveToLocalStorage();
+            showToast('Changes applied', 'success');
+        }
+
+        function approveFromModal() {
+            approveRegion(state.selectedRegionId);
+            closeRegionModal();
+        }
+
+        function rejectFromModal() {
+            rejectRegion(state.selectedRegionId);
+            closeRegionModal();
+        }
+
+        function editBoundaryFromModal() {
+            closeRegionModal();
+            startEditMode();
+        }
+
+        // =============================================
+        // CONTEXT MENU
+        // =============================================
+        function showContextMenu(event, id) {
+            event.preventDefault();
+            selectRegion(id, 'single');
+
+            const menu = document.getElementById('context-menu');
+            menu.style.left = event.pageX + 'px';
+            menu.style.top = event.pageY + 'px';
+            menu.classList.add('active');
+        }
+
+        document.addEventListener('click', () => {
+            document.getElementById('context-menu').classList.remove('active');
+        });
+
+        // =============================================
+        // CANVAS INTERACTION
+        // =============================================
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+
+            // Zoom toward mouse position
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            const newZoom = Math.max(0.1, Math.min(10, state.zoom * delta));
+            const zoomDelta = newZoom / state.zoom;
+
+            state.panX = mouseX - (mouseX - state.panX) * zoomDelta;
+            state.panY = mouseY - (mouseY - state.panY) * zoomDelta;
+            state.zoom = newZoom;
+
+            redraw();
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            if (e.button === 2 || e.button === 1) {
+                // Right or middle click - start panning
+                state.isPanning = true;
+                state.panStartX = e.clientX - state.panX;
+                state.panStartY = e.clientY - state.panY;
+                canvas.style.cursor = 'grabbing';
+            } else if (e.button === 0) {
+                // Left click
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX - rect.left - state.panX) / state.zoom;
+                const y = (e.clientY - rect.top - state.panY) / state.zoom;
+
+                if (state.editMode && state.selectedPointIndex >= 0) {
+                    const p = state.editPoints[state.selectedPointIndex];
+                    if (p && p.type === 'curve') {
+                        if (p.cp1x !== undefined) {
+                            const dist1 = Math.sqrt(Math.pow(p.cp1x - x, 2) + Math.pow(p.cp1y - y, 2));
+                            if (dist1 < 15) {
+                                state.draggingHandle = 'cp1';
+                                return;
+                            }
+                        }
+                        if (p.cp2x !== undefined) {
+                            const dist2 = Math.sqrt(Math.pow(p.cp2x - x, 2) + Math.pow(p.cp2y - y, 2));
+                            if (dist2 < 15) {
+                                state.draggingHandle = 'cp2';
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                handleCanvasClick(x, y, e);
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (state.isPanning) {
+                state.panX = e.clientX - state.panStartX;
+                state.panY = e.clientY - state.panStartY;
+                redraw();
+            } else if (state.draggingHandle && state.selectedPointIndex >= 0) {
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.clientX - rect.left - state.panX) / state.zoom;
+                const y = (e.clientY - rect.top - state.panY) / state.zoom;
+
+                const p = state.editPoints[state.selectedPointIndex];
+                if (state.draggingHandle === 'cp1') {
+                    p.cp1x = Math.round(x);
+                    p.cp1y = Math.round(y);
+                } else if (state.draggingHandle === 'cp2') {
+                    p.cp2x = Math.round(x);
+                    p.cp2y = Math.round(y);
+                }
+                redraw();
+            }
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            if (e.button === 2 || e.button === 1) {
+                state.isPanning = false;
+                canvas.style.cursor = 'crosshair';
+            }
+            state.draggingHandle = null;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            state.isPanning = false;
+            canvas.style.cursor = 'crosshair';
+        });
+
+        canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        function handleCanvasClick(x, y, event) {
+            if (state.editMode === 'draw' || state.editMode === 'zone-draw') {
+                state.editPoints.push({
+                    x: Math.round(x),
+                    y: Math.round(y),
+                    type: 'corner'
+                });
+                state.selectedPointIndex = state.editPoints.length - 1;
+                redraw();
+                return;
+            }
+
+            if (state.editMode === 'edit' || state.editMode === 'zone-edit') {
+                for (let i = 0; i < state.editPoints.length; i++) {
+                    const p = state.editPoints[i];
+                    if (p.type === 'curve') {
+                        if (p.cp1x !== undefined) {
+                            const dist = Math.sqrt(Math.pow(p.cp1x - x, 2) + Math.pow(p.cp1y - y, 2));
+                            if (dist < 15) {
+                                state.selectedPointIndex = i;
+                                state.draggingHandle = 'cp1';
+                                redraw();
+                                return;
+                            }
+                        }
+                        if (p.cp2x !== undefined) {
+                            const dist = Math.sqrt(Math.pow(p.cp2x - x, 2) + Math.pow(p.cp2y - y, 2));
+                            if (dist < 15) {
+                                state.selectedPointIndex = i;
+                                state.draggingHandle = 'cp2';
+                                redraw();
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                // Find nearest point
+                let nearestIdx = -1;
+                let nearestDist = Infinity;
+
+                state.editPoints.forEach((p, i) => {
+                    const dist = Math.sqrt(Math.pow(p.x - x, 2) + Math.pow(p.y - y, 2));
+                    if (dist < nearestDist) {
+                        nearestDist = dist;
+                        nearestIdx = i;
+                    }
+                });
+
+                if (event.ctrlKey && nearestIdx >= 0 && nearestDist < 20 && state.editPoints.length > 3) {
+                    // Delete point
+                    state.editPoints.splice(nearestIdx, 1);
+                    state.selectedPointIndex = -1;
+                } else if (event.shiftKey && nearestIdx >= 0) {
+                    // Add point after nearest
+                    const nextIdx = (nearestIdx + 1) % state.editPoints.length;
+                    state.editPoints.splice(nextIdx, 0, {
+                        x: Math.round(x),
+                        y: Math.round(y),
+                        type: 'corner'
+                    });
+                    state.selectedPointIndex = nextIdx;
+                } else if (nearestDist < 30) {
+                    if (state.selectedPointIndex === nearestIdx && nearestDist < 15) {
+                        const oldX = state.editPoints[nearestIdx].x;
+                        const oldY = state.editPoints[nearestIdx].y;
+                        const newX = Math.round(x);
+                        const newY = Math.round(y);
+                        state.editPoints[nearestIdx].x = newX;
+                        state.editPoints[nearestIdx].y = newY;
+                        updateControlHandlesOnMove(nearestIdx, oldX, oldY, newX, newY);
+                    } else {
+                        state.selectedPointIndex = nearestIdx;
+                    }
+                    state.draggingHandle = null;
+                }
+
+                redraw();
+                return;
+            }
+
+            // Normal click - select region
+            const clickedRegion = getRegionAtPoint(x, y);
+
+            if (clickedRegion) {
+                if (event.ctrlKey || event.metaKey) {
+                    selectRegion(clickedRegion.id, 'toggle');
+                } else if (event.shiftKey) {
+                    selectRegion(clickedRegion.id, 'add');
+                } else {
+                    selectRegion(clickedRegion.id, 'single');
+                }
+            } else if (!event.ctrlKey && !event.metaKey && !event.shiftKey) {
+                clearSelection();
+            }
+        }
+
+        function updateControlHandlesOnMove(idx, oldX, oldY, newX, newY) {
+            const p = state.editPoints[idx];
+            if (p.type !== 'curve') return;
+
+            const dx = newX - oldX;
+            const dy = newY - oldY;
+
+            if (p.cp1x !== undefined) {
+                p.cp1x += dx;
+                p.cp1y += dy;
+            }
+            if (p.cp2x !== undefined) {
+                p.cp2x += dx;
+                p.cp2y += dy;
+            }
+        }
+
+        function togglePointCurve() {
+            if (!state.editMode) {
+                showToast('Select a point first', 'info');
+                return;
+            }
+
+            let idx = state.selectedPointIndex;
+            if (idx < 0 && (state.editMode === 'draw' || state.editMode === 'zone-draw')) {
+                idx = state.editPoints.length - 1;
+            }
+            if (idx < 0) {
+                showToast('Select a point first', 'info');
+                return;
+            }
+
+            const p = state.editPoints[idx];
+            const prevIdx = (idx - 1 + state.editPoints.length) % state.editPoints.length;
+            const nextIdx = (idx + 1) % state.editPoints.length;
+            const prev = state.editPoints[prevIdx];
+            const next = state.editPoints[nextIdx];
+
+            if (p.type === 'curve') {
+                p.type = 'corner';
+                delete p.cp1x;
+                delete p.cp1y;
+                delete p.cp2x;
+                delete p.cp2y;
+            } else {
+                p.type = 'curve';
+                const dx1 = (prev.x - p.x) / 3;
+                const dy1 = (prev.y - p.y) / 3;
+                const dx2 = (next.x - p.x) / 3;
+                const dy2 = (next.y - p.y) / 3;
+                p.cp1x = p.x + dx1;
+                p.cp1y = p.y + dy1;
+                p.cp2x = p.x + dx2;
+                p.cp2y = p.y + dy2;
+            }
+
+            redraw();
+        }
+
+        canvas.addEventListener('dblclick', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left - state.panX) / state.zoom;
+            const y = (e.clientY - rect.top - state.panY) / state.zoom;
+
+            const clickedRegion = getRegionAtPoint(x, y);
+            if (clickedRegion) {
+                openRegionModal(clickedRegion.id);
+            }
+        });
+
+        // =============================================
+        // ZOOM CONTROLS
+        // =============================================
+        function zoomIn() {
+            state.zoom = Math.min(10, state.zoom * 1.2);
+            redraw();
+        }
+
+        function zoomOut() {
+            state.zoom = Math.max(0.1, state.zoom / 1.2);
+            redraw();
+        }
+
+        function resetView() {
+            if (!state.image) return;
+
+            const scaleX = container.clientWidth / state.image.width;
+            const scaleY = container.clientHeight / state.image.height;
+            state.zoom = Math.min(scaleX, scaleY) * 0.9;
+            state.panX = (container.clientWidth - state.image.width * state.zoom) / 2;
+            state.panY = (container.clientHeight - state.image.height * state.zoom) / 2;
+
+            redraw();
+        }
+
+        // =============================================
+        // SIDEBAR TOGGLE
+        // =============================================
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('sidebar-toggle');
+
+            sidebar.classList.toggle('hidden');
+            toggle.classList.toggle('open');
+        }
+
+        // =============================================
+        // DETECTION PANEL
+        // =============================================
+        function toggleDetectionPanel() {
+            const panel = document.getElementById('detection-panel');
+            panel.classList.toggle('active');
+        }
+
+        function updateSlider(id) {
+            const value = document.getElementById(id).value;
+            document.getElementById(id + '-value').textContent = value;
+
+            if (id === 'canny-low') state.detectParams.cannyLow = parseInt(value);
+            if (id === 'canny-high') state.detectParams.cannyHigh = parseInt(value);
+            if (id === 'min-area') state.detectParams.minArea = parseInt(value);
+            if (id === 'close-size') state.detectParams.closeSize = parseInt(value);
+            scheduleAutoSave();
+        }
+
+        // =============================================
+        // SAVE / LOAD / EXPORT
+        // =============================================
+        function saveToLocalStorage() {
+            syncActiveImageEntry();
+            const data = {
+                project: state.project,
+                regions: state.regions,
+                zones: state.zones,
+                groups: state.groups,
+                detectParams: state.detectParams,
+                masterParts: state.masterParts,
+                zoneUids: state.zoneUids
+            };
+            localStorage.setItem('blueprintMapper', JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const data = JSON.parse(localStorage.getItem('blueprintMapper'));
+                if (data) {
+                    // Load master parts and zone UIDs
+                    state.masterParts = data.masterParts || [];
+                    state.zoneUids = data.zoneUids || {};
+
+                    if (data.project && Array.isArray(data.project.images)) {
+                        state.project = data.project;
+                        if (!state.project.images) {
+                            state.project.images = [];
+                        }
+                        const activeId = state.project.activeImageId || (state.project.images[0] && state.project.images[0].id);
+                        state.project.activeImageId = activeId || null;
+                        if (activeId) {
+                            loadImageFromLibrary(activeId, { silent: true, skipSync: true });
+                            return;
+                        }
+                        state.image = null;
+                        document.getElementById('empty-state').style.display = 'block';
+                        document.getElementById('zoom-controls').style.display = 'none';
+                        updateUI();
+                        renderImageLibraryList();
+                        return;
+                    }
+
+                    state.regions = data.regions || [];
+                    state.zones = data.zones || {};
+                    state.groups = data.groups || {};
+                    state.detectParams = data.detectParams || state.detectParams;
+                    applyDetectPresetToUI({ detectParams: state.detectParams });
+                    updateUI();
+                }
+            } catch (e) {
+                console.error('Failed to load from localStorage:', e);
+            }
+        }
+
+        function saveProject() {
+            saveToLocalStorage();
+            showToast('Project saved', 'success');
+        }
+
+        function scheduleAutoSave() {
+            if (autoSaveTimer) {
+                clearTimeout(autoSaveTimer);
+            }
+            autoSaveTimer = setTimeout(() => {
+                saveToLocalStorage();
+                autoSaveTimer = null;
+            }, AUTO_SAVE_DELAY);
+        }
+
+        function exportJSON() {
+            const data = {
+                project: state.project,
+                regions: state.regions,
+                zones: state.zones,
+                groups: state.groups,
+                zoneUids: state.zoneUids,
+                detectParams: state.detectParams,
+                exportedAt: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'blueprint_regions.json';
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showToast('Exported to JSON', 'success');
+        }
+
+        function importJSON() {
+            document.getElementById('json-import-input').click();
+        }
+
+        function handleJSONImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.project && Array.isArray(data.project.images)) {
+                        state.project = data.project;
+                        const activeId = state.project.activeImageId || (state.project.images[0] && state.project.images[0].id);
+                        state.project.activeImageId = activeId || null;
+                        if (activeId) {
+                            loadImageFromLibrary(activeId, { silent: true, skipSync: true });
+                        } else {
+                            updateUI();
+                        }
+                        saveToLocalStorage();
+                        showToast('Imported project', 'success');
+                    } else {
+                        state.regions = data.regions || [];
+                        state.zones = data.zones || {};
+                        state.groups = data.groups || {};
+                        state.zoneUids = data.zoneUids || {};
+                        state.detectParams = data.detectParams || state.detectParams;
+                        applyDetectPresetToUI({ detectParams: state.detectParams });
+                        updateUI();
+                        redraw();
+                        saveToLocalStorage();
+                        showToast('Imported successfully', 'success');
+                    }
+                } catch (err) {
+                    showToast('Invalid JSON file', 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // =============================================
+        // MASTER PARTS V2 & UID LINKING
+        // =============================================
+        function loadMasterPartsV2() {
+            document.getElementById('master-parts-input').click();
+        }
+
+        function handleMasterPartsLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    // Support both { parts: [...] } and direct array
+                    const parts = data.parts || data;
+                    if (!Array.isArray(parts)) {
+                        showToast('Invalid master_parts_v2 format', 'error');
+                        return;
+                    }
+                    state.masterParts = parts;
+                    saveToLocalStorage();
+                    showToast(`Loaded ${parts.length} parts`, 'success');
+
+                    // Refresh UID picker if modal is open
+                    if (state.selectedZoneId) {
+                        renderUidPicker(state.selectedZoneId);
+                    }
+                } catch (err) {
+                    showToast('Invalid JSON file', 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function renderUidPicker(zoneId) {
+            const assignedContainer = document.getElementById('zone-assigned-uids');
+            const listContainer = document.getElementById('uid-picker-list');
+
+            if (!assignedContainer || !listContainer) return;
+
+            const assignedUids = state.zoneUids[zoneId] || [];
+
+            // Render assigned UIDs
+            if (assignedUids.length === 0) {
+                assignedContainer.innerHTML = '<span style="color: var(--text-dim); font-size: 0.8rem;">No UIDs linked</span>';
+            } else {
+                assignedContainer.innerHTML = assignedUids.map(uid => {
+                    const part = state.masterParts.find(p => p.uid === uid);
+                    const dash = part?.dash || uid.split('|')[0] || uid;
+                    return `<div class="assigned-uid-tag">
+                        <span>${escapeHtml(dash)}</span>
+                        <button class="remove-uid" onclick="removeUidFromZone('${zoneId}', '${escapeHtml(uid)}')">&times;</button>
+                    </div>`;
+                }).join('');
+            }
+
+            // Render available UIDs
+            if (state.masterParts.length === 0) {
+                listContainer.innerHTML = '<div style="color: var(--text-dim); font-size: 0.8rem; padding: 0.5rem;">Load master_parts_v2.json from File menu</div>';
+                return;
+            }
+
+            const searchInput = document.getElementById('uid-search-input');
+            const searchTerm = (searchInput?.value || '').toLowerCase();
+
+            const filteredParts = state.masterParts.filter(part => {
+                const dash = (part.dash || '').toLowerCase();
+                const material = (part.material || '').toLowerCase();
+                const desc = (part.description || '').toLowerCase();
+                return dash.includes(searchTerm) || material.includes(searchTerm) || desc.includes(searchTerm);
+            }).slice(0, 50); // Limit to 50 for performance
+
+            if (filteredParts.length === 0) {
+                listContainer.innerHTML = '<div style="color: var(--text-dim); font-size: 0.8rem; padding: 0.5rem;">No matching parts</div>';
+                return;
+            }
+
+            listContainer.innerHTML = filteredParts.map(part => {
+                const isAssigned = assignedUids.includes(part.uid);
+                const zoneMatch = part.zone && zoneId.toLowerCase().includes(part.zone.toString().toLowerCase());
+                return `<div class="uid-item ${isAssigned ? 'assigned' : ''}" onclick="toggleUidForZone('${zoneId}', '${escapeHtml(part.uid)}')">
+                    <span class="uid-text">
+                        <span class="uid-dash">${escapeHtml(part.dash || '')}</span>
+                        <span class="uid-material">${escapeHtml(part.material || '')}</span>
+                        ${zoneMatch ? '<span style="color: var(--neon-green); margin-left: 0.3rem;">●</span>' : ''}
+                    </span>
+                    <span class="uid-action ${isAssigned ? 'remove' : ''}">${isAssigned ? 'Remove' : 'Add'}</span>
+                </div>`;
+            }).join('');
+        }
+
+        function filterUidList() {
+            if (state.selectedZoneId) {
+                renderUidPicker(state.selectedZoneId);
+            }
+        }
+
+        function toggleUidForZone(zoneId, uid) {
+            if (!state.zoneUids[zoneId]) {
+                state.zoneUids[zoneId] = [];
+            }
+
+            const idx = state.zoneUids[zoneId].indexOf(uid);
+            if (idx >= 0) {
+                state.zoneUids[zoneId].splice(idx, 1);
+            } else {
+                state.zoneUids[zoneId].push(uid);
+            }
+
+            renderUidPicker(zoneId);
+            scheduleAutoSave();
+        }
+
+        function removeUidFromZone(zoneId, uid) {
+            if (!state.zoneUids[zoneId]) return;
+
+            const idx = state.zoneUids[zoneId].indexOf(uid);
+            if (idx >= 0) {
+                state.zoneUids[zoneId].splice(idx, 1);
+                renderUidPicker(zoneId);
+                scheduleAutoSave();
+            }
+        }
+
+        function autoLinkUidsToZone(zoneId) {
+            // Auto-link parts whose zone field matches this zone
+            const zone = state.zones[zoneId];
+            if (!zone) return;
+
+            const zoneName = zone.name.toLowerCase();
+            const zoneNum = zoneName.match(/\d+/)?.[0];
+
+            if (!state.zoneUids[zoneId]) {
+                state.zoneUids[zoneId] = [];
+            }
+
+            let addedCount = 0;
+            state.masterParts.forEach(part => {
+                if (!part.zone) return;
+                const partZone = part.zone.toString().toLowerCase();
+                const partZoneNum = partZone.match(/\d+/)?.[0];
+
+                // Match by zone number or name
+                const matches = (zoneNum && partZoneNum && zoneNum === partZoneNum) ||
+                    zoneName.includes(partZone) || partZone.includes(zoneName);
+
+                if (matches && !state.zoneUids[zoneId].includes(part.uid)) {
+                    state.zoneUids[zoneId].push(part.uid);
+                    addedCount++;
+                }
+            });
+
+            if (addedCount > 0) {
+                showToast(`Auto-linked ${addedCount} UIDs`, 'success');
+                renderUidPicker(zoneId);
+                scheduleAutoSave();
+            } else {
+                showToast('No matching parts found', 'info');
+            }
+        }
+
+        function exportBlueprintMapV2() {
+            // Build blueprint_map_v2.json
+            const zones = {};
+
+            Object.entries(state.zones).forEach(([zoneId, zone]) => {
+                const linkedUids = state.zoneUids[zoneId] || [];
+                const regionsInZone = state.regions.filter(r => r.zone === zoneId);
+
+                zones[zoneId] = {
+                    zone_id: zoneId,
+                    zone_name: zone.name,
+                    color: zone.color,
+                    contour: zone.contour || null,
+                    regions: regionsInZone.map(r => ({
+                        region_id: r.id,
+                        name: r.name || r.id,
+                        contour: r.contour,
+                        bbox: r.bbox,
+                        center: r.center
+                    })),
+                    linked_uids: linkedUids,
+                    slide_number: zone.slideNumber || null
+                };
+            });
+
+            const blueprintMap = {
+                version: '2.0',
+                exported_at: new Date().toISOString(),
+                project: {
+                    name: state.project.name || 'Blueprint Map',
+                    image_count: state.project.images?.length || 0
+                },
+                zones: zones,
+                uid_count: Object.values(state.zoneUids).flat().length,
+                region_count: state.regions.length
+            };
+
+            const blob = new Blob([JSON.stringify(blueprintMap, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'blueprint_map_v2.json';
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showToast('Exported blueprint_map_v2.json', 'success');
+        }
+
+        // =============================================
+        // TOAST NOTIFICATIONS
+        // =============================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const iconPaths = {
+                success: 'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z',
+                error: 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z',
+                info: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'
+            };
+
+            toast.innerHTML = `
+                <svg class="toast-icon" viewBox="0 0 24 24"><path d="${iconPaths[type]}"/></svg>
+                <span class="toast-message">${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // =============================================
+        // KEYBOARD SHORTCUTS
+        // =============================================
+        document.addEventListener('keydown', (e) => {
+            // Edit mode shortcuts
+            if (state.editMode) {
+                if (e.key === 'Enter') {
+                    finishEditMode();
+                    return;
+                }
+                if (e.key === 'Escape') {
+                    cancelEditMode();
+                    return;
+                }
+                if (e.key === 'c' || e.key === 'C') {
+                    togglePointCurve();
+                    return;
+                }
+            }
+
+            // Global shortcuts
+            if (e.ctrlKey && e.key === 'o') {
+                e.preventDefault();
+                openImage();
+            } else if (e.ctrlKey && (e.key === 'z' || e.key === 'Z')) {
+                e.preventDefault();
+                undo();
+            } else if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                saveProject();
+            } else if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                e.preventDefault();
+                duplicateOpposite();
+            } else if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                duplicateRegion();
+            } else if (e.key === 'e' || e.key === 'E') {
+                startEditMode();
+            } else if (e.key === 'n' || e.key === 'N') {
+                startDrawMode();
+            } else if (e.key === 'z' || e.key === 'Z') {
+                assignZone();
+            } else if (e.key === 'Delete') {
+                deleteRegion();
+            } else if (e.key === 'F2') {
+                renameRegion();
+            } else if (e.key === 'F5') {
+                e.preventDefault();
+                redetectRegions();
+            } else if (e.key === 'Home') {
+                resetView();
+            } else if (e.key === 'Tab') {
+                e.preventDefault();
+                toggleSidebar();
+            } else if (e.key === 's' && !e.ctrlKey) {
+                // Toggle show selected only
+                const checkbox = document.getElementById('show-selected-only');
+                checkbox.checked = !checkbox.checked;
+                redraw();
+            } else if (e.key === 'l' || e.key === 'L') {
+                // Toggle labels
+                const checkbox = document.getElementById('hide-labels');
+                checkbox.checked = !checkbox.checked;
+                redraw();
+            } else if (e.key === 'a' || e.key === 'A') {
+                if (state.selectedRegionId) {
+                    approveRegion(state.selectedRegionId);
+                }
+            } else if (e.key === 'r' || e.key === 'R') {
+                if (state.selectedRegionId && !e.ctrlKey) {
+                    rejectRegion(state.selectedRegionId);
+                }
+            } else if (e.key === 'ArrowDown' || e.key === 'j') {
+                selectNextRegion();
+            } else if (e.key === 'ArrowUp' || e.key === 'k') {
+                selectPrevRegion();
+            }
+        });
+
+        function selectNextRegion() {
+            const visible = getVisibleRegions();
+            const currentIdx = visible.findIndex(r => r.id === state.selectedRegionId);
+            const nextIdx = (currentIdx + 1) % visible.length;
+            if (visible[nextIdx]) {
+                selectRegion(visible[nextIdx].id);
+            }
+        }
+
+        function selectPrevRegion() {
+            const visible = getVisibleRegions();
+            const currentIdx = visible.findIndex(r => r.id === state.selectedRegionId);
+            const prevIdx = (currentIdx - 1 + visible.length) % visible.length;
+            if (visible[prevIdx]) {
+                selectRegion(visible[prevIdx].id);
+            }
+        }
+
+        // =============================================
+        // INITIALIZATION
+        // =============================================
+        window.addEventListener('beforeunload', () => saveToLocalStorage());
+        loadFromLocalStorage();
+        updateUI();
+    </script>
+</body>
+
+</html>

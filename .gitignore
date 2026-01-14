@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Images (large files - commit selectively)
+*.png
+*.jpg
+*.jpeg
+!project_root/slides/images/*.png
+
+# PowerPoint and PDF (large files)
+*.pptx
+*.pdf
+
+# Excel
+*.xlsx
+*.xls
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+*.tmp
+*.bak
+
+# Folders to ignore
+New folder/
+Boot Partner/

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>PARTner — Materials</title>
+  <script>
+    // Suppress Babel in-browser warning
+    window.BABEL_DISABLE_CACHE = true;
+    const originalWarn = console.warn;
+    console.warn = (...args) => {
+      if (args[0]?.includes?.('in-browser Babel')) return;
+      originalWarn.apply(console, args);
+    };
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* Keep same styling as original app for quick compatibility */
+    :root { --accent: #eab308; --accent2: #ca8a04; --accentGlow: rgba(234, 179, 8, 0.4); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'JetBrains Mono',monospace;background:#0a0a14;color:#fff;padding:calc(92px + 52px) 1rem 2rem}
+    .glass-panel{background:linear-gradient(135deg,rgba(20,20,35,0.85),rgba(10,10,20,0.92));padding:1rem;border-radius:10px}
+    .toolbar-btn{padding:8px 12px;border-radius:18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:#9ca3af}
+    input, select, textarea{background:rgba(0,0,0,0.4);color:#fff;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.06)}
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo, useRef } = React;
+
+    // Persistence keys (kept similar so user can migrate if desired)
+    const LS_COMPONENTS = "partner_materials_v1";
+    const LS_STORAGE = "partner_storage_v1";
+
+    const toNumber = (v, fallback = 0) => { const n = Number(v); return Number.isFinite(n) ? n : fallback; };
+    const toString = (v, fallback = '') => (v === null || v === undefined) ? fallback : String(v);
+
+    function normalizeComponent(c) {
+      const raw = c && typeof c === 'object' ? c : {};
+      const storageId = raw.storageId;
+      const row = toNumber(raw.row, NaN);
+      const col = toNumber(raw.col, NaN);
+      const validStorageId = storageId === null || storageId === undefined ? null : storageId;
+      const validRow = Number.isFinite(row) && row >= 1 ? row : null;
+      const validCol = Number.isFinite(col) && col >= 1 ? col : null;
+
+      return {
+        ...raw,
+        id: raw.id ?? raw._id ?? null,
+        regionId: toString(raw.regionId),
+        dash: toString(raw.dash),
+        name: toString(raw.name),
+        zone: toString(raw.zone),
+        opCard: toString(raw.opCard),
+        drawing: toString(raw.drawing),
+        sheet: toString(raw.sheet),
+        material: toString(raw.material),
+        category: toString(raw.category || 'misc'),
+        quantity: Math.max(0, toNumber(raw.quantity ?? raw.qty ?? raw.qtyOnHand, 0)), // quantity = qty on hand
+        unit: toString(raw.unit),
+        detailPage: toString(raw.detailPage),
+        partnerLocatorUID: toString(raw.partnerLocatorUID),
+        partnerBin: toString(raw.partnerBin),
+        minQty: Math.max(0, toNumber(raw.minQty, 0)),
+        lowStockQty: Math.max(0, toNumber(raw.lowStockQty, 0)),
+        storageId: validStorageId,
+        row: validStorageId ? validRow : null,
+        col: validStorageId ? validCol : null,
+        notes: toString(raw.notes)
+      };
+    }
+
+    function normalizeStorage(s) {
+      const raw = s && typeof s === 'object' ? s : {};
+      const rows = Math.max(1, Math.floor(toNumber(raw.rows, 1)));
+      const cols = Math.max(1, Math.floor(toNumber(raw.cols, 1)));
+      return { ...raw, id: toNumber(raw.id, raw.id), name: toString(raw.name), rows, cols, description: toString(raw.description) };
+    }
+
+    const CATEGORIES = {
+      sheet: { name: 'Sheet', color: '#FFD700', icon: '📄' },
+      stick: { name: 'Stick', color: '#00FFFF', icon: '📏' },
+      kit: { name: 'Kit', color: '#7FFF00', icon: '🎁' },
+      misc: { name: 'Misc', color: '#95A5A6', icon: '◇' }
+    };
+
+    const INITIAL_STORAGE = [ { id: 1, name: 'Partner Bin A', rows: 4, cols: 6, description: 'Default storage' } ];
+
+    // Replace demo components with items from the image (fields kept to match spreadsheet)
+    const INITIAL_COMPONENTS = [
+      {
+        id: 1,
+        regionId: 'Z1-2',
+        dash: 'X12-001A',
+        name: 'Inlet Bleed Screen RH',
+        zone: '1',
+        opCard: 'AB12345-01',
+        drawing: 'X12-0101',
+        sheet: '3',
+        material: 'XMP001-1',
+        category: 'sheet',
+        qty: 1,
+        unit: 'EA',
+        detailPage: '12',
+        partnerLocatorUID: 'X12-001A_XMP001-1_1',
+        partnerBin: 'B1_D2',
+        qtyOnHand: 34,
+        minQty: 25,
+        lowStockQty: 10
+      },
+      {
+        id: 2,
+        regionId: 'Z3-4',
+        dash: 'X12-001B',
+        name: 'Inlet Bleed Screen LH',
+        zone: '3',
+        opCard: 'AB12345-02',
+        drawing: 'X12-0102',
+        sheet: '3',
+        material: 'XMP002-2',
+        category: 'stick',
+        qty: 3,
+        unit: 'PCS',
+        detailPage: '34',
+        partnerLocatorUID: 'X12-001A_XMP001-1_2',
+        partnerBin: 'B1_D3',
+        qtyOnHand: 34,
+        minQty: 25,
+        lowStockQty: 10
+      },
+      {
+        id: 3,
+        regionId: 'Z1-42',
+        dash: 'X12-001C',
+        name: 'Alpha Panel',
+        zone: '1',
+        opCard: 'AB12345-03',
+        drawing: 'X12-0103',
+        sheet: '3',
+        material: 'XMP003-3',
+        category: 'kit',
+        qty: 1,
+        unit: 'EA',
+        detailPage: '152',
+        partnerLocatorUID: 'X12-001A_XMP001-1_3',
+        partnerBin: 'B1_D4',
+        qtyOnHand: 34,
+        minQty: 25,
+        lowStockQty: 10
+      },
+      {
+        id: 4,
+        regionId: 'Z6-51',
+        dash: 'X12-001D',
+        name: 'Beta Panel',
+        zone: '6',
+        opCard: 'AB12345-04',
+        drawing: 'X12-0104',
+        sheet: '3',
+        material: 'XMP004-4',
+        category: 'misc',
+        qty: 6,
+        unit: 'KIT',
+        detailPage: '77',
+        partnerLocatorUID: 'X12-001A_XMP001-1_4',
+        partnerBin: 'B1_D5',
+        qtyOnHand: 34,
+        minQty: 25,
+        lowStockQty: 10
+      }
+    ].map(normalizeComponent);
+
+    // Simple Glass panel component
+    const GlassPanel = ({ children, style = {} }) => (<div className="glass-panel" style={style}>{children}</div>);
+
+    const ComponentCard = ({ component }) => {
+      const cat = CATEGORIES[component.category] || CATEGORIES.misc;
+      const isLow = component.quantity <= component.lowStockQty;
+      return (
+        <GlassPanel style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'baseline' }}>
+              <div style={{ fontSize: '1.2rem' }}>{cat.icon}</div>
+              <div>
+                <div style={{ fontWeight: 700 }}>{component.name}</div>
+                <div style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}>{component.dash} • Zone {component.zone}</div>
+              </div>
+            </div>
+
+            <div style={{ marginTop: '0.6rem', fontSize: '0.82rem', color: 'rgba(255,255,255,0.6)' }}>
+              <div>Material: <strong>{component.material}</strong> ({CATEGORIES[component.category]?.name})</div>
+              <div>Detail Page: {component.detailPage} • Sheet: {component.sheet}</div>
+              <div>Locator: {component.partnerLocatorUID} • Bin: {component.partnerBin}</div>
+            </div>
+          </div>
+
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: '1.6rem', fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, color: isLow ? '#FF6B6B' : cat.color }}>{component.quantity}</div>
+            <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>{component.unit}</div>
+            {isLow && <div style={{ marginTop: '6px', fontSize: '0.7rem', color: '#FF6B6B' }}>LOW (≤ {component.lowStockQty})</div>}
+          </div>
+        </GlassPanel>
+      );
+    };
+
+    const App = () => {
+      const [components, setComponents] = useState(() => {
+        const raw = JSON.parse(localStorage.getItem(LS_COMPONENTS) || 'null');
+        if (!Array.isArray(raw)) { localStorage.setItem(LS_COMPONENTS, JSON.stringify(INITIAL_COMPONENTS)); return INITIAL_COMPONENTS; }
+        return raw.map(normalizeComponent);
+      });
+
+      useEffect(() => { localStorage.setItem(LS_COMPONENTS, JSON.stringify(components)); }, [components]);
+
+      const handleExport = () => {
+        const lines = ['PARTner Materials Export', `Generated: ${new Date().toLocaleString()}`, ''];
+        lines.push(['Region ID','Dash','Name','Zone','OP Card','Drawing','Sheet','Material','Material Type','Qty On Hand','Unit','Detail Page','Partner Locator UID','Partner Bin','Min QTY','Low Stock Alert'].join('\t'));
+        components.forEach(c => {
+          lines.push([
+            c.regionId, c.dash, c.name, c.zone, c.opCard, c.drawing, c.sheet, c.material, c.category, c.quantity, c.unit, c.detailPage, c.partnerLocatorUID, c.partnerBin, c.minQty, c.lowStockQty
+          ].join('\t'));
+        });
+        const blob = new Blob([lines.join('\n')], { type: 'text/tab-separated-values' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'PARTner-materials-export.tsv'; a.click();
+      };
+
+      return (
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <h1 style={{ marginBottom: '0.5rem' }}>PARTner — Materials</h1>
+          <p style={{ marginBottom: '1rem', color: 'rgba(255,255,255,0.6)' }}>Tracks spreadsheet fields: Region ID, Dash, Name, Zone, OP Card, Drawing, Sheet, Material, Material Type, QTY, Unit, Detail Page, Locator UID, Bin, QTY on Hand, Min QTY, Low Stock Alert</p>
+
+          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+            <button className="toolbar-btn" onClick={() => { setComponents([ ...components, normalizeComponent({ id: Date.now(), name: 'New Item', category: 'misc', quantity: 0 }) ]); }}>Add</button>
+            <button className="toolbar-btn" onClick={handleExport}>Export TSV</button>
+            <button className="toolbar-btn" onClick={() => { navigator.clipboard.writeText(JSON.stringify(components, null, 2)); }}>Copy JSON</button>
+          </div>
+
+          <div style={{ display: 'grid', gap: '0.75rem' }}>
+            {components.map(c => (<ComponentCard key={c.id} component={c} />))}
+          </div>
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

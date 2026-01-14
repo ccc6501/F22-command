@@ -1,0 +1,3305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>PARTner</title>
+  <script>
+    // Suppress Babel in-browser warning
+    window.BABEL_DISABLE_CACHE = true;
+    const originalWarn = console.warn;
+    console.warn = (...args) => {
+      if (args[0]?.includes?.('in-browser Babel')) return;
+      originalWarn.apply(console, args);
+    };
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      /* ===== Unified Header System vars ===== */
+      --accent: #eab308;
+      --accent2: #ca8a04;
+      --accentGlow: rgba(234, 179, 8, 0.4);
+
+      /* Status colors */
+      --syncOff: #ef4444;
+      --syncSaved: #a855f7;
+
+      /* Active status (starts as off) */
+      --status: var(--syncOff);
+
+      /* Core palette */
+      --bg-dark: #0a0a0f;
+      --bg-card: rgba(20, 20, 30, 0.6);
+      --glass: rgba(12, 12, 20, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --text-primary: #e5e5e7;
+      --text-secondary: #9ca3af;
+      --text-dim: #6b7280;
+
+      /* Header dimensions */
+      --header-row1-height-expanded: 92px;
+      --header-row1-height-collapsed: 56px;
+      --header-row2-height: 52px;
+
+      /* Safe area */
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: linear-gradient(135deg, #0a0a14 0%, #12121f 50%, #0d0d18 100%);
+      min-height: 100vh;
+      color: #fff;
+      overflow-x: hidden;
+      padding-top: calc(var(--safe-top) + var(--header-row1-height-expanded) + var(--header-row2-height));
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.toolbar-hidden {
+      padding-top: calc(var(--safe-top) + var(--header-row1-height-expanded));
+    }
+
+    /* ==================== UNIFIED HEADER ==================== */
+    .unified-header {
+      position: fixed;
+      top: var(--safe-top);
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .unified-header,
+      .unified-header * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    /* ==================== ROW 1: APP IDENTITY BAND ==================== */
+    .app-identity {
+      position: relative;
+      height: var(--header-row1-height-expanded);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    /* Multi-layer accent wash background (the "life") */
+    .app-identity::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        /* Accent radial washes */
+        radial-gradient(900px 280px at 10% 20%,
+          color-mix(in srgb, var(--accent) 35%, transparent) 0%,
+          transparent 60%),
+        radial-gradient(700px 240px at 85% 10%,
+          color-mix(in srgb, var(--accent2) 26%, transparent) 0%,
+          transparent 62%),
+        /* Dark gradient base */
+        linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
+      z-index: 1;
+      animation: wash-breathe 5s ease-in-out infinite;
+    }
+
+    @keyframes wash-breathe {
+
+      0%,
+      100% {
+        opacity: 0.85;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes toastSlideIn {
+      from {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes toastSlideOut {
+      from {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0;
+      }
+    }
+
+    /* Subtle grid overlay on header */
+    .app-identity::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Glass layer */
+    .app-identity-glass {
+      position: absolute;
+      inset: 0;
+      background: var(--glass);
+      backdrop-filter: blur(20px) saturate(1.3);
+      -webkit-backdrop-filter: blur(20px) saturate(1.3);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow:
+        0 2px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      z-index: 3;
+    }
+
+    .app-identity-content {
+      position: relative;
+      z-index: 4;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 18px 18px;
+      height: 100%;
+    }
+
+    .unified-header.collapsed .app-identity {
+      height: var(--header-row1-height-collapsed);
+    }
+
+    .unified-header.collapsed .app-identity-content {
+      padding: 11px 18px;
+    }
+
+    /* Left: App Icon Badge (simple, clean) */
+    .app-icon-badge {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .unified-header.collapsed .app-icon-badge {
+      width: 34px;
+      height: 34px;
+    }
+
+    .icon-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg,
+          rgba(255, 255, 255, 0.08) 0%,
+          rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .unified-header.collapsed .icon-container {
+      border-radius: 10px;
+    }
+
+    /* Breathing glow animation on icon */
+    .icon-container::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border-radius: 20px;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+      opacity: 0;
+      animation: breathe-glow 2.6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes breathe-glow {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(0.88);
+      }
+
+      50% {
+        opacity: 0.28;
+        transform: scale(1.08);
+      }
+    }
+
+    .app-icon {
+      width: 58%;
+      height: 58%;
+      color: var(--accent);
+      filter: drop-shadow(0 0 8px var(--accentGlow));
+      transition: all 0.35s;
+    }
+
+    /* Middle: App name & tagline */
+    .app-info {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .app-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      -webkit-text-stroke: 1px var(--accent2);
+      text-shadow:
+        0 0 18px var(--accentGlow),
+        0 0 2px rgba(0, 0, 0, 0.8);
+      transition: all 0.35s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .unified-header.collapsed .app-name {
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .app-tagline {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: color-mix(in srgb, var(--accent) 15%, var(--text-dim));
+      letter-spacing: 0.4px;
+      margin-top: 5px;
+      opacity: 1;
+      max-height: 20px;
+      transform: scaleY(1);
+      transform-origin: top;
+      transition: all 0.35s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+
+    .unified-header.collapsed .app-tagline {
+      opacity: 0;
+      max-height: 0;
+      margin-top: 0;
+      transform: scaleY(0);
+    }
+
+    /* Right: Version & Status */
+    .app-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.35s;
+    }
+
+    /* Version pill becomes the status indicator */
+    .version-pill {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1.5px solid var(--status);
+      border-radius: 14px;
+      padding: 5px 11px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.9px;
+      color: var(--status);
+      text-transform: uppercase;
+      box-shadow: 0 0 16px color-mix(in srgb, var(--status) 35%, transparent);
+      transition: all 0.35s;
+      font-family: 'Rajdhani', sans-serif;
+      white-space: nowrap;
+    }
+
+    .unified-header.collapsed .version-pill {
+      font-size: 8px;
+      padding: 4px 9px;
+    }
+
+    /* Status text (replaces "production") */
+    .status-text {
+      font-size: 8px;
+      font-weight: 600;
+      color: color-mix(in srgb, var(--status) 70%, #9ca3af);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 1;
+      max-height: 12px;
+      transition: all 0.35s;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .unified-header.collapsed .status-text {
+      opacity: 1;
+      font-size: 7px;
+    }
+
+    /* ==================== ROW 2: TOOLBAR RAIL ==================== */
+    .toolbar-rail {
+      position: relative;
+      height: var(--header-row2-height);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    /* Subtle accent wash for toolbar */
+    .toolbar-rail::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(600px 200px at 50% -50%,
+          color-mix(in srgb, var(--accent) 18%, transparent) 0%,
+          transparent 65%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .toolbar-rail::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      z-index: 2;
+    }
+
+    .toolbar-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .toolbar-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .toolbar-hidden .toolbar-rail {
+      display: none;
+    }
+
+    .unified-header.collapsed .toolbar-rail {
+      height: 0;
+      opacity: 0;
+    }
+
+    .unified-header.collapsed .toolbar-content {
+      padding: 0 18px;
+    }
+
+    .toolbar-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 10px 18px;
+      min-height: 36px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 0.4px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .toolbar-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+      color: var(--accent);
+      box-shadow: 0 0 16px color-mix(in srgb, var(--accentGlow) 60%, transparent);
+      transform: translateY(-1px);
+    }
+
+    .toolbar-btn:active {
+      transform: scale(0.94) translateY(0);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 20px var(--accentGlow);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.3);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 215, 0, 0.5);
+    }
+
+    /* Animations */
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    @keyframes scan-line {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(100vh);
+      }
+    }
+
+    .pulse-glow {
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Glass panel base */
+    .glass-panel {
+      background: linear-gradient(135deg, rgba(20, 20, 35, 0.85) 0%, rgba(10, 10, 20, 0.92) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Input styling */
+    input,
+    select,
+    textarea {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(255, 215, 0, 0.4);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    select option {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    /* Button base */
+    button {
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Tab styling */
+    .tab-button {
+      padding: 0.75rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      border-radius: 8px 8px 0 0;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tab-button.active {
+      background: rgba(255, 215, 0, 0.15);
+      border-color: rgba(255, 215, 0, 0.3);
+      color: #FFD700;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+    }
+
+    .tab-button:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .grid-cell:hover {
+        transform: scale(1.05);
+        z-index: 10;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ==================== UNIFIED HEADER ==================== -->
+  <div class="unified-header" id="header">
+
+    <!-- Row 1: App Identity Band -->
+    <div class="app-identity">
+      <div class="app-identity-glass"></div>
+      <div class="app-identity-content">
+        <div class="app-icon-badge">
+          <div class="icon-container">
+            <svg class="app-icon" viewBox="0 0 24 24" fill="none" id="appIcon">
+              <!-- PARTner icon -->
+              <rect x="3" y="8" width="6" height="8" rx="1" stroke="currentColor" stroke-width="2" fill="none" />
+              <rect x="15" y="8" width="6" height="8" rx="1" stroke="currentColor" stroke-width="2" fill="none" />
+              <path d="M9 12h6" stroke="currentColor" stroke-width="2" />
+              <circle cx="6" cy="12" r="1.5" fill="currentColor" />
+              <circle cx="18" cy="12" r="1.5" fill="currentColor" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="app-info">
+          <div class="app-name" id="appName">PARTner</div>
+          <div class="app-tagline" id="appTagline">Electronics component inventory</div>
+        </div>
+
+        <div class="app-meta">
+          <div class="version-pill" id="versionPill">v1.0-beta</div>
+          <div class="status-text" id="statusText">SYNC OFF</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Toolbar Rail -->
+    <div class="toolbar-rail" id="toolbarRail">
+      <div class="toolbar-content" id="toolbarContent">
+        <!-- Toolbar buttons will be added by JS -->
+      </div>
+    </div>
+
+  </div>
+
+  <div id="root"></div>
+
+  <script>
+    // ==================== UNIFIED HEADER API ====================
+    window.MakerHeader = {
+      setApp: function ({ name, tagline, iconSvg, accent, accent2, accentGlow }) {
+        if (name) document.getElementById('appName').textContent = name;
+        if (tagline) document.getElementById('appTagline').textContent = tagline;
+        if (iconSvg) document.getElementById('appIcon').innerHTML = iconSvg;
+        if (accent) document.documentElement.style.setProperty('--accent', accent);
+        if (accent2) document.documentElement.style.setProperty('--accent2', accent2);
+        if (accentGlow) document.documentElement.style.setProperty('--accentGlow', accentGlow);
+      },
+      setStatus: function (status) {
+        const statusMap = {
+          off: { color: 'var(--syncOff)', text: 'SYNC OFF' },
+          local: { color: 'var(--syncOff)', text: 'SYNC OFF' },
+          saved: { color: 'var(--syncSaved)', text: 'SAVED' }
+        };
+        const info = statusMap[status] || statusMap.off;
+        document.documentElement.style.setProperty('--status', info.color);
+        const st = document.getElementById('statusText');
+        if (st) st.textContent = info.text;
+      },
+      setMeta: function ({ versionText }) {
+        if (versionText) {
+          const vp = document.getElementById('versionPill');
+          if (vp) vp.textContent = versionText;
+        }
+      },
+      setActions: function (actions) {
+        const toolbar = document.getElementById('toolbarContent');
+        if (!toolbar) return;
+        toolbar.innerHTML = '';
+        if (!actions || !Array.isArray(actions)) return;
+        actions.forEach(action => {
+          const btn = document.createElement('button');
+          btn.className = 'toolbar-btn' + (action.primary ? ' primary' : '');
+          btn.textContent = action.label;
+          btn.onclick = action.onClick;
+          toolbar.appendChild(btn);
+        });
+      },
+      showToolbar: function (visible) {
+        document.body.classList.toggle('toolbar-hidden', !visible);
+        const rail = document.getElementById('toolbarRail');
+        if (rail) rail.style.display = visible ? 'flex' : 'none';
+      }
+    };
+
+    // ==================== HEADER SCROLL BEHAVIOR ====================
+    (function () {
+      const header = document.getElementById('header');
+      if (!header) return;
+      let lastScroll = 0;
+      let scrollTicking = false;
+
+      function handleScroll() {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll <= 0) {
+          header.classList.remove('collapsed');
+        } else if (currentScroll > lastScroll && currentScroll > 40) {
+          header.classList.add('collapsed');
+        } else if (currentScroll < lastScroll - 10) {
+          header.classList.remove('collapsed');
+        }
+        lastScroll = currentScroll;
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!scrollTicking) {
+          window.requestAnimationFrame(() => {
+            handleScroll();
+            scrollTicking = false;
+          });
+          scrollTicking = true;
+        }
+      }, { passive: true });
+    })();
+
+    // Initialize header
+    MakerHeader.setApp({
+      name: 'PARTner',
+      tagline: 'Materials inventory',
+      accent: '#eab308',
+      accent2: '#ca8a04',
+      accentGlow: 'rgba(234, 179, 8, 0.4)'
+    });
+    MakerHeader.setMeta({ versionText: 'v1.0-beta' });
+    MakerHeader.setStatus('off');
+    // Toolbar will be populated by React app
+  </script>
+
+  <script type="text/babel" data-skip-js-check="true">
+    const { useState, useEffect, useCallback, useMemo, useRef } = React;
+
+    // ═══════════════════════════════════════════════════════════════
+    // PERSISTENCE (localStorage)
+    // ═══════════════════════════════════════════════════════════════
+
+    const LS_COMPONENTS = "bootbro_materials_v1";
+    const LS_STORAGE = "bootbro_storage_v1";
+    const LS_UID_ID_MAP = "bootbro_uid_id_map_v1";
+    const LS_MASTER_INV = "bootbro_master_inventory_v2";
+
+    // UID and Master Inventory v2 support
+    function loadUidIdMap() {
+      try { return JSON.parse(localStorage.getItem(LS_UID_ID_MAP) || '{}') || {}; }
+      catch { return {}; }
+    }
+    function saveUidIdMap(map) {
+      try { localStorage.setItem(LS_UID_ID_MAP, JSON.stringify(map)); } catch { }
+    }
+    function nextItemId(uidMap) {
+      const vals = Object.values(uidMap).map(n => Number(n)).filter(Number.isFinite);
+      return (vals.length ? Math.max(...vals) : 100000) + 1;
+    }
+
+    function makeUidFromRow(dash, material) {
+      const d = String(dash || '').trim();
+      const m = String(material || '').trim();
+      return `${d}|${m}`;
+    }
+
+    // Build master_inventory_v2 from current components and storage
+    function buildMasterInventoryV2(components, storageLocations) {
+      const uidMap = loadUidIdMap();
+      const items = [];
+
+      // Build storage lookup
+      const storageLookup = {};
+      storageLocations.forEach(s => { storageLookup[s.id] = s; });
+
+      // Group components by UID
+      const byUid = new Map();
+      components.forEach(comp => {
+        const uid = makeUidFromRow(comp.dash, comp.material);
+        if (!uid || uid.startsWith('|')) return;
+
+        if (!byUid.has(uid)) {
+          byUid.set(uid, []);
+        }
+        byUid.get(uid).push(comp);
+      });
+
+      // Build inventory items
+      byUid.forEach((comps, uid) => {
+        if (!uidMap[uid]) {
+          uidMap[uid] = nextItemId(uidMap);
+        }
+
+        const first = comps[0];
+        const storage = first.storageId ? storageLookup[first.storageId] : null;
+
+        // Aggregate quantities across all components with this UID
+        const totalQty = comps.reduce((sum, c) => sum + (c.quantity || 0), 0);
+
+        // Build contexts from all occurrences
+        const contexts = comps.map(c => ({
+          zone: c.zone || '',
+          sequence_label: c.sequenceLabel || '',
+          detailPage: c.detailPage || ''
+        })).filter(ctx => ctx.zone || ctx.sequence_label || ctx.detailPage);
+
+        // Build storage locations
+        const locations = [];
+        comps.forEach(c => {
+          if (c.storageId) {
+            const st = storageLookup[c.storageId];
+            locations.push({
+              location_id: c.storageId,
+              location_name: st ? st.name : '',
+              bin_row: c.row || null,
+              bin_col: c.col || null,
+              bin_label: (c.row && c.col) ? `R${c.row}C${c.col}` : '',
+              qty: c.quantity || 0
+            });
+          }
+        });
+
+        items.push({
+          item_id: uidMap[uid],
+          uid,
+          part: {
+            dash: String(first.dash || '').trim(),
+            material: String(first.material || '').trim(),
+            name: String(first.name || '').trim(),
+            op_card: String(first.opCard || '').trim(),
+            drawing: String(first.drawing || '').trim(),
+            sheet: String(first.sheet || '').trim()
+          },
+          contexts,
+          inventory: {
+            qty_on_hand: totalQty,
+            qty_reserved: 0,
+            qty_issued: 0,
+            min_qty: first.minQty || 0,
+            low_stock: first.lowStock || 0
+          },
+          storage: {
+            default_location_id: first.storageId || null,
+            locations
+          },
+          media: {
+            detail_refs: contexts.filter(c => c.detailPage).map(c => ({ detailPage: c.detailPage })),
+            images: []
+          },
+          manual: { is_manual: false, added_by: null },
+          audit: {
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }
+        });
+      });
+
+      saveUidIdMap(uidMap);
+
+      return {
+        schema: 'master_inventory_v2',
+        exportedAt: new Date().toISOString(),
+        items: items.sort((a, b) => a.item_id - b.item_id),
+        locations: storageLocations.map(s => ({
+          location_id: s.id,
+          name: s.name,
+          rows: s.rows,
+          cols: s.cols,
+          description: s.description || ''
+        })),
+        transactions: []
+      };
+    }
+
+    // Simple toast notification
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#22c55e' : '#3b82f6'};
+        color: white;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.875rem;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        animation: toastSlideIn 0.3s ease;
+      `;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = 'toastSlideOut 0.3s ease forwards';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    function safeParse(json, fallback) {
+      try {
+        return JSON.parse(json);
+      } catch {
+        return fallback;
+      }
+    }
+
+    function safeLoad(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return fallback;
+        const data = safeParse(raw, fallback);
+        return Array.isArray(data) ? data : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function safeSave(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch {
+        // ignore quota / disabled storage
+      }
+    }
+
+    const toNumber = (v, fallback = 0) => {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
+    };
+
+    const toString = (v, fallback = '') => {
+      if (v === null || v === undefined) return fallback;
+      return String(v);
+    };
+
+    function normalizeComponent(c) {
+      // Support both original electronic fields and new materials spreadsheet fields
+      const raw = c && typeof c === 'object' ? c : {};
+      const { qty, qtyOnHand, lowStockQty, minQty, material, materialType, regionId, dash, zone, opCard, drawing, sheet, detailPage, partnerLocatorUID, partnerBin, ...rest } = raw;
+      const category = (raw.category && CATEGORIES[raw.category]) ? raw.category : (materialType && CATEGORIES[materialType.toLowerCase()]) ? materialType.toLowerCase() : 'misc';
+
+      const storageId = raw.storageId;
+      const row = toNumber(raw.row, NaN);
+      const col = toNumber(raw.col, NaN);
+
+      const validStorageId = storageId === null || storageId === undefined ? null : storageId;
+      const validRow = Number.isFinite(row) && row >= 1 ? row : null;
+      const validCol = Number.isFinite(col) && col >= 1 ? col : null;
+
+      return {
+        ...rest,
+        id: raw.id ?? raw._id ?? null,
+        // Spreadsheet fields
+        regionId: toString(regionId),
+        dash: toString(dash),
+        zone: toString(zone),
+        opCard: toString(opCard),
+        drawing: toString(drawing),
+        sheet: toString(sheet),
+        material: toString(material ?? raw.value),
+        materialType: toString(materialType ?? raw.package),
+        detailPage: toString(detailPage),
+        partnerLocatorUID: toString(partnerLocatorUID),
+        partnerBin: toString(partnerBin),
+        minQty: Math.max(0, toNumber(minQty, toNumber(raw.minQty, 0))),
+        // Backward-compatible UI fields
+        name: toString(raw.name),
+        category,
+        value: toString(material ?? raw.value),
+        package: toString(materialType ?? raw.package),
+        quantity: Math.max(0, toNumber(raw.quantity ?? qtyOnHand ?? qty, 0)),
+        lowStock: Math.max(0, toNumber(lowStockQty ?? raw.lowStock, 0)),
+        storageId: validStorageId,
+        row: validStorageId ? validRow : null,
+        col: validStorageId ? validCol : null,
+        notes: toString(raw.notes)
+      };
+    }
+
+    function normalizeStorage(s) {
+      const raw = s && typeof s === 'object' ? s : {};
+      const rows = Math.max(1, Math.floor(toNumber(raw.rows, 1)));
+      const cols = Math.max(1, Math.floor(toNumber(raw.cols, 1)));
+
+      return {
+        ...raw,
+        id: toNumber(raw.id, raw.id),
+        name: toString(raw.name),
+        rows,
+        cols,
+        description: toString(raw.description)
+      };
+    }
+
+    // Convert master_parts.json format to component format
+    function convertMasterPartsToComponents(masterParts) {
+      const components = [];
+      let idCounter = 1;
+
+      // Handle the structured format with slides array
+      const slides = masterParts.slides || [];
+
+      // Build storage location lookup from imported data (if present)
+      const storageLocations = masterParts.storage_locations || [];
+      const storageLookup = {};
+      storageLocations.forEach(s => {
+        storageLookup[s.id] = s;
+        // Also lookup by name for matching
+        storageLookup[s.name] = s;
+      });
+
+      for (const slide of slides) {
+        const slideNumber = slide.slide_number;
+        const tables = slide.tables || [];
+
+        for (const table of tables) {
+          const rows = table.rows || [];
+
+          for (const row of rows) {
+            // Map the JSON fields to component fields
+            const materialType = (row.material_type || row.materialType || 'misc').toLowerCase();
+            const category = CATEGORIES[materialType] ? materialType : 'misc';
+
+            // Try to resolve storage ID from name if provided
+            let storageId = row.storage_id || null;
+            if (!storageId && row.storage_name) {
+              const storage = storageLookup[row.storage_name];
+              if (storage) storageId = storage.id;
+            }
+
+            components.push({
+              id: idCounter++,
+              regionId: row.region_id || row.regionId || '',
+              dash: row.dash || row.Dash || '',
+              name: row.name || row.Name || '',
+              zone: row.zone || row.Zone || '',
+              opCard: row.op_card || row.opCard || row['OP Card'] || '',
+              drawing: row.drawing || row.Drawing || '',
+              sheet: row.sheet || row.Sheet || '',
+              material: row.material || row.Material || '',
+              materialType: materialType,
+              category: category,
+              // Bootbro tracking fields
+              quantity: parseInt(row.quantity || row.qty || 1, 10),
+              unit: row.unit || 'EA',
+              minQty: parseInt(row.min_qty || row.minQty || 0, 10),
+              lowStock: parseInt(row.low_stock || row.lowStock || row.low_stock_qty || 0, 10),
+              storageId: storageId,
+              row: row.bin_row || null,
+              col: row.bin_col || null,
+              partnerBin: row.partner_bin || row.partnerBin || '',
+              partnerLocatorUID: row.partner_locator_uid || row.partnerLocatorUID || `${row.dash || ''}_${row.material || ''}_${idCounter}`,
+              notes: row.notes || '',
+              // Reference fields
+              detailPage: String(slideNumber),
+              slideNumber: slideNumber,
+              slideId: slide.slide_id
+            });
+          }
+        }
+      }
+
+      return components.map(normalizeComponent);
+    }
+
+    // Also import storage locations if present
+    function extractStorageLocationsFromMasterParts(masterParts) {
+      const storageLocations = masterParts.storage_locations || [];
+      return storageLocations.map(s => ({
+        id: s.id,
+        name: s.name || '',
+        rows: s.rows || 4,
+        cols: s.cols || 6,
+        description: s.description || ''
+      }));
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // CONSTANTS & DATA
+    // ═══════════════════════════════════════════════════════════════
+
+    // Material-focused categories (mapped from spreadsheet Material Type)
+    const CATEGORIES = {
+      sheet: { name: 'Sheet', color: '#FFD700', icon: '📄' },
+      stick: { name: 'Stick', color: '#00FFFF', icon: '📏' },
+      kit: { name: 'Kit', color: '#7FFF00', icon: '🎁' },
+      misc: { name: 'Misc', color: '#95A5A6', icon: '◇' }
+    };
+
+    const INITIAL_STORAGE = [
+      { id: 1, name: 'Parts Cabinet A', rows: 4, cols: 6, description: 'Main resistor and capacitor storage' },
+      { id: 2, name: 'IC Drawer', rows: 2, cols: 8, description: 'DIP and SMD integrated circuits' },
+      { id: 3, name: 'Connector Bin', rows: 3, cols: 4, description: 'Headers, USB, barrel jacks' }
+    ];
+
+    // Initial items replaced with the 4 spreadsheet rows from the image
+    const INITIAL_COMPONENTS = [
+      {
+        id: 1,
+        regionId: 'Z1-2',
+        dash: 'X12-001A',
+        name: 'Inlet Bleed Screen RH',
+        zone: '1',
+        opCard: 'AB12345-01',
+        drawing: 'X12-0101',
+        sheet: '3',
+        material: 'XMP001-1',
+        materialType: 'Sheet',
+        quantity: 1,
+        unit: 'EA',
+        detailPage: '12',
+        partnerLocatorUID: 'X12-001A_XMP001-1_1',
+        partnerBin: 'B1_D2',
+        qtyOnHand: 34,
+        minQty: 25,
+        lowStockQty: 10
+      },
+      {
+        id: 2,
+        regionId: 'Z3-4',
+        dash: 'X12-001B',
+        name: 'Inlet Bleed Screen LH',
+        zone: '3',
+        opCard: 'AB12345-02',
+        drawing: 'X12-0102',
+        sheet: '3',
+        material: 'XMP002-2',
+        materialType: 'Stick',
+        quantity: 3,
+        unit: 'PCS',
+        detailPage: '34',
+        partnerLocatorUID: 'X12-001A_XMP001-1_2',
+        partnerBin: 'B1_D3',
+        qtyOnHand: 34,
+        minQty: 25,
+        lowStockQty: 10
+      },
+      {
+        id: 3,
+        regionId: 'Z1-42',
+        dash: 'X12-001C',
+        name: 'Alpha Panel',
+        zone: '1',
+        opCard: 'AB12345-03',
+        drawing: 'X12-0103',
+        sheet: '3',
+        material: 'XMP003-3',
+        materialType: 'Kit',
+        quantity: 1,
+        unit: 'EA',
+        detailPage: '152',
+        partnerLocatorUID: 'X12-001A_XMP001-1_3',
+        partnerBin: 'B1_D4',
+        qtyOnHand: 34,
+        minQty: 25,
+        lowStockQty: 10
+      },
+      {
+        id: 4,
+        regionId: 'Z6-51',
+        dash: 'X12-001D',
+        name: 'Beta Panel',
+        zone: '6',
+        opCard: 'AB12345-04',
+        drawing: 'X12-0104',
+        sheet: '3',
+        material: 'XMP004-4',
+        materialType: 'Misc',
+        quantity: 6,
+        unit: 'KIT',
+        detailPage: '77',
+        partnerLocatorUID: 'X12-001A_XMP001-1_4',
+        partnerBin: 'B1_D5',
+        qtyOnHand: 34,
+        minQty: 25,
+        lowStockQty: 10
+      }
+    ].map(normalizeComponent);
+
+    // ═══════════════════════════════════════════════════════════════
+    // UTILITY COMPONENTS
+    // ═══════════════════════════════════════════════════════════════
+
+    const GlassPanel = ({ children, className = '', glow = null, onClick = null, style = {} }) => (
+      <div
+        onClick={onClick}
+        className={`glass-panel ${className}`}
+        style={{
+          boxShadow: glow
+            ? `0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05), 0 0 25px ${glow}25`
+            : undefined,
+          cursor: onClick ? 'pointer' : undefined,
+          ...style
+        }}
+      >
+        {glow && (
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: `linear-gradient(135deg, ${glow}12 0%, transparent 50%)`,
+            pointerEvents: 'none',
+            borderRadius: 'inherit'
+          }} />
+        )}
+        <div style={{ position: 'relative', zIndex: 1 }}>{children}</div>
+      </div>
+    );
+
+    const Modal = ({ children, onClose }) => (
+      <div
+        onClick={onClose}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 100,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '1rem',
+          background: 'rgba(0,0,0,0.85)',
+          backdropFilter: 'blur(8px)'
+        }}
+      >
+        <div onClick={e => e.stopPropagation()}>
+          {children}
+        </div>
+      </div>
+    );
+
+    const NeonText = ({ children, color = '#FFD700', size = '1.5rem', className = '' }) => (
+      <span
+        className={className}
+        style={{
+          fontSize: size,
+          fontWeight: 700,
+          fontFamily: "'Orbitron', sans-serif",
+          background: `linear-gradient(135deg, ${color} 0%, ${color}CC 100%)`,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          textShadow: `0 0 30px ${color}40`,
+          letterSpacing: '0.02em'
+        }}
+      >
+        {children}
+      </span>
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // STORAGE LOCATION COMPONENTS
+    // ═══════════════════════════════════════════════════════════════
+
+    const StorageGrid = ({ storage, components, onCellClick, selectedCell, highlightComponent }) => {
+      const getComponentsInCell = (row, col) =>
+        components.filter(c => c.storageId === storage.id && c.row === row && c.col === col);
+
+      return (
+        <GlassPanel glow="#00FFFF" style={{ padding: '1rem' }}>
+          <div style={{ marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h3 style={{ color: '#00FFFF', fontSize: '1rem', fontWeight: 600 }}>{storage.name}</h3>
+              <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.7rem', marginTop: '0.25rem' }}>
+                {storage.rows} × {storage.cols} grid • {storage.description}
+              </p>
+            </div>
+            <div style={{
+              padding: '0.25rem 0.5rem',
+              background: 'rgba(0,255,255,0.1)',
+              borderRadius: '4px',
+              fontSize: '0.7rem',
+              color: '#00FFFF'
+            }}>
+              {components.filter(c => c.storageId === storage.id).length} parts
+            </div>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${storage.cols}, 1fr)`,
+            gap: '4px'
+          }}>
+            {/* Column headers */}
+            <div style={{ gridColumn: '1 / -1', display: 'grid', gridTemplateColumns: `repeat(${storage.cols}, 1fr)`, gap: '4px', marginBottom: '2px' }}>
+              {Array.from({ length: storage.cols }, (_, i) => (
+                <div key={i} style={{ textAlign: 'center', fontSize: '0.6rem', color: 'rgba(255,255,255,0.3)' }}>
+                  {i + 1}
+                </div>
+              ))}
+            </div>
+
+            {Array.from({ length: storage.rows }, (_, rowIdx) => (
+              <React.Fragment key={rowIdx}>
+                {Array.from({ length: storage.cols }, (_, colIdx) => {
+                  const row = rowIdx + 1;
+                  const col = colIdx + 1;
+                  const cellComponents = getComponentsInCell(row, col);
+                  const isSelected = selectedCell?.storageId === storage.id && selectedCell?.row === row && selectedCell?.col === col;
+                  const hasHighlight = highlightComponent && cellComponents.some(c => String(c.id) === String(highlightComponent));
+                  const primaryComponent = cellComponents[0];
+                  const cat = primaryComponent ? CATEGORIES[primaryComponent.category] : null;
+
+                  return (
+                    <div
+                      key={`${row}-${col}`}
+                      className="grid-cell"
+                      onClick={() => onCellClick(storage.id, row, col, cellComponents)}
+                      style={{
+                        aspectRatio: '1',
+                        background: cellComponents.length > 0
+                          ? `${cat?.color}15`
+                          : 'rgba(255,255,255,0.03)',
+                        border: `1px solid ${isSelected ? '#FFD700' :
+                          hasHighlight ? '#7FFF00' :
+                            cellComponents.length > 0 ? `${cat?.color}40` :
+                              'rgba(255,255,255,0.08)'
+                          }`,
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.2s',
+                        position: 'relative',
+                        minHeight: '36px',
+                        boxShadow: hasHighlight ? `0 0 15px ${cat?.color}50` : 'none'
+                      }}
+                    >
+                      {cellComponents.length > 0 ? (
+                        <>
+                          <span style={{
+                            fontSize: '0.9rem',
+                            color: cat?.color,
+                            textShadow: `0 0 8px ${cat?.color}`
+                          }}>
+                            {cat?.icon}
+                          </span>
+                          {cellComponents.length > 1 && (
+                            <span style={{
+                              position: 'absolute',
+                              top: '2px',
+                              right: '2px',
+                              fontSize: '0.55rem',
+                              background: 'rgba(255,215,0,0.3)',
+                              padding: '0 3px',
+                              borderRadius: '3px',
+                              color: '#FFD700'
+                            }}>
+                              +{cellComponents.length - 1}
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <span style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.15)' }}>
+                          {row},{col}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </React.Fragment>
+            ))}
+          </div>
+        </GlassPanel>
+      );
+    };
+
+    const StorageModal = ({ storage, onSave, onClose, onDelete }) => {
+      const [form, setForm] = useState(storage || {
+        name: '',
+        rows: 4,
+        cols: 6,
+        description: ''
+      });
+
+      const isEditing = !!storage;
+
+      return (
+        <Modal onClose={onClose}>
+          <GlassPanel glow="#00FFFF" style={{ width: '100%', maxWidth: '400px', padding: '1.5rem' }}>
+            <NeonText color="#00FFFF" size="1.25rem">
+              {isEditing ? 'Edit Storage Location' : 'New Storage Location'}
+            </NeonText>
+
+            <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Name
+                </label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={e => setForm({ ...form, name: e.target.value })}
+                  placeholder="e.g., Parts Cabinet A"
+                  style={{ width: '100%' }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Rows
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={form.rows}
+                    onChange={e => setForm({ ...form, rows: parseInt(e.target.value) || 1 })}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    Columns
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={form.cols}
+                    onChange={e => setForm({ ...form, cols: parseInt(e.target.value) || 1 })}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Description
+                </label>
+                <input
+                  type="text"
+                  value={form.description}
+                  onChange={e => setForm({ ...form, description: e.target.value })}
+                  placeholder="What's stored here?"
+                  style={{ width: '100%' }}
+                />
+              </div>
+
+              {/* Preview */}
+              <div>
+                <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Preview
+                </label>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: `repeat(${Math.min(form.cols, 10)}, 1fr)`,
+                  gap: '2px',
+                  padding: '0.5rem',
+                  background: 'rgba(0,0,0,0.3)',
+                  borderRadius: '8px',
+                  maxWidth: '200px'
+                }}>
+                  {Array.from({ length: Math.min(form.rows * form.cols, 40) }, (_, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        aspectRatio: '1',
+                        background: 'rgba(0,255,255,0.1)',
+                        border: '1px solid rgba(0,255,255,0.2)',
+                        borderRadius: '2px',
+                        minWidth: '12px',
+                        minHeight: '12px'
+                      }}
+                    />
+                  ))}
+                </div>
+                <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.3)', marginTop: '0.25rem' }}>
+                  {form.rows * form.cols} total cells
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+              {isEditing && (
+                <button
+                  onClick={() => onDelete(storage.id)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    background: 'rgba(255,107,107,0.15)',
+                    border: '1px solid rgba(255,107,107,0.3)',
+                    color: '#FF6B6B',
+                    borderRadius: '8px',
+                    fontSize: '0.85rem'
+                  }}
+                >
+                  Delete
+                </button>
+              )}
+              <div style={{ flex: 1 }} />
+              <button
+                onClick={onClose}
+                style={{
+                  padding: '0.5rem 1rem',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  color: 'rgba(255,255,255,0.6)',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => onSave(form)}
+                disabled={!form.name.trim()}
+                style={{
+                  padding: '0.5rem 1.25rem',
+                  background: 'linear-gradient(135deg, #00FFFF 0%, #00CED1 100%)',
+                  border: 'none',
+                  color: '#000',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  boxShadow: '0 0 20px rgba(0,255,255,0.3)'
+                }}
+              >
+                {isEditing ? 'Update' : 'Create'}
+              </button>
+            </div>
+          </GlassPanel>
+        </Modal>
+      );
+    };
+
+    const CellContentsModal = ({ storage, row, col, components, onClose, onEditComponent, onRemoveFromCell }) => {
+      const cat = components[0] ? CATEGORIES[components[0].category] : null;
+
+      return (
+        <Modal onClose={onClose}>
+          <GlassPanel glow={cat?.color || '#00FFFF'} style={{ width: '100%', maxWidth: '400px', padding: '1.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+              <div>
+                <NeonText color={cat?.color || '#00FFFF'} size="1rem">
+                  {storage.name}
+                </NeonText>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                  Cell {row}, {col}
+                </p>
+              </div>
+            </div>
+
+            {components.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '2rem', color: 'rgba(255,255,255,0.4)' }}>
+                <p>Empty cell</p>
+                <p style={{ fontSize: '0.75rem', marginTop: '0.5rem' }}>Assign items from the Materials tab</p>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {components.map(comp => {
+                  const compCat = CATEGORIES[comp.category];
+                  const isLow = comp.quantity <= comp.lowStock;
+                  return (
+                    <div
+                      key={comp.id}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.75rem',
+                        padding: '0.75rem',
+                        background: `${compCat.color}10`,
+                        border: `1px solid ${compCat.color}30`,
+                        borderRadius: '8px'
+                      }}
+                    >
+                      <span style={{ fontSize: '1.25rem', color: compCat.color }}>{compCat.icon}</span>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ color: '#fff', fontSize: '0.85rem', fontWeight: 500 }}>{comp.name}</div>
+                        <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.7rem' }}>
+                          {comp.value} • {comp.package}
+                        </div>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{
+                          fontSize: '1.1rem',
+                          fontWeight: 700,
+                          color: isLow ? '#FF6B6B' : compCat.color,
+                          fontFamily: "'JetBrains Mono', monospace"
+                        }}>
+                          {comp.quantity}
+                        </div>
+                        {isLow && (
+                          <div style={{
+                            fontSize: '0.6rem',
+                            color: '#FF6B6B',
+                            background: 'rgba(255,107,107,0.2)',
+                            padding: '0.1rem 0.3rem',
+                            borderRadius: '3px'
+                          }}>LOW</div>
+                        )}
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <button
+                          onClick={() => onEditComponent(comp)}
+                          title="Edit component"
+                          style={{
+                            height: '24px',
+                            padding: '0 0.5rem',
+                            background: 'rgba(255,255,255,0.06)',
+                            border: '1px solid rgba(255,255,255,0.15)',
+                            borderRadius: '4px',
+                            color: 'rgba(255,255,255,0.75)',
+                            fontSize: '0.7rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => onRemoveFromCell(comp.id)}
+                          title="Remove from cell"
+                          style={{
+                            width: '24px',
+                            height: '24px',
+                            background: 'rgba(255,107,107,0.15)',
+                            border: '1px solid rgba(255,107,107,0.3)',
+                            borderRadius: '4px',
+                            color: '#FF6B6B',
+                            fontSize: '0.9rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            <button
+              onClick={onClose}
+              style={{
+                width: '100%',
+                marginTop: '1rem',
+                padding: '0.6rem',
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: 'rgba(255,255,255,0.6)',
+                borderRadius: '8px',
+                fontSize: '0.85rem'
+              }}
+            >
+              Close
+            </button>
+          </GlassPanel>
+        </Modal>
+      );
+    };
+
+    // ═══════════════════════════════════════════════════════════════
+    // COMPONENT INVENTORY COMPONENTS  
+    // ═══════════════════════════════════════════════════════════════
+
+    const ComponentCard = ({ component, storage, onClick, onQuickAdjust, isHighlighted }) => {
+      const cat = CATEGORIES[component.category];
+      const isLow = component.quantity <= component.lowStock;
+      const locationText = storage
+        ? `${storage.name} [${component.row},${component.col}]`
+        : 'Unassigned';
+
+      return (
+        <GlassPanel
+          onClick={onClick}
+          glow={isHighlighted ? '#7FFF00' : cat.color}
+          style={{
+            padding: '1rem',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            transform: isHighlighted ? 'scale(1.02)' : 'scale(1)'
+          }}
+        >
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <span style={{
+                  fontSize: '1rem',
+                  color: cat.color,
+                  textShadow: `0 0 10px ${cat.color}`
+                }}>{cat.icon}</span>
+                <span style={{
+                  fontSize: '0.65rem',
+                  color: cat.color,
+                  opacity: 0.7,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em'
+                }}>{cat.name}</span>
+              </div>
+
+              <h3 style={{ color: '#fff', fontSize: '0.95rem', fontWeight: 500, marginBottom: '0.25rem' }}>
+                {component.name}
+              </h3>
+
+              <div style={{ display: 'flex', gap: '0.5rem', fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>{component.material || component.value}</span>
+                <span style={{ opacity: 0.4 }}>•</span>
+                <span>{component.materialType || component.package}</span>
+              </div>
+
+              <div style={{
+                marginTop: '0.5rem',
+                fontSize: '0.7rem',
+                color: storage ? 'rgba(0,255,255,0.7)' : 'rgba(255,255,255,0.3)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.25rem'
+              }}>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  <span style={{ opacity: 0.7 }}>Dash:</span>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace" }}>{component.dash}</span>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  <span style={{ opacity: 0.7 }}>Locator:</span>
+                  <span>{component.partnerBin || locationText}</span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <div
+                className={isLow ? 'pulse-glow' : ''}
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 700,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  color: isLow ? '#FF6B6B' : cat.color,
+                  textShadow: isLow ? '0 0 15px #FF6B6B' : `0 0 10px ${cat.color}50`
+                }}
+              >
+                {component.quantity}
+              </div>
+              <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)' }}>in stock</div>
+              {isLow && (
+                <div style={{
+                  marginTop: '0.25rem',
+                  fontSize: '0.6rem',
+                  padding: '0.15rem 0.4rem',
+                  background: 'rgba(255,107,107,0.2)',
+                  border: '1px solid rgba(255,107,107,0.3)',
+                  borderRadius: '10px',
+                  color: '#FF6B6B'
+                }}>LOW</div>
+              )}
+              <button
+                onClick={e => { e.stopPropagation(); onQuickAdjust(component); }}
+                style={{
+                  marginTop: '0.5rem',
+                  padding: '0.25rem 0.5rem',
+                  background: `${cat.color}20`,
+                  border: `1px solid ${cat.color}40`,
+                  borderRadius: '4px',
+                  color: cat.color,
+                  fontSize: '0.7rem'
+                }}
+              >
+                ± Qty
+              </button>
+            </div>
+          </div>
+        </GlassPanel>
+      );
+    };
+
+    const ComponentModal = ({ component, storageLocations, onSave, onClose, onDelete, onUse }) => {
+      const [form, setForm] = useState(component || {
+        name: '',
+        category: 'resistor',
+        value: '',
+        package: '',
+        quantity: 0,
+        storageId: null,
+        row: null,
+        col: null,
+        lowStock: 5,
+        notes: ''
+      });
+
+      const isEditing = !!component;
+      const selectedStorage = storageLocations.find(s => s.id === form.storageId);
+
+      return (
+        <Modal onClose={onClose}>
+          <GlassPanel glow="#FFD700" style={{ width: '100%', maxWidth: '450px', padding: '1.5rem', maxHeight: '90vh', overflowY: 'auto' }}>
+            <NeonText size="1.25rem">
+              {isEditing ? 'Edit Item' : 'Add Item'}
+            </NeonText>
+
+            <div style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Name</label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={e => setForm({ ...form, name: e.target.value })}
+                  placeholder="e.g., 10kΩ Resistor"
+                  style={{ width: '100%' }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Category</label>
+                <select
+                  value={form.category}
+                  onChange={e => setForm({ ...form, category: e.target.value })}
+                  style={{ width: '100%' }}
+                >
+                  {Object.entries(CATEGORIES).map(([key, cat]) => (
+                    <option key={key} value={key}>{cat.icon} {cat.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Material</label>
+                  <input
+                    type="text"
+                    value={form.material ?? form.value}
+                    onChange={e => setForm({ ...form, material: e.target.value })}
+                    placeholder="e.g., XMP001-1"
+                    style={{ width: '100%', fontFamily: "'JetBrains Mono', monospace" }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Material Type</label>
+                  <input
+                    type="text"
+                    value={form.materialType ?? form.package}
+                    onChange={e => setForm({ ...form, materialType: e.target.value })}
+                    placeholder="Sheet / Stick / Kit"
+                    style={{ width: '100%' }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Quantity</label>
+                  <input
+                    type="number"
+                    value={form.quantity}
+                    onChange={e => setForm({ ...form, quantity: parseInt(e.target.value) || 0 })}
+                    min="0"
+                    style={{ width: '100%', fontFamily: "'JetBrains Mono', monospace" }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Low Stock Alert</label>
+                  <input
+                    type="number"
+                    value={form.lowStock}
+                    onChange={e => setForm({ ...form, lowStock: parseInt(e.target.value) || 0 })}
+                    min="0"
+                    style={{ width: '100%', fontFamily: "'JetBrains Mono', monospace" }}
+                  />
+                </div>
+              </div>
+
+              {/* Storage Location Assignment */}
+              <div style={{
+                padding: '1rem',
+                background: 'rgba(0,255,255,0.05)',
+                border: '1px solid rgba(0,255,255,0.2)',
+                borderRadius: '8px'
+              }}>
+                <label style={{ display: 'block', fontSize: '0.7rem', color: '#00FFFF', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
+                  Storage Location
+                </label>
+
+                <select
+                  value={form.storageId || ''}
+                  onChange={e => setForm({
+                    ...form,
+                    storageId: e.target.value ? parseInt(e.target.value) : null,
+                    row: null,
+                    col: null
+                  })}
+                  style={{ width: '100%', marginBottom: '0.75rem' }}
+                >
+                  <option value="">— Unassigned —</option>
+                  {storageLocations.map(s => (
+                    <option key={s.id} value={s.id}>{s.name} ({s.rows}×{s.cols})</option>
+                  ))}
+                </select>
+
+                {selectedStorage && (
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)', marginBottom: '0.25rem' }}>Row (1-{selectedStorage.rows})</label>
+                      <input
+                        type="number"
+                        value={form.row || ''}
+                        onChange={e => setForm({ ...form, row: parseInt(e.target.value) || null })}
+                        min="1"
+                        max={selectedStorage.rows}
+                        placeholder="Row"
+                        style={{ width: '100%' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)', marginBottom: '0.25rem' }}>Column (1-{selectedStorage.cols})</label>
+                      <input
+                        type="number"
+                        value={form.col || ''}
+                        onChange={e => setForm({ ...form, col: parseInt(e.target.value) || null })}
+                        min="1"
+                        max={selectedStorage.cols}
+                        placeholder="Col"
+                        style={{ width: '100%' }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.5rem', textTransform: 'uppercase' }}>Notes</label>
+                <textarea
+                  value={form.notes}
+                  onChange={e => setForm({ ...form, notes: e.target.value })}
+                  placeholder="Additional details..."
+                  rows={2}
+                  style={{ width: '100%', resize: 'none' }}
+                />
+              </div>
+
+              {/* Spreadsheet fields */}
+              <div style={{ marginTop: '0.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Region ID</label>
+                  <input type="text" value={form.regionId || ''} onChange={e => setForm({ ...form, regionId: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Dash</label>
+                  <input type="text" value={form.dash || ''} onChange={e => setForm({ ...form, dash: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>OP Card</label>
+                  <input type="text" value={form.opCard || ''} onChange={e => setForm({ ...form, opCard: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Drawing</label>
+                  <input type="text" value={form.drawing || ''} onChange={e => setForm({ ...form, drawing: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Sheet</label>
+                  <input type="text" value={form.sheet || ''} onChange={e => setForm({ ...form, sheet: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Detail Page</label>
+                  <input type="text" value={form.detailPage || ''} onChange={e => setForm({ ...form, detailPage: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Partner Locator UID</label>
+                  <input type="text" value={form.partnerLocatorUID || ''} onChange={e => setForm({ ...form, partnerLocatorUID: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Partner Bin</label>
+                  <input type="text" value={form.partnerBin || ''} onChange={e => setForm({ ...form, partnerBin: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Unit</label>
+                  <input type="text" value={form.unit || ''} onChange={e => setForm({ ...form, unit: e.target.value })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Min QTY</label>
+                  <input type="number" value={form.minQty || 0} onChange={e => setForm({ ...form, minQty: Math.max(0, parseInt(e.target.value || 0)) })} />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.25rem', textTransform: 'uppercase' }}>Low Stock Alert</label>
+                  <input type="number" value={form.lowStock || form.lowStockQty || 0} onChange={e => setForm({ ...form, lowStock: Math.max(0, parseInt(e.target.value || 0)) })} />
+                </div>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+              {isEditing && (
+                <button
+                  onClick={() => onDelete(component.id)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    background: 'rgba(255,107,107,0.15)',
+                    border: '1px solid rgba(255,107,107,0.3)',
+                    color: '#FF6B6B',
+                    borderRadius: '8px',
+                    fontSize: '0.85rem'
+                  }}
+                >
+                  Delete
+                </button>
+              )}
+              {isEditing && component.quantity > 0 && (
+                <button
+                  onClick={() => onUse(component)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    background: 'rgba(127,255,0,0.15)',
+                    border: '1px solid rgba(127,255,0,0.3)',
+                    color: '#7FFF00',
+                    borderRadius: '8px',
+                    fontSize: '0.85rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.35rem'
+                  }}
+                >
+                  <span>⚡</span> Use
+                </button>
+              )}
+              <div style={{ flex: 1 }} />
+              <button
+                onClick={onClose}
+                style={{
+                  padding: '0.5rem 1rem',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  color: 'rgba(255,255,255,0.6)',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => onSave(form)}
+                disabled={!form.name.trim()}
+                style={{
+                  padding: '0.5rem 1.25rem',
+                  background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+                  border: 'none',
+                  color: '#000',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  boxShadow: '0 0 20px rgba(255,215,0,0.3)'
+                }}
+              >
+                {isEditing ? 'Update' : 'Add'}
+              </button>
+            </div>
+          </GlassPanel>
+        </Modal>
+      );
+    };
+
+    const QuickAdjustModal = ({ component, onSave, onClose }) => {
+      const [adjustment, setAdjustment] = useState(0);
+      const cat = CATEGORIES[component.category];
+      const newQty = Math.max(0, component.quantity + adjustment);
+
+      return (
+        <Modal onClose={onClose}>
+          <GlassPanel glow={cat.color} style={{ width: '100%', maxWidth: '320px', padding: '1.5rem' }}>
+            <h3 style={{ color: '#fff', fontSize: '1rem', marginBottom: '0.25rem' }}>{component.name}</h3>
+            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', marginBottom: '1.5rem' }}>Adjust quantity</p>
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              {[{ v: -10, s: '−10' }, { v: -1, s: '−' }].map(({ v, s }) => (
+                <button
+                  key={v}
+                  onClick={() => setAdjustment(a => a + v)}
+                  style={{
+                    width: v === -1 ? '48px' : '40px',
+                    height: v === -1 ? '48px' : '40px',
+                    borderRadius: '50%',
+                    background: 'rgba(255,107,107,0.2)',
+                    border: '1px solid rgba(255,107,107,0.4)',
+                    color: '#FF6B6B',
+                    fontSize: v === -1 ? '1.5rem' : '0.9rem',
+                    fontWeight: 700
+                  }}
+                >{s}</button>
+              ))}
+
+              <div style={{ textAlign: 'center', padding: '0 0.5rem' }}>
+                <div style={{
+                  fontSize: '2.5rem',
+                  fontWeight: 700,
+                  fontFamily: "'JetBrains Mono', monospace",
+                  color: cat.color,
+                  textShadow: `0 0 20px ${cat.color}`
+                }}>{newQty}</div>
+                {adjustment !== 0 && (
+                  <div style={{
+                    fontSize: '0.75rem',
+                    color: adjustment > 0 ? '#7FFF00' : '#FF6B6B'
+                  }}>
+                    {adjustment > 0 ? '+' : ''}{adjustment}
+                  </div>
+                )}
+              </div>
+
+              {[{ v: 1, s: '+' }, { v: 10, s: '+10' }].map(({ v, s }) => (
+                <button
+                  key={v}
+                  onClick={() => setAdjustment(a => a + v)}
+                  style={{
+                    width: v === 1 ? '48px' : '40px',
+                    height: v === 1 ? '48px' : '40px',
+                    borderRadius: '50%',
+                    background: 'rgba(127,255,0,0.2)',
+                    border: '1px solid rgba(127,255,0,0.4)',
+                    color: '#7FFF00',
+                    fontSize: v === 1 ? '1.5rem' : '0.9rem',
+                    fontWeight: 700
+                  }}
+                >{s}</button>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button
+                onClick={onClose}
+                style={{
+                  flex: 1,
+                  padding: '0.6rem',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  color: 'rgba(255,255,255,0.6)',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem'
+                }}
+              >Cancel</button>
+              <button
+                onClick={() => onSave({ ...component, quantity: newQty })}
+                disabled={adjustment === 0}
+                style={{
+                  flex: 1,
+                  padding: '0.6rem',
+                  background: `linear-gradient(135deg, ${cat.color} 0%, ${cat.color}CC 100%)`,
+                  border: 'none',
+                  color: '#000',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  boxShadow: `0 0 20px ${cat.color}40`
+                }}
+              >Update</button>
+            </div>
+          </GlassPanel>
+        </Modal>
+      );
+    };
+
+    const UsePartModal = ({ component, storage, onSave, onClose }) => {
+      const [step, setStep] = useState(1); // 1 = quantity, 2 = location visual
+      const [useQty, setUseQty] = useState(1);
+      const cat = CATEGORIES[component.category];
+      const maxQty = component.quantity;
+      const newQty = Math.max(0, component.quantity - useQty);
+
+      const handleConfirm = () => {
+        if (step === 1) {
+          setStep(2);
+        } else {
+          onSave({ ...component, quantity: newQty });
+        }
+      };
+
+      // Location visualization grid
+      const LocationGrid = () => {
+        if (!storage) {
+          return (
+            <div style={{
+              textAlign: 'center',
+              padding: '2rem',
+              background: 'rgba(255,107,107,0.1)',
+              border: '1px solid rgba(255,107,107,0.3)',
+              borderRadius: '12px'
+            }}>
+              <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📍</div>
+              <p style={{ color: '#FF6B6B', fontSize: '0.9rem' }}>No location assigned</p>
+              <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', marginTop: '0.5rem' }}>
+                This component hasn't been assigned to a storage location yet.
+              </p>
+            </div>
+          );
+        }
+
+        return (
+          <div>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '1rem',
+              padding: '0.75rem',
+              background: 'rgba(0,255,255,0.1)',
+              border: '1px solid rgba(0,255,255,0.3)',
+              borderRadius: '8px'
+            }}>
+              <div style={{ color: '#00FFFF', fontSize: '1rem', fontWeight: 600 }}>{storage.name}</div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                Row {component.row}, Column {component.col}
+              </div>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: `repeat(${storage.cols}, 1fr)`,
+              gap: '4px',
+              padding: '1rem',
+              background: 'rgba(0,0,0,0.3)',
+              borderRadius: '12px'
+            }}>
+              {/* Column labels */}
+              {Array.from({ length: storage.cols }, (_, i) => (
+                <div key={`col-${i}`} style={{
+                  textAlign: 'center',
+                  fontSize: '0.6rem',
+                  color: component.col === i + 1 ? '#7FFF00' : 'rgba(255,255,255,0.3)',
+                  fontWeight: component.col === i + 1 ? 700 : 400,
+                  marginBottom: '4px'
+                }}>
+                  {i + 1}
+                </div>
+              ))}
+
+              {Array.from({ length: storage.rows }, (_, rowIdx) => (
+                <React.Fragment key={`row-${rowIdx}`}>
+                  {Array.from({ length: storage.cols }, (_, colIdx) => {
+                    const row = rowIdx + 1;
+                    const col = colIdx + 1;
+                    const isTarget = component.row === row && component.col === col;
+
+                    return (
+                      <div
+                        key={`${row}-${col}`}
+                        className={isTarget ? 'pulse-glow' : ''}
+                        style={{
+                          aspectRatio: '1',
+                          minHeight: '32px',
+                          background: isTarget
+                            ? `linear-gradient(135deg, ${cat.color}40 0%, ${cat.color}20 100%)`
+                            : 'rgba(255,255,255,0.05)',
+                          border: isTarget
+                            ? `2px solid ${cat.color}`
+                            : '1px solid rgba(255,255,255,0.1)',
+                          borderRadius: '6px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          position: 'relative',
+                          boxShadow: isTarget ? `0 0 20px ${cat.color}50, inset 0 0 15px ${cat.color}20` : 'none',
+                          transform: isTarget ? 'scale(1.1)' : 'scale(1)',
+                          zIndex: isTarget ? 10 : 1,
+                          transition: 'all 0.3s'
+                        }}
+                      >
+                        {isTarget ? (
+                          <>
+                            <span style={{
+                              fontSize: '1.2rem',
+                              color: cat.color,
+                              textShadow: `0 0 10px ${cat.color}`
+                            }}>
+                              {cat.icon}
+                            </span>
+                            <span style={{
+                              position: 'absolute',
+                              bottom: '2px',
+                              fontSize: '0.5rem',
+                              color: cat.color,
+                              fontWeight: 700
+                            }}>HERE</span>
+                          </>
+                        ) : (
+                          <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.2)' }}>
+                            {row},{col}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Row labels on side */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              marginTop: '0.75rem',
+              fontSize: '0.7rem',
+              color: 'rgba(255,255,255,0.4)'
+            }}>
+              <span>↑ Row {component.row}</span>
+              <span>•</span>
+              <span>Col {component.col} →</span>
+            </div>
+          </div>
+        );
+      };
+
+      return (
+        <Modal onClose={onClose}>
+          <GlassPanel glow={cat.color} style={{ width: '100%', maxWidth: '400px', padding: '1.5rem' }}>
+            {/* Header */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+              <span style={{
+                fontSize: '1.5rem',
+                color: cat.color,
+                textShadow: `0 0 15px ${cat.color}`
+              }}>{cat.icon}</span>
+              <div>
+                <h3 style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 600 }}>{component.name}</h3>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem' }}>
+                  {component.value} • {component.package}
+                </p>
+              </div>
+            </div>
+
+            {/* Step indicator */}
+            <div style={{
+              display: 'flex',
+              gap: '0.5rem',
+              marginBottom: '1.5rem',
+              marginTop: '1rem'
+            }}>
+              {[1, 2].map(s => (
+                <div
+                  key={s}
+                  style={{
+                    flex: 1,
+                    height: '3px',
+                    borderRadius: '2px',
+                    background: step >= s ? cat.color : 'rgba(255,255,255,0.1)',
+                    boxShadow: step >= s ? `0 0 10px ${cat.color}50` : 'none',
+                    transition: 'all 0.3s'
+                  }}
+                />
+              ))}
+            </div>
+
+            {step === 1 ? (
+              <>
+                {/* Quantity selection */}
+                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center' }}>
+                  How many do you need?
+                </p>
+
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <button
+                    onClick={() => setUseQty(q => Math.max(1, q - 1))}
+                    disabled={useQty <= 1}
+                    style={{
+                      width: '44px',
+                      height: '44px',
+                      borderRadius: '50%',
+                      background: 'rgba(255,255,255,0.1)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      color: '#fff',
+                      fontSize: '1.5rem',
+                      fontWeight: 700
+                    }}
+                  >−</button>
+
+                  <div style={{ textAlign: 'center', minWidth: '80px' }}>
+                    <input
+                      type="number"
+                      value={useQty}
+                      onChange={e => setUseQty(Math.min(maxQty, Math.max(1, parseInt(e.target.value) || 1)))}
+                      min="1"
+                      max={maxQty}
+                      style={{
+                        width: '80px',
+                        textAlign: 'center',
+                        fontSize: '2rem',
+                        fontWeight: 700,
+                        background: 'transparent',
+                        border: 'none',
+                        color: cat.color,
+                        fontFamily: "'JetBrains Mono', monospace"
+                      }}
+                    />
+                    <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)' }}>
+                      of {maxQty} available
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setUseQty(q => Math.min(maxQty, q + 1))}
+                    disabled={useQty >= maxQty}
+                    style={{
+                      width: '44px',
+                      height: '44px',
+                      borderRadius: '50%',
+                      background: 'rgba(255,255,255,0.1)',
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      color: '#fff',
+                      fontSize: '1.5rem',
+                      fontWeight: 700
+                    }}
+                  >+</button>
+                </div>
+
+                {/* Quick select buttons */}
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                  {[1, 5, 10].filter(n => n <= maxQty).map(n => (
+                    <button
+                      key={n}
+                      onClick={() => setUseQty(n)}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        background: useQty === n ? `${cat.color}30` : 'rgba(255,255,255,0.05)',
+                        border: `1px solid ${useQty === n ? cat.color : 'rgba(255,255,255,0.1)'}`,
+                        borderRadius: '6px',
+                        color: useQty === n ? cat.color : 'rgba(255,255,255,0.5)',
+                        fontSize: '0.8rem'
+                      }}
+                    >{n}</button>
+                  ))}
+                  {maxQty > 10 && (
+                    <button
+                      onClick={() => setUseQty(maxQty)}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        background: useQty === maxQty ? `${cat.color}30` : 'rgba(255,255,255,0.05)',
+                        border: `1px solid ${useQty === maxQty ? cat.color : 'rgba(255,255,255,0.1)'}`,
+                        borderRadius: '6px',
+                        color: useQty === maxQty ? cat.color : 'rgba(255,255,255,0.5)',
+                        fontSize: '0.8rem'
+                      }}
+                    >All ({maxQty})</button>
+                  )}
+                </div>
+
+                {/* Remaining indicator */}
+                <div style={{
+                  textAlign: 'center',
+                  padding: '0.75rem',
+                  background: newQty <= component.lowStock ? 'rgba(255,107,107,0.1)' : 'rgba(255,255,255,0.03)',
+                  border: `1px solid ${newQty <= component.lowStock ? 'rgba(255,107,107,0.3)' : 'rgba(255,255,255,0.05)'}`,
+                  borderRadius: '8px',
+                  marginBottom: '1rem'
+                }}>
+                  <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem' }}>After use: </span>
+                  <span style={{
+                    color: newQty <= component.lowStock ? '#FF6B6B' : '#7FFF00',
+                    fontWeight: 700,
+                    fontFamily: "'JetBrains Mono', monospace"
+                  }}>{newQty} remaining</span>
+                  {newQty <= component.lowStock && newQty > 0 && (
+                    <span style={{ color: '#FF6B6B', fontSize: '0.75rem', marginLeft: '0.5rem' }}>(low stock!)</span>
+                  )}
+                  {newQty === 0 && (
+                    <span style={{ color: '#FF6B6B', fontSize: '0.75rem', marginLeft: '0.5rem' }}>(out of stock!)</span>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Location visualization */}
+                <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', marginBottom: '1rem', textAlign: 'center' }}>
+                  📍 Go grab your part!
+                </p>
+                <LocationGrid />
+              </>
+            )}
+
+            {/* Actions */}
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+              <button
+                onClick={step === 1 ? onClose : () => setStep(1)}
+                style={{
+                  flex: 1,
+                  padding: '0.6rem',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  color: 'rgba(255,255,255,0.6)',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem'
+                }}
+              >{step === 1 ? 'Cancel' : '← Back'}</button>
+              <button
+                onClick={handleConfirm}
+                style={{
+                  flex: 1,
+                  padding: '0.6rem',
+                  background: `linear-gradient(135deg, ${cat.color} 0%, ${cat.color}CC 100%)`,
+                  border: 'none',
+                  color: '#000',
+                  borderRadius: '8px',
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
+                  boxShadow: `0 0 20px ${cat.color}40`
+                }}
+              >{step === 1 ? 'Show Location →' : `Use ${useQty} Part${useQty > 1 ? 's' : ''}`}</button>
+            </div>
+          </GlassPanel>
+        </Modal>
+      );
+    };
+
+    // ═══════════════════════════════════════════════════════════════
+    // MAIN APPLICATION
+    // ═══════════════════════════════════════════════════════════════
+
+    const App = () => {
+      const [activeTab, setActiveTab] = useState('inventory');
+      const importInputRef = useRef(null);
+      const [components, setComponents] = useState(() => {
+        // Check if URL has force_examples parameter to reset data
+        const urlParams = new URLSearchParams(window.location.search);
+        const forceExamples = urlParams.has('force_examples');
+
+        // Always check if stored data has old electronic component fields
+        const stored = localStorage.getItem(LS_COMPONENTS);
+        let hasOldData = false;
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            // Check if any item has electronic-specific fields (value, package) and NOT material fields
+            hasOldData = parsed.some(item =>
+              (item.value || item.package) && !item.material && !item.materialType
+            );
+          } catch (e) {
+            hasOldData = true;
+          }
+        }
+
+        if (forceExamples || hasOldData) {
+          // Clear old localStorage and use new examples
+          localStorage.removeItem(LS_COMPONENTS);
+          const normalized = INITIAL_COMPONENTS.map(normalizeComponent);
+          safeSave(LS_COMPONENTS, normalized);
+          return normalized;
+        }
+
+        const loaded = safeLoad(LS_COMPONENTS, INITIAL_COMPONENTS);
+        const normalized = loaded.map(normalizeComponent);
+        // If missing/corrupt, immediately overwrite with normalized defaults
+        if (loaded === INITIAL_COMPONENTS) safeSave(LS_COMPONENTS, normalized);
+        return normalized;
+      });
+      const [storageLocations, setStorageLocations] = useState(() => {
+        const loaded = safeLoad(LS_STORAGE, INITIAL_STORAGE);
+        const normalized = loaded.map(normalizeStorage);
+        if (loaded === INITIAL_STORAGE) safeSave(LS_STORAGE, normalized);
+        return normalized;
+      });
+
+      useEffect(() => safeSave(LS_COMPONENTS, components), [components]);
+      useEffect(() => safeSave(LS_STORAGE, storageLocations), [storageLocations]);
+
+      // Search and filter state
+      const [search, setSearch] = useState('');
+      const [categoryFilter, setCategoryFilter] = useState(null);
+      const [sortBy, setSortBy] = useState('name');
+      const [lowStockOnly, setLowStockOnly] = useState(false);
+
+      // Modal states
+      const [showComponentModal, setShowComponentModal] = useState(false);
+      const [editComponent, setEditComponent] = useState(null);
+      const [quickAdjust, setQuickAdjust] = useState(null);
+      const [usePart, setUsePart] = useState(null);
+      const [showStorageModal, setShowStorageModal] = useState(false);
+      const [editStorage, setEditStorage] = useState(null);
+      const [cellContents, setCellContents] = useState(null);
+      const [highlightComponent, setHighlightComponent] = useState(null);
+
+      // Filtered components
+      const filteredComponents = useMemo(() => {
+        return components
+          .filter(c => {
+            const matchesSearch = search === '' ||
+              c.name.toLowerCase().includes(search.toLowerCase()) ||
+              c.value.toLowerCase().includes(search.toLowerCase()) ||
+              c.notes?.toLowerCase().includes(search.toLowerCase());
+            const matchesCat = categoryFilter === null || c.category === categoryFilter;
+            const matchesLowStock = !lowStockOnly || c.quantity <= c.lowStock;
+            return matchesSearch && matchesCat && matchesLowStock;
+          })
+          .sort((a, b) => {
+            switch (sortBy) {
+              case 'quantity-low': return a.quantity - b.quantity;
+              case 'quantity-high': return b.quantity - a.quantity;
+              case 'category': return a.category.localeCompare(b.category);
+              default: return a.name.localeCompare(b.name);
+            }
+          });
+      }, [components, search, categoryFilter, sortBy, lowStockOnly]);
+
+      // Stats
+      const stats = useMemo(() => ({
+        totalParts: components.reduce((sum, c) => sum + c.quantity, 0),
+        uniqueComponents: components.length,
+        lowStock: components.filter(c => c.quantity <= c.lowStock).length,
+        unassigned: components.filter(c => !c.storageId).length
+      }), [components]);
+
+      // Handlers
+      const handleSaveComponent = (comp) => {
+        if (comp.id) {
+          setComponents(prev => prev.map(c => String(c.id) === String(comp.id) ? comp : c));
+        } else {
+          const newId = (crypto?.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`);
+          setComponents(prev => [...prev, { ...comp, id: newId }]);
+        }
+        setShowComponentModal(false);
+        setEditComponent(null);
+        setQuickAdjust(null);
+      };
+
+      const handleDeleteComponent = (id) => {
+        setComponents(prev => prev.filter(c => String(c.id) !== String(id)));
+        setEditComponent(null);
+      };
+
+      const handleSaveStorage = (storage) => {
+        if (storage.id) {
+          setStorageLocations(prev => prev.map(s => s.id === storage.id ? storage : s));
+        } else {
+          const newId = (crypto?.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`);
+          setStorageLocations(prev => [...prev, { ...storage, id: newId }]);
+        }
+        setShowStorageModal(false);
+        setEditStorage(null);
+      };
+
+      const handleDeleteStorage = (id) => {
+        // Unassign components from deleted storage
+        setComponents(prev => prev.map(c =>
+          c.storageId === id ? { ...c, storageId: null, row: null, col: null } : c
+        ));
+        setStorageLocations(prev => prev.filter(s => s.id !== id));
+        setEditStorage(null);
+      };
+
+      const handleCellClick = (storageId, row, col, cellComps) => {
+        const storage = storageLocations.find(s => String(s.id) === String(storageId));
+        setCellContents({ storage, row, col, components: cellComps });
+      };
+
+      const handleRemoveFromCell = (compId) => {
+        setComponents(prev => prev.map(c =>
+          String(c.id) === String(compId) ? { ...c, storageId: null, row: null, col: null } : c
+        ));
+        setCellContents(prev => {
+          if (!prev) return prev;
+          const nextComponents = (prev.components || []).filter(c => String(c.id) !== String(compId));
+          return { ...prev, components: nextComponents };
+        });
+      };
+
+      const [exportStatus, setExportStatus] = useState(null);
+
+      function downloadBlob(filename, mime, text) {
+        try {
+          const blob = new Blob([text], { type: mime });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+        } catch {
+          // ignore
+        }
+      }
+
+      const buildExportText = () => {
+        // Sort components by storage location, then by row/col
+        const sorted = [...components].sort((a, b) => {
+          // Unassigned items go to the end
+          if (!a.storageId && !b.storageId) return a.name.localeCompare(b.name);
+          if (!a.storageId) return 1;
+          if (!b.storageId) return -1;
+
+          // Sort by storage name
+          const storageA = storageLocations.find(s => String(s.id) === String(a.storageId));
+          const storageB = storageLocations.find(s => String(s.id) === String(b.storageId));
+          const nameCompare = (storageA?.name || '').localeCompare(storageB?.name || '');
+          if (nameCompare !== 0) return nameCompare;
+
+          // Then by row
+          if (a.row !== b.row) return (a.row || 0) - (b.row || 0);
+
+          // Then by column
+          return (a.col || 0) - (b.col || 0);
+        });
+
+        // Build TSV export with the spreadsheet columns
+        const headers = [
+          'Region ID', 'Dash', 'Name', 'Zone', 'OP Card', 'Drawing', 'Sheet', 'Material', 'Material Type', 'QTY On Hand', 'Unit', 'Detail Page', 'Partner Locator UID', 'Partner Bin', 'Min QTY', 'Low Stock Alert QTY'
+        ];
+
+        const rows = [headers.join('\t')];
+
+        sorted.forEach(comp => {
+          const row = [
+            comp.regionId || '',
+            comp.dash || '',
+            comp.name || '',
+            comp.zone || '',
+            comp.opCard || '',
+            comp.drawing || '',
+            comp.sheet || '',
+            comp.material || comp.value || '',
+            comp.materialType || comp.package || '',
+            comp.quantity ?? '',
+            comp.unit || '',
+            comp.detailPage || '',
+            comp.partnerLocatorUID || '',
+            comp.partnerBin || '',
+            comp.minQty ?? '',
+            comp.lowStock ?? ''
+          ];
+          rows.push(row.join('\t'));
+        });
+
+        // Add a small footer
+        rows.push('');
+        rows.push(`Exported: ${new Date().toLocaleString()}`);
+
+        return rows.join('\n');
+      };
+
+      const handleExportToClipboard = () => {
+        const output = buildExportText();
+
+        navigator.clipboard.writeText(output).then(() => {
+          setExportStatus('success');
+          setTimeout(() => setExportStatus(null), 2000);
+        }).catch(() => {
+          setExportStatus('error');
+          setTimeout(() => setExportStatus(null), 2000);
+        });
+      };
+
+      const handleDownloadTxt = () => {
+        const output = buildExportText();
+        downloadBlob(`PARTner-materials-export-${new Date().toISOString().slice(0, 10)}.tsv`, 'text/tab-separated-values;charset=utf-8', output);
+        setExportStatus('txt');
+        setTimeout(() => setExportStatus(null), 2000);
+      };
+
+      const handleDownloadJson = () => {
+        const payload = {
+          version: 1,
+          exportedAt: new Date().toISOString(),
+          storageLocations,
+          components
+        };
+        const json = JSON.stringify(payload, null, 2);
+        downloadBlob(`PARTner-export-${new Date().toISOString().slice(0, 10)}.json`, 'application/json;charset=utf-8', json);
+        setExportStatus('json');
+        setTimeout(() => setExportStatus(null), 2000);
+      };
+
+      // Export in master_parts.json format with bootbro tracking fields
+      const handleExportMasterParts = () => {
+        // Group components by slide number (detailPage)
+        const slideGroups = {};
+        components.forEach(comp => {
+          const slideNum = parseInt(comp.detailPage, 10) || 0;
+          if (!slideGroups[slideNum]) {
+            slideGroups[slideNum] = [];
+          }
+          slideGroups[slideNum].push(comp);
+        });
+
+        // Build storage location lookup
+        const storageLookup = {};
+        storageLocations.forEach(s => {
+          storageLookup[s.id] = s;
+        });
+
+        // Build slides array
+        const slides = Object.keys(slideGroups)
+          .map(Number)
+          .sort((a, b) => a - b)
+          .map(slideNum => {
+            const rows = slideGroups[slideNum].map(comp => {
+              const storage = comp.storageId ? storageLookup[comp.storageId] : null;
+              return {
+                // Original table fields
+                dash: comp.dash || '',
+                name: comp.name || '',
+                op_card: comp.opCard || '',
+                drawing: comp.drawing || '',
+                sheet: comp.sheet || '',
+                material: comp.material || '',
+                material_type: comp.materialType || '',
+                zone: comp.zone || '',
+                region_id: comp.regionId || '',
+                // Bootbro tracking fields
+                quantity: comp.quantity || 0,
+                unit: comp.unit || 'EA',
+                min_qty: comp.minQty || 0,
+                low_stock: comp.lowStock || 0,
+                storage_id: comp.storageId || null,
+                storage_name: storage ? storage.name : '',
+                bin_row: comp.row || null,
+                bin_col: comp.col || null,
+                bin_label: (comp.row && comp.col) ? `R${comp.row}C${comp.col}` : '',
+                partner_bin: comp.partnerBin || '',
+                partner_locator_uid: comp.partnerLocatorUID || '',
+                notes: comp.notes || ''
+              };
+            });
+
+            return {
+              slide_number: slideNum,
+              slide_id: `bootbro::slide_${slideNum}`,
+              row_count: rows.length,
+              tables: [{
+                table_index: 0,
+                headers: ['Dash', 'Name', 'OP Card', 'Drawing', 'Sheet', 'Material', 'Qty', 'Min Qty', 'Bin'],
+                rows
+              }]
+            };
+          });
+
+        const payload = {
+          metadata: {
+            exported_at: new Date().toISOString(),
+            source: 'bootbro',
+            version: '1.0',
+            slide_count: slides.length,
+            row_count: components.length
+          },
+          storage_locations: storageLocations.map(s => ({
+            id: s.id,
+            name: s.name,
+            rows: s.rows,
+            cols: s.cols,
+            description: s.description || ''
+          })),
+          slides
+        };
+
+        const json = JSON.stringify(payload, null, 2);
+        downloadBlob(`master_parts_${new Date().toISOString().slice(0, 10)}.json`, 'application/json;charset=utf-8', json);
+        showToast(`Exported ${components.length} parts to master_parts.json`, 'success');
+      };
+
+      // Export master_inventory_v2.json for Aircraft Viewer
+      const handleExportMasterInventory = () => {
+        const inv = buildMasterInventoryV2(components, storageLocations);
+        const json = JSON.stringify(inv, null, 2);
+        downloadBlob(`master_inventory_v2.json`, 'application/json;charset=utf-8', json);
+        showToast(`Exported ${inv.items.length} inventory items`, 'success');
+      };
+
+      const handleImportJsonClick = () => {
+        try {
+          if (importInputRef.current) importInputRef.current.click();
+        } catch {
+          // ignore
+        }
+      };
+
+      const handleImportJsonFile = (e) => {
+        const input = e?.target;
+        const file = input?.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const text = String(reader.result || '');
+            const payload = JSON.parse(text);
+
+            // Check if this is a master_parts.json format (has metadata and slides arrays)
+            if (payload && payload.metadata && Array.isArray(payload.slides)) {
+              // Convert master_parts.json to components format
+              const importedComponents = convertMasterPartsToComponents(payload);
+              if (importedComponents.length === 0) {
+                showToast('No parts found in master_parts.json', 'error');
+                return;
+              }
+
+              // Also import storage locations if present
+              if (Array.isArray(payload.storage_locations) && payload.storage_locations.length > 0) {
+                const importedStorage = extractStorageLocationsFromMasterParts(payload).map(normalizeStorage);
+                setStorageLocations(importedStorage);
+              }
+
+              setComponents(importedComponents);
+              showToast(`Imported ${importedComponents.length} parts from master_parts.json`, 'success');
+              return;
+            }
+
+            // Otherwise expect the original format with components and storageLocations
+            const hasArrays = payload && typeof payload === 'object' && Array.isArray(payload.components) && Array.isArray(payload.storageLocations);
+            if (!hasArrays) throw new Error('Invalid file format');
+
+            const importedStorage = payload.storageLocations.map(normalizeStorage);
+            const importedComponents = payload.components.map(normalizeComponent);
+
+            setStorageLocations(importedStorage);
+            setComponents(importedComponents);
+            showToast('Import complete', 'success');
+          } catch (err) {
+            console.error('Import error:', err);
+            showToast('Import failed (invalid JSON)', 'error');
+          } finally {
+            try {
+              if (input) input.value = '';
+            } catch {
+              // ignore
+            }
+          }
+        };
+        reader.onerror = () => {
+          showToast('Import failed (read error)', 'error');
+          try {
+            if (input) input.value = '';
+          } catch {
+            // ignore
+          }
+        };
+        reader.readAsText(file);
+      };
+
+      // Populate toolbar with action buttons
+      useEffect(() => {
+        window.MakerHeader.setActions([
+          { label: 'Export', onClick: handleExportToClipboard },
+          { label: 'TXT', onClick: handleDownloadTxt },
+          { label: 'JSON', onClick: handleDownloadJson },
+          { label: 'Master Parts', onClick: handleExportMasterParts },
+          { label: 'Inventory', onClick: handleExportMasterInventory },
+          { label: 'Import', onClick: handleImportJsonClick },
+          { label: lowStockOnly ? 'All Items' : 'Low Stock', onClick: () => setLowStockOnly(v => !v) }
+        ]);
+        window.MakerHeader.showToolbar(true);
+      }, [exportStatus, lowStockOnly]);
+
+      return (
+        <div style={{ minHeight: '100vh', padding: '1rem' }}>
+          <input
+            ref={importInputRef}
+            type="file"
+            accept="application/json,.json"
+            style={{ display: 'none' }}
+            onChange={handleImportJsonFile}
+          />
+          {/* Background effects */}
+          <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', overflow: 'hidden', zIndex: 0 }}>
+            <div style={{
+              position: 'absolute',
+              top: '20%',
+              left: '-10%',
+              width: '300px',
+              height: '300px',
+              borderRadius: '50%',
+              background: 'rgba(255,215,0,0.06)',
+              filter: 'blur(100px)'
+            }} />
+            <div style={{
+              position: 'absolute',
+              bottom: '20%',
+              right: '-10%',
+              width: '300px',
+              height: '300px',
+              borderRadius: '50%',
+              background: 'rgba(0,255,255,0.05)',
+              filter: 'blur(100px)'
+            }} />
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '400px',
+              height: '400px',
+              borderRadius: '50%',
+              background: 'rgba(218,112,214,0.03)',
+              filter: 'blur(120px)'
+            }} />
+          </div>
+
+          <div style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto' }}>
+            {/* Stats bar */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              {[
+                { label: 'Total QTY', value: stats.totalParts.toLocaleString(), color: '#FFD700' },
+                { label: 'Unique Items', value: stats.uniqueComponents, color: '#00FFFF' },
+                { label: 'Low Stock', value: stats.lowStock, color: stats.lowStock > 0 ? '#FF6B6B' : '#7FFF00' },
+                { label: 'Unassigned', value: stats.unassigned, color: stats.unassigned > 0 ? '#F39C12' : '#7FFF00' }
+              ].map((stat, i) => (
+                <GlassPanel key={i} style={{ padding: '0.75rem', textAlign: 'center' }}>
+                  <div style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 700,
+                    fontFamily: "'JetBrains Mono', monospace",
+                    color: stat.color,
+                    textShadow: `0 0 15px ${stat.color}40`
+                  }}>{stat.value}</div>
+                  <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    {stat.label}
+                  </div>
+                </GlassPanel>
+              ))}
+            </div>
+
+            {/* Tabs */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '-1px' }}>
+              <button
+                className={`tab-button ${activeTab === 'inventory' ? 'active' : ''}`}
+                onClick={() => setActiveTab('inventory')}
+              >
+                📦 Materials
+              </button>
+              <button
+                className={`tab-button ${activeTab === 'storage' ? 'active' : ''}`}
+                onClick={() => setActiveTab('storage')}
+              >
+                🗄️ Storage Map
+              </button>
+            </div>
+
+            {/* Tab content */}
+            <GlassPanel style={{ padding: '1.5rem', borderTopLeftRadius: 0 }}>
+              {activeTab === 'inventory' && (
+                <>
+                  {/* Search and controls */}
+                  <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
+                    <div style={{ flex: 1, position: 'relative' }}>
+                      <input
+                        type="text"
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        placeholder="Search components, values..."
+                        style={{ width: '100%', paddingLeft: '2.5rem' }}
+                      />
+                      <span style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)' }}>🔍</span>
+                    </div>
+                    <select
+                      value={sortBy}
+                      onChange={e => setSortBy(e.target.value)}
+                      style={{ width: '140px' }}
+                    >
+                      <option value="name">Sort: Name</option>
+                      <option value="quantity-low">Sort: Qty ↑</option>
+                      <option value="quantity-high">Sort: Qty ↓</option>
+                      <option value="category">Sort: Category</option>
+                    </select>
+                    <button
+                      onClick={() => { setEditComponent(null); setShowComponentModal(true); }}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+                        border: 'none',
+                        borderRadius: '8px',
+                        color: '#000',
+                        fontWeight: 600,
+                        fontSize: '0.85rem',
+                        boxShadow: '0 0 20px rgba(255,215,0,0.3)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}
+                    >
+                      <span style={{ fontSize: '1.1rem' }}>+</span> Add
+                    </button>
+                  </div>
+
+                  {/* Category filters */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+                    <button
+                      onClick={() => setCategoryFilter(null)}
+                      style={{
+                        padding: '0.4rem 0.75rem',
+                        fontSize: '0.7rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        borderRadius: '20px',
+                        background: categoryFilter === null ? 'rgba(255,215,0,0.2)' : 'rgba(255,255,255,0.05)',
+                        border: `1px solid ${categoryFilter === null ? 'rgba(255,215,0,0.4)' : 'rgba(255,255,255,0.1)'}`,
+                        color: categoryFilter === null ? '#FFD700' : 'rgba(255,255,255,0.5)',
+                        boxShadow: categoryFilter === null ? '0 0 15px rgba(255,215,0,0.2)' : 'none'
+                      }}
+                    >All</button>
+                    {Object.entries(CATEGORIES).map(([key, cat]) => (
+                      <button
+                        key={key}
+                        onClick={() => setCategoryFilter(key)}
+                        style={{
+                          padding: '0.4rem 0.75rem',
+                          fontSize: '0.7rem',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                          borderRadius: '20px',
+                          background: categoryFilter === key ? `${cat.color}20` : 'rgba(255,255,255,0.05)',
+                          border: `1px solid ${categoryFilter === key ? `${cat.color}50` : 'rgba(255,255,255,0.1)'}`,
+                          color: categoryFilter === key ? cat.color : 'rgba(255,255,255,0.5)',
+                          boxShadow: categoryFilter === key ? `0 0 15px ${cat.color}25` : 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.35rem'
+                        }}
+                      >
+                        <span style={{ color: cat.color }}>{cat.icon}</span>
+                        {cat.name}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Components grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '0.75rem' }}>
+                    {filteredComponents.map(comp => (
+                      <ComponentCard
+                        key={comp.id}
+                        component={comp}
+                        storage={storageLocations.find(s => s.id === comp.storageId)}
+                        onClick={() => { setEditComponent(comp); setShowComponentModal(true); }}
+                        onQuickAdjust={setQuickAdjust}
+                        isHighlighted={String(highlightComponent) === String(comp.id)}
+                      />
+                    ))}
+                  </div>
+
+                  {filteredComponents.length === 0 && (
+                    <div style={{ textAlign: 'center', padding: '3rem', color: 'rgba(255,255,255,0.4)' }}>
+                      <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem', opacity: 0.5 }}>🔍</div>
+                      <p>No components found</p>
+                      <button
+                        onClick={() => { setSearch(''); setCategoryFilter(null); }}
+                        style={{
+                          marginTop: '0.75rem',
+                          background: 'none',
+                          border: 'none',
+                          color: '#00FFFF',
+                          textDecoration: 'underline',
+                          fontSize: '0.85rem'
+                        }}
+                      >Clear filters</button>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {activeTab === 'storage' && (
+                <>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
+                      Click cells to view contents • Edit items to assign locations
+                    </p>
+                    <button
+                      onClick={() => { setEditStorage(null); setShowStorageModal(true); }}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        background: 'linear-gradient(135deg, #00FFFF 0%, #00CED1 100%)',
+                        border: 'none',
+                        borderRadius: '8px',
+                        color: '#000',
+                        fontWeight: 600,
+                        fontSize: '0.85rem',
+                        boxShadow: '0 0 20px rgba(0,255,255,0.3)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}
+                    >
+                      <span style={{ fontSize: '1.1rem' }}>+</span> New Location
+                    </button>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '1rem' }}>
+                    {storageLocations.map(storage => (
+                      <div key={storage.id}>
+                        <StorageGrid
+                          storage={storage}
+                          components={components}
+                          onCellClick={handleCellClick}
+                          selectedCell={cellContents?.storage?.id === storage.id ? cellContents : null}
+                          highlightComponent={highlightComponent}
+                        />
+                        <button
+                          onClick={() => { setEditStorage(storage); setShowStorageModal(true); }}
+                          style={{
+                            marginTop: '0.5rem',
+                            width: '100%',
+                            padding: '0.4rem',
+                            background: 'rgba(255,255,255,0.03)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            borderRadius: '6px',
+                            color: 'rgba(255,255,255,0.4)',
+                            fontSize: '0.75rem'
+                          }}
+                        >
+                          Edit Location
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+
+                  {storageLocations.length === 0 && (
+                    <div style={{ textAlign: 'center', padding: '3rem', color: 'rgba(255,255,255,0.4)' }}>
+                      <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem', opacity: 0.5 }}>🗄️</div>
+                      <p>No storage locations defined</p>
+                      <p style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>Create locations to organize your components</p>
+                    </div>
+                  )}
+                </>
+              )}
+            </GlassPanel>
+          </div>
+
+          {/* Modals */}
+          {showComponentModal && (
+            <ComponentModal
+              component={editComponent}
+              storageLocations={storageLocations}
+              onSave={handleSaveComponent}
+              onClose={() => { setShowComponentModal(false); setEditComponent(null); }}
+              onDelete={handleDeleteComponent}
+              onUse={(comp) => { setShowComponentModal(false); setEditComponent(null); setUsePart(comp); }}
+            />
+          )}
+
+          {quickAdjust && (
+            <QuickAdjustModal
+              component={quickAdjust}
+              onSave={handleSaveComponent}
+              onClose={() => setQuickAdjust(null)}
+            />
+          )}
+
+          {showStorageModal && (
+            <StorageModal
+              storage={editStorage}
+              onSave={handleSaveStorage}
+              onClose={() => { setShowStorageModal(false); setEditStorage(null); }}
+              onDelete={handleDeleteStorage}
+            />
+          )}
+
+          {cellContents && (
+            <CellContentsModal
+              storage={cellContents.storage}
+              row={cellContents.row}
+              col={cellContents.col}
+              components={cellContents.components}
+              onClose={() => setCellContents(null)}
+              onEditComponent={(comp) => { setCellContents(null); setEditComponent(comp); setShowComponentModal(true); }}
+              onRemoveFromCell={handleRemoveFromCell}
+            />
+          )}
+
+          {usePart && (
+            <UsePartModal
+              component={usePart}
+              storage={storageLocations.find(s => s.id === usePart.storageId)}
+              onSave={(updatedComp) => { handleSaveComponent(updatedComp); setUsePart(null); }}
+              onClose={() => setUsePart(null)}
+            />
+          )}
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>

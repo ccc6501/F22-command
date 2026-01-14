@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPTX Table Extractor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --glass-bg: rgba(20, 20, 35, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-text: rgba(255, 255, 255, 0.7);
+            --neon-cyan: #00f0ff;
+            --neon-gold: #ffd700;
+            --neon-green: #00ff88;
+            --neon-red: #ff4466;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-dark);
+            color: var(--glass-text);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: var(--neon-cyan);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--glass-text);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--glass-border);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            background: var(--glass-bg);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 2rem;
+        }
+
+        .drop-zone:hover,
+        .drop-zone.dragover {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .drop-zone input {
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            background: var(--glass-bg);
+            color: var(--glass-text);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        button.primary {
+            background: linear-gradient(135deg, var(--neon-cyan), #0088aa);
+            border: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+        button.primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            color: var(--neon-gold);
+            font-weight: 600;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .slides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .slide-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .slide-header {
+            padding: 0.75rem 1rem;
+            background: rgba(0, 240, 255, 0.1);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slide-title {
+            color: var(--neon-cyan);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .slide-meta {
+            font-size: 0.75rem;
+            color: var(--glass-text);
+        }
+
+        .table-container {
+            max-height: 300px;
+            overflow: auto;
+            padding: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+        }
+
+        th,
+        td {
+            border: 1px solid var(--glass-border);
+            padding: 0.4rem 0.6rem;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--neon-gold);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .no-tables {
+            padding: 1rem;
+            text-align: center;
+            color: var(--glass-text);
+            font-style: italic;
+        }
+
+        .master-table-container {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            max-height: 500px;
+            overflow: auto;
+            margin-bottom: 2rem;
+        }
+
+        .master-table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+        }
+
+        .master-table-container th,
+        .master-table-container td {
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+        }
+
+        .master-table-container th {
+            background: rgba(255, 215, 0, 0.15);
+            color: var(--neon-gold);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .master-table-container tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .master-table-container tr:hover {
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .slide-num-col {
+            color: var(--neon-cyan);
+            font-weight: 600;
+            text-align: center !important;
+        }
+
+        .json-preview {
+            background: #1a1a2e;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem;
+            max-height: 400px;
+            overflow: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 0.75rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .section-title {
+            color: var(--neon-gold);
+            font-size: 1rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            color: var(--neon-green);
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .processing {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .processing-content {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--glass-border);
+            border-top-color: var(--neon-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📊 PPTX Table Extractor</h1>
+        <p class="subtitle">Extract structured table data from PowerPoint files for use with slide images</p>
+
+        <div class="drop-zone" id="dropZone">
+            <p>📁 Drop PPTX files here or click to browse</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">Extracts tables with slide names for
+                matching to PDF images</p>
+            <input type="file" id="fileInput" accept=".pptx" multiple>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="deckCount">0</div>
+                <div class="stat-label">Files Loaded</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="slideCount">0</div>
+                <div class="stat-label">Slides</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="tableCount">0</div>
+                <div class="stat-label">Tables Found</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="rowCount">0</div>
+                <div class="stat-label">Total Rows</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="clearBtn">🗑️ Clear All</button>
+            <button id="exportAllBtn" class="primary" disabled>📦 Export All (JSON + CSV)</button>
+            <button id="exportJsonBtn" disabled>📥 Export JSON</button>
+            <button id="exportCsvBtn" disabled>📥 Export CSV</button>
+            <button id="copyJsonBtn" disabled>📋 Copy JSON</button>
+        </div>
+
+        <h3 class="section-title">Extracted Tables by Slide</h3>
+        <div class="slides-grid" id="slidesGrid"></div>
+
+        <h3 class="section-title">Master Table (All Data)</h3>
+        <div class="master-table-container" id="masterTableContainer">
+            <div class="no-tables">Import a PPTX file to see master table</div>
+        </div>
+
+        <h3 class="section-title">JSON Preview</h3>
+        <div class="json-preview" id="jsonPreview">// Import a PPTX file to see extracted data</div>
+    </div>
+
+    <div class="processing hidden" id="processing">
+        <div class="processing-content">
+            <div class="spinner"></div>
+            <div id="processingText">Processing...</div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        const state = {
+            decks: [],
+            slides: [],
+            tables: [],
+            allRows: []
+        };
+
+        // DOM refs
+        const ui = {
+            dropZone: document.getElementById('dropZone'),
+            fileInput: document.getElementById('fileInput'),
+            deckCount: document.getElementById('deckCount'),
+            slideCount: document.getElementById('slideCount'),
+            tableCount: document.getElementById('tableCount'),
+            rowCount: document.getElementById('rowCount'),
+            slidesGrid: document.getElementById('slidesGrid'),
+            masterTableContainer: document.getElementById('masterTableContainer'),
+            jsonPreview: document.getElementById('jsonPreview'),
+            clearBtn: document.getElementById('clearBtn'),
+            exportAllBtn: document.getElementById('exportAllBtn'),
+            exportJsonBtn: document.getElementById('exportJsonBtn'),
+            exportCsvBtn: document.getElementById('exportCsvBtn'),
+            copyJsonBtn: document.getElementById('copyJsonBtn'),
+            processing: document.getElementById('processing'),
+            processingText: document.getElementById('processingText')
+        };
+
+        // Event listeners
+        ui.dropZone.addEventListener('click', () => ui.fileInput.click());
+        ui.fileInput.addEventListener('change', handleFiles);
+        ui.dropZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            ui.dropZone.classList.add('dragover');
+        });
+        ui.dropZone.addEventListener('dragleave', () => ui.dropZone.classList.remove('dragover'));
+        ui.dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            ui.dropZone.classList.remove('dragover');
+            handleFiles({ target: { files: e.dataTransfer.files } });
+        });
+
+        ui.clearBtn.addEventListener('click', clearAll);
+        ui.exportAllBtn.addEventListener('click', exportAll);
+        ui.exportJsonBtn.addEventListener('click', exportJson);
+        ui.exportCsvBtn.addEventListener('click', exportCsv);
+        ui.copyJsonBtn.addEventListener('click', copyJson);
+
+        function showProcessing(text) {
+            ui.processingText.textContent = text;
+            ui.processing.classList.remove('hidden');
+        }
+
+        function hideProcessing() {
+            ui.processing.classList.add('hidden');
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        async function handleFiles(e) {
+            const files = Array.from(e.target.files).filter(f => f.name.endsWith('.pptx'));
+            if (!files.length) return;
+
+            showProcessing('Loading PPTX files...');
+
+            for (const file of files) {
+                try {
+                    await processPptx(file);
+                } catch (err) {
+                    console.error('Error processing', file.name, err);
+                    showToast(`Error: ${file.name} - ${err.message}`);
+                }
+            }
+
+            hideProcessing();
+            updateStats();
+            renderSlides();
+            renderMasterTable();
+            updateJsonPreview();
+            updateButtonStates();
+            ui.fileInput.value = '';
+        }
+
+        async function processPptx(file) {
+            const buffer = await file.arrayBuffer();
+            const zip = await JSZip.loadAsync(buffer);
+
+            const deckId = file.name.replace(/\.pptx$/i, '');
+            state.decks.push({ id: deckId, name: file.name });
+
+            // Get slide files
+            const slideFiles = zip.file(/^ppt\/slides\/slide\d+\.xml$/);
+            const slidePaths = slideFiles.map(f => f.name).sort((a, b) => {
+                const numA = parseInt(a.match(/slide(\d+)/)[1]);
+                const numB = parseInt(b.match(/slide(\d+)/)[1]);
+                return numA - numB;
+            });
+
+            // First pass: extract zones for all slides to calculate sequences
+            const slideZones = [];
+            for (const slidePath of slidePaths) {
+                const slideXml = await zip.file(slidePath).async('string');
+                const zone = extractZoneFromSlide(slideXml);
+                slideZones.push(zone);
+            }
+
+            // Calculate zone sequences (z1, z2, z3 within each zone)
+            const zoneCounters = {}; // Track sequence per zone
+            const slideSequences = slideZones.map(zone => {
+                if (zone === null) return null;
+                if (!zoneCounters[zone]) zoneCounters[zone] = 0;
+                zoneCounters[zone]++;
+                return zoneCounters[zone];
+            });
+
+            // Second pass: process slides with zone and sequence info
+            for (let i = 0; i < slidePaths.length; i++) {
+                const slidePath = slidePaths[i];
+                const slideNum = parseInt(slidePath.match(/slide(\d+)/)[1]);
+                const slideXml = await zip.file(slidePath).async('string');
+                const slideId = `${deckId}::slide_${slideNum}`;
+
+                // Extract title from slide
+                const title = extractSlideTitle(slideXml) || `Slide ${slideNum}`;
+
+                // Get zone and sequence
+                const zone = slideZones[i];
+                const zoneSequence = slideSequences[i];
+                const zoneLabel = zone !== null ? `Z${zone}` : '';
+                const sequenceLabel = zoneSequence !== null ? `z${zoneSequence}` : '';
+
+                // Extract tables with zone info
+                const tables = extractTables(slideXml, slideId, deckId, slideNum, title, zone, zoneSequence);
+
+                const slideData = {
+                    deck_id: deckId,
+                    deck_name: file.name,
+                    slide_number: slideNum,
+                    slide_id: slideId,
+                    title: title,
+                    zone: zone,
+                    zone_sequence: zoneSequence,
+                    zone_label: zoneLabel,
+                    sequence_label: sequenceLabel,
+                    table_count: tables.length,
+                    row_count: tables.reduce((sum, t) => sum + t.rows.length, 0)
+                };
+
+                state.slides.push(slideData);
+                state.tables.push(...tables);
+
+                tables.forEach(t => {
+                    t.rows.forEach((row, rowIdx) => {
+                        state.allRows.push({
+                            deck_id: deckId,
+                            deck_name: file.name,
+                            slide_number: slideNum,
+                            slide_id: slideId,
+                            slide_title: title,
+                            zone: zone,
+                            zone_sequence: zoneSequence,
+                            zone_label: zoneLabel,
+                            sequence_label: sequenceLabel,
+                            table_index: t.table_index,
+                            row_index: rowIdx,
+                            ...row
+                        });
+                    });
+                });
+            }
+        }
+
+        function extractSlideTitle(xml) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(xml, 'application/xml');
+            const ns = {
+                a: 'http://schemas.openxmlformats.org/drawingml/2006/main',
+                p: 'http://schemas.openxmlformats.org/presentationml/2006/main'
+            };
+
+            // Look for title placeholder
+            const shapes = doc.getElementsByTagNameNS(ns.p, 'sp');
+            for (const shape of shapes) {
+                const nvSpPr = shape.getElementsByTagNameNS(ns.p, 'nvSpPr')[0];
+                if (!nvSpPr) continue;
+
+                const nvPr = nvSpPr.getElementsByTagNameNS(ns.p, 'nvPr')[0];
+                if (!nvPr) continue;
+
+                const ph = nvPr.getElementsByTagNameNS(ns.p, 'ph')[0];
+                if (ph && (ph.getAttribute('type') === 'title' || ph.getAttribute('type') === 'ctrTitle')) {
+                    const texts = shape.getElementsByTagNameNS(ns.a, 't');
+                    const titleParts = [];
+                    for (const t of texts) {
+                        if (t.textContent) titleParts.push(t.textContent.trim());
+                    }
+                    if (titleParts.length) return titleParts.join(' ');
+                }
+            }
+
+            // Fallback: first text shape with substantial text
+            for (const shape of shapes) {
+                const texts = shape.getElementsByTagNameNS(ns.a, 't');
+                const allText = Array.from(texts).map(t => t.textContent?.trim()).filter(Boolean).join(' ');
+                if (allText.length > 5 && allText.length < 100) {
+                    return allText;
+                }
+            }
+
+            return null;
+        }
+
+        // Extract zone number from slide content
+        function extractZoneFromSlide(xml) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(xml, 'application/xml');
+            const ns = {
+                a: 'http://schemas.openxmlformats.org/drawingml/2006/main',
+                p: 'http://schemas.openxmlformats.org/presentationml/2006/main'
+            };
+
+            // Collect all text from the slide
+            const allTexts = [];
+            const textElements = doc.getElementsByTagNameNS(ns.a, 't');
+            for (const t of textElements) {
+                if (t.textContent) allTexts.push(t.textContent.trim());
+            }
+            const fullText = allTexts.join(' ');
+
+            // Look for zone patterns like "Zone 4", "ZONE 4", "Zone: 4", "Z4", "ZONE4"
+            const patterns = [
+                /\bZONE\s*[:.]?\s*(\d+)\b/i,           // "Zone 4", "Zone: 4", "Zone.4"
+                /\bZ\s*[:.]?\s*(\d+)\b/i,              // "Z4", "Z 4", "Z:4"
+                /\bZN\s*[:.]?\s*(\d+)\b/i,             // "ZN4", "ZN 4"
+                /\bZONE[-_]?(\d+)\b/i,                 // "Zone-4", "Zone_4", "Zone4"
+            ];
+
+            for (const pattern of patterns) {
+                const match = fullText.match(pattern);
+                if (match) {
+                    return parseInt(match[1], 10);
+                }
+            }
+
+            return null; // Zone not found
+        }
+
+        function extractTables(xml, slideId, deckId, slideNum, slideTitle, zone = null, zoneSequence = null) {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(xml, 'application/xml');
+            const ns = {
+                a: 'http://schemas.openxmlformats.org/drawingml/2006/main',
+                p: 'http://schemas.openxmlformats.org/presentationml/2006/main'
+            };
+
+            const tables = [];
+            const tblElements = doc.getElementsByTagNameNS(ns.a, 'tbl');
+
+            Array.from(tblElements).forEach((tbl, tableIdx) => {
+                const rows = [];
+                const headerRow = [];
+                const trElements = tbl.getElementsByTagNameNS(ns.a, 'tr');
+
+                Array.from(trElements).forEach((tr, rowIdx) => {
+                    const cells = [];
+                    const tcElements = tr.getElementsByTagNameNS(ns.a, 'tc');
+
+                    Array.from(tcElements).forEach(tc => {
+                        const texts = tc.getElementsByTagNameNS(ns.a, 't');
+                        const cellText = Array.from(texts)
+                            .map(t => t.textContent?.trim())
+                            .filter(Boolean)
+                            .join(' ');
+                        cells.push(cellText);
+                    });
+
+                    // Skip reference/proprietary header rows
+                    const rowText = cells.join(' ').toUpperCase();
+                    if (rowText.includes('REFERENCE ONLY') ||
+                        rowText.includes('PROPRIETARY') ||
+                        rowText.includes('LOCKHEED MARTIN') ||
+                        rowText.includes('CONFIDENTIAL')) {
+                        return; // Skip this row
+                    }
+
+                    if (rowIdx === 0 || headerRow.length === 0) {
+                        // First valid row is header
+                        if (headerRow.length === 0) {
+                            headerRow.push(...cells);
+                        }
+                    } else {
+                        // Data rows - create object with header keys
+                        const rowObj = {};
+                        cells.forEach((cell, colIdx) => {
+                            const key = headerRow[colIdx] || `col_${colIdx}`;
+                            // Clean up key name
+                            const cleanKey = key.toLowerCase()
+                                .replace(/[^a-z0-9]+/g, '_')
+                                .replace(/^_|_$/g, '');
+                            rowObj[cleanKey || `col_${colIdx}`] = cell;
+                        });
+
+                        // Only add rows with some data
+                        if (Object.values(rowObj).some(v => v && v.trim())) {
+                            rows.push(rowObj);
+                        }
+                    }
+                });
+
+                // Fill down blank cells with data from above
+                if (rows.length > 1) {
+                    const keys = Object.keys(rows[0] || {});
+                    for (let i = 1; i < rows.length; i++) {
+                        keys.forEach(key => {
+                            if (!rows[i][key] || rows[i][key].trim() === '') {
+                                rows[i][key] = rows[i - 1][key] || '';
+                            }
+                        });
+                    }
+                }
+
+                if (rows.length > 0) {
+                    tables.push({
+                        slide_id: slideId,
+                        deck_id: deckId,
+                        slide_number: slideNum,
+                        slide_title: slideTitle,
+                        zone: zone,
+                        zone_sequence: zoneSequence,
+                        table_index: tableIdx,
+                        headers: headerRow,
+                        rows: rows
+                    });
+                }
+            });
+
+            return tables;
+        }
+
+        function updateStats() {
+            ui.deckCount.textContent = state.decks.length;
+            ui.slideCount.textContent = state.slides.length;
+            ui.tableCount.textContent = state.tables.length;
+            ui.rowCount.textContent = state.allRows.length;
+        }
+
+        function renderSlides() {
+            ui.slidesGrid.innerHTML = '';
+
+            state.slides.forEach(slide => {
+                const tables = state.tables.filter(t => t.slide_id === slide.slide_id);
+
+                const card = document.createElement('div');
+                card.className = 'slide-card';
+
+                let tablesHtml = '';
+                if (tables.length === 0) {
+                    tablesHtml = '<div class="no-tables">No tables on this slide</div>';
+                } else {
+                    tables.forEach(table => {
+                        if (table.rows.length === 0) return;
+
+                        const headers = table.headers.map(h => `<th>${escapeHtml(h)}</th>`).join('');
+                        const rows = table.rows.slice(0, 10).map(row => {
+                            const cells = table.headers.map(h => {
+                                const key = h.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+                                return `<td>${escapeHtml(row[key] || '')}</td>`;
+                            }).join('');
+                            return `<tr>${cells}</tr>`;
+                        }).join('');
+
+                        const moreRows = table.rows.length > 10 ?
+                            `<tr><td colspan="${table.headers.length}" style="text-align:center;font-style:italic;">... and ${table.rows.length - 10} more rows</td></tr>` : '';
+
+                        tablesHtml += `
+                            <div class="table-container">
+                                <table>
+                                    <thead><tr>${headers}</tr></thead>
+                                    <tbody>${rows}${moreRows}</tbody>
+                                </table>
+                            </div>
+                        `;
+                    });
+                }
+
+                // Build zone/sequence label
+                const zoneInfo = slide.zone !== null ?
+                    `Zone ${slide.zone}${slide.zone_sequence ? ` (z${slide.zone_sequence})` : ''}` :
+                    'No Zone';
+
+                card.innerHTML = `
+                    <div class="slide-header">
+                        <span class="slide-title">${escapeHtml(slide.title)}</span>
+                        <span class="slide-meta">${slide.deck_id} • Slide ${slide.slide_number} • ${zoneInfo} • ${slide.row_count} rows</span>
+                    </div>
+                    ${tablesHtml}
+                `;
+
+                ui.slidesGrid.appendChild(card);
+            });
+        }
+
+        function renderMasterTable() {
+            if (state.allRows.length === 0) {
+                ui.masterTableContainer.innerHTML = '<div class="no-tables">Import a PPTX file to see master table</div>';
+                return;
+            }
+
+            // Get all unique data columns (excluding metadata columns)
+            const metaCols = ['deck_id', 'deck_name', 'slide_id', 'slide_title', 'table_index', 'row_index', 'zone', 'zone_sequence', 'zone_label', 'sequence_label'];
+            const dataCols = new Set();
+            state.allRows.forEach(row => {
+                Object.keys(row).forEach(k => {
+                    if (!metaCols.includes(k)) dataCols.add(k);
+                });
+            });
+
+            // Order columns sensibly: zone and sequence first, then data, slide_number last
+            const colOrder = ['dash', 'name', 'op_card', 'drawing', 'sheet', 'material'];
+            const orderedCols = ['zone', 'zone_seq']; // Zone columns first
+            colOrder.forEach(c => {
+                if (dataCols.has(c)) {
+                    orderedCols.push(c);
+                    dataCols.delete(c);
+                }
+            });
+            // Add remaining columns
+            dataCols.forEach(c => orderedCols.push(c));
+            // Add slide_number at the end
+            orderedCols.push('slide_number');
+
+            // Build header
+            const headerCells = orderedCols.map(col => {
+                let displayName = col.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                if (col === 'zone_seq') displayName = 'Seq';
+                if (col === 'zone') displayName = 'Zone';
+                return `<th>${escapeHtml(displayName)}</th>`;
+            }).join('');
+
+            // Build rows
+            const bodyRows = state.allRows.map(row => {
+                const cells = orderedCols.map(col => {
+                    let value = '';
+                    if (col === 'zone') {
+                        value = row.zone !== null ? `Z${row.zone}` : '';
+                    } else if (col === 'zone_seq') {
+                        value = row.zone_sequence !== null ? `z${row.zone_sequence}` : '';
+                    } else if (col === 'slide_number') {
+                        return `<td class="slide-num-col">${row[col] || ''}</td>`;
+                    } else {
+                        value = row[col] || '';
+                    }
+                    return `<td>${escapeHtml(String(value))}</td>`;
+                }).join('');
+                return `<tr>${cells}</tr>`;
+            }).join('');
+
+            ui.masterTableContainer.innerHTML = `
+                <table>
+                    <thead><tr>${headerCells}</tr></thead>
+                    <tbody>${bodyRows}</tbody>
+                </table>
+            `;
+        }
+
+        function updateJsonPreview() {
+            const exportData = buildExportData();
+            ui.jsonPreview.textContent = JSON.stringify(exportData, null, 2);
+        }
+
+        // Normalize dash variants like "5HY03205-111 C,D" → ["5HY03205-111C", "5HY03205-111D"]
+        function normalizeDashVariants(dashRaw) {
+            const s = String(dashRaw || '').trim();
+            if (!s) return [];
+            // Pattern: base dash followed by space and comma-separated suffixes like "C,D"
+            const m = s.match(/^(.+?)(?:\s+([A-Z](?:,[A-Z])+))$/i);
+            if (!m) return [s.replace(/\s+/g, '')];
+            const base = m[1].trim();
+            const suffixes = m[2].split(',').map(x => x.trim()).filter(Boolean);
+            return suffixes.map(sf => `${base}${sf}`.replace(/\s+/g, ''));
+        }
+
+        function makeUid(dash, material) {
+            const d = String(dash || '').trim();
+            const m = String(material || '').trim();
+            return `${d}|${m}`;
+        }
+
+        function buildMasterPartsV2() {
+            const parts = [];
+            const seen = new Set();
+
+            for (const r of state.allRows) {
+                const zone = r.zone ?? null;
+                const zone_sequence = r.zone_sequence ?? null;
+                const zone_label = r.zone_label || (zone !== null ? `Z${zone}` : '');
+                const sequence_label = r.sequence_label || (zone !== null && zone_sequence !== null ? `z${zone} s${zone_sequence}` : '');
+
+                const dashVariants = normalizeDashVariants(r.dash);
+                const material = r.material || '';
+
+                for (const dash of dashVariants.length ? dashVariants : [r.dash]) {
+                    const uid = makeUid(dash, material);
+                    const key = `${uid}::${r.deck_id}::${r.slide_number}::${r.table_index}::${r.row_index}`;
+                    if (seen.has(key)) continue;
+                    seen.add(key);
+
+                    parts.push({
+                        uid,
+                        dash,
+                        material,
+                        name: r.name || '',
+                        op_card: r.op_card || '',
+                        drawing: r.drawing || '',
+                        sheet: r.sheet || '',
+                        context: {
+                            deck_id: r.deck_id,
+                            deck_name: r.deck_name,
+                            slide_id: r.slide_id,
+                            slide_title: r.slide_title,
+                            slide_number: r.slide_number,
+                            zone: zone,
+                            zone_label: zone_label,
+                            zone_sequence: zone_sequence,
+                            sequence_label: sequence_label,
+                            table_index: r.table_index,
+                            row_index: r.row_index
+                        }
+                    });
+                }
+            }
+
+            // Build slide index
+            const slideIndex = [];
+            const slideSeen = new Set();
+            for (const s of state.slides) {
+                const k = `${s.deck_id}::${s.slide_number}`;
+                if (slideSeen.has(k)) continue;
+                slideSeen.add(k);
+
+                slideIndex.push({
+                    deck_id: s.deck_id,
+                    deck_name: s.deck_name,
+                    slide_id: s.slide_id,
+                    slide_number: s.slide_number,
+                    slide_title: s.title || s.slide_title || '',
+                    zone: s.zone ?? null,
+                    zone_label: s.zone_label || (s.zone != null ? `Z${s.zone}` : ''),
+                    zone_sequence: s.zone_sequence ?? null,
+                    sequence_label: s.sequence_label || (s.zone != null && s.zone_sequence != null ? `z${s.zone} s${s.zone_sequence}` : '')
+                });
+            }
+
+            return {
+                schema: 'master_parts_v2',
+                exportedAt: new Date().toISOString(),
+                parts,
+                slides: slideIndex
+            };
+        }
+
+        function buildExportData() {
+            // Build v2 as primary with legacy embedded
+            const v2 = buildMasterPartsV2();
+            v2.legacy = {
+                metadata: {
+                    exported_at: new Date().toISOString(),
+                    deck_count: state.decks.length,
+                    slide_count: state.slides.length,
+                    table_count: state.tables.length,
+                    row_count: state.allRows.length
+                },
+                decks: state.decks,
+                slides: state.slides.map(s => ({
+                    ...s,
+                    tables: state.tables.filter(t => t.slide_id === s.slide_id)
+                })),
+                all_rows: state.allRows
+            };
+            return v2;
+        }
+
+        function updateButtonStates() {
+            const hasData = state.allRows.length > 0;
+            ui.exportAllBtn.disabled = !hasData;
+            ui.exportJsonBtn.disabled = !hasData;
+            ui.exportCsvBtn.disabled = !hasData;
+            ui.copyJsonBtn.disabled = !hasData;
+        }
+
+        function clearAll() {
+            state.decks = [];
+            state.slides = [];
+            state.tables = [];
+            state.allRows = [];
+            updateStats();
+            renderSlides();
+            renderMasterTable();
+            ui.jsonPreview.textContent = '// Import a PPTX file to see extracted data';
+            updateButtonStates();
+        }
+
+        async function exportAll() {
+            await exportJson();
+            await exportCsv();
+            showToast('Both JSON and CSV exported!');
+        }
+
+        async function exportJson() {
+            // Export v2 format as primary
+            const dataV2 = buildMasterPartsV2();
+            await saveToDataFolder(JSON.stringify(dataV2, null, 2), 'master_parts_v2.json', 'application/json');
+
+            // Also export legacy format for backward compatibility
+            const legacy = {
+                metadata: {
+                    exported_at: new Date().toISOString(),
+                    deck_count: state.decks.length,
+                    slide_count: state.slides.length,
+                    table_count: state.tables.length,
+                    row_count: state.allRows.length
+                },
+                decks: state.decks,
+                slides: state.slides.map(s => ({
+                    ...s,
+                    tables: state.tables.filter(t => t.slide_id === s.slide_id)
+                })),
+                all_rows: state.allRows
+            };
+            await saveToDataFolder(JSON.stringify(legacy, null, 2), 'master_parts.json', 'application/json');
+        }
+
+        async function exportCsv() {
+            if (state.allRows.length === 0) return;
+
+            // Get all unique columns - order them sensibly
+            const metaCols = ['deck_id', 'deck_name', 'slide_id', 'slide_title', 'table_index', 'row_index', 'zone_label', 'sequence_label'];
+            const colOrder = ['zone', 'zone_sequence', 'dash', 'name', 'op_card', 'drawing', 'sheet', 'material', 'slide_number'];
+            const allCols = new Set();
+            state.allRows.forEach(row => Object.keys(row).forEach(k => {
+                if (!metaCols.includes(k)) allCols.add(k);
+            }));
+
+            // Order columns
+            const columns = [];
+            colOrder.forEach(c => {
+                if (allCols.has(c)) {
+                    columns.push(c);
+                    allCols.delete(c);
+                }
+            });
+            allCols.forEach(c => columns.push(c));
+
+            // Build CSV
+            const header = columns.map(c => `"${c}"`).join(',');
+            const rows = state.allRows.map(row => {
+                return columns.map(col => {
+                    const val = String(row[col] ?? '').replace(/"/g, '""');
+                    return `"${val}"`;
+                }).join(',');
+            });
+
+            const csv = [header, ...rows].join('\n');
+            const filename = 'master_parts.csv';
+            await saveToDataFolder(csv, filename, 'text/csv');
+        }
+
+        async function saveToDataFolder(content, filename, mimeType) {
+            // Try File System Access API first (allows saving to specific folder)
+            if ('showSaveFilePicker' in window) {
+                try {
+                    const handle = await window.showSaveFilePicker({
+                        suggestedName: filename,
+                        startIn: 'desktop',
+                        types: [{
+                            description: mimeType.includes('json') ? 'JSON File' : 'CSV File',
+                            accept: { [mimeType]: [mimeType.includes('json') ? '.json' : '.csv'] }
+                        }]
+                    });
+                    const writable = await handle.createWritable();
+                    await writable.write(content);
+                    await writable.close();
+                    showToast(`Saved: ${filename}`);
+                    return;
+                } catch (err) {
+                    if (err.name === 'AbortError') return; // User cancelled
+                    console.warn('File System API failed, falling back to download:', err);
+                }
+            }
+
+            // Fallback to regular download
+            const blob = new Blob([content], { type: mimeType });
+            downloadBlob(blob, filename);
+            showToast(`Downloaded: ${filename} (save to project_root/data folder)`);
+        }
+
+        function copyJson() {
+            const data = buildExportData();
+            navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+            showToast('JSON copied to clipboard!');
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+
+</html>
