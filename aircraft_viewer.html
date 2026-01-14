@@ -1621,11 +1621,34 @@
                 }
 
                 // Try loading legacy formats as fallback
+                if (!inventoryFile) {
+                    inventoryFile = await getFileFromFolder(handle, 'master_inventory.json');
+                    if (!inventoryFile) {
+                        try {
+                            const dataFolder = await handle.getDirectoryHandle('data');
+                            inventoryFile = await getFileFromFolder(dataFolder, 'master_inventory.json');
+                        } catch { }
+                    }
+                    if (!inventoryFile) {
+                        try {
+                            const projectRoot = await handle.getDirectoryHandle('project_root');
+                            const dataFolder = await projectRoot.getDirectoryHandle('data');
+                            inventoryFile = await getFileFromFolder(dataFolder, 'master_inventory.json');
+                        } catch { }
+                    }
+                }
                 if (!partsFile) {
                     partsFile = await getFileFromFolder(handle, 'master_parts.json');
                     if (!partsFile) {
                         try {
                             const dataFolder = await handle.getDirectoryHandle('data');
+                            partsFile = await getFileFromFolder(dataFolder, 'master_parts.json');
+                        } catch { }
+                    }
+                    if (!partsFile) {
+                        try {
+                            const projectRoot = await handle.getDirectoryHandle('project_root');
+                            const dataFolder = await projectRoot.getDirectoryHandle('data');
                             partsFile = await getFileFromFolder(dataFolder, 'master_parts.json');
                         } catch { }
                     }
@@ -1638,7 +1661,46 @@
                 }
                 if (partsFile) {
                     const data = JSON.parse(await partsFile.text());
-                    state.parts = data.items ? data : { items: Array.isArray(data) ? data : [] };
+                    // Handle different formats
+                    if (data.items) {
+                        // Already in v2 format
+                        state.parts = data;
+                    } else if (data.slides) {
+                        // Legacy format from table_extractor - extract rows from slides
+                        const items = [];
+                        data.slides.forEach(slide => {
+                            (slide.tables || []).forEach(table => {
+                                (table.rows || []).forEach(row => {
+                                    // Construct UID from dash|material
+                                    const uid = row.uid || (row.dash && row.material ? `${row.dash}|${row.material}` : row.dash || '');
+                                    items.push({
+                                        uid: uid,
+                                        dash: row.dash || '',
+                                        material: row.material || '',
+                                        name: row.name || '',
+                                        op_card: row.op_card || '',
+                                        drawing: row.drawing || '',
+                                        sheet: row.sheet || '',
+                                        zone: slide.zone || '',
+                                        zone_sequence: slide.zone_sequence || '',
+                                        zone_label: slide.zone_label || '',
+                                        slide_number: slide.slide_number || '',
+                                        deck_id: slide.deck_id || ''
+                                    });
+                                });
+                            });
+                        });
+                        state.parts = {
+                            items: items,
+                            metadata: data.metadata || {},
+                            decks: data.decks || []
+                        };
+                        console.log(`Loaded ${items.length} parts from legacy format`);
+                    } else if (Array.isArray(data)) {
+                        state.parts = { items: data };
+                    } else {
+                        state.parts = { items: [] };
+                    }
                 }
                 if (blueprintFile) {
                     const data = JSON.parse(await blueprintFile.text());
