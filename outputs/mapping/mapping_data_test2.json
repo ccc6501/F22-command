@@ -1,0 +1,33 @@
+{
+    "timestamp": "20240116_120500",
+    "processing_date": "2024-01-16T12:05:00.000000",
+    "imageName": "test_image_2.png",
+    "regions": [
+        {
+            "id": 1,
+            "color": "#00ff88",
+            "regionId": "region_003",
+            "name": "Region 3"
+        },
+        {
+            "id": 2,
+            "color": "#ff9500",
+            "regionId": "region_004",
+            "name": "Region 4"
+        },
+        {
+            "id": 3,
+            "color": "#bf00ff",
+            "regionId": "region_005",
+            "name": "Region 5"
+        }
+    ],
+    "summary": {
+        "totalRegions": 3,
+        "colors": [
+            "#00ff88",
+            "#ff9500",
+            "#bf00ff"
+        ]
+    }
+}

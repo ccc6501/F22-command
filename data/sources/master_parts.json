@@ -1,0 +1,865 @@
+{
+  "metadata": {
+    "exported_at": "2026-01-14T17:58:00.725Z",
+    "deck_count": 1,
+    "slide_count": 9,
+    "table_count": 9,
+    "row_count": 20
+  },
+  "decks": [
+    {
+      "id": "Presentation7",
+      "name": "Presentation7.pptx"
+    }
+  ],
+  "slides": [
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 1,
+      "slide_id": "Presentation7::slide_1",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 1,
+      "zone_sequence": 1,
+      "zone_label": "Z1",
+      "sequence_label": "z1",
+      "table_count": 1,
+      "row_count": 3,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_1",
+          "deck_id": "Presentation7",
+          "slide_number": 1,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 1,
+          "zone_sequence": 1,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03205-111A",
+              "name": "Inlet Bleed Screen LH",
+              "op_card": "YY17201-01",
+              "drawing": "5HY03505",
+              "sheet": "6",
+              "material": "5PTE0158-3"
+            },
+            {
+              "dash": "5HY03205-111B",
+              "name": "Inlet Bleed Screen LH",
+              "op_card": "YY17201-01",
+              "drawing": "5HY03505",
+              "sheet": "6",
+              "material": "5PTE0189-4"
+            },
+            {
+              "dash": "5HY03205-111 C,D",
+              "name": "Inlet Bleed Screen LH",
+              "op_card": "YY17201-01",
+              "drawing": "5HY03505",
+              "sheet": "6",
+              "material": "5PTE0157-3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 2,
+      "slide_id": "Presentation7::slide_2",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 1,
+      "zone_sequence": 2,
+      "zone_label": "Z1",
+      "sequence_label": "z2",
+      "table_count": 1,
+      "row_count": 3,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_2",
+          "deck_id": "Presentation7",
+          "slide_number": 2,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 1,
+          "zone_sequence": 2,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03205-112A",
+              "name": "Inlet Bleed Screen RH",
+              "op_card": "YY17201-01",
+              "drawing": "5HY03505",
+              "sheet": "6",
+              "material": "5PTE0158-3"
+            },
+            {
+              "dash": "5HY03205-112B",
+              "name": "Inlet Bleed Screen RH",
+              "op_card": "YY17201-01",
+              "drawing": "5HY03505",
+              "sheet": "6",
+              "material": "5PTE0189-4"
+            },
+            {
+              "dash": "5HY03205-112 C,D",
+              "name": "Inlet Bleed Screen RH",
+              "op_card": "YY17201-01",
+              "drawing": "5HY03505",
+              "sheet": "6",
+              "material": "5PTE0157-3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 3,
+      "slide_id": "Presentation7::slide_3",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 2,
+      "zone_sequence": 1,
+      "zone_label": "Z2",
+      "sequence_label": "z1",
+      "table_count": 1,
+      "row_count": 3,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_3",
+          "deck_id": "Presentation7",
+          "slide_number": 3,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 2,
+          "zone_sequence": 1,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03204-115A",
+              "name": "IFR opening Aft",
+              "op_card": "YY17202-01",
+              "drawing": "5HY03504",
+              "sheet": "4",
+              "material": "5PTE0189-1"
+            },
+            {
+              "dash": "5HY03204-115B",
+              "name": "IFR opening Aft",
+              "op_card": "YY17202-01",
+              "drawing": "5HY03504",
+              "sheet": "4",
+              "material": "5PTE0189-3"
+            },
+            {
+              "dash": "5HY03204-115 C,D",
+              "name": "IFR opening Aft",
+              "op_card": "YY17202-01",
+              "drawing": "5HY03504",
+              "sheet": "4",
+              "material": "5PTE0165-2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 4,
+      "slide_id": "Presentation7::slide_4",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 3,
+      "zone_sequence": 1,
+      "zone_label": "Z3",
+      "sequence_label": "z1",
+      "table_count": 1,
+      "row_count": 2,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_4",
+          "deck_id": "Presentation7",
+          "slide_number": 4,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 3,
+          "zone_sequence": 1,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03200-124 A,B,C",
+              "name": "Aft Boom Upper RH",
+              "op_card": "YY17203-01",
+              "drawing": "5HY03500",
+              "sheet": "8",
+              "material": "5PTE0189-1"
+            },
+            {
+              "dash": "5HY03200-124 D,E",
+              "name": "Aft Boom Upper RH",
+              "op_card": "YY17203-01",
+              "drawing": "5HY03500",
+              "sheet": "8",
+              "material": "5PTE0159-1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 5,
+      "slide_id": "Presentation7::slide_5",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 5,
+      "zone_sequence": 1,
+      "zone_label": "Z5",
+      "sequence_label": "z1",
+      "table_count": 1,
+      "row_count": 1,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_5",
+          "deck_id": "Presentation7",
+          "slide_number": 5,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 5,
+          "zone_sequence": 1,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03209-104 A,B,C",
+              "name": "Upper LEF inboard Blade seal RH",
+              "op_card": "YY17205-01",
+              "drawing": "5HU01901",
+              "sheet": "3",
+              "material": "5PTE0159-2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 6,
+      "slide_id": "Presentation7::slide_6",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 5,
+      "zone_sequence": 2,
+      "zone_label": "Z5",
+      "sequence_label": "z2",
+      "table_count": 1,
+      "row_count": 1,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_6",
+          "deck_id": "Presentation7",
+          "slide_number": 6,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 5,
+          "zone_sequence": 2,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03213-104 A,B,C",
+              "name": "Flaperon blade seal Upper RH",
+              "op_card": "YY17205-01",
+              "drawing": "5HY03377",
+              "sheet": "1",
+              "material": "5PTE0159-2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 7,
+      "slide_id": "Presentation7::slide_7",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 7,
+      "zone_sequence": 1,
+      "zone_label": "Z7",
+      "sequence_label": "z1",
+      "table_count": 1,
+      "row_count": 3,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_7",
+          "deck_id": "Presentation7",
+          "slide_number": 7,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 7,
+          "zone_sequence": 1,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03206-111 D",
+              "name": "PDU Lower RH",
+              "op_card": "YY17209-01",
+              "drawing": "5HY03506",
+              "sheet": "5",
+              "material": "5PTE0189-4"
+            },
+            {
+              "dash": "5HY03206-111 C",
+              "name": "PDU Lower RH",
+              "op_card": "YY17209-01",
+              "drawing": "5HY03506",
+              "sheet": "5",
+              "material": "5PTE0158-3"
+            },
+            {
+              "dash": "5HY03206-111 A,B",
+              "name": "PDU Lower RH",
+              "op_card": "YY17209-01",
+              "drawing": "5HY03506",
+              "sheet": "5",
+              "material": "5PTE0157-3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 8,
+      "slide_id": "Presentation7::slide_8",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 8,
+      "zone_sequence": 1,
+      "zone_label": "Z8",
+      "sequence_label": "z1",
+      "table_count": 1,
+      "row_count": 3,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_8",
+          "deck_id": "Presentation7",
+          "slide_number": 8,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 8,
+          "zone_sequence": 1,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03206-117A",
+              "name": "SOB to Bump LH",
+              "op_card": "YY17210-01",
+              "drawing": "5HY03506",
+              "sheet": "7",
+              "material": "5PTE0157-3"
+            },
+            {
+              "dash": "5HY03206-117B",
+              "name": "Lower Fuel Bay LH",
+              "op_card": "YY17210-01",
+              "drawing": "5HY03506",
+              "sheet": "7",
+              "material": "5PTE0189-4"
+            },
+            {
+              "dash": "5HY03206-117C",
+              "name": "Lower Fuel Bay Strip LH",
+              "op_card": "YY17210-01",
+              "drawing": "5HY03506",
+              "sheet": "7",
+              "material": "5PTE0158-3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 9,
+      "slide_id": "Presentation7::slide_9",
+      "title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 10,
+      "zone_sequence": 1,
+      "zone_label": "Z10",
+      "sequence_label": "z1",
+      "table_count": 1,
+      "row_count": 1,
+      "tables": [
+        {
+          "slide_id": "Presentation7::slide_9",
+          "deck_id": "Presentation7",
+          "slide_number": 9,
+          "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+          "zone": 10,
+          "zone_sequence": 1,
+          "table_index": 0,
+          "headers": [
+            "Dash",
+            "Name",
+            "OP Card",
+            "Drawing",
+            "Sheet",
+            "Material"
+          ],
+          "rows": [
+            {
+              "dash": "5HY03210-104A,B,C",
+              "name": "Lower LEF Blade Seal  Inboard RH",
+              "op_card": "YY17212-01",
+              "drawing": "5HU1903",
+              "sheet": "4",
+              "material": "5PTE0159-2"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "all_rows": [
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 1,
+      "slide_id": "Presentation7::slide_1",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 1,
+      "zone_sequence": 1,
+      "zone_label": "Z1",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03205-111A",
+      "name": "Inlet Bleed Screen LH",
+      "op_card": "YY17201-01",
+      "drawing": "5HY03505",
+      "sheet": "6",
+      "material": "5PTE0158-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 1,
+      "slide_id": "Presentation7::slide_1",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 1,
+      "zone_sequence": 1,
+      "zone_label": "Z1",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 1,
+      "dash": "5HY03205-111B",
+      "name": "Inlet Bleed Screen LH",
+      "op_card": "YY17201-01",
+      "drawing": "5HY03505",
+      "sheet": "6",
+      "material": "5PTE0189-4"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 1,
+      "slide_id": "Presentation7::slide_1",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 1,
+      "zone_sequence": 1,
+      "zone_label": "Z1",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 2,
+      "dash": "5HY03205-111 C,D",
+      "name": "Inlet Bleed Screen LH",
+      "op_card": "YY17201-01",
+      "drawing": "5HY03505",
+      "sheet": "6",
+      "material": "5PTE0157-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 2,
+      "slide_id": "Presentation7::slide_2",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 1,
+      "zone_sequence": 2,
+      "zone_label": "Z1",
+      "sequence_label": "z2",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03205-112A",
+      "name": "Inlet Bleed Screen RH",
+      "op_card": "YY17201-01",
+      "drawing": "5HY03505",
+      "sheet": "6",
+      "material": "5PTE0158-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 2,
+      "slide_id": "Presentation7::slide_2",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 1,
+      "zone_sequence": 2,
+      "zone_label": "Z1",
+      "sequence_label": "z2",
+      "table_index": 0,
+      "row_index": 1,
+      "dash": "5HY03205-112B",
+      "name": "Inlet Bleed Screen RH",
+      "op_card": "YY17201-01",
+      "drawing": "5HY03505",
+      "sheet": "6",
+      "material": "5PTE0189-4"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 2,
+      "slide_id": "Presentation7::slide_2",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 1,
+      "zone_sequence": 2,
+      "zone_label": "Z1",
+      "sequence_label": "z2",
+      "table_index": 0,
+      "row_index": 2,
+      "dash": "5HY03205-112 C,D",
+      "name": "Inlet Bleed Screen RH",
+      "op_card": "YY17201-01",
+      "drawing": "5HY03505",
+      "sheet": "6",
+      "material": "5PTE0157-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 3,
+      "slide_id": "Presentation7::slide_3",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 2,
+      "zone_sequence": 1,
+      "zone_label": "Z2",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03204-115A",
+      "name": "IFR opening Aft",
+      "op_card": "YY17202-01",
+      "drawing": "5HY03504",
+      "sheet": "4",
+      "material": "5PTE0189-1"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 3,
+      "slide_id": "Presentation7::slide_3",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 2,
+      "zone_sequence": 1,
+      "zone_label": "Z2",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 1,
+      "dash": "5HY03204-115B",
+      "name": "IFR opening Aft",
+      "op_card": "YY17202-01",
+      "drawing": "5HY03504",
+      "sheet": "4",
+      "material": "5PTE0189-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 3,
+      "slide_id": "Presentation7::slide_3",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 2,
+      "zone_sequence": 1,
+      "zone_label": "Z2",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 2,
+      "dash": "5HY03204-115 C,D",
+      "name": "IFR opening Aft",
+      "op_card": "YY17202-01",
+      "drawing": "5HY03504",
+      "sheet": "4",
+      "material": "5PTE0165-2"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 4,
+      "slide_id": "Presentation7::slide_4",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 3,
+      "zone_sequence": 1,
+      "zone_label": "Z3",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03200-124 A,B,C",
+      "name": "Aft Boom Upper RH",
+      "op_card": "YY17203-01",
+      "drawing": "5HY03500",
+      "sheet": "8",
+      "material": "5PTE0189-1"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 4,
+      "slide_id": "Presentation7::slide_4",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 3,
+      "zone_sequence": 1,
+      "zone_label": "Z3",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 1,
+      "dash": "5HY03200-124 D,E",
+      "name": "Aft Boom Upper RH",
+      "op_card": "YY17203-01",
+      "drawing": "5HY03500",
+      "sheet": "8",
+      "material": "5PTE0159-1"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 5,
+      "slide_id": "Presentation7::slide_5",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 5,
+      "zone_sequence": 1,
+      "zone_label": "Z5",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03209-104 A,B,C",
+      "name": "Upper LEF inboard Blade seal RH",
+      "op_card": "YY17205-01",
+      "drawing": "5HU01901",
+      "sheet": "3",
+      "material": "5PTE0159-2"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 6,
+      "slide_id": "Presentation7::slide_6",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 5,
+      "zone_sequence": 2,
+      "zone_label": "Z5",
+      "sequence_label": "z2",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03213-104 A,B,C",
+      "name": "Flaperon blade seal Upper RH",
+      "op_card": "YY17205-01",
+      "drawing": "5HY03377",
+      "sheet": "1",
+      "material": "5PTE0159-2"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 7,
+      "slide_id": "Presentation7::slide_7",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 7,
+      "zone_sequence": 1,
+      "zone_label": "Z7",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03206-111 D",
+      "name": "PDU Lower RH",
+      "op_card": "YY17209-01",
+      "drawing": "5HY03506",
+      "sheet": "5",
+      "material": "5PTE0189-4"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 7,
+      "slide_id": "Presentation7::slide_7",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 7,
+      "zone_sequence": 1,
+      "zone_label": "Z7",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 1,
+      "dash": "5HY03206-111 C",
+      "name": "PDU Lower RH",
+      "op_card": "YY17209-01",
+      "drawing": "5HY03506",
+      "sheet": "5",
+      "material": "5PTE0158-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 7,
+      "slide_id": "Presentation7::slide_7",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 7,
+      "zone_sequence": 1,
+      "zone_label": "Z7",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 2,
+      "dash": "5HY03206-111 A,B",
+      "name": "PDU Lower RH",
+      "op_card": "YY17209-01",
+      "drawing": "5HY03506",
+      "sheet": "5",
+      "material": "5PTE0157-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 8,
+      "slide_id": "Presentation7::slide_8",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 8,
+      "zone_sequence": 1,
+      "zone_label": "Z8",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03206-117A",
+      "name": "SOB to Bump LH",
+      "op_card": "YY17210-01",
+      "drawing": "5HY03506",
+      "sheet": "7",
+      "material": "5PTE0157-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 8,
+      "slide_id": "Presentation7::slide_8",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 8,
+      "zone_sequence": 1,
+      "zone_label": "Z8",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 1,
+      "dash": "5HY03206-117B",
+      "name": "Lower Fuel Bay LH",
+      "op_card": "YY17210-01",
+      "drawing": "5HY03506",
+      "sheet": "7",
+      "material": "5PTE0189-4"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 8,
+      "slide_id": "Presentation7::slide_8",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 8,
+      "zone_sequence": 1,
+      "zone_label": "Z8",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 2,
+      "dash": "5HY03206-117C",
+      "name": "Lower Fuel Bay Strip LH",
+      "op_card": "YY17210-01",
+      "drawing": "5HY03506",
+      "sheet": "7",
+      "material": "5PTE0158-3"
+    },
+    {
+      "deck_id": "Presentation7",
+      "deck_name": "Presentation7.pptx",
+      "slide_number": 9,
+      "slide_id": "Presentation7::slide_9",
+      "slide_title": "FOR REFERENCE ONLY -LOCKHEED MARTIN PROPRIETARY INFORMATION",
+      "zone": 10,
+      "zone_sequence": 1,
+      "zone_label": "Z10",
+      "sequence_label": "z1",
+      "table_index": 0,
+      "row_index": 0,
+      "dash": "5HY03210-104A,B,C",
+      "name": "Lower LEF Blade Seal  Inboard RH",
+      "op_card": "YY17212-01",
+      "drawing": "5HU1903",
+      "sheet": "4",
+      "material": "5PTE0159-2"
+    }
+  ]
+}

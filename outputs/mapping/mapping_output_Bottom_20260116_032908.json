@@ -1,0 +1,1083 @@
+{
+  "timestamp": "2026-01-16T08:29:08.390Z",
+  "imageName": "BOTTOM",
+  "viewType": "B",
+  "regions": [
+    {
+      "id": "B1",
+      "color": "#e21818",
+      "regionId": "region_143",
+      "name": "region_143"
+    },
+    {
+      "id": "B2",
+      "color": "#ed322a",
+      "regionId": "region_005",
+      "name": "region_005"
+    },
+    {
+      "id": "B3",
+      "color": "#cf2314",
+      "regionId": "region_017",
+      "name": "region_017"
+    },
+    {
+      "id": "B4",
+      "color": "#c32b16",
+      "regionId": "region_140",
+      "name": "region_140"
+    },
+    {
+      "id": "B5",
+      "color": "#e84d30",
+      "regionId": "region_054",
+      "name": "region_054"
+    },
+    {
+      "id": "B6",
+      "color": "#ee5f3c",
+      "regionId": "region_098",
+      "name": "region_098"
+    },
+    {
+      "id": "B7",
+      "color": "#e64412",
+      "regionId": "region_059",
+      "name": "region_059"
+    },
+    {
+      "id": "B8",
+      "color": "#bf4c20",
+      "regionId": "region_148",
+      "name": "region_148"
+    },
+    {
+      "id": "B9",
+      "color": "#cb490e",
+      "regionId": "region_014",
+      "name": "region_014"
+    },
+    {
+      "id": "B10",
+      "color": "#d75e1c",
+      "regionId": "region_089",
+      "name": "region_089"
+    },
+    {
+      "id": "B11",
+      "color": "#eb792f",
+      "regionId": "region_075",
+      "name": "region_075"
+    },
+    {
+      "id": "B12",
+      "color": "#e98030",
+      "regionId": "region_002",
+      "name": "region_002"
+    },
+    {
+      "id": "B13",
+      "color": "#ee913e",
+      "regionId": "region_146",
+      "name": "region_146"
+    },
+    {
+      "id": "B14",
+      "color": "#bb6f20",
+      "regionId": "region_020",
+      "name": "region_020"
+    },
+    {
+      "id": "B15",
+      "color": "#d47a0e",
+      "regionId": "region_132",
+      "name": "region_132"
+    },
+    {
+      "id": "B16",
+      "color": "#d28a24",
+      "regionId": "region_067",
+      "name": "region_067"
+    },
+    {
+      "id": "B17",
+      "color": "#cf870c",
+      "regionId": "region_097",
+      "name": "region_097"
+    },
+    {
+      "id": "B18",
+      "color": "#e9b142",
+      "regionId": "region_081",
+      "name": "region_081"
+    },
+    {
+      "id": "B19",
+      "color": "#ce991a",
+      "regionId": "region_038",
+      "name": "region_038"
+    },
+    {
+      "id": "B20",
+      "color": "#d3a318",
+      "regionId": "region_091",
+      "name": "region_091"
+    },
+    {
+      "id": "B21",
+      "color": "#d5a90b",
+      "regionId": "region_073",
+      "name": "region_073"
+    },
+    {
+      "id": "B22",
+      "color": "#eacb3a",
+      "regionId": "region_121",
+      "name": "region_121"
+    },
+    {
+      "id": "B23",
+      "color": "#e2c50e",
+      "regionId": "region_037",
+      "name": "region_037"
+    },
+    {
+      "id": "B24",
+      "color": "#ddc915",
+      "regionId": "region_120",
+      "name": "region_120"
+    },
+    {
+      "id": "B25",
+      "color": "#c5bb1a",
+      "regionId": "region_092",
+      "name": "region_092"
+    },
+    {
+      "id": "B26",
+      "color": "#c7c418",
+      "regionId": "region_055",
+      "name": "region_055"
+    },
+    {
+      "id": "B27",
+      "color": "#e0e334",
+      "regionId": "region_063",
+      "name": "region_063"
+    },
+    {
+      "id": "B28",
+      "color": "#d9e515",
+      "regionId": "region_036",
+      "name": "region_036"
+    },
+    {
+      "id": "B29",
+      "color": "#d6eb14",
+      "regionId": "region_015",
+      "name": "region_015"
+    },
+    {
+      "id": "B30",
+      "color": "#d7f22c",
+      "regionId": "region_119",
+      "name": "region_119"
+    },
+    {
+      "id": "B31",
+      "color": "#bce013",
+      "regionId": "region_145",
+      "name": "region_145"
+    },
+    {
+      "id": "B32",
+      "color": "#bfe048",
+      "regionId": "region_048",
+      "name": "region_048"
+    },
+    {
+      "id": "B33",
+      "color": "#b1dc36",
+      "regionId": "region_118",
+      "name": "region_118"
+    },
+    {
+      "id": "B34",
+      "color": "#b0ea27",
+      "regionId": "region_058",
+      "name": "region_058"
+    },
+    {
+      "id": "B35",
+      "color": "#95ce24",
+      "regionId": "region_094",
+      "name": "region_094"
+    },
+    {
+      "id": "B36",
+      "color": "#abf136",
+      "regionId": "region_003",
+      "name": "region_003"
+    },
+    {
+      "id": "B37",
+      "color": "#8ce014",
+      "regionId": "region_158",
+      "name": "region_158"
+    },
+    {
+      "id": "B38",
+      "color": "#95e732",
+      "regionId": "region_045",
+      "name": "region_045"
+    },
+    {
+      "id": "B39",
+      "color": "#90e439",
+      "regionId": "region_116",
+      "name": "region_116"
+    },
+    {
+      "id": "B40",
+      "color": "#91ef3e",
+      "regionId": "region_031",
+      "name": "region_031"
+    },
+    {
+      "id": "B41",
+      "color": "#75e81d",
+      "regionId": "region_124",
+      "name": "region_124"
+    },
+    {
+      "id": "B42",
+      "color": "#82e145",
+      "regionId": "region_090",
+      "name": "region_090"
+    },
+    {
+      "id": "B43",
+      "color": "#60e517",
+      "regionId": "region_046",
+      "name": "region_046"
+    },
+    {
+      "id": "B44",
+      "color": "#48cc0c",
+      "regionId": "region_117",
+      "name": "region_117"
+    },
+    {
+      "id": "B45",
+      "color": "#4dd719",
+      "regionId": "region_130",
+      "name": "region_130"
+    },
+    {
+      "id": "B46",
+      "color": "#61ef35",
+      "regionId": "region_072",
+      "name": "region_072"
+    },
+    {
+      "id": "B47",
+      "color": "#39d613",
+      "regionId": "region_137",
+      "name": "region_137"
+    },
+    {
+      "id": "B48",
+      "color": "#2eda0d",
+      "regionId": "region_078",
+      "name": "region_078"
+    },
+    {
+      "id": "B49",
+      "color": "#37e221",
+      "regionId": "region_106",
+      "name": "region_106"
+    },
+    {
+      "id": "B50",
+      "color": "#20d910",
+      "regionId": "region_088",
+      "name": "region_088"
+    },
+    {
+      "id": "B51",
+      "color": "#2dda26",
+      "regionId": "region_024",
+      "name": "region_024"
+    },
+    {
+      "id": "B52",
+      "color": "#28f028",
+      "regionId": "region_156",
+      "name": "region_156"
+    },
+    {
+      "id": "B53",
+      "color": "#21ec29",
+      "regionId": "region_008",
+      "name": "region_008"
+    },
+    {
+      "id": "B54",
+      "color": "#1ce62c",
+      "regionId": "region_151",
+      "name": "region_151"
+    },
+    {
+      "id": "B55",
+      "color": "#1db22f",
+      "regionId": "region_006",
+      "name": "region_006"
+    },
+    {
+      "id": "B56",
+      "color": "#41e95b",
+      "regionId": "region_035",
+      "name": "region_035"
+    },
+    {
+      "id": "B57",
+      "color": "#13d63a",
+      "regionId": "region_043",
+      "name": "region_043"
+    },
+    {
+      "id": "B58",
+      "color": "#0dee42",
+      "regionId": "region_138",
+      "name": "region_138"
+    },
+    {
+      "id": "B59",
+      "color": "#23f15b",
+      "regionId": "region_026",
+      "name": "region_026"
+    },
+    {
+      "id": "B60",
+      "color": "#0eea53",
+      "regionId": "region_133",
+      "name": "region_133"
+    },
+    {
+      "id": "B61",
+      "color": "#1bcf5b",
+      "regionId": "region_157",
+      "name": "region_157"
+    },
+    {
+      "id": "B62",
+      "color": "#29f077",
+      "regionId": "region_004",
+      "name": "region_004"
+    },
+    {
+      "id": "B63",
+      "color": "#18cd66",
+      "regionId": "region_028",
+      "name": "region_028"
+    },
+    {
+      "id": "B64",
+      "color": "#13b961",
+      "regionId": "region_141",
+      "name": "region_141"
+    },
+    {
+      "id": "B65",
+      "color": "#1acc75",
+      "regionId": "region_019",
+      "name": "region_019"
+    },
+    {
+      "id": "B66",
+      "color": "#0fbd6f",
+      "regionId": "region_080",
+      "name": "region_080"
+    },
+    {
+      "id": "B67",
+      "color": "#35e69d",
+      "regionId": "region_009",
+      "name": "region_009"
+    },
+    {
+      "id": "B68",
+      "color": "#2bde9b",
+      "regionId": "region_155",
+      "name": "region_155"
+    },
+    {
+      "id": "B69",
+      "color": "#0ddf99",
+      "regionId": "region_007",
+      "name": "region_007"
+    },
+    {
+      "id": "B70",
+      "color": "#39f3bc",
+      "regionId": "region_152",
+      "name": "region_152"
+    },
+    {
+      "id": "B71",
+      "color": "#40e2b8",
+      "regionId": "region_134",
+      "name": "region_134"
+    },
+    {
+      "id": "B72",
+      "color": "#3bddba",
+      "regionId": "region_032",
+      "name": "region_032"
+    },
+    {
+      "id": "B73",
+      "color": "#1fcaab",
+      "regionId": "region_039",
+      "name": "region_039"
+    },
+    {
+      "id": "B74",
+      "color": "#26ecd1",
+      "regionId": "region_029",
+      "name": "region_029"
+    },
+    {
+      "id": "B75",
+      "color": "#48e5d6",
+      "regionId": "region_044",
+      "name": "region_044"
+    },
+    {
+      "id": "B76",
+      "color": "#21d9ce",
+      "regionId": "region_109",
+      "name": "region_109"
+    },
+    {
+      "id": "B77",
+      "color": "#1bc9c5",
+      "regionId": "region_122",
+      "name": "region_122"
+    },
+    {
+      "id": "B78",
+      "color": "#10c7ca",
+      "regionId": "region_071",
+      "name": "region_071"
+    },
+    {
+      "id": "B79",
+      "color": "#25ced9",
+      "regionId": "region_077",
+      "name": "region_077"
+    },
+    {
+      "id": "B80",
+      "color": "#15bed1",
+      "regionId": "region_027",
+      "name": "region_027"
+    },
+    {
+      "id": "B81",
+      "color": "#1ab1c8",
+      "regionId": "region_021",
+      "name": "region_021"
+    },
+    {
+      "id": "B82",
+      "color": "#10a8c9",
+      "regionId": "region_096",
+      "name": "region_096"
+    },
+    {
+      "id": "B83",
+      "color": "#2db9e0",
+      "regionId": "region_139",
+      "name": "region_139"
+    },
+    {
+      "id": "B84",
+      "color": "#21a3cf",
+      "regionId": "region_107",
+      "name": "region_107"
+    },
+    {
+      "id": "B85",
+      "color": "#109ed9",
+      "regionId": "region_050",
+      "name": "region_050"
+    },
+    {
+      "id": "B86",
+      "color": "#45b3ea",
+      "regionId": "region_030",
+      "name": "region_030"
+    },
+    {
+      "id": "B87",
+      "color": "#1789cd",
+      "regionId": "region_144",
+      "name": "region_144"
+    },
+    {
+      "id": "B88",
+      "color": "#49a1df",
+      "regionId": "region_079",
+      "name": "region_079"
+    },
+    {
+      "id": "B89",
+      "color": "#1173c2",
+      "regionId": "region_136",
+      "name": "region_136"
+    },
+    {
+      "id": "B90",
+      "color": "#2179cd",
+      "regionId": "region_022",
+      "name": "region_022"
+    },
+    {
+      "id": "B91",
+      "color": "#2084f3",
+      "regionId": "region_053",
+      "name": "region_053"
+    },
+    {
+      "id": "B92",
+      "color": "#2072df",
+      "regionId": "region_033",
+      "name": "region_033"
+    },
+    {
+      "id": "B93",
+      "color": "#2c73e0",
+      "regionId": "region_070",
+      "name": "region_070"
+    },
+    {
+      "id": "B94",
+      "color": "#1d56be",
+      "regionId": "region_093",
+      "name": "region_093"
+    },
+    {
+      "id": "B95",
+      "color": "#1855db",
+      "regionId": "region_084",
+      "name": "region_084"
+    },
+    {
+      "id": "B96",
+      "color": "#4e77e3",
+      "regionId": "region_135",
+      "name": "region_135"
+    },
+    {
+      "id": "B97",
+      "color": "#1e41b4",
+      "regionId": "region_082",
+      "name": "region_082"
+    },
+    {
+      "id": "B98",
+      "color": "#1840e3",
+      "regionId": "region_153",
+      "name": "region_153"
+    },
+    {
+      "id": "B99",
+      "color": "#1d3de5",
+      "regionId": "region_125",
+      "name": "region_125"
+    },
+    {
+      "id": "B100",
+      "color": "#374be7",
+      "regionId": "region_041",
+      "name": "region_041"
+    },
+    {
+      "id": "B101",
+      "color": "#4c57e4",
+      "regionId": "region_010",
+      "name": "region_010"
+    },
+    {
+      "id": "B102",
+      "color": "#363de4",
+      "regionId": "region_105",
+      "name": "region_105"
+    },
+    {
+      "id": "B103",
+      "color": "#0e0ed2",
+      "regionId": "region_154",
+      "name": "region_154"
+    },
+    {
+      "id": "B104",
+      "color": "#352de8",
+      "regionId": "region_061",
+      "name": "region_061"
+    },
+    {
+      "id": "B105",
+      "color": "#291ae1",
+      "regionId": "region_131",
+      "name": "region_131"
+    },
+    {
+      "id": "B106",
+      "color": "#3b23ee",
+      "regionId": "region_123",
+      "name": "region_123"
+    },
+    {
+      "id": "B107",
+      "color": "#624ae0",
+      "regionId": "region_011",
+      "name": "region_011"
+    },
+    {
+      "id": "B108",
+      "color": "#3612c9",
+      "regionId": "region_147",
+      "name": "region_147"
+    },
+    {
+      "id": "B109",
+      "color": "#5d32e9",
+      "regionId": "region_066",
+      "name": "region_066"
+    },
+    {
+      "id": "B110",
+      "color": "#4c1dc8",
+      "regionId": "region_104",
+      "name": "region_104"
+    },
+    {
+      "id": "B111",
+      "color": "#4c1db4",
+      "regionId": "region_018",
+      "name": "region_018"
+    },
+    {
+      "id": "B112",
+      "color": "#5b0ee9",
+      "regionId": "region_150",
+      "name": "region_150"
+    },
+    {
+      "id": "B113",
+      "color": "#792def",
+      "regionId": "region_012",
+      "name": "region_012"
+    },
+    {
+      "id": "B114",
+      "color": "#611eb9",
+      "regionId": "region_085",
+      "name": "region_085"
+    },
+    {
+      "id": "B115",
+      "color": "#9148e3",
+      "regionId": "region_062",
+      "name": "region_062"
+    },
+    {
+      "id": "B116",
+      "color": "#994de3",
+      "regionId": "region_113",
+      "name": "region_113"
+    },
+    {
+      "id": "B117",
+      "color": "#7015bb",
+      "regionId": "region_060",
+      "name": "region_060"
+    },
+    {
+      "id": "B118",
+      "color": "#8612d7",
+      "regionId": "region_052",
+      "name": "region_052"
+    },
+    {
+      "id": "B119",
+      "color": "#9516e0",
+      "regionId": "region_099",
+      "name": "region_099"
+    },
+    {
+      "id": "B120",
+      "color": "#a028db",
+      "regionId": "region_128",
+      "name": "region_128"
+    },
+    {
+      "id": "B121",
+      "color": "#9d1bd3",
+      "regionId": "region_110",
+      "name": "region_110"
+    },
+    {
+      "id": "B122",
+      "color": "#9b15c9",
+      "regionId": "region_069",
+      "name": "region_069"
+    },
+    {
+      "id": "B123",
+      "color": "#c110f1",
+      "regionId": "region_083",
+      "name": "region_083"
+    },
+    {
+      "id": "B124",
+      "color": "#ae16cf",
+      "regionId": "region_074",
+      "name": "region_074"
+    },
+    {
+      "id": "B125",
+      "color": "#c833df",
+      "regionId": "region_095",
+      "name": "region_095"
+    },
+    {
+      "id": "B126",
+      "color": "#bb1ecc",
+      "regionId": "region_068",
+      "name": "region_068"
+    },
+    {
+      "id": "B127",
+      "color": "#bb0cc6",
+      "regionId": "region_100",
+      "name": "region_100"
+    },
+    {
+      "id": "B128",
+      "color": "#ee3df1",
+      "regionId": "region_149",
+      "name": "region_149"
+    },
+    {
+      "id": "B129",
+      "color": "#ca23c7",
+      "regionId": "region_114",
+      "name": "region_114"
+    },
+    {
+      "id": "B130",
+      "color": "#cf1ec5",
+      "regionId": "region_086",
+      "name": "region_086"
+    },
+    {
+      "id": "B131",
+      "color": "#ea43da",
+      "regionId": "region_034",
+      "name": "region_034"
+    },
+    {
+      "id": "B132",
+      "color": "#e93fd2",
+      "regionId": "region_013",
+      "name": "region_013"
+    },
+    {
+      "id": "B133",
+      "color": "#e840ca",
+      "regionId": "region_087",
+      "name": "region_087"
+    },
+    {
+      "id": "B134",
+      "color": "#cc24a8",
+      "regionId": "region_127",
+      "name": "region_127"
+    },
+    {
+      "id": "B135",
+      "color": "#bb1b92",
+      "regionId": "region_129",
+      "name": "region_129"
+    },
+    {
+      "id": "B136",
+      "color": "#c41791",
+      "regionId": "region_076",
+      "name": "region_076"
+    },
+    {
+      "id": "B137",
+      "color": "#cd1690",
+      "regionId": "region_101",
+      "name": "region_101"
+    },
+    {
+      "id": "B138",
+      "color": "#d92194",
+      "regionId": "region_042",
+      "name": "region_042"
+    },
+    {
+      "id": "B139",
+      "color": "#dc0d87",
+      "regionId": "region_040",
+      "name": "region_040"
+    },
+    {
+      "id": "B140",
+      "color": "#e6419c",
+      "regionId": "region_142",
+      "name": "region_142"
+    },
+    {
+      "id": "B141",
+      "color": "#cd0c6e",
+      "regionId": "region_025",
+      "name": "region_025"
+    },
+    {
+      "id": "B142",
+      "color": "#ee398e",
+      "regionId": "region_115",
+      "name": "region_115"
+    },
+    {
+      "id": "B143",
+      "color": "#e53380",
+      "regionId": "region_064",
+      "name": "region_064"
+    },
+    {
+      "id": "B144",
+      "color": "#ba1b5a",
+      "regionId": "region_057",
+      "name": "region_057"
+    },
+    {
+      "id": "B145",
+      "color": "#f12e73",
+      "regionId": "region_016",
+      "name": "region_016"
+    },
+    {
+      "id": "B146",
+      "color": "#e4336a",
+      "regionId": "region_056",
+      "name": "region_056"
+    },
+    {
+      "id": "B147",
+      "color": "#d21549",
+      "regionId": "region_126",
+      "name": "region_126"
+    },
+    {
+      "id": "B148",
+      "color": "#ec2957",
+      "regionId": "region_102",
+      "name": "region_102"
+    },
+    {
+      "id": "B149",
+      "color": "#c20a2e",
+      "regionId": "region_108",
+      "name": "region_108"
+    },
+    {
+      "id": "B150",
+      "color": "#de1433",
+      "regionId": "region_023",
+      "name": "region_023"
+    },
+    {
+      "id": "B151",
+      "color": "#ed394e",
+      "regionId": "region_049",
+      "name": "region_049"
+    },
+    {
+      "id": "B152",
+      "color": "#e52e3c",
+      "regionId": "region_111",
+      "name": "region_111"
+    },
+    {
+      "id": "B153",
+      "color": "#df161e",
+      "regionId": "region_051",
+      "name": "region_051"
+    }
+  ],
+  "summary": {
+    "totalRegions": 153,
+    "colors": [
+      "#e21818",
+      "#ed322a",
+      "#cf2314",
+      "#c32b16",
+      "#e84d30",
+      "#ee5f3c",
+      "#e64412",
+      "#bf4c20",
+      "#cb490e",
+      "#d75e1c",
+      "#eb792f",
+      "#e98030",
+      "#ee913e",
+      "#bb6f20",
+      "#d47a0e",
+      "#d28a24",
+      "#cf870c",
+      "#e9b142",
+      "#ce991a",
+      "#d3a318",
+      "#d5a90b",
+      "#eacb3a",
+      "#e2c50e",
+      "#ddc915",
+      "#c5bb1a",
+      "#c7c418",
+      "#e0e334",
+      "#d9e515",
+      "#d6eb14",
+      "#d7f22c",
+      "#bce013",
+      "#bfe048",
+      "#b1dc36",
+      "#b0ea27",
+      "#95ce24",
+      "#abf136",
+      "#8ce014",
+      "#95e732",
+      "#90e439",
+      "#91ef3e",
+      "#75e81d",
+      "#82e145",
+      "#60e517",
+      "#48cc0c",
+      "#4dd719",
+      "#61ef35",
+      "#39d613",
+      "#2eda0d",
+      "#37e221",
+      "#20d910",
+      "#2dda26",
+      "#28f028",
+      "#21ec29",
+      "#1ce62c",
+      "#1db22f",
+      "#41e95b",
+      "#13d63a",
+      "#0dee42",
+      "#23f15b",
+      "#0eea53",
+      "#1bcf5b",
+      "#29f077",
+      "#18cd66",
+      "#13b961",
+      "#1acc75",
+      "#0fbd6f",
+      "#35e69d",
+      "#2bde9b",
+      "#0ddf99",
+      "#39f3bc",
+      "#40e2b8",
+      "#3bddba",
+      "#1fcaab",
+      "#26ecd1",
+      "#48e5d6",
+      "#21d9ce",
+      "#1bc9c5",
+      "#10c7ca",
+      "#25ced9",
+      "#15bed1",
+      "#1ab1c8",
+      "#10a8c9",
+      "#2db9e0",
+      "#21a3cf",
+      "#109ed9",
+      "#45b3ea",
+      "#1789cd",
+      "#49a1df",
+      "#1173c2",
+      "#2179cd",
+      "#2084f3",
+      "#2072df",
+      "#2c73e0",
+      "#1d56be",
+      "#1855db",
+      "#4e77e3",
+      "#1e41b4",
+      "#1840e3",
+      "#1d3de5",
+      "#374be7",
+      "#4c57e4",
+      "#363de4",
+      "#0e0ed2",
+      "#352de8",
+      "#291ae1",
+      "#3b23ee",
+      "#624ae0",
+      "#3612c9",
+      "#5d32e9",
+      "#4c1dc8",
+      "#4c1db4",
+      "#5b0ee9",
+      "#792def",
+      "#611eb9",
+      "#9148e3",
+      "#994de3",
+      "#7015bb",
+      "#8612d7",
+      "#9516e0",
+      "#a028db",
+      "#9d1bd3",
+      "#9b15c9",
+      "#c110f1",
+      "#ae16cf",
+      "#c833df",
+      "#bb1ecc",
+      "#bb0cc6",
+      "#ee3df1",
+      "#ca23c7",
+      "#cf1ec5",
+      "#ea43da",
+      "#e93fd2",
+      "#e840ca",
+      "#cc24a8",
+      "#bb1b92",
+      "#c41791",
+      "#cd1690",
+      "#d92194",
+      "#dc0d87",
+      "#e6419c",
+      "#cd0c6e",
+      "#ee398e",
+      "#e53380",
+      "#ba1b5a",
+      "#f12e73",
+      "#e4336a",
+      "#d21549",
+      "#ec2957",
+      "#c20a2e",
+      "#de1433",
+      "#ed394e",
+      "#e52e3c",
+      "#df161e"
+    ]
+  }
+}

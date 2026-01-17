@@ -1,43 +1,88 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-.pytest_cache/
-*.egg-info/
-dist/
-build/
+# Python# Python
 
-# Images (large files - commit selectively)
+__pycache__/__pycache__/
+
+*.py[cod]*.py[cod]
+
+*$py.class*$py.class
+
+*.so.pytest_cache/
+
+.Python*.egg-info/
+
+.venv/dist/
+
+venv/build/
+
+ENV/
+
+env/# Images (large files - commit selectively)
+
 *.png
-*.jpg
-*.jpeg
-!project_root/slides/images/*.png
+
+# Testing*.jpg
+
+.pytest_cache/*.jpeg
+
+.coverage!project_root/slides/images/*.png
+
+htmlcov/
 
 # PowerPoint and PDF (large files)
-*.pptx
-*.pdf
 
-# Excel
-*.xlsx
-*.xls
+# IDE*.pptx
 
-# Database files
-*.db
-*.sqlite
-*.sqlite3
+.vscode/*.pdf
 
-# IDE
-.vscode/
 .idea/
 
+*.swp# Excel
+
+*.swo*.xlsx
+
+*~*.xls
+
+
+
+# OS# Database files
+
+.DS_Store*.db
+
+Thumbs.db*.sqlite
+
+desktop.ini*.sqlite3
+
+
+
+# Manager database and logs# IDE
+
+manager/f22_registry.db.vscode/
+
+manager/logs/.idea/
+
+*.log
+
 # OS
-.DS_Store
-Thumbs.db
 
-# Temp
+# Temporary build artifacts.DS_Store
+
+*.bakThumbs.db
+
 *.tmp
-*.bak
 
-# Folders to ignore
-New folder/
+*.temp# Temp
+
+*.tmp
+
+# Large data files (optional - remove if you want to track them)*.bak
+
+# *.glb
+
+# *.obj# Folders to ignore
+
+# *.sqliteNew folder/
+
 Boot Partner/
+
+# Node modules (if any JS tooling added later)
+node_modules/

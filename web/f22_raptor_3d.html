@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F-22 Blueprint Mapper | 3D Touch Zones</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-void: #050508;
+            --bg-panel: rgba(12, 14, 20, 0.92);
+            --glass-border: rgba(255, 215, 0, 0.2);
+            --neon-gold: #ffd700;
+            --neon-cyan: #00d4ff;
+            --neon-green: #00ff88;
+            --neon-red: #ff3366;
+            --neon-violet: #9d4edd;
+            --text-primary: #e8e8f0;
+            --text-secondary: #8888a0;
+        }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-void); font-family: 'Rajdhani', sans-serif; color: var(--text-primary); }
+        #canvas-container { width: 100%; height: 100%; position: relative; }
+        canvas { display: block; touch-action: none; }
+
+        /* Header */
+        .header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.6rem 1.25rem;
+            background: var(--bg-panel); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--neon-gold); letter-spacing: 0.15em; text-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+        .header-subtitle { font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.3em; text-transform: uppercase; margin-top: 0.15rem; }
+        .status-indicator { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--neon-cyan); }
+        .status-dot { width: 8px; height: 8px; background: var(--neon-cyan); border-radius: 50%; animation: pulse 2s ease-in-out infinite; box-shadow: 0 0 10px var(--neon-cyan); }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+        /* Info Panel (Right) */
+        .info-panel {
+            position: fixed; top: 60px; right: 0; bottom: 60px; width: 320px; z-index: 90;
+            background: var(--bg-panel); backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            padding: 1rem; overflow-y: auto;
+            transform: translateX(100%); opacity: 0; pointer-events: none;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .info-panel.visible { opacity: 1; pointer-events: auto; transform: translateX(0); }
+        .info-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: linear-gradient(180deg, var(--neon-gold), transparent); }
+        .info-header { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.75rem; padding-right: 2rem; }
+        .info-title { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--neon-gold); letter-spacing: 0.03em; }
+        .info-category { font-size: 0.6rem; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 0.1em; padding: 0.2rem 0.4rem; background: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 20px; width: fit-content; }
+        .info-specs { display: flex; flex-direction: column; gap: 0.5rem; }
+        .spec-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 215, 0, 0.15); border-radius: 8px; padding: 0.5rem 0.75rem; display: flex; justify-content: space-between; align-items: center; }
+        .spec-label { font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; }
+        .spec-value { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: var(--neon-cyan); text-align: right; word-break: break-all; max-width: 60%; }
+        .close-btn { position: absolute; top: 0.75rem; right: 0.75rem; width: 24px; height: 24px; background: rgba(255, 51, 102, 0.1); border: 1px solid rgba(255, 51, 102, 0.3); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .close-btn:hover { background: rgba(255, 51, 102, 0.2); border-color: var(--neon-red); }
+        .close-btn svg { width: 12px; height: 12px; stroke: var(--neon-red); stroke-width: 2; }
+
+        /* Left Panel (Config) */
+        .config-panel {
+            position: fixed; top: 60px; left: 0; bottom: 60px; width: 300px; z-index: 90;
+            background: var(--bg-panel); backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; overflow: hidden;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .config-panel.visible { transform: translateX(0); }
+        .config-panel::after { content: ''; position: absolute; top: 0; right: 0; width: 2px; height: 100%; background: linear-gradient(180deg, var(--neon-gold), transparent); }
+        .config-header { padding: 0.75rem; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .config-title { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 1px; }
+        .config-content { flex: 1; overflow-y: auto; padding: 0.75rem; }
+        .config-content::-webkit-scrollbar { width: 6px; }
+        .config-content::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 3px; }
+        .config-content::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 3px; }
+        .config-section { margin-bottom: 1rem; }
+        .config-section-title { font-size: 0.7rem; color: var(--neon-gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
+        .config-row { margin-bottom: 0.6rem; }
+        .config-row label { display: block; font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
+        .config-row input[type="file"] { width: 100%; padding: 0.4rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 215, 0, 0.12); border-radius: 6px; color: var(--text-secondary); font-size: 0.7rem; }
+        .config-row select { width: 100%; padding: 0.5rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 215, 0, 0.12); border-radius: 6px; color: var(--text-primary); font-size: 0.75rem; }
+        .config-row input[type="range"] { width: 100%; }
+        .range-value { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--neon-cyan); float: right; }
+        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }
+        .btn { cursor: pointer; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid rgba(255, 215, 0, 0.18); background: rgba(255, 215, 0, 0.08); color: var(--text-primary); font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 0.7rem; transition: all 0.2s ease; }
+        .btn:hover { background: rgba(255, 215, 0, 0.15); border-color: var(--neon-gold); }
+        .btn:active { transform: translateY(1px); }
+        .btn.danger { border-color: rgba(255, 51, 102, 0.3); background: rgba(255, 51, 102, 0.1); }
+        .btn.danger:hover { background: rgba(255, 51, 102, 0.2); border-color: var(--neon-red); }
+
+        /* Toggle Buttons */
+        .panel-toggle {
+            position: fixed; top: 50%; z-index: 95;
+            width: 32px; height: 64px;
+            background: var(--bg-panel); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .panel-toggle:hover { border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
+        .panel-toggle svg { width: 18px; height: 18px; stroke: var(--neon-cyan); fill: none; transition: transform 0.3s ease; }
+        .panel-toggle.left { left: 0; border-radius: 0 8px 8px 0; transform: translateY(-50%); }
+        .panel-toggle.right { right: 0; border-radius: 8px 0 0 8px; transform: translateY(-50%); }
+        .panel-toggle.left.open { left: 300px; }
+        .panel-toggle.left.open svg { transform: rotate(180deg); }
+        .panel-toggle.right.open { right: 320px; }
+        .panel-toggle.right.open svg { transform: rotate(180deg); }
+
+        /* Toolbar at Bottom */
+        .toolbar {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-panel); backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+        }
+        .toolbar-btn { width: 40px; height: 40px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; position: relative; }
+        .toolbar-btn:hover { background: rgba(0, 255, 255, 0.1); border-color: var(--neon-cyan); }
+        .toolbar-btn.active { background: rgba(255, 215, 0, 0.2); border-color: var(--neon-gold); }
+        .toolbar-btn svg { width: 18px; height: 18px; stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
+        .toolbar-btn:hover svg { stroke: var(--neon-cyan); }
+        .toolbar-btn.active svg { stroke: var(--neon-gold); }
+        .toolbar-separator { width: 1px; height: 24px; background: var(--glass-border); }
+        .toolbar-info { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--text-secondary); padding: 0 1rem; }
+        .toolbar-info span { color: var(--neon-gold); }
+
+        /* HUD Overlay */
+        .hud {
+            position: fixed; left: 50%; bottom: 70px; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); border-radius: 10px;
+            padding: 0.6rem 1.25rem;
+            display: flex; gap: 1.5rem; align-items: center;
+            pointer-events: none; z-index: 80;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .hud.visible { opacity: 1; }
+        .hud-item { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; }
+        .hud-label { font-size: 0.6rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+        .hud-value { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: var(--neon-cyan); }
+        .hud-value.gold { color: var(--neon-gold); }
+
+        /* Corner Decorations */
+        .corner-decor { position: fixed; width: 60px; height: 60px; pointer-events: none; z-index: 10; }
+        .corner-decor.top-left { top: 60px; left: 0; }
+        .corner-decor.top-right { top: 60px; right: 0; transform: scaleX(-1); }
+        .corner-decor.bottom-left { bottom: 60px; left: 0; transform: scaleY(-1); }
+        .corner-decor.bottom-right { bottom: 60px; right: 0; transform: scale(-1); }
+        .corner-decor svg { width: 100%; height: 100%; stroke: var(--neon-gold); stroke-width: 1; opacity: 0.4; fill: none; }
+
+        /* Canvas Previews in Config */
+        .preview-wrap { position: relative; background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 215, 0, 0.12); border-radius: 6px; overflow: hidden; height: 100px; margin-top: 0.5rem; }
+        .preview-wrap canvas { width: 100%; height: 100%; display: block; }
+
+        /* Upload Overlay */
+        .upload-screen {
+            position: fixed; inset: 0; z-index: 200;
+            background: var(--bg-void);
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .upload-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .upload-box { background: var(--bg-panel); border: 2px dashed var(--glass-border); border-radius: 16px; padding: 3rem; text-align: center; max-width: 500px; cursor: pointer; transition: all 0.3s ease; }
+        .upload-box:hover, .upload-box.dragover { border-color: var(--neon-cyan); box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); }
+        .upload-icon { width: 80px; height: 80px; margin: 0 auto 1.5rem; stroke: var(--neon-gold); stroke-width: 1.5; }
+        .upload-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--neon-gold); letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+        .upload-subtitle { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .upload-formats { font-size: 0.75rem; color: var(--text-secondary); padding: 0.5rem 1rem; background: rgba(0, 0, 0, 0.3); border-radius: 20px; display: inline-block; }
+        .upload-formats span { color: var(--neon-cyan); }
+        #file-input { display: none; }
+
+        /* Loading Overlay */
+        .loading-overlay { position: fixed; inset: 0; z-index: 300; background: var(--bg-void); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .loading-overlay.visible { opacity: 1; visibility: visible; }
+        .loading-ring { width: 80px; height: 80px; position: relative; }
+        .loading-ring::before, .loading-ring::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 3px solid transparent; }
+        .loading-ring::before { border-top-color: var(--neon-gold); animation: spin 1s linear infinite; }
+        .loading-ring::after { border-right-color: var(--neon-cyan); animation: spin 1.5s linear infinite reverse; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { margin-top: 2rem; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; letter-spacing: 0.3em; color: var(--text-secondary); }
+    </style>
+    <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+</head>
+<body>
+    <!-- Upload Screen -->
+    <div class="upload-screen" id="upload-screen">
+        <div class="upload-box" id="upload-box">
+            <svg class="upload-icon" viewBox="0 0 24 24" fill="none">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+            </svg>
+            <div class="upload-title">LOAD 3D MODEL</div>
+            <div class="upload-subtitle">Drop GLB/GLTF file or click to browse</div>
+            <div class="upload-formats">Supported: <span>.glb .gltf</span></div>
+            <input type="file" id="file-input" accept=".glb,.gltf">
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading">
+        <div class="loading-ring"></div>
+        <div class="loading-text">LOADING MODEL</div>
+    </div>
+
+    <!-- Corner Decorations -->
+    <div class="corner-decor top-left"><svg viewBox="0 0 60 60"><path d="M0 30 L0 0 L30 0" /><path d="M0 20 L0 10 L10 10 L10 0" /></svg></div>
+    <div class="corner-decor top-right"><svg viewBox="0 0 60 60"><path d="M0 30 L0 0 L30 0" /><path d="M0 20 L0 10 L10 10 L10 0" /></svg></div>
+    <div class="corner-decor bottom-left"><svg viewBox="0 0 60 60"><path d="M0 30 L0 0 L30 0" /><path d="M0 20 L0 10 L10 10 L10 0" /></svg></div>
+    <div class="corner-decor bottom-right"><svg viewBox="0 0 60 60"><path d="M0 30 L0 0 L30 0" /><path d="M0 20 L0 10 L10 10 L10 0" /></svg></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div>
+            <h1>BLUEPRINT MAPPER</h1>
+            <div class="header-subtitle">3D Touch Zone System</div>
+        </div>
+        <div class="status-indicator">
+            <div class="status-dot"></div>
+            <span id="status-text">READY</span>
+        </div>
+    </header>
+
+    <!-- Left Panel Toggle -->
+    <div class="panel-toggle left" id="config-toggle">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+
+    <!-- Config Panel (Left) -->
+    <div class="config-panel" id="config-panel">
+        <div class="config-header">
+            <div class="config-title">Configuration</div>
+        </div>
+        <div class="config-content">
+            <div class="config-section">
+                <div class="config-section-title">Model & Textures</div>
+                <div class="config-row">
+                    <label>GLB Model</label>
+                    <input type="file" id="glbFile" accept=".glb,.gltf">
+                </div>
+                <div class="config-row">
+                    <label>Texture (optional)</label>
+                    <input type="file" id="textureFile" accept="image/*">
+                </div>
+                <div class="config-row">
+                    <label>Panel ID Map (UV-space PNG)</label>
+                    <input type="file" id="panelIdMapFile" accept="image/*">
+                    <div class="preview-wrap"><canvas id="panelIdPreview"></canvas></div>
+                </div>
+                <div class="config-row">
+                    <label>Panel JSON</label>
+                    <input type="file" id="panelJsonFile" accept=".json">
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-section-title">Display</div>
+                <div class="config-row">
+                    <label>Material Mode</label>
+                    <select id="materialMode">
+                        <option value="untextured">Untextured (Normal)</option>
+                        <option value="textured">Textured</option>
+                    </select>
+                </div>
+                <div class="config-row">
+                    <label>Color Tolerance <span class="range-value" id="toleranceLabel">30</span></label>
+                    <input type="range" id="tolerance" min="0" max="150" value="30">
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-section-title"> Panel Calibration Wizard</div>
+                
+                <!-- Calibration Controls -->
+                <div class="btn-row" style="margin-bottom: 0.5rem;">
+                    <button class="btn" id="startCalibrationBtn" style="background: linear-gradient(135deg, var(--neon-green), #00aa55);">? Start</button>
+                    <button class="btn" id="skipPanelBtn" style="display: none;">Skip ?</button>
+                    <button class="btn danger" id="stopCalibrationBtn" style="display: none;"> Stop</button>
+                </div>
+                
+                <!-- Current Target Panel -->
+                <div id="calibrationTarget" style="display: none; padding: 0.6rem; margin-bottom: 0.5rem; background: rgba(0,212,255,0.15); border: 1px solid var(--neon-cyan); border-radius: 6px;">
+                    <div style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.3rem;">CLICK ON PANEL:</div>
+                    <div id="targetPanelName" style="font-size: 0.95rem; color: var(--neon-cyan); font-weight: 600;">-</div>
+                    <div id="targetExpectedColor" style="font-size: 0.75rem; color: var(--neon-gold); margin-top: 0.2rem;">Expected RGB: -</div>
+                    <div id="targetExpectedColor" style="font-size: 0.75rem; color: var(--neon-gold); margin-top: 0.2rem;">Expected RGB: -</div>
+                    <div style="margin-top: 0.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 0.7rem; color: var(--text-secondary);">Expected RGB:</span>
+                        <span id="expectedColorBox" style="display: inline-block; width: 20px; height: 20px; border: 1px solid #fff; border-radius: 3px;"></span>
+                        <span id="expectedColorText" style="font-size: 0.8rem; color: var(--neon-green); font-family: monospace;">-</span>
+                    </div>
+                    <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.3rem;">
+                        Progress: <span id="calibProgress">0</span> / <span id="calibTotal">0</span>
+                    </div>
+                </div>
+                
+                <!-- Panel List with Status -->
+                <div id="panelCalibList" style="max-height: 200px; overflow-y: auto; font-size: 0.75rem; border: 1px solid var(--glass-border); border-radius: 6px; padding: 0.3rem;">
+                    <div style="color: var(--text-secondary); padding: 0.3rem;">Load model to see panels...</div>
+                </div>
+                
+                <!-- Manual Mode Toggle -->
+                <div class="config-row" style="margin-top: 0.5rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem;">
+                        <input type="checkbox" id="calibrationMode" style="width: 14px; height: 14px;">
+                        Manual Marker Mode
+                    </label>
+                </div>
+                
+                <!-- Export/Clear -->
+                <div class="btn-row" style="margin-top: 0.5rem;">
+                    <button class="btn" id="exportMarkersBtn"> Export</button>
+                    <button class="btn danger" id="clearMarkersBtn"> Clear All</button>
+                </div>
+                <div class="config-row" style="margin-top: 0.3rem;">
+                    <span style="font-size: 0.7rem; color: var(--text-secondary);">Calibrated: <span id="markerCount" style="color: var(--neon-green);">0</span></span>
+                </div>
+            </div>
+
+            <div class="config-section">
+                <div class="config-section-title">Session</div>
+                <div class="btn-row">
+                    <button class="btn" id="saveSessionBtn">Save</button>
+                    <button class="btn" id="loadSessionBtn">Load</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Panel Toggle -->
+    <div class="panel-toggle right" id="info-toggle">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <!-- Info Panel (Right) -->
+    <div class="info-panel" id="info-panel">
+        <button class="close-btn" id="info-close">
+            <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="info-header">
+            <div class="info-title" id="panelTitle">SELECT A PANEL</div>
+            <div class="info-category" id="panelCategory">—</div>
+        </div>
+        <div class="info-specs" id="panelSpecs">
+            <div class="spec-item"><div class="spec-label">UV</div><div class="spec-value" id="specUv">—</div></div>
+            <div class="spec-item"><div class="spec-label">RGB</div><div class="spec-value" id="specRgb">—</div></div>
+            <div class="spec-item"><div class="spec-label">Face</div><div class="spec-value" id="specFace">—</div></div>
+        </div>
+        <div style="margin-top: 1rem;">
+            <div class="config-section-title">Panel Data</div>
+            <pre id="panelDataPre" style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; color: var(--text-secondary); white-space: pre-wrap; max-height: 200px; overflow-y: auto;">No panel selected</pre>
+        </div>
+    </div>
+
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- HUD -->
+    <div class="hud" id="hud">
+        <div class="hud-item"><div class="hud-label">Panel</div><div class="hud-value gold" id="hudPanel">—</div></div>
+        <div class="hud-item"><div class="hud-label">UV</div><div class="hud-value" id="hudUv">—</div></div>
+        <div class="hud-item"><div class="hud-label">RGB</div><div class="hud-value" id="hudRgb">—</div></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar" id="toolbar">
+        <button class="toolbar-btn" id="btn-reset" title="Reset View">
+            <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
+        <button class="toolbar-btn" id="btn-front" title="Front View">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+        </button>
+        <button class="toolbar-btn" id="btn-top" title="Top View">
+            <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M12 8v8"/></svg>
+        </button>
+        <button class="toolbar-btn" id="btn-side" title="Side View">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </button>
+        <div class="toolbar-separator"></div>
+        <button class="toolbar-btn" id="btn-material" title="Toggle Material">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/></svg>
+        </button>
+        <div class="toolbar-separator"></div>
+        <div class="toolbar-info">Meshes: <span id="meshCount">0</span></div>
+        <div class="toolbar-info">Panels: <span id="panelCount">0</span></div>
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+
+        // DOM Elements
+        const els = {
+            container: document.getElementById('canvas-container'),
+            uploadScreen: document.getElementById('upload-screen'),
+            uploadBox: document.getElementById('upload-box'),
+            fileInput: document.getElementById('file-input'),
+            loading: document.getElementById('loading'),
+            statusText: document.getElementById('status-text'),
+            configPanel: document.getElementById('config-panel'),
+            configToggle: document.getElementById('config-toggle'),
+            infoPanel: document.getElementById('info-panel'),
+            infoToggle: document.getElementById('info-toggle'),
+            infoClose: document.getElementById('info-close'),
+            hud: document.getElementById('hud'),
+            toolbar: document.getElementById('toolbar'),
+            // Config inputs
+            glbFile: document.getElementById('glbFile'),
+            textureFile: document.getElementById('textureFile'),
+            panelIdMapFile: document.getElementById('panelIdMapFile'),
+            panelJsonFile: document.getElementById('panelJsonFile'),
+            panelIdPreview: document.getElementById('panelIdPreview'),
+            materialMode: document.getElementById('materialMode'),
+            tolerance: document.getElementById('tolerance'),
+            toleranceLabel: document.getElementById('toleranceLabel'),
+            calibrationMode: document.getElementById('calibrationMode'),
+            exportMarkersBtn: document.getElementById('exportMarkersBtn'),
+            clearMarkersBtn: document.getElementById('clearMarkersBtn'),
+            markerCount: document.getElementById('markerCount'),
+            // Calibration Wizard
+            startCalibrationBtn: document.getElementById('startCalibrationBtn'),
+            skipPanelBtn: document.getElementById('skipPanelBtn'),
+            stopCalibrationBtn: document.getElementById('stopCalibrationBtn'),
+            calibrationTarget: document.getElementById('calibrationTarget'),
+            targetPanelName: document.getElementById('targetPanelName'),
+            calibProgress: document.getElementById('calibProgress'),
+            calibTotal: document.getElementById('calibTotal'),
+            panelCalibList: document.getElementById('panelCalibList'),
+            targetExpectedColor: document.getElementById('targetExpectedColor'),
+            expectedColorBox: document.getElementById('expectedColorBox'),
+            expectedColorText: document.getElementById('expectedColorText'),
+            expectedColorBox: document.getElementById('expectedColorBox'),
+            expectedColorText: document.getElementById('expectedColorText'),
+            saveSessionBtn: document.getElementById('saveSessionBtn'),
+            loadSessionBtn: document.getElementById('loadSessionBtn'),
+            // Info panel
+            panelTitle: document.getElementById('panelTitle'),
+            panelCategory: document.getElementById('panelCategory'),
+            specUv: document.getElementById('specUv'),
+            specRgb: document.getElementById('specRgb'),
+            specFace: document.getElementById('specFace'),
+            panelDataPre: document.getElementById('panelDataPre'),
+            // HUD
+            hudPanel: document.getElementById('hudPanel'),
+            hudUv: document.getElementById('hudUv'),
+            hudRgb: document.getElementById('hudRgb'),
+            // Toolbar
+            meshCount: document.getElementById('meshCount'),
+            panelCount: document.getElementById('panelCount'),
+            btnReset: document.getElementById('btn-reset'),
+            btnFront: document.getElementById('btn-front'),
+            btnTop: document.getElementById('btn-top'),
+            btnSide: document.getElementById('btn-side'),
+            btnMaterial: document.getElementById('btn-material')
+        };
+
+        // State
+        const state = {
+            renderer: null, scene: null, camera: null, controls: null,
+            raycaster: new THREE.Raycaster(),
+            pointerNdc: new THREE.Vector2(),
+            modelRoot: null, meshList: [], originalMaterials: new Map(),
+            texture: null,
+            panelIdImage: null, panelIdCanvas: document.createElement('canvas'),
+            panelIdCtx: null, panelIdImageData: null,
+            panels: [], panelsRgb: [],
+            lastUv: null, lastRgb: null, lastPanel: null,
+            pointerDown: null,
+            calibrationMarkers: [], markerMeshes: [],
+            // Calibration Wizard State
+            calibrationWizardActive: false,
+            calibrationQueue: [],           // Panels left to calibrate
+            currentCalibrationTarget: null, // Current panel being calibrated
+            calibratedPanels: new Map(),    // panel_id -> marker data
+            modelCenter: new THREE.Vector3(), modelSize: 1
+        };
+        state.panelIdCtx = state.panelIdCanvas.getContext('2d', { willReadFrequently: true });
+
+        // Utility functions
+        const clamp01 = v => Math.min(1, Math.max(0, v));
+        const fmt3 = v => Number.isFinite(v) ? v.toFixed(3) : '—';
+        const rgbKey = (r, g, b) => `${r},${g},${b}`;
+
+        function parsePanelJson(raw) {
+            try {
+                const p = JSON.parse(raw);
+                // Handle array format
+                if (Array.isArray(p)) return { panels: p };
+                // Handle {panels: [...]} format
+                if (p?.panels) return p;
+                // Handle {mapping: {"#RRGGBB": {...}}} format (from panel_id_map_colors.json)
+                if (p?.mapping) {
+                    const panels = Object.entries(p.mapping).map(([hex, info]) => {
+                        const r = parseInt(hex.slice(1, 3), 16);
+                        const g = parseInt(hex.slice(3, 5), 16);
+                        const b = parseInt(hex.slice(5, 7), 16);
+                        return {
+                            id: info.panel_id || info.id || hex,
+                            name: info.object_name || info.name || info.panel_id || hex,
+                            color: { r, g, b },
+                            data: { panel_index: info.panel_index, object_name: info.object_name }
+                        };
+                    });
+                    return { panels };
+                }
+                return { panels: [] };
+            } catch { return { panels: [] }; }
+        }
+
+        function normalizePanelList(panels) {
+            return (panels || []).filter(p => {
+                const c = p?.color;
+                return Number.isFinite(Number(c?.r)) && Number.isFinite(Number(c?.g)) && Number.isFinite(Number(c?.b));
+            }).map(p => ({
+                id: String(p.id ?? ''), name: String(p.name ?? ''), data: p.data ?? null,
+                color: { r: Math.round(Number(p.color.r)), g: Math.round(Number(p.color.g)), b: Math.round(Number(p.color.b)) }
+            }));
+        }
+
+        function findNearestPanel(r, g, b, tolerance) {
+            if (!state.panelsRgb.length) return null;
+            let best = null, bestDist = Infinity;
+            for (const p of state.panelsRgb) {
+                const dist = Math.sqrt((r - p.r) ** 2 + (g - p.g) ** 2 + (b - p.b) ** 2);
+                if (dist < bestDist) { bestDist = dist; best = p; }
+            }
+            return best && bestDist <= tolerance ? { panel: best.panel, dist: bestDist } : null;
+        }
+
+        // Find panel by mesh/object name (primary detection method)
+        function findPanelByMeshName(meshName) {
+            if (!meshName || !state.panels.length) return null;
+            // Direct match on object_name or panel id
+            for (const p of state.panels) {
+                const objName = p.data?.object_name || '';
+                if (objName === meshName || p.id === meshName || p.name === meshName) {
+                    return p;
+                }
+            }
+            // Fuzzy match - normalize names (remove spaces, underscores, case)
+            const normalize = s => s.toLowerCase().replace(/[\s_-]/g, '');
+            const normMesh = normalize(meshName);
+            for (const p of state.panels) {
+                const objName = p.data?.object_name || '';
+                if (normalize(objName) === normMesh || normalize(p.id) === normMesh || normalize(p.name) === normMesh) {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        // Three.js Setup
+        function initThree() {
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.domElement.style.position = 'absolute';
+            renderer.domElement.style.top = '60px';
+            renderer.domElement.style.left = '0';
+            renderer.domElement.style.width = '100%';
+            renderer.domElement.style.height = 'calc(100% - 120px)';
+            els.container.appendChild(renderer.domElement);
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a1a2e);  // Brighter background
+
+            const camera = new THREE.PerspectiveCamera(50, 1, 0.01, 10000);  // Extended far plane
+            camera.position.set(0, 0.5, 2);
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.12;      // Faster damping response
+            controls.rotateSpeed = 1.5;         // FASTER rotation (was 0.6)
+            controls.zoomSpeed = 2.0;           // FASTER zoom
+            controls.panSpeed = 1.5;            // FASTER pan
+            controls.minDistance = 0.5;         // Allow closer zoom
+            controls.maxDistance = 500;  // Allow MUCH farther zoom out          // Allow farther zoom
+
+            // === ENHANCED LIGHTING SETUP ===
+            // Hemisphere light (sky + ground ambient)
+            const hemi = new THREE.HemisphereLight(0xffffff, 0x444466, 2.0);  // BRIGHTER
+            scene.add(hemi);
+            
+            // Main key light (front-top-right)
+            const dir = new THREE.DirectionalLight(0xffffff, 2.5);  // MUCH BRIGHTER
+            dir.position.set(5, 8, 5);
+            scene.add(dir);
+            
+            // Fill light (front-left)
+            const dir2 = new THREE.DirectionalLight(0xaaccff, 1.5);  // Cool fill
+            dir2.position.set(-5, 3, 3);
+            scene.add(dir2);
+            
+            // Back rim light
+            const dir3 = new THREE.DirectionalLight(0xffffee, 1.0);
+            dir3.position.set(0, 2, -8);
+            scene.add(dir3);
+            
+            // Bottom fill (reduce harsh shadows)
+            const dir4 = new THREE.DirectionalLight(0x6688aa, 0.8);
+            dir4.position.set(0, -5, 0);
+            scene.add(dir4);
+            
+            // Ambient for overall minimum brightness
+            const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambient);
+            
+            // Ground plane / stage
+            const stageGeo = new THREE.CircleGeometry(15, 64);
+            const stageMat = new THREE.MeshStandardMaterial({ 
+                color: 0x2a2a3a, 
+                roughness: 0.8,
+                metalness: 0.2
+            });
+            const stage = new THREE.Mesh(stageGeo, stageMat);
+            stage.rotation.x = -Math.PI / 2;
+            stage.position.y = -0.01;  // Slightly below origin
+            stage.receiveShadow = true;
+            scene.add(stage);
+
+            state.renderer = renderer;
+            state.scene = scene;
+            state.camera = camera;
+            state.controls = controls;
+
+            const onResize = () => {
+                const w = window.innerWidth;
+                const h = window.innerHeight - 120;
+                renderer.setSize(w, h);
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+            };
+            window.addEventListener('resize', onResize);
+            onResize();
+
+            const tick = () => {
+                controls.update();
+                renderer.render(scene, camera);
+                requestAnimationFrame(tick);
+            };
+            tick();
+        }
+
+        function frameObject(obj) {
+            const box = new THREE.Box3().setFromObject(obj);
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+            state.modelCenter.copy(center);
+            state.modelSize = Math.max(size.x, size.y, size.z);
+            const dist = state.modelSize * 2;
+            state.controls.target.copy(center);
+            state.camera.position.copy(center.clone().add(new THREE.Vector3(dist * 0.3, dist * 0.2, dist)));
+            state.camera.near = Math.max(0.001, state.modelSize / 1000);
+            state.camera.far = Math.max(10, state.modelSize * 20);
+            state.camera.updateProjectionMatrix();
+            state.controls.update();
+        }
+
+        function setCameraView(view) {
+            const dist = state.modelSize * 2;
+            const c = state.modelCenter;
+            let pos;
+            switch (view) {
+                case 'front': pos = new THREE.Vector3(c.x, c.y, c.z + dist); break;
+                case 'top': pos = new THREE.Vector3(c.x, c.y + dist, c.z); break;
+                case 'side': pos = new THREE.Vector3(c.x + dist, c.y, c.z); break;
+                default: pos = new THREE.Vector3(c.x + dist * 0.3, c.y + dist * 0.2, c.z + dist);
+            }
+            state.camera.position.copy(pos);
+            state.controls.target.copy(c);
+            state.controls.update();
+        }
+
+        function clearModel() {
+            if (state.modelRoot) {
+                state.scene.remove(state.modelRoot);
+                state.modelRoot.traverse(o => {
+                    if (o.isMesh) {
+                        o.geometry?.dispose?.();
+                        const mat = o.material;
+                        if (Array.isArray(mat)) mat.forEach(m => m.dispose?.());
+                        else mat?.dispose?.();
+                    }
+                });
+            }
+            state.modelRoot = null;
+            state.meshList = [];
+            state.originalMaterials.clear();
+        }
+
+        function applyMaterialMode(mode) {
+            if (!state.modelRoot) return;
+            for (const mesh of state.meshList) {
+                if (mode === 'textured') {
+                    const orig = state.originalMaterials.get(mesh);
+                    if (orig) mesh.material = orig;
+                    if (state.texture) {
+                        const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+                        for (const m of mats) { if (m && 'map' in m) { m.map = state.texture; m.needsUpdate = true; } }
+                    }
+                } else {
+                    mesh.material = new THREE.MeshNormalMaterial({ flatShading: false });
+                }
+            }
+        }
+
+        async function loadGlb(file) {
+            els.loading.classList.add('visible');
+            els.statusText.textContent = 'LOADING...';
+            const url = URL.createObjectURL(file);
+            try {
+                const loader = new GLTFLoader();
+                const gltf = await new Promise((res, rej) => loader.load(url, res, undefined, rej));
+                clearModel();
+                state.modelRoot = gltf.scene || gltf.scenes?.[0];
+                if (!state.modelRoot) throw new Error('No scene in GLB');
+                state.modelRoot.traverse(o => {
+                    if (o.isMesh) { state.meshList.push(o); state.originalMaterials.set(o, o.material); }
+                });
+                state.scene.add(state.modelRoot);
+                frameObject(state.modelRoot);
+                applyMaterialMode(els.materialMode.value);
+                els.meshCount.textContent = state.meshList.length;
+                els.uploadScreen.classList.add('hidden');
+                els.hud.classList.add('visible');
+                els.statusText.textContent = 'MODEL LOADED';
+            } catch (e) {
+                console.error(e);
+                els.statusText.textContent = 'LOAD FAILED';
+            } finally {
+                els.loading.classList.remove('visible');
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            }
+        }
+
+        async function loadImageFromFile(file) {
+            const url = URL.createObjectURL(file);
+            const img = new Image();
+            img.src = url;
+            await img.decode();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            return img;
+        }
+
+        async function loadPanelIdMap(file) {
+            const img = await loadImageFromFile(file);
+            state.panelIdImage = img;
+            state.panelIdCanvas.width = img.width;
+            state.panelIdCanvas.height = img.height;
+            state.panelIdCtx.drawImage(img, 0, 0);
+            state.panelIdImageData = state.panelIdCtx.getImageData(0, 0, img.width, img.height);
+            // Draw preview
+            const prev = els.panelIdPreview;
+            const pctx = prev.getContext('2d');
+            prev.width = prev.clientWidth * 2;
+            prev.height = prev.clientHeight * 2;
+            pctx.drawImage(img, 0, 0, prev.width, prev.height);
+        }
+
+        async function loadTexture(file) {
+            const img = await loadImageFromFile(file);
+            const tex = new THREE.Texture(img);
+            tex.colorSpace = THREE.SRGBColorSpace;
+            tex.needsUpdate = true;
+            state.texture = tex;
+            if (els.materialMode.value === 'textured') applyMaterialMode('textured');
+        }
+
+        // === URL-BASED LOADING FUNCTIONS (for auto-load) ===
+        async function loadGlbFromUrl(url) {
+            els.loading.classList.add('visible');
+            els.statusText.textContent = 'LOADING MODEL...';
+            try {
+                const loader = new GLTFLoader();
+                const gltf = await new Promise((res, rej) => loader.load(url, res, undefined, rej));
+                clearModel();
+                state.modelRoot = gltf.scene || gltf.scenes?.[0];
+                if (!state.modelRoot) throw new Error('No scene in GLB');
+                state.modelRoot.traverse(o => {
+                    if (o.isMesh) { state.meshList.push(o); state.originalMaterials.set(o, o.material); }
+                });
+                state.scene.add(state.modelRoot);
+                frameObject(state.modelRoot);
+                applyMaterialMode(els.materialMode.value);
+                els.meshCount.textContent = state.meshList.length;
+                els.uploadScreen.classList.add('hidden');
+                els.hud.classList.add('visible');
+                els.statusText.textContent = 'MODEL LOADED';
+                return true;
+            } catch (e) {
+                console.error('GLB load failed:', e);
+                els.statusText.textContent = 'MODEL LOAD FAILED';
+                return false;
+            } finally {
+                els.loading.classList.remove('visible');
+            }
+        }
+
+        async function loadPanelIdMapFromUrl(url) {
+            try {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.src = url;
+                await img.decode();
+                state.panelIdImage = img;
+                state.panelIdCanvas.width = img.width;
+                state.panelIdCanvas.height = img.height;
+                state.panelIdCtx.drawImage(img, 0, 0);
+                state.panelIdImageData = state.panelIdCtx.getImageData(0, 0, img.width, img.height);
+                const prev = els.panelIdPreview;
+                const pctx = prev.getContext('2d');
+                prev.width = prev.clientWidth * 2;
+                prev.height = prev.clientHeight * 2;
+                pctx.drawImage(img, 0, 0, prev.width, prev.height);
+                console.log('Panel ID Map loaded:', img.width, 'x', img.height);
+                return true;
+            } catch (e) {
+                console.error('Panel ID map load failed:', e);
+                return false;
+            }
+        }
+
+        async function loadPanelJsonFromUrl(url) {
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const text = await res.text();
+                state.panels = normalizePanelList(parsePanelJson(text).panels);
+                state.panelsRgb = state.panels.map(p => ({ r: p.color.r, g: p.color.g, b: p.color.b, panel: p }));
+                els.panelCount.textContent = state.panels.length;
+                els.calibTotal.textContent = state.panels.length;
+                updatePanelCalibList();
+                console.log('Panels loaded:', state.panels.length);
+                return true;
+            } catch (e) {
+                console.error('Panel JSON load failed:', e);
+                return false;
+            }
+        }
+
+        async function autoLoadAssets() {
+            const basePath = './assets/';
+            const assets = {
+                glb: basePath + 'F22Raptor.glb',
+                panelMap: basePath + 'panel_id_map.png',
+                panelJson: basePath + 'panel_id_map_colors.json'
+            };
+            
+            console.log('Auto-loading assets from:', basePath);
+            els.statusText.textContent = 'AUTO-LOADING...';
+            
+            // Load panel data first (needed for panel detection)
+            const jsonOk = await loadPanelJsonFromUrl(assets.panelJson);
+            const mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+            
+            // Load the 3D model
+            const glbOk = await loadGlbFromUrl(assets.glb);
+            
+            if (glbOk && jsonOk && mapOk) {
+                els.statusText.textContent = 'READY - CLICK TO IDENTIFY PANELS';
+                console.log('All assets loaded successfully!');
+            } else {
+                els.statusText.textContent = 'SOME ASSETS FAILED';
+                console.warn('Asset load status:', { glbOk, jsonOk, mapOk });
+            }
+        }
+        // === END URL-BASED LOADING ===
+
+        function samplePanelIdMapAtUv(uv) {
+            if (!state.panelIdImageData) return null;
+            const w = state.panelIdCanvas.width, h = state.panelIdCanvas.height;
+            const x = Math.min(w - 1, Math.max(0, Math.floor(clamp01(uv.x) * w)));
+            const y = Math.min(h - 1, Math.max(0, Math.floor((1 - clamp01(uv.y)) * h)));
+            const idx = (y * w + x) * 4;
+            const d = state.panelIdImageData.data;
+            return { r: d[idx], g: d[idx + 1], b: d[idx + 2], a: d[idx + 3] };
+        }
+
+        function updateHud(panel, uv, rgb) {
+            els.hudPanel.textContent = panel?.id || panel?.name || '—';
+            els.hudUv.textContent = uv ? `${fmt3(uv.x)}, ${fmt3(uv.y)}` : '—';
+            els.hudRgb.textContent = rgb ? `${rgb.r},${rgb.g},${rgb.b}` : '—';
+        }
+
+        function updateInfoPanel(panel, uv, rgb, faceIdx) {
+            els.panelTitle.textContent = panel?.id || (rgb ? `RGB(${rgb.r},${rgb.g},${rgb.b})` : 'NO HIT');
+            els.panelCategory.textContent = panel?.name || (panel ? '' : 'No matching panel');
+            els.specUv.textContent = uv ? `${fmt3(uv.x)}, ${fmt3(uv.y)}` : '—';
+            els.specRgb.textContent = rgb ? `${rgb.r}, ${rgb.g}, ${rgb.b}` : '—';
+            els.specFace.textContent = faceIdx ?? '—';
+            const debugInfo = {
+                panelIdMapLoaded: !!state.panelIdImageData,
+                panelsLoaded: state.panelsRgb.length,
+                tolerance: Number(els.tolerance.value),
+                sampledColor: rgb,
+                matchedPanel: panel ? { id: panel.id, color: panel.color } : null
+            };
+            els.panelDataPre.textContent = panel 
+                ? JSON.stringify({ id: panel.id, name: panel.name, color: panel.color, data: panel.data }, null, 2)
+                : JSON.stringify(debugInfo, null, 2);
+            els.infoPanel.classList.add('visible');
+            els.infoToggle.classList.add('open');
+        }
+
+        function tryPick(e, showInfo) {
+            if (!state.modelRoot || !state.meshList.length) {
+                console.log('No model loaded');
+                return null;
+            }
+            const rect = state.renderer.domElement.getBoundingClientRect();
+            state.pointerNdc.set(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
+            state.raycaster.setFromCamera(state.pointerNdc, state.camera);
+            const hits = state.raycaster.intersectObjects(state.meshList, true);
+            const hit = hits.find(h => h.uv);
+            if (!hit?.uv) {
+                // Try first hit even without UV
+                if (hits.length > 0 && showInfo) {
+                    console.log('Hit found but no UV:', hits[0]);
+                    updateInfoPanel(null, null, null, hits[0].faceIndex);
+                }
+                updateHud(null, null, null);
+                return null;
+            }
+
+            state.lastUv = hit.uv.clone();
+            console.log('HIT:', hit.object?.name, 'UV:', hit.uv?.x?.toFixed(4), hit.uv?.y?.toFixed(4), 'UV2:', hit.uv2);
+            console.log('HIT DETAILS:', {
+                meshName: hit.object?.name,
+                uv: hit.uv,
+                uv2: hit.uv2,
+                faceIndex: hit.faceIndex,
+                point: hit.point
+            });
+            const rgb = samplePanelIdMapAtUv(state.lastUv);
+            state.lastRgb = rgb;
+            
+            // PRIMARY: Try to find panel by mesh name first (most reliable)
+            const meshPanel = findPanelByMeshName(hit.object?.name);
+            
+            // FALLBACK: Use UV-based color detection if mesh name didn't match
+            const tolerance = Number(els.tolerance.value);
+            const nearest = !meshPanel && rgb ? findNearestPanel(rgb.r, rgb.g, rgb.b, tolerance) : null;
+            
+            // Use mesh-based detection if found, otherwise UV-based
+            state.lastPanel = meshPanel ?? nearest?.panel ?? null;
+            
+            // Log detection method for debugging
+            if (meshPanel) {
+                console.log('Panel detected by MESH NAME:', meshPanel.id);
+            } else if (nearest) {
+                console.log('Panel detected by UV COLOR:', nearest.panel.id, 'dist:', nearest.dist);
+            }
+
+            console.log('Pick result:', { mesh: hit.object?.name, uv: state.lastUv, rgb, panel: state.lastPanel?.id, panelsLoaded: state.panelsRgb.length });
+
+            updateHud(state.lastPanel, state.lastUv, rgb);
+            if (showInfo) updateInfoPanel(state.lastPanel, state.lastUv, rgb, hit.faceIndex);
+
+            return { hit, rgb, panel: state.lastPanel };
+        }
+
+        // Calibration
+        function addCalibrationMarker(uv, rgb, panel, point) {
+            const marker = { id: state.calibrationMarkers.length + 1, uv: { x: uv.x, y: uv.y }, rgb, panel: panel ? { id: panel.id, name: panel.name } : null, worldPos: point ? { x: point.x, y: point.y, z: point.z } : null };
+            state.calibrationMarkers.push(marker);
+            if (point) {
+                const geo = new THREE.SphereGeometry(state.modelSize * 0.01, 16, 16);
+                const mat = new THREE.MeshBasicMaterial({ color: 0x00e5ff });
+                const sphere = new THREE.Mesh(geo, mat);
+                sphere.position.copy(point);
+                state.scene.add(sphere);
+                state.markerMeshes.push(sphere);
+            }
+            els.markerCount.textContent = state.calibrationMarkers.length;
+        }
+
+        function clearCalibrationMarkers() {
+            state.calibrationMarkers = [];
+            for (const m of state.markerMeshes) { state.scene.remove(m); m.geometry.dispose(); m.material.dispose(); }
+            state.markerMeshes = [];
+            els.markerCount.textContent = '0';
+        }
+
+
+        // ========== CALIBRATION WIZARD ==========
+        function updatePanelCalibList() {
+            if (!state.panels.length) {
+                els.panelCalibList.innerHTML = '<div style="color: var(--text-secondary); padding: 0.3rem;">No panels loaded...</div>';
+                return;
+            }
+            let html = '';
+            for (const panel of state.panels) {
+                const isCalibrated = state.calibratedPanels.has(panel.id);
+                const isTarget = state.currentCalibrationTarget?.id === panel.id;
+                const bgColor = isTarget ? 'rgba(0,212,255,0.2)' : (isCalibrated ? 'rgba(0,255,136,0.1)' : 'transparent');
+                const borderColor = isTarget ? 'var(--neon-cyan)' : (isCalibrated ? 'var(--neon-green)' : 'transparent');
+                const icon = isCalibrated ? '' : (isTarget ? '' : '');
+                const iconColor = isCalibrated ? 'var(--neon-green)' : (isTarget ? 'var(--neon-cyan)' : 'var(--text-secondary)');
+                html += `<div style="padding: 0.35rem 0.5rem; margin: 0.15rem 0; background: ${bgColor}; border-left: 2px solid ${borderColor}; border-radius: 3px; display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="color: ${iconColor}; font-size: 0.8rem;">${icon}</span>
+                    <span style="flex: 1; color: ${isCalibrated ? 'var(--neon-green)' : 'var(--text-primary)'};">${panel.name || panel.id}</span>
+                </div>`;
+            }
+            els.panelCalibList.innerHTML = html;
+        }
+
+        function startCalibrationWizard() {
+            if (!state.panels.length) {
+                alert('No panels loaded! Load panel JSON first.');
+                return;
+            }
+            // Build queue of uncalibrated panels
+            state.calibrationQueue = state.panels.filter(p => !state.calibratedPanels.has(p.id));
+            if (!state.calibrationQueue.length) {
+                alert('All panels already calibrated!');
+                return;
+            }
+            state.calibrationWizardActive = true;
+            els.startCalibrationBtn.style.display = 'none';
+            els.skipPanelBtn.style.display = 'inline-block';
+            els.stopCalibrationBtn.style.display = 'inline-block';
+            els.calibrationTarget.style.display = 'block';
+            els.calibTotal.textContent = state.panels.length;
+            advanceToNextPanel();
+        }
+
+        function stopCalibrationWizard() {
+            state.calibrationWizardActive = false;
+            state.currentCalibrationTarget = null;
+            state.calibrationQueue = [];
+            els.startCalibrationBtn.style.display = 'inline-block';
+            els.skipPanelBtn.style.display = 'none';
+            els.stopCalibrationBtn.style.display = 'none';
+            els.calibrationTarget.style.display = 'none';
+            updatePanelCalibList();
+            els.statusText.textContent = 'CALIBRATION STOPPED';
+        }
+
+        function advanceToNextPanel() {
+            if (!state.calibrationQueue.length) {
+                // All done!
+                state.calibrationWizardActive = false;
+                state.currentCalibrationTarget = null;
+                els.startCalibrationBtn.style.display = 'inline-block';
+                els.skipPanelBtn.style.display = 'none';
+                els.stopCalibrationBtn.style.display = 'none';
+                els.calibrationTarget.style.display = 'none';
+                updatePanelCalibList();
+                els.statusText.textContent = 'CALIBRATION COMPLETE!';
+                alert(' All panels calibrated! Click Export to save.');
+                return;
+            }
+            state.currentCalibrationTarget = state.calibrationQueue.shift();
+            els.targetPanelName.textContent = state.currentCalibrationTarget.name || state.currentCalibrationTarget.id;
+            els.calibProgress.textContent = state.calibratedPanels.size;
+            els.statusText.textContent = 'CLICK: ' + (state.currentCalibrationTarget.name || state.currentCalibrationTarget.id);
+            updatePanelCalibList();
+        }
+
+        function skipCurrentPanel() {
+            if (!state.calibrationWizardActive) return;
+            // Put current panel at end of queue
+            if (state.currentCalibrationTarget) {
+                state.calibrationQueue.push(state.currentCalibrationTarget);
+            }
+            advanceToNextPanel();
+        }
+
+        function handleWizardClick(uv, rgb, panel, point, hitMeshName) {
+            if (!state.calibrationWizardActive || !state.currentCalibrationTarget) return false;
+            
+            // Create marker for this calibration
+            const target = state.currentCalibrationTarget;
+            const marker = {
+                id: state.calibrationMarkers.length + 1,
+                panel_id: target.id,
+                panel_name: target.name,
+                expected_color: target.color,
+                clicked_rgb: rgb,
+                uv: { x: uv.x, y: uv.y },
+                worldPos: point ? { x: point.x, y: point.y, z: point.z } : null,
+                hit_mesh: hitMeshName || 'unknown',
+                timestamp: new Date().toISOString()
+            };
+            
+            state.calibrationMarkers.push(marker);
+            state.calibratedPanels.set(target.id, marker);
+            
+            // Add visual marker
+            if (point) {
+                const geo = new THREE.SphereGeometry(state.modelSize * 0.012, 16, 16);
+                const mat = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
+                const sphere = new THREE.Mesh(geo, mat);
+                sphere.position.copy(point);
+                state.scene.add(sphere);
+                state.markerMeshes.push(sphere);
+            }
+            
+            els.markerCount.textContent = state.calibratedPanels.size;
+            els.calibProgress.textContent = state.calibratedPanels.size;
+            
+            // Move to next panel
+            advanceToNextPanel();
+            return true;
+        }
+        // ========== END CALIBRATION WIZARD ==========
+
+        function exportMarkers() {
+            if (!state.calibrationMarkers.length) { alert('No markers'); return; }
+            const blob = new Blob([JSON.stringify({ hit_mesh: hitMeshName || 'unknown',
+                timestamp: new Date().toISOString(), markers: state.calibrationMarkers }, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `calibration_${Date.now()}.json`; a.click();
+        }
+
+        function saveSession() {
+            localStorage.setItem('blueprint_mapper_session', JSON.stringify({
+                tolerance: Number(els.tolerance.value), materialMode: els.materialMode.value,
+                calibrationMode: els.calibrationMode.checked, calibrationMarkers: state.calibrationMarkers
+            }));
+            alert('Session saved');
+        }
+
+        function loadSession() {
+            const s = localStorage.getItem('blueprint_mapper_session');
+            if (!s) { alert('No session'); return; }
+            try {
+                const d = JSON.parse(s);
+                els.tolerance.value = d.tolerance || 30; els.toleranceLabel.textContent = els.tolerance.value;
+                els.materialMode.value = d.materialMode || 'untextured';
+                els.calibrationMode.checked = d.calibrationMode || false;
+                clearCalibrationMarkers();
+                state.calibrationMarkers = d.calibrationMarkers || [];
+                for (const m of state.calibrationMarkers) {
+                    if (m.worldPos) {
+                        const geo = new THREE.SphereGeometry(state.modelSize * 0.01, 16, 16);
+                        const mat = new THREE.MeshBasicMaterial({ color: 0x00e5ff });
+                        const sphere = new THREE.Mesh(geo, mat);
+                        sphere.position.set(m.worldPos.x, m.worldPos.y, m.worldPos.z);
+                        state.scene.add(sphere);
+                        state.markerMeshes.push(sphere);
+                    }
+                }
+                els.markerCount.textContent = state.calibrationMarkers.length;
+                applyMaterialMode(els.materialMode.value);
+                alert('Session loaded');
+            } catch (e) { alert('Load failed: ' + e.message); }
+        }
+
+        // Event Listeners
+        els.uploadBox.addEventListener('click', () => els.fileInput.click());
+        els.fileInput.addEventListener('change', e => { if (e.target.files[0]) loadGlb(e.target.files[0]); });
+        els.uploadBox.addEventListener('dragover', e => { e.preventDefault(); els.uploadBox.classList.add('dragover'); });
+        els.uploadBox.addEventListener('dragleave', () => els.uploadBox.classList.remove('dragover'));
+        els.uploadBox.addEventListener('drop', e => { e.preventDefault(); els.uploadBox.classList.remove('dragover'); if (e.dataTransfer.files[0]) loadGlb(e.dataTransfer.files[0]); });
+
+        els.glbFile.addEventListener('change', e => { if (e.target.files[0]) loadGlb(e.target.files[0]); });
+        els.textureFile.addEventListener('change', e => { if (e.target.files[0]) loadTexture(e.target.files[0]); });
+        els.panelIdMapFile.addEventListener('change', e => { if (e.target.files[0]) loadPanelIdMap(e.target.files[0]); });
+        els.panelJsonFile.addEventListener('change', async e => {
+            if (!e.target.files[0]) return;
+            const text = await e.target.files[0].text();
+            state.panels = normalizePanelList(parsePanelJson(text).panels);
+            state.panelsRgb = state.panels.map(p => ({ r: p.color.r, g: p.color.g, b: p.color.b, panel: p }));
+            els.panelCount.textContent = state.panels.length;
+            els.calibTotal.textContent = state.panels.length;
+            updatePanelCalibList();
+        });
+
+        els.materialMode.addEventListener('change', () => applyMaterialMode(els.materialMode.value));
+        els.tolerance.addEventListener('input', () => els.toleranceLabel.textContent = els.tolerance.value);
+
+        els.configToggle.addEventListener('click', () => {
+            els.configPanel.classList.toggle('visible');
+            els.configToggle.classList.toggle('open');
+        });
+        els.infoToggle.addEventListener('click', () => {
+            els.infoPanel.classList.toggle('visible');
+            els.infoToggle.classList.toggle('open');
+        });
+        els.infoClose.addEventListener('click', () => {
+            els.infoPanel.classList.remove('visible');
+            els.infoToggle.classList.remove('open');
+        });
+
+        els.exportMarkersBtn.addEventListener('click', exportMarkers);
+        // Calibration Wizard buttons
+        els.startCalibrationBtn.addEventListener('click', startCalibrationWizard);
+        els.skipPanelBtn.addEventListener('click', skipCurrentPanel);
+        els.stopCalibrationBtn.addEventListener('click', stopCalibrationWizard);
+        els.clearMarkersBtn.addEventListener('click', () => {
+            clearCalibrationMarkers();
+            state.calibratedPanels.clear();
+            updatePanelCalibList();
+        });
+        els.saveSessionBtn.addEventListener('click', saveSession);
+        els.loadSessionBtn.addEventListener('click', loadSession);
+
+        els.btnReset.addEventListener('click', () => state.modelRoot && frameObject(state.modelRoot));
+        els.btnFront.addEventListener('click', () => setCameraView('front'));
+        els.btnTop.addEventListener('click', () => setCameraView('top'));
+        els.btnSide.addEventListener('click', () => setCameraView('side'));
+        els.btnMaterial.addEventListener('click', () => {
+            els.materialMode.value = els.materialMode.value === 'untextured' ? 'textured' : 'untextured';
+            applyMaterialMode(els.materialMode.value);
+            els.btnMaterial.classList.toggle('active', els.materialMode.value === 'textured');
+        });
+
+        // Init
+        initThree();
+
+        // Auto-load assets from ./assets/ folder
+        autoLoadAssets();
+        
+        // Pointer events on canvas (must be after initThree)
+        let pDown = null;
+        state.renderer.domElement.addEventListener('pointerdown', e => {
+            pDown = { x: e.clientX, y: e.clientY };
+        });
+        state.renderer.domElement.addEventListener('pointerup', e => {
+            if (!pDown) return;
+            const moved = Math.hypot(e.clientX - pDown.x, e.clientY - pDown.y);
+            pDown = null;
+            if (moved <= 6) {
+                const result = tryPick(e, !els.calibrationMode.checked && !state.calibrationWizardActive);
+                if (result?.hit) {
+                    // Wizard mode takes priority
+                    if (state.calibrationWizardActive) {
+                        handleWizardClick(state.lastUv, state.lastRgb, state.lastPanel, result.hit.point, result.hit.object?.name);
+                    }
+                    // Manual calibration mode
+                    else if (els.calibrationMode.checked) {
+                        addCalibrationMarker(state.lastUv, state.lastRgb, state.lastPanel, result.hit.point);
+                    }
+                }
+            }
+        });
+        state.renderer.domElement.addEventListener('pointermove', e => {
+            if (e.buttons) return;
+            tryPick(e, false);
+        });
+    </script>
+</body>
+</html>

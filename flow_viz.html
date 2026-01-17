@@ -1,0 +1,202 @@
+import os, re, json, hashlib, sqlite3, time
+from pathlib import Path
+from typing import Dict, List, Tuple, Any
+
+# ---------------------------
+# Config (edit these 2 lines)
+# ---------------------------
+ROOT = Path(r".").resolve()  # set to your ecosystem root folder
+REGISTRY_DB = ROOT / "manager" / "f22_registry.db"  # adjust if needed
+
+OUT_MANIFEST = ROOT / "system_manifest.json"
+OUT_EVENTS = ROOT / "events.jsonl"  # append-only event stream for animation
+
+APP_DIR_HINTS = ["apps", "web", "html", "ui"]
+DATA_DIR_HINTS = ["data", "exports", "sources", "inbox", "out", "build", "derived", "cache", "db", "manager"]
+
+API_PATTERNS = [
+    r'fetch\(\s*[\'"]([^\'"]+)[\'"]',                 # fetch("/api/...")
+    r'XMLHttpRequest\(\)',                            # older patterns
+    r'\/api\/[a-zA-Z0-9_\-\/]+'                        # /api/...
+]
+
+DB_TABLES = ["data_records", "measurements", "touch_zones", "build_queue", "audit_log"]
+
+# ---------------------------
+# Helpers
+# ---------------------------
+def sha256_file(p: Path) -> str:
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+def is_probably_app_html(p: Path) -> bool:
+    if p.suffix.lower() != ".html": 
+        return False
+    name = p.name.lower()
+    if "node_modules" in p.parts: 
+        return False
+    return True
+
+def read_text_safely(p: Path, max_bytes=2_000_000) -> str:
+    try:
+        b = p.read_bytes()
+        if len(b) > max_bytes:
+            b = b[:max_bytes]
+        return b.decode("utf-8", errors="ignore")
+    except:
+        return ""
+
+def find_api_refs(text: str) -> List[str]:
+    hits = set()
+    # fetch("...")
+    for m in re.finditer(API_PATTERNS[0], text):
+        url = m.group(1).strip()
+        if "/api/" in url:
+            hits.add(url)
+    # raw /api/ patterns
+    for m in re.finditer(API_PATTERNS[2], text):
+        hits.add(m.group(0))
+    return sorted(hits)
+
+def guess_category(path: Path) -> str:
+    parts = [p.lower() for p in path.parts]
+    for k in APP_DIR_HINTS:
+        if k in parts: return "webapp"
+    for k in DATA_DIR_HINTS:
+        if k in parts: return "storage"
+    if path.suffix.lower() in [".db", ".sqlite", ".sqlite3"]:
+        return "database"
+    return "file"
+
+def node_id(kind: str, key: str) -> str:
+    return f"{kind}:{key}"
+
+# ---------------------------
+# Build nodes + edges
+# ---------------------------
+def build_manifest() -> Dict[str, Any]:
+    nodes: Dict[str, Dict[str, Any]] = {}
+    edges: List[Dict[str, Any]] = []
+
+    def add_node(kind: str, key: str, label: str, meta: Dict[str, Any] = None):
+        nid = node_id(kind, key)
+        if nid not in nodes:
+            nodes[nid] = {
+                "id": nid,
+                "kind": kind,      # webapp | api | database | folder | file | table | derived
+                "label": label,
+                "meta": meta or {}
+            }
+        return nid
+
+    def add_edge(src: str, dst: str, rel: str, meta: Dict[str, Any] = None):
+        edges.append({
+            "src": src,
+            "dst": dst,
+            "rel": rel,          # reads | writes | calls | produces | updates
+            "meta": meta or {}
+        })
+
+    # Root + major folders
+    root_id = add_node("folder", str(ROOT), "Ecosystem Root", {"path": str(ROOT)})
+
+    # 1) Scan HTML apps
+    html_files: List[Path] = []
+    for p in ROOT.rglob("*.html"):
+        if is_probably_app_html(p):
+            html_files.append(p)
+
+    for p in html_files:
+        rel = str(p.relative_to(ROOT)).replace("\\", "/")
+        text = read_text_safely(p)
+        app = add_node("webapp", rel, p.stem, {"path": rel, "size": p.stat().st_size})
+        add_edge(root_id, app, "contains")
+
+        # API references inside HTML
+        for url in find_api_refs(text):
+            api = add_node("api", url, url, {"url": url})
+            add_edge(app, api, "calls")
+
+        # crude hints for localStorage / indexedDB usage
+        if "localStorage" in text:
+            store = add_node("storage", "browser:localStorage", "Browser localStorage", {})
+            add_edge(app, store, "writes", {"hint": "localStorage"})
+        if "indexedDB" in text:
+            store = add_node("storage", "browser:indexedDB", "Browser IndexedDB", {})
+            add_edge(app, store, "writes", {"hint": "indexedDB"})
+
+    # 2) Registry DB + tables
+    if REGISTRY_DB.exists():
+        db_rel = str(REGISTRY_DB.relative_to(ROOT)).replace("\\", "/")
+        db = add_node("database", db_rel, "f22_registry.db", {"path": db_rel})
+
+        add_edge(root_id, db, "contains")
+
+        # Table nodes + edges
+        for t in DB_TABLES:
+            table = add_node("table", f"{db_rel}::{t}", t, {"table": t})
+            add_edge(db, table, "contains")
+
+        # Optional: infer flows from audit_log + build_queue if columns exist
+        try:
+            conn = sqlite3.connect(str(REGISTRY_DB))
+            cur = conn.cursor()
+
+            # Build queue → derived outputs
+            cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            existing = {r[0] for r in cur.fetchall()}
+
+            if "build_queue" in existing:
+                # best-effort: try common columns
+                cols = [r[1] for r in cur.execute("PRAGMA table_info(build_queue)").fetchall()]
+                # try to read a few rows
+                cur.execute("SELECT * FROM build_queue LIMIT 50")
+                rows = cur.fetchall()
+                for row in rows:
+                    rowd = dict(zip(cols, row))
+                    # guess some fields
+                    out_key = rowd.get("output") or rowd.get("out_path") or rowd.get("target") or rowd.get("name") or "derived_output"
+                    derived = add_node("derived", str(out_key), str(out_key), {"from": "build_queue"})
+                    add_edge(node_id("table", f"{db_rel}::build_queue"), derived, "produces")
+            conn.close()
+        except Exception as e:
+            # keep manifest usable even if schema differs
+            pass
+
+    # 3) Storage folders (high-signal)
+    for d in DATA_DIR_HINTS:
+        cand = ROOT / d
+        if cand.exists() and cand.is_dir():
+            nid = add_node("folder", str(cand), d, {"path": str(cand)})
+            add_edge(root_id, nid, "contains")
+
+    return {
+        "version": "2.0",
+        "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "root": str(ROOT),
+        "nodes": list(nodes.values()),
+        "edges": edges
+    }
+
+def emit_event(kind: str, src: str, dst: str, rel: str, detail: Dict[str, Any]):
+    evt = {
+        "ts": time.time(),
+        "kind": kind,   # file_change | db_update | api_call | build
+        "src": src,
+        "dst": dst,
+        "rel": rel,
+        "detail": detail
+    }
+    with open(OUT_EVENTS, "a", encoding="utf-8") as f:
+        f.write(json.dumps(evt) + "\n")
+
+def main():
+    manifest = build_manifest()
+    OUT_MANIFEST.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    print(f"Wrote: {OUT_MANIFEST}")
+
+if __name__ == "__main__":
+    main()

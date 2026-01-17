@@ -1,0 +1,3498 @@
+{
+  "timestamp": "20260116_030440",
+  "processing_date": "2026-01-16T03:04:40.981508",
+  "total_files_processed": 6,
+  "files_processed": [
+    "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+    "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+    "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+    "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+    "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data_test1.json",
+    "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data_test2.json"
+  ],
+  "regions": [
+    {
+      "id": 1,
+      "color": "#f02e2e",
+      "regionId": "region_128",
+      "name": "region_128",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 1
+    },
+    {
+      "id": 2,
+      "color": "#be261f",
+      "regionId": "region_005",
+      "name": "region_005",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 2
+    },
+    {
+      "id": 3,
+      "color": "#dd3828",
+      "regionId": "region_012",
+      "name": "region_012",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 3
+    },
+    {
+      "id": 4,
+      "color": "#cd2d14",
+      "regionId": "region_122",
+      "name": "region_122",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 4
+    },
+    {
+      "id": 5,
+      "color": "#cc3817",
+      "regionId": "region_082",
+      "name": "region_082",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 5
+    },
+    {
+      "id": 6,
+      "color": "#df5933",
+      "regionId": "region_041",
+      "name": "region_041",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 6
+    },
+    {
+      "id": 7,
+      "color": "#de4710",
+      "regionId": "region_016",
+      "name": "region_016",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 7
+    },
+    {
+      "id": 8,
+      "color": "#e07a4c",
+      "regionId": "region_105",
+      "name": "region_105",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 8
+    },
+    {
+      "id": 9,
+      "color": "#de7134",
+      "regionId": "region_037",
+      "name": "region_037",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 9
+    },
+    {
+      "id": 10,
+      "color": "#e66b18",
+      "regionId": "region_084",
+      "name": "region_084",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 10
+    },
+    {
+      "id": 11,
+      "color": "#f0740f",
+      "regionId": "region_060",
+      "name": "region_060",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 11
+    },
+    {
+      "id": 12,
+      "color": "#dc8939",
+      "regionId": "region_038",
+      "name": "region_038",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 12
+    },
+    {
+      "id": 13,
+      "color": "#ee8e1d",
+      "regionId": "region_083",
+      "name": "region_083",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 13
+    },
+    {
+      "id": 14,
+      "color": "#ce7f10",
+      "regionId": "region_040",
+      "name": "region_040",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 14
+    },
+    {
+      "id": 15,
+      "color": "#c98717",
+      "regionId": "region_003",
+      "name": "region_003",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 15
+    },
+    {
+      "id": 16,
+      "color": "#edb541",
+      "regionId": "region_129",
+      "name": "region_129",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 16
+    },
+    {
+      "id": 17,
+      "color": "#c9981d",
+      "regionId": "region_057",
+      "name": "region_057",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 17
+    },
+    {
+      "id": 18,
+      "color": "#eabe30",
+      "regionId": "region_011",
+      "name": "region_011",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 18
+    },
+    {
+      "id": 19,
+      "color": "#cdaa1b",
+      "regionId": "region_132",
+      "name": "region_132",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 19
+    },
+    {
+      "id": 20,
+      "color": "#e9c912",
+      "regionId": "region_123",
+      "name": "region_123",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 20
+    },
+    {
+      "id": 21,
+      "color": "#e2d248",
+      "regionId": "region_020",
+      "name": "region_020",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 21
+    },
+    {
+      "id": 22,
+      "color": "#e3d71d",
+      "regionId": "region_027",
+      "name": "region_027",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 22
+    },
+    {
+      "id": 23,
+      "color": "#c2bf10",
+      "regionId": "region_026",
+      "name": "region_026",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 23
+    },
+    {
+      "id": 24,
+      "color": "#e4e939",
+      "regionId": "region_024",
+      "name": "region_024",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 24
+    },
+    {
+      "id": 25,
+      "color": "#d2e20f",
+      "regionId": "region_111",
+      "name": "region_111",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 25
+    },
+    {
+      "id": 26,
+      "color": "#a2b41a",
+      "regionId": "region_067",
+      "name": "region_067",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 26
+    },
+    {
+      "id": 27,
+      "color": "#a0ba1b",
+      "regionId": "region_061",
+      "name": "region_061",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 27
+    },
+    {
+      "id": 28,
+      "color": "#96b719",
+      "regionId": "region_107",
+      "name": "region_107",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 28
+    },
+    {
+      "id": 29,
+      "color": "#b9e637",
+      "regionId": "region_064",
+      "name": "region_064",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 29
+    },
+    {
+      "id": 30,
+      "color": "#a1da1a",
+      "regionId": "region_070",
+      "name": "region_070",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 30
+    },
+    {
+      "id": 31,
+      "color": "#90cd1a",
+      "regionId": "region_135",
+      "name": "region_135",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 31
+    },
+    {
+      "id": 32,
+      "color": "#a6f12f",
+      "regionId": "region_008",
+      "name": "region_008",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 32
+    },
+    {
+      "id": 33,
+      "color": "#a1ec3e",
+      "regionId": "region_134",
+      "name": "region_134",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 33
+    },
+    {
+      "id": 34,
+      "color": "#77c81d",
+      "regionId": "region_015",
+      "name": "region_015",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 34
+    },
+    {
+      "id": 35,
+      "color": "#84ef22",
+      "regionId": "region_007",
+      "name": "region_007",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 35
+    },
+    {
+      "id": 36,
+      "color": "#83f22f",
+      "regionId": "region_062",
+      "name": "region_062",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 36
+    },
+    {
+      "id": 37,
+      "color": "#68d324",
+      "regionId": "region_136",
+      "name": "region_136",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 37
+    },
+    {
+      "id": 38,
+      "color": "#66ef1e",
+      "regionId": "region_002",
+      "name": "region_002",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 38
+    },
+    {
+      "id": 39,
+      "color": "#49b61a",
+      "regionId": "region_131",
+      "name": "region_131",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 39
+    },
+    {
+      "id": 40,
+      "color": "#52f11b",
+      "regionId": "region_013",
+      "name": "region_013",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 40
+    },
+    {
+      "id": 41,
+      "color": "#39c116",
+      "regionId": "region_068",
+      "name": "region_068",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 41
+    },
+    {
+      "id": 42,
+      "color": "#37b61e",
+      "regionId": "region_010",
+      "name": "region_010",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 42
+    },
+    {
+      "id": 43,
+      "color": "#29bc15",
+      "regionId": "region_043",
+      "name": "region_043",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 43
+    },
+    {
+      "id": 44,
+      "color": "#29b01e",
+      "regionId": "region_080",
+      "name": "region_080",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 44
+    },
+    {
+      "id": 45,
+      "color": "#40ef3b",
+      "regionId": "region_124",
+      "name": "region_124",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 45
+    },
+    {
+      "id": 46,
+      "color": "#39df3b",
+      "regionId": "region_018",
+      "name": "region_018",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 46
+    },
+    {
+      "id": 47,
+      "color": "#17c722",
+      "regionId": "region_116",
+      "name": "region_116",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 47
+    },
+    {
+      "id": 48,
+      "color": "#1eb42e",
+      "regionId": "region_115",
+      "name": "region_115",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 48
+    },
+    {
+      "id": 49,
+      "color": "#3ce855",
+      "regionId": "region_118",
+      "name": "region_118",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 49
+    },
+    {
+      "id": 50,
+      "color": "#0dda35",
+      "regionId": "region_036",
+      "name": "region_036",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 50
+    },
+    {
+      "id": 51,
+      "color": "#4ae16e",
+      "regionId": "region_014",
+      "name": "region_014",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 51
+    },
+    {
+      "id": 52,
+      "color": "#3fdd6c",
+      "regionId": "region_099",
+      "name": "region_099",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 52
+    },
+    {
+      "id": 53,
+      "color": "#32e36c",
+      "regionId": "region_133",
+      "name": "region_133",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 53
+    },
+    {
+      "id": 54,
+      "color": "#2aed73",
+      "regionId": "region_006",
+      "name": "region_006",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 54
+    },
+    {
+      "id": 55,
+      "color": "#37f084",
+      "regionId": "region_030",
+      "name": "region_030",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 55
+    },
+    {
+      "id": 56,
+      "color": "#45de8c",
+      "regionId": "region_106",
+      "name": "region_106",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 56
+    },
+    {
+      "id": 57,
+      "color": "#3fdd8f",
+      "regionId": "region_108",
+      "name": "region_108",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 57
+    },
+    {
+      "id": 58,
+      "color": "#34f29d",
+      "regionId": "region_069",
+      "name": "region_069",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 58
+    },
+    {
+      "id": 59,
+      "color": "#17cb82",
+      "regionId": "region_065",
+      "name": "region_065",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 59
+    },
+    {
+      "id": 60,
+      "color": "#1db57e",
+      "regionId": "region_073",
+      "name": "region_073",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 60
+    },
+    {
+      "id": 61,
+      "color": "#11e4a2",
+      "regionId": "region_095",
+      "name": "region_095",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 61
+    },
+    {
+      "id": 62,
+      "color": "#46e5bb",
+      "regionId": "region_025",
+      "name": "region_025",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 62
+    },
+    {
+      "id": 63,
+      "color": "#31e1b9",
+      "regionId": "region_051",
+      "name": "region_051",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 63
+    },
+    {
+      "id": 64,
+      "color": "#4ce1c6",
+      "regionId": "region_017",
+      "name": "region_017",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 64
+    },
+    {
+      "id": 65,
+      "color": "#3aedd5",
+      "regionId": "region_023",
+      "name": "region_023",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 65
+    },
+    {
+      "id": 66,
+      "color": "#26eddb",
+      "regionId": "region_127",
+      "name": "region_127",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 66
+    },
+    {
+      "id": 67,
+      "color": "#1cd5cc",
+      "regionId": "region_004",
+      "name": "region_004",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 67
+    },
+    {
+      "id": 68,
+      "color": "#1fdcdc",
+      "regionId": "region_137",
+      "name": "region_137",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 68
+    },
+    {
+      "id": 69,
+      "color": "#1bd9e2",
+      "regionId": "region_029",
+      "name": "region_029",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 69
+    },
+    {
+      "id": 70,
+      "color": "#20b5c4",
+      "regionId": "region_112",
+      "name": "region_112",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 70
+    },
+    {
+      "id": 71,
+      "color": "#3ad2ea",
+      "regionId": "region_022",
+      "name": "region_022",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 71
+    },
+    {
+      "id": 72,
+      "color": "#0dafd2",
+      "regionId": "region_028",
+      "name": "region_028",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 72
+    },
+    {
+      "id": 73,
+      "color": "#30c5f1",
+      "regionId": "region_104",
+      "name": "region_104",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 73
+    },
+    {
+      "id": 74,
+      "color": "#3db2de",
+      "regionId": "region_126",
+      "name": "region_126",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 74
+    },
+    {
+      "id": 75,
+      "color": "#3ab7f0",
+      "regionId": "region_121",
+      "name": "region_121",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 75
+    },
+    {
+      "id": 76,
+      "color": "#2ba7ec",
+      "regionId": "region_021",
+      "name": "region_021",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 76
+    },
+    {
+      "id": 77,
+      "color": "#2a9dea",
+      "regionId": "region_053",
+      "name": "region_053",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 77
+    },
+    {
+      "id": 78,
+      "color": "#449ae0",
+      "regionId": "region_056",
+      "name": "region_056",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 78
+    },
+    {
+      "id": 79,
+      "color": "#2174c4",
+      "regionId": "region_035",
+      "name": "region_035",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 79
+    },
+    {
+      "id": 80,
+      "color": "#167bef",
+      "regionId": "region_110",
+      "name": "region_110",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 80
+    },
+    {
+      "id": 81,
+      "color": "#0c5fd3",
+      "regionId": "region_101",
+      "name": "region_101",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 81
+    },
+    {
+      "id": 82,
+      "color": "#0e62ee",
+      "regionId": "region_088",
+      "name": "region_088",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 82
+    },
+    {
+      "id": 83,
+      "color": "#154dbe",
+      "regionId": "region_072",
+      "name": "region_072",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 83
+    },
+    {
+      "id": 84,
+      "color": "#4975e3",
+      "regionId": "region_031",
+      "name": "region_031",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 84
+    },
+    {
+      "id": 85,
+      "color": "#1b44c5",
+      "regionId": "region_085",
+      "name": "region_085",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 85
+    },
+    {
+      "id": 86,
+      "color": "#294ddf",
+      "regionId": "region_125",
+      "name": "region_125",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 86
+    },
+    {
+      "id": 87,
+      "color": "#1b39e7",
+      "regionId": "region_019",
+      "name": "region_019",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 87
+    },
+    {
+      "id": 88,
+      "color": "#3549ed",
+      "regionId": "region_109",
+      "name": "region_109",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 88
+    },
+    {
+      "id": 89,
+      "color": "#4d56e2",
+      "regionId": "region_130",
+      "name": "region_130",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 89
+    },
+    {
+      "id": 90,
+      "color": "#2124d1",
+      "regionId": "region_009",
+      "name": "region_009",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 90
+    },
+    {
+      "id": 91,
+      "color": "#221ccb",
+      "regionId": "region_117",
+      "name": "region_117",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 91
+    },
+    {
+      "id": 92,
+      "color": "#2919ec",
+      "regionId": "region_075",
+      "name": "region_075",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 92
+    },
+    {
+      "id": 93,
+      "color": "#3e29db",
+      "regionId": "region_042",
+      "name": "region_042",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 93
+    },
+    {
+      "id": 94,
+      "color": "#411ff0",
+      "regionId": "region_094",
+      "name": "region_094",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 94
+    },
+    {
+      "id": 95,
+      "color": "#603ee2",
+      "regionId": "region_100",
+      "name": "region_100",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 95
+    },
+    {
+      "id": 96,
+      "color": "#4f1ce4",
+      "regionId": "region_039",
+      "name": "region_039",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 96
+    },
+    {
+      "id": 97,
+      "color": "#581de5",
+      "regionId": "region_113",
+      "name": "region_113",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 97
+    },
+    {
+      "id": 98,
+      "color": "#4e12c0",
+      "regionId": "region_087",
+      "name": "region_087",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 98
+    },
+    {
+      "id": 99,
+      "color": "#742ee2",
+      "regionId": "region_086",
+      "name": "region_086",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 99
+    },
+    {
+      "id": 100,
+      "color": "#873de8",
+      "regionId": "region_048",
+      "name": "region_048",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 100
+    },
+    {
+      "id": 101,
+      "color": "#7211db",
+      "regionId": "region_059",
+      "name": "region_059",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 101
+    },
+    {
+      "id": 102,
+      "color": "#8d2fe4",
+      "regionId": "region_079",
+      "name": "region_079",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 102
+    },
+    {
+      "id": 103,
+      "color": "#781cbe",
+      "regionId": "region_103",
+      "name": "region_103",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 103
+    },
+    {
+      "id": 104,
+      "color": "#a93bef",
+      "regionId": "region_071",
+      "name": "region_071",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 104
+    },
+    {
+      "id": 105,
+      "color": "#851fba",
+      "regionId": "region_045",
+      "name": "region_045",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 105
+    },
+    {
+      "id": 106,
+      "color": "#ab20e6",
+      "regionId": "region_077",
+      "name": "region_077",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 106
+    },
+    {
+      "id": 107,
+      "color": "#af1ae1",
+      "regionId": "region_033",
+      "name": "region_033",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 107
+    },
+    {
+      "id": 108,
+      "color": "#c31af0",
+      "regionId": "region_055",
+      "name": "region_055",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 108
+    },
+    {
+      "id": 109,
+      "color": "#c21de3",
+      "regionId": "region_074",
+      "name": "region_074",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 109
+    },
+    {
+      "id": 110,
+      "color": "#c025d5",
+      "regionId": "region_034",
+      "name": "region_034",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 110
+    },
+    {
+      "id": 111,
+      "color": "#da36e7",
+      "regionId": "region_102",
+      "name": "region_102",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 111
+    },
+    {
+      "id": 112,
+      "color": "#df17e5",
+      "regionId": "region_054",
+      "name": "region_054",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 112
+    },
+    {
+      "id": 113,
+      "color": "#d50fd2",
+      "regionId": "region_076",
+      "name": "region_076",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 113
+    },
+    {
+      "id": 114,
+      "color": "#d116c6",
+      "regionId": "region_090",
+      "name": "region_090",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 114
+    },
+    {
+      "id": 115,
+      "color": "#e61bd1",
+      "regionId": "region_091",
+      "name": "region_091",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 115
+    },
+    {
+      "id": 116,
+      "color": "#e61dc8",
+      "regionId": "region_052",
+      "name": "region_052",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 116
+    },
+    {
+      "id": 117,
+      "color": "#c31da3",
+      "regionId": "region_089",
+      "name": "region_089",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 117
+    },
+    {
+      "id": 118,
+      "color": "#e511b2",
+      "regionId": "region_046",
+      "name": "region_046",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 118
+    },
+    {
+      "id": 119,
+      "color": "#dc27a8",
+      "regionId": "region_044",
+      "name": "region_044",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 119
+    },
+    {
+      "id": 120,
+      "color": "#b31e82",
+      "regionId": "region_096",
+      "name": "region_096",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 120
+    },
+    {
+      "id": 121,
+      "color": "#ba1b7f",
+      "regionId": "region_049",
+      "name": "region_049",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 121
+    },
+    {
+      "id": 122,
+      "color": "#ee269b",
+      "regionId": "region_066",
+      "name": "region_066",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 122
+    },
+    {
+      "id": 123,
+      "color": "#ee439f",
+      "regionId": "region_047",
+      "name": "region_047",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 123
+    },
+    {
+      "id": 124,
+      "color": "#d7267d",
+      "regionId": "region_092",
+      "name": "region_092",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 124
+    },
+    {
+      "id": 125,
+      "color": "#e8277d",
+      "regionId": "region_078",
+      "name": "region_078",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 125
+    },
+    {
+      "id": 126,
+      "color": "#cb0b58",
+      "regionId": "region_050",
+      "name": "region_050",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 126
+    },
+    {
+      "id": 127,
+      "color": "#ce0d52",
+      "regionId": "region_063",
+      "name": "region_063",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 127
+    },
+    {
+      "id": 128,
+      "color": "#be1a4d",
+      "regionId": "region_097",
+      "name": "region_097",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 128
+    },
+    {
+      "id": 129,
+      "color": "#dc1047",
+      "regionId": "region_098",
+      "name": "region_098",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 129
+    },
+    {
+      "id": 130,
+      "color": "#e43e63",
+      "regionId": "region_032",
+      "name": "region_032",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 130
+    },
+    {
+      "id": 131,
+      "color": "#d22342",
+      "regionId": "region_081",
+      "name": "region_081",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 131
+    },
+    {
+      "id": 132,
+      "color": "#f1112f",
+      "regionId": "region_058",
+      "name": "region_058",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 132
+    },
+    {
+      "id": 133,
+      "color": "#e21426",
+      "regionId": "region_120",
+      "name": "region_120",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 133
+    },
+    {
+      "id": 134,
+      "color": "#e54148",
+      "regionId": "region_114",
+      "name": "region_114",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (1).json",
+      "file_index": 0,
+      "global_id": 134
+    },
+    {
+      "id": 1,
+      "color": "#e13131",
+      "regionId": "region_004",
+      "name": "region_004",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 135
+    },
+    {
+      "id": 2,
+      "color": "#e9311d",
+      "regionId": "region_039",
+      "name": "region_039",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 136
+    },
+    {
+      "id": 3,
+      "color": "#e2370e",
+      "regionId": "region_003",
+      "name": "region_003",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 137
+    },
+    {
+      "id": 4,
+      "color": "#e46e3e",
+      "regionId": "region_042",
+      "name": "region_042",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 138
+    },
+    {
+      "id": 5,
+      "color": "#ef7c33",
+      "regionId": "region_006",
+      "name": "region_006",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 139
+    },
+    {
+      "id": 6,
+      "color": "#ec8f37",
+      "regionId": "region_002",
+      "name": "region_002",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 140
+    },
+    {
+      "id": 7,
+      "color": "#eba544",
+      "regionId": "region_035",
+      "name": "region_035",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 141
+    },
+    {
+      "id": 8,
+      "color": "#e8ad30",
+      "regionId": "region_053",
+      "name": "region_053",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 142
+    },
+    {
+      "id": 9,
+      "color": "#f1c325",
+      "regionId": "region_056",
+      "name": "region_056",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 143
+    },
+    {
+      "id": 10,
+      "color": "#bea918",
+      "regionId": "region_005",
+      "name": "region_005",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 144
+    },
+    {
+      "id": 11,
+      "color": "#e6e139",
+      "regionId": "region_043",
+      "name": "region_043",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 145
+    },
+    {
+      "id": 12,
+      "color": "#ddea25",
+      "regionId": "region_046",
+      "name": "region_046",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 146
+    },
+    {
+      "id": 13,
+      "color": "#c4e710",
+      "regionId": "region_016",
+      "name": "region_016",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 147
+    },
+    {
+      "id": 14,
+      "color": "#aedd29",
+      "regionId": "region_063",
+      "name": "region_063",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 148
+    },
+    {
+      "id": 15,
+      "color": "#92da0f",
+      "regionId": "region_011",
+      "name": "region_011",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 149
+    },
+    {
+      "id": 16,
+      "color": "#80d518",
+      "regionId": "region_025",
+      "name": "region_025",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 150
+    },
+    {
+      "id": 17,
+      "color": "#82de36",
+      "regionId": "region_027",
+      "name": "region_027",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 151
+    },
+    {
+      "id": 18,
+      "color": "#60ef12",
+      "regionId": "region_012",
+      "name": "region_012",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 152
+    },
+    {
+      "id": 19,
+      "color": "#63ec33",
+      "regionId": "region_020",
+      "name": "region_020",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 153
+    },
+    {
+      "id": 20,
+      "color": "#49f228",
+      "regionId": "region_045",
+      "name": "region_045",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 154
+    },
+    {
+      "id": 21,
+      "color": "#2ce320",
+      "regionId": "region_028",
+      "name": "region_028",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 155
+    },
+    {
+      "id": 22,
+      "color": "#45e74a",
+      "regionId": "region_024",
+      "name": "region_024",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 156
+    },
+    {
+      "id": 23,
+      "color": "#33f14b",
+      "regionId": "region_009",
+      "name": "region_009",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 157
+    },
+    {
+      "id": 24,
+      "color": "#11d63d",
+      "regionId": "region_015",
+      "name": "region_015",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 158
+    },
+    {
+      "id": 25,
+      "color": "#15ca50",
+      "regionId": "region_037",
+      "name": "region_037",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 159
+    },
+    {
+      "id": 26,
+      "color": "#14d666",
+      "regionId": "region_019",
+      "name": "region_019",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 160
+    },
+    {
+      "id": 27,
+      "color": "#33e08c",
+      "regionId": "region_014",
+      "name": "region_014",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 161
+    },
+    {
+      "id": 28,
+      "color": "#26e59b",
+      "regionId": "region_049",
+      "name": "region_049",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 162
+    },
+    {
+      "id": 29,
+      "color": "#41e7b7",
+      "regionId": "region_040",
+      "name": "region_040",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 163
+    },
+    {
+      "id": 30,
+      "color": "#2ce7c3",
+      "regionId": "region_041",
+      "name": "region_041",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 164
+    },
+    {
+      "id": 31,
+      "color": "#15bead",
+      "regionId": "region_017",
+      "name": "region_017",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 165
+    },
+    {
+      "id": 32,
+      "color": "#12f1f1",
+      "regionId": "region_010",
+      "name": "region_010",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 166
+    },
+    {
+      "id": 33,
+      "color": "#1fb0bf",
+      "regionId": "region_051",
+      "name": "region_051",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 167
+    },
+    {
+      "id": 34,
+      "color": "#14b2d7",
+      "regionId": "region_033",
+      "name": "region_033",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 168
+    },
+    {
+      "id": 35,
+      "color": "#2fb7ef",
+      "regionId": "region_032",
+      "name": "region_032",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 169
+    },
+    {
+      "id": 36,
+      "color": "#1f99e6",
+      "regionId": "region_055",
+      "name": "region_055",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 170
+    },
+    {
+      "id": 37,
+      "color": "#3597f4",
+      "regionId": "region_060",
+      "name": "region_060",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 171
+    },
+    {
+      "id": 38,
+      "color": "#1d6ad4",
+      "regionId": "region_050",
+      "name": "region_050",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 172
+    },
+    {
+      "id": 39,
+      "color": "#2866e7",
+      "regionId": "region_058",
+      "name": "region_058",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 173
+    },
+    {
+      "id": 40,
+      "color": "#2750dd",
+      "regionId": "region_008",
+      "name": "region_008",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 174
+    },
+    {
+      "id": 41,
+      "color": "#0b25d1",
+      "regionId": "region_031",
+      "name": "region_031",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 175
+    },
+    {
+      "id": 42,
+      "color": "#242aea",
+      "regionId": "region_036",
+      "name": "region_036",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 176
+    },
+    {
+      "id": 43,
+      "color": "#1b0edd",
+      "regionId": "region_059",
+      "name": "region_059",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 177
+    },
+    {
+      "id": 44,
+      "color": "#2d0cd6",
+      "regionId": "region_038",
+      "name": "region_038",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 178
+    },
+    {
+      "id": 45,
+      "color": "#420dda",
+      "regionId": "region_026",
+      "name": "region_026",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 179
+    },
+    {
+      "id": 46,
+      "color": "#5d0dee",
+      "regionId": "region_022",
+      "name": "region_022",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 180
+    },
+    {
+      "id": 47,
+      "color": "#8534e8",
+      "regionId": "region_034",
+      "name": "region_034",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 181
+    },
+    {
+      "id": 48,
+      "color": "#7a15ce",
+      "regionId": "region_023",
+      "name": "region_023",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 182
+    },
+    {
+      "id": 49,
+      "color": "#9623d5",
+      "regionId": "region_065",
+      "name": "region_065",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 183
+    },
+    {
+      "id": 50,
+      "color": "#9514c1",
+      "regionId": "region_057",
+      "name": "region_057",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 184
+    },
+    {
+      "id": 51,
+      "color": "#b40bd4",
+      "regionId": "region_007",
+      "name": "region_007",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 185
+    },
+    {
+      "id": 52,
+      "color": "#bf16cb",
+      "regionId": "region_021",
+      "name": "region_021",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 186
+    },
+    {
+      "id": 53,
+      "color": "#e03cdb",
+      "regionId": "region_061",
+      "name": "region_061",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 187
+    },
+    {
+      "id": 54,
+      "color": "#ec2fd3",
+      "regionId": "region_044",
+      "name": "region_044",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 188
+    },
+    {
+      "id": 55,
+      "color": "#ee2ac2",
+      "regionId": "region_047",
+      "name": "region_047",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 189
+    },
+    {
+      "id": 56,
+      "color": "#ba1986",
+      "regionId": "region_054",
+      "name": "region_054",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 190
+    },
+    {
+      "id": 57,
+      "color": "#d01983",
+      "regionId": "region_048",
+      "name": "region_048",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 191
+    },
+    {
+      "id": 58,
+      "color": "#e24390",
+      "regionId": "region_029",
+      "name": "region_029",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 192
+    },
+    {
+      "id": 59,
+      "color": "#f33d83",
+      "regionId": "region_030",
+      "name": "region_030",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 193
+    },
+    {
+      "id": 60,
+      "color": "#f12e67",
+      "regionId": "region_018",
+      "name": "region_018",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 194
+    },
+    {
+      "id": 61,
+      "color": "#d40d33",
+      "regionId": "region_013",
+      "name": "region_013",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 195
+    },
+    {
+      "id": 62,
+      "color": "#dd3a4a",
+      "regionId": "region_062",
+      "name": "region_062",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (2).json",
+      "file_index": 1,
+      "global_id": 196
+    },
+    {
+      "id": 1,
+      "color": "#c61414",
+      "regionId": "region_017",
+      "name": "region_017",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 197
+    },
+    {
+      "id": 2,
+      "color": "#e85c3c",
+      "regionId": "region_018",
+      "name": "region_018",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 198
+    },
+    {
+      "id": 3,
+      "color": "#f17026",
+      "regionId": "region_010",
+      "name": "region_010",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 199
+    },
+    {
+      "id": 4,
+      "color": "#e99d43",
+      "regionId": "region_001",
+      "name": "region_001",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 200
+    },
+    {
+      "id": 5,
+      "color": "#dcaa24",
+      "regionId": "region_023",
+      "name": "region_023",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 201
+    },
+    {
+      "id": 6,
+      "color": "#e8d511",
+      "regionId": "region_030",
+      "name": "region_030",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 202
+    },
+    {
+      "id": 7,
+      "color": "#c9da18",
+      "regionId": "region_029",
+      "name": "region_029",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 203
+    },
+    {
+      "id": 8,
+      "color": "#addb32",
+      "regionId": "region_033",
+      "name": "region_033",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 204
+    },
+    {
+      "id": 9,
+      "color": "#8ce323",
+      "regionId": "region_025",
+      "name": "region_025",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 205
+    },
+    {
+      "id": 10,
+      "color": "#74f12d",
+      "regionId": "region_031",
+      "name": "region_031",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 206
+    },
+    {
+      "id": 11,
+      "color": "#5be03d",
+      "regionId": "region_006",
+      "name": "region_006",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 207
+    },
+    {
+      "id": 12,
+      "color": "#2ae52a",
+      "regionId": "region_007",
+      "name": "region_007",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 208
+    },
+    {
+      "id": 13,
+      "color": "#19ed40",
+      "regionId": "region_004",
+      "name": "region_004",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 209
+    },
+    {
+      "id": 14,
+      "color": "#17e662",
+      "regionId": "region_021",
+      "name": "region_021",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 210
+    },
+    {
+      "id": 15,
+      "color": "#47e49d",
+      "regionId": "region_002",
+      "name": "region_002",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 211
+    },
+    {
+      "id": 16,
+      "color": "#2cf2bc",
+      "regionId": "region_005",
+      "name": "region_005",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 212
+    },
+    {
+      "id": 17,
+      "color": "#1eb4a7",
+      "regionId": "region_020",
+      "name": "region_020",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 213
+    },
+    {
+      "id": 18,
+      "color": "#12afbf",
+      "regionId": "region_014",
+      "name": "region_014",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 214
+    },
+    {
+      "id": 19,
+      "color": "#11a6dd",
+      "regionId": "region_032",
+      "name": "region_032",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 215
+    },
+    {
+      "id": 20,
+      "color": "#187ccf",
+      "regionId": "region_013",
+      "name": "region_013",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 216
+    },
+    {
+      "id": 21,
+      "color": "#3674e1",
+      "regionId": "region_015",
+      "name": "region_015",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 217
+    },
+    {
+      "id": 22,
+      "color": "#2045f0",
+      "regionId": "region_011",
+      "name": "region_011",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 218
+    },
+    {
+      "id": 23,
+      "color": "#1717bd",
+      "regionId": "region_012",
+      "name": "region_012",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 219
+    },
+    {
+      "id": 24,
+      "color": "#5f42e1",
+      "regionId": "region_016",
+      "name": "region_016",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 220
+    },
+    {
+      "id": 25,
+      "color": "#7032dc",
+      "regionId": "region_008",
+      "name": "region_008",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 221
+    },
+    {
+      "id": 26,
+      "color": "#8623d8",
+      "regionId": "region_028",
+      "name": "region_028",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 222
+    },
+    {
+      "id": 27,
+      "color": "#b33ae1",
+      "regionId": "region_027",
+      "name": "region_027",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 223
+    },
+    {
+      "id": 28,
+      "color": "#cc22dd",
+      "regionId": "region_009",
+      "name": "region_009",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 224
+    },
+    {
+      "id": 29,
+      "color": "#dd15cb",
+      "regionId": "region_024",
+      "name": "region_024",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 225
+    },
+    {
+      "id": 30,
+      "color": "#c70d95",
+      "regionId": "region_003",
+      "name": "region_003",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 226
+    },
+    {
+      "id": 31,
+      "color": "#eb409d",
+      "regionId": "region_026",
+      "name": "region_026",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 227
+    },
+    {
+      "id": 32,
+      "color": "#e5276c",
+      "regionId": "region_022",
+      "name": "region_022",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 228
+    },
+    {
+      "id": 33,
+      "color": "#e24763",
+      "regionId": "region_019",
+      "name": "region_019",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data (3).json",
+      "file_index": 2,
+      "global_id": 229
+    },
+    {
+      "id": 1,
+      "color": "#e13c3c",
+      "regionId": "region_143",
+      "name": "region_143",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 230
+    },
+    {
+      "id": 2,
+      "color": "#e7332c",
+      "regionId": "region_005",
+      "name": "region_005",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 231
+    },
+    {
+      "id": 3,
+      "color": "#d52112",
+      "regionId": "region_017",
+      "name": "region_017",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 232
+    },
+    {
+      "id": 4,
+      "color": "#c9301b",
+      "regionId": "region_140",
+      "name": "region_140",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 233
+    },
+    {
+      "id": 5,
+      "color": "#e4654d",
+      "regionId": "region_054",
+      "name": "region_054",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 234
+    },
+    {
+      "id": 6,
+      "color": "#d1421f",
+      "regionId": "region_098",
+      "name": "region_098",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 235
+    },
+    {
+      "id": 7,
+      "color": "#c23c13",
+      "regionId": "region_059",
+      "name": "region_059",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 236
+    },
+    {
+      "id": 8,
+      "color": "#b94519",
+      "regionId": "region_148",
+      "name": "region_148",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 237
+    },
+    {
+      "id": 9,
+      "color": "#cd490d",
+      "regionId": "region_014",
+      "name": "region_014",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 238
+    },
+    {
+      "id": 10,
+      "color": "#ba541c",
+      "regionId": "region_089",
+      "name": "region_089",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 239
+    },
+    {
+      "id": 11,
+      "color": "#ec6812",
+      "regionId": "region_075",
+      "name": "region_075",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 240
+    },
+    {
+      "id": 12,
+      "color": "#bb621f",
+      "regionId": "region_002",
+      "name": "region_002",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 241
+    },
+    {
+      "id": 13,
+      "color": "#c0630f",
+      "regionId": "region_146",
+      "name": "region_146",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 242
+    },
+    {
+      "id": 14,
+      "color": "#cb6f10",
+      "regionId": "region_020",
+      "name": "region_020",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 243
+    },
+    {
+      "id": 15,
+      "color": "#e98c1b",
+      "regionId": "region_132",
+      "name": "region_132",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 244
+    },
+    {
+      "id": 16,
+      "color": "#ee9b24",
+      "regionId": "region_067",
+      "name": "region_067",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 245
+    },
+    {
+      "id": 17,
+      "color": "#d78d10",
+      "regionId": "region_097",
+      "name": "region_097",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 246
+    },
+    {
+      "id": 18,
+      "color": "#f1a91a",
+      "regionId": "region_081",
+      "name": "region_081",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 247
+    },
+    {
+      "id": 19,
+      "color": "#ce9818",
+      "regionId": "region_038",
+      "name": "region_038",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 248
+    },
+    {
+      "id": 20,
+      "color": "#b7901d",
+      "regionId": "region_091",
+      "name": "region_091",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 249
+    },
+    {
+      "id": 21,
+      "color": "#deb727",
+      "regionId": "region_073",
+      "name": "region_073",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 250
+    },
+    {
+      "id": 22,
+      "color": "#eac40f",
+      "regionId": "region_121",
+      "name": "region_121",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 251
+    },
+    {
+      "id": 23,
+      "color": "#eed53b",
+      "regionId": "region_037",
+      "name": "region_037",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 252
+    },
+    {
+      "id": 24,
+      "color": "#d0be13",
+      "regionId": "region_120",
+      "name": "region_120",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 253
+    },
+    {
+      "id": 25,
+      "color": "#e6da16",
+      "regionId": "region_092",
+      "name": "region_092",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 254
+    },
+    {
+      "id": 26,
+      "color": "#c4c10f",
+      "regionId": "region_055",
+      "name": "region_055",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 255
+    },
+    {
+      "id": 27,
+      "color": "#dde048",
+      "regionId": "region_063",
+      "name": "region_063",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 256
+    },
+    {
+      "id": 28,
+      "color": "#b8c30c",
+      "regionId": "region_036",
+      "name": "region_036",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 257
+    },
+    {
+      "id": 29,
+      "color": "#b6c714",
+      "regionId": "region_015",
+      "name": "region_015",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 258
+    },
+    {
+      "id": 30,
+      "color": "#a8c011",
+      "regionId": "region_119",
+      "name": "region_119",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 259
+    },
+    {
+      "id": 31,
+      "color": "#c9e545",
+      "regionId": "region_145",
+      "name": "region_145",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 260
+    },
+    {
+      "id": 32,
+      "color": "#c1ed22",
+      "regionId": "region_048",
+      "name": "region_048",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 261
+    },
+    {
+      "id": 33,
+      "color": "#bee745",
+      "regionId": "region_118",
+      "name": "region_118",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 262
+    },
+    {
+      "id": 34,
+      "color": "#ade32b",
+      "regionId": "region_058",
+      "name": "region_058",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 263
+    },
+    {
+      "id": 35,
+      "color": "#9cdf16",
+      "regionId": "region_094",
+      "name": "region_094",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 264
+    },
+    {
+      "id": 36,
+      "color": "#a0ed1e",
+      "regionId": "region_003",
+      "name": "region_003",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 265
+    },
+    {
+      "id": 37,
+      "color": "#a6f436",
+      "regionId": "region_158",
+      "name": "region_158",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 266
+    },
+    {
+      "id": 38,
+      "color": "#71c30e",
+      "regionId": "region_045",
+      "name": "region_045",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 267
+    },
+    {
+      "id": 39,
+      "color": "#91f12e",
+      "regionId": "region_116",
+      "name": "region_116",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 268
+    },
+    {
+      "id": 40,
+      "color": "#78ee10",
+      "regionId": "region_031",
+      "name": "region_031",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 269
+    },
+    {
+      "id": 41,
+      "color": "#66c51d",
+      "regionId": "region_124",
+      "name": "region_124",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 270
+    },
+    {
+      "id": 42,
+      "color": "#7eef34",
+      "regionId": "region_090",
+      "name": "region_090",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 271
+    },
+    {
+      "id": 43,
+      "color": "#59dd10",
+      "regionId": "region_046",
+      "name": "region_046",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 272
+    },
+    {
+      "id": 44,
+      "color": "#56ef0f",
+      "regionId": "region_117",
+      "name": "region_117",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 273
+    },
+    {
+      "id": 45,
+      "color": "#62df32",
+      "regionId": "region_130",
+      "name": "region_130",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 274
+    },
+    {
+      "id": 46,
+      "color": "#5ef032",
+      "regionId": "region_072",
+      "name": "region_072",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 275
+    },
+    {
+      "id": 47,
+      "color": "#51f329",
+      "regionId": "region_137",
+      "name": "region_137",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 276
+    },
+    {
+      "id": 48,
+      "color": "#4de431",
+      "regionId": "region_078",
+      "name": "region_078",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 277
+    },
+    {
+      "id": 49,
+      "color": "#35c521",
+      "regionId": "region_106",
+      "name": "region_106",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 278
+    },
+    {
+      "id": 50,
+      "color": "#22cf14",
+      "regionId": "region_088",
+      "name": "region_088",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 279
+    },
+    {
+      "id": 51,
+      "color": "#19eb11",
+      "regionId": "region_024",
+      "name": "region_024",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 280
+    },
+    {
+      "id": 52,
+      "color": "#0bc30b",
+      "regionId": "region_156",
+      "name": "region_156",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 281
+    },
+    {
+      "id": 53,
+      "color": "#0cc814",
+      "regionId": "region_008",
+      "name": "region_008",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 282
+    },
+    {
+      "id": 54,
+      "color": "#1bbd27",
+      "regionId": "region_151",
+      "name": "region_151",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 283
+    },
+    {
+      "id": 55,
+      "color": "#21df38",
+      "regionId": "region_006",
+      "name": "region_006",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 284
+    },
+    {
+      "id": 56,
+      "color": "#47e960",
+      "regionId": "region_035",
+      "name": "region_035",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 285
+    },
+    {
+      "id": 57,
+      "color": "#16c438",
+      "regionId": "region_043",
+      "name": "region_043",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 286
+    },
+    {
+      "id": 58,
+      "color": "#36e45f",
+      "regionId": "region_138",
+      "name": "region_138",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 287
+    },
+    {
+      "id": 59,
+      "color": "#2ae85e",
+      "regionId": "region_026",
+      "name": "region_026",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 288
+    },
+    {
+      "id": 60,
+      "color": "#1fb34d",
+      "regionId": "region_133",
+      "name": "region_133",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 289
+    },
+    {
+      "id": 61,
+      "color": "#1eaf51",
+      "regionId": "region_157",
+      "name": "region_157",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 290
+    },
+    {
+      "id": 62,
+      "color": "#0dca57",
+      "regionId": "region_004",
+      "name": "region_004",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 291
+    },
+    {
+      "id": 63,
+      "color": "#2ce07a",
+      "regionId": "region_028",
+      "name": "region_028",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 292
+    },
+    {
+      "id": 64,
+      "color": "#39ec8d",
+      "regionId": "region_141",
+      "name": "region_141",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 293
+    },
+    {
+      "id": 65,
+      "color": "#3de794",
+      "regionId": "region_019",
+      "name": "region_019",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 294
+    },
+    {
+      "id": 66,
+      "color": "#1cd581",
+      "regionId": "region_080",
+      "name": "region_080",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 295
+    },
+    {
+      "id": 67,
+      "color": "#3ae39d",
+      "regionId": "region_009",
+      "name": "region_009",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 296
+    },
+    {
+      "id": 68,
+      "color": "#12d089",
+      "regionId": "region_155",
+      "name": "region_155",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 297
+    },
+    {
+      "id": 69,
+      "color": "#1bc68d",
+      "regionId": "region_007",
+      "name": "region_007",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 298
+    },
+    {
+      "id": 70,
+      "color": "#2ef1b8",
+      "regionId": "region_152",
+      "name": "region_152",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 299
+    },
+    {
+      "id": 71,
+      "color": "#13c194",
+      "regionId": "region_134",
+      "name": "region_134",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 300
+    },
+    {
+      "id": 72,
+      "color": "#35e7c1",
+      "regionId": "region_032",
+      "name": "region_032",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 301
+    },
+    {
+      "id": 73,
+      "color": "#17eec8",
+      "regionId": "region_039",
+      "name": "region_039",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 302
+    },
+    {
+      "id": 74,
+      "color": "#1aebce",
+      "regionId": "region_029",
+      "name": "region_029",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 303
+    },
+    {
+      "id": 75,
+      "color": "#15d1bf",
+      "regionId": "region_044",
+      "name": "region_044",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 304
+    },
+    {
+      "id": 76,
+      "color": "#17ccc2",
+      "regionId": "region_109",
+      "name": "region_109",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 305
+    },
+    {
+      "id": 77,
+      "color": "#23ddda",
+      "regionId": "region_122",
+      "name": "region_122",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 306
+    },
+    {
+      "id": 78,
+      "color": "#10c9cd",
+      "regionId": "region_071",
+      "name": "region_071",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 307
+    },
+    {
+      "id": 79,
+      "color": "#1bd8e3",
+      "regionId": "region_077",
+      "name": "region_077",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 308
+    },
+    {
+      "id": 80,
+      "color": "#31d2e3",
+      "regionId": "region_027",
+      "name": "region_027",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 309
+    },
+    {
+      "id": 81,
+      "color": "#19a7be",
+      "regionId": "region_021",
+      "name": "region_021",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 310
+    },
+    {
+      "id": 82,
+      "color": "#19c3e8",
+      "regionId": "region_096",
+      "name": "region_096",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 311
+    },
+    {
+      "id": 83,
+      "color": "#3bcaf2",
+      "regionId": "region_139",
+      "name": "region_139",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 312
+    },
+    {
+      "id": 84,
+      "color": "#27b1e0",
+      "regionId": "region_107",
+      "name": "region_107",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 313
+    },
+    {
+      "id": 85,
+      "color": "#28a7db",
+      "regionId": "region_050",
+      "name": "region_050",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 314
+    },
+    {
+      "id": 86,
+      "color": "#15a7f0",
+      "regionId": "region_030",
+      "name": "region_030",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 315
+    },
+    {
+      "id": 87,
+      "color": "#37a8eb",
+      "regionId": "region_144",
+      "name": "region_144",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 316
+    },
+    {
+      "id": 88,
+      "color": "#3aa4ee",
+      "regionId": "region_079",
+      "name": "region_079",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 317
+    },
+    {
+      "id": 89,
+      "color": "#1c83d9",
+      "regionId": "region_136",
+      "name": "region_136",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 318
+    },
+    {
+      "id": 90,
+      "color": "#2388e8",
+      "regionId": "region_022",
+      "name": "region_022",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 319
+    },
+    {
+      "id": 91,
+      "color": "#3081dc",
+      "regionId": "region_053",
+      "name": "region_053",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 320
+    },
+    {
+      "id": 92,
+      "color": "#206fd6",
+      "regionId": "region_033",
+      "name": "region_033",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 321
+    },
+    {
+      "id": 93,
+      "color": "#3a81ef",
+      "regionId": "region_070",
+      "name": "region_070",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 322
+    },
+    {
+      "id": 94,
+      "color": "#2066e7",
+      "regionId": "region_093",
+      "name": "region_093",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 323
+    },
+    {
+      "id": 95,
+      "color": "#1b56d9",
+      "regionId": "region_084",
+      "name": "region_084",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 324
+    },
+    {
+      "id": 96,
+      "color": "#3e6eeb",
+      "regionId": "region_135",
+      "name": "region_135",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 325
+    },
+    {
+      "id": 97,
+      "color": "#1a40bd",
+      "regionId": "region_082",
+      "name": "region_082",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 326
+    },
+    {
+      "id": 98,
+      "color": "#2049f3",
+      "regionId": "region_153",
+      "name": "region_153",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 327
+    },
+    {
+      "id": 99,
+      "color": "#304eed",
+      "regionId": "region_125",
+      "name": "region_125",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 328
+    },
+    {
+      "id": 100,
+      "color": "#1629b7",
+      "regionId": "region_041",
+      "name": "region_041",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 329
+    },
+    {
+      "id": 101,
+      "color": "#0c1de7",
+      "regionId": "region_010",
+      "name": "region_010",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 330
+    },
+    {
+      "id": 102,
+      "color": "#333ae3",
+      "regionId": "region_105",
+      "name": "region_105",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 331
+    },
+    {
+      "id": 103,
+      "color": "#4242e7",
+      "regionId": "region_154",
+      "name": "region_154",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 332
+    },
+    {
+      "id": 104,
+      "color": "#1e17c6",
+      "regionId": "region_061",
+      "name": "region_061",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 333
+    },
+    {
+      "id": 105,
+      "color": "#3d30e0",
+      "regionId": "region_131",
+      "name": "region_131",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 334
+    },
+    {
+      "id": 106,
+      "color": "#3522c2",
+      "regionId": "region_123",
+      "name": "region_123",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 335
+    },
+    {
+      "id": 107,
+      "color": "#3c1fd6",
+      "regionId": "region_011",
+      "name": "region_011",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 336
+    },
+    {
+      "id": 108,
+      "color": "#6444e7",
+      "regionId": "region_147",
+      "name": "region_147",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 337
+    },
+    {
+      "id": 109,
+      "color": "#5125e1",
+      "regionId": "region_066",
+      "name": "region_066",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 338
+    },
+    {
+      "id": 110,
+      "color": "#5116ec",
+      "regionId": "region_104",
+      "name": "region_104",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 339
+    },
+    {
+      "id": 111,
+      "color": "#5517de",
+      "regionId": "region_018",
+      "name": "region_018",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 340
+    },
+    {
+      "id": 112,
+      "color": "#7131e8",
+      "regionId": "region_150",
+      "name": "region_150",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 341
+    },
+    {
+      "id": 113,
+      "color": "#8142e1",
+      "regionId": "region_012",
+      "name": "region_012",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 342
+    },
+    {
+      "id": 114,
+      "color": "#782cdc",
+      "regionId": "region_085",
+      "name": "region_085",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 343
+    },
+    {
+      "id": 115,
+      "color": "#882fed",
+      "regionId": "region_062",
+      "name": "region_062",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 344
+    },
+    {
+      "id": 116,
+      "color": "#8619ef",
+      "regionId": "region_113",
+      "name": "region_113",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 345
+    },
+    {
+      "id": 117,
+      "color": "#972def",
+      "regionId": "region_060",
+      "name": "region_060",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 346
+    },
+    {
+      "id": 118,
+      "color": "#8d1fda",
+      "regionId": "region_052",
+      "name": "region_052",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 347
+    },
+    {
+      "id": 119,
+      "color": "#7e1fb6",
+      "regionId": "region_099",
+      "name": "region_099",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 348
+    },
+    {
+      "id": 120,
+      "color": "#ac21f2",
+      "regionId": "region_128",
+      "name": "region_128",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 349
+    },
+    {
+      "id": 121,
+      "color": "#8719b5",
+      "regionId": "region_110",
+      "name": "region_110",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 350
+    },
+    {
+      "id": 122,
+      "color": "#ac15e0",
+      "regionId": "region_069",
+      "name": "region_069",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 351
+    },
+    {
+      "id": 123,
+      "color": "#ae13d9",
+      "regionId": "region_083",
+      "name": "region_083",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 352
+    },
+    {
+      "id": 124,
+      "color": "#c444df",
+      "regionId": "region_074",
+      "name": "region_074",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 353
+    },
+    {
+      "id": 125,
+      "color": "#b922d1",
+      "regionId": "region_095",
+      "name": "region_095",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 354
+    },
+    {
+      "id": 126,
+      "color": "#bb0bce",
+      "regionId": "region_068",
+      "name": "region_068",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 355
+    },
+    {
+      "id": 127,
+      "color": "#d012dc",
+      "regionId": "region_100",
+      "name": "region_100",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 356
+    },
+    {
+      "id": 128,
+      "color": "#d61fda",
+      "regionId": "region_149",
+      "name": "region_149",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 357
+    },
+    {
+      "id": 129,
+      "color": "#e342e0",
+      "regionId": "region_114",
+      "name": "region_114",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 358
+    },
+    {
+      "id": 130,
+      "color": "#c61ebc",
+      "regionId": "region_086",
+      "name": "region_086",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 359
+    },
+    {
+      "id": 131,
+      "color": "#e41cd1",
+      "regionId": "region_034",
+      "name": "region_034",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 360
+    },
+    {
+      "id": 132,
+      "color": "#d825bf",
+      "regionId": "region_013",
+      "name": "region_013",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 361
+    },
+    {
+      "id": 133,
+      "color": "#e319bf",
+      "regionId": "region_087",
+      "name": "region_087",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 362
+    },
+    {
+      "id": 134,
+      "color": "#e412b7",
+      "regionId": "region_127",
+      "name": "region_127",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 363
+    },
+    {
+      "id": 135,
+      "color": "#dc26ae",
+      "regionId": "region_129",
+      "name": "region_129",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 364
+    },
+    {
+      "id": 136,
+      "color": "#ef3cba",
+      "regionId": "region_076",
+      "name": "region_076",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 365
+    },
+    {
+      "id": 137,
+      "color": "#db1d9b",
+      "regionId": "region_101",
+      "name": "region_101",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 366
+    },
+    {
+      "id": 138,
+      "color": "#ee42ae",
+      "regionId": "region_042",
+      "name": "region_042",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 367
+    },
+    {
+      "id": 139,
+      "color": "#e04da3",
+      "regionId": "region_040",
+      "name": "region_040",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 368
+    },
+    {
+      "id": 140,
+      "color": "#cb0b75",
+      "regionId": "region_142",
+      "name": "region_142",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 369
+    },
+    {
+      "id": 141,
+      "color": "#e22b88",
+      "regionId": "region_025",
+      "name": "region_025",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 370
+    },
+    {
+      "id": 142,
+      "color": "#ec388d",
+      "regionId": "region_115",
+      "name": "region_115",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 371
+    },
+    {
+      "id": 143,
+      "color": "#dd1068",
+      "regionId": "region_064",
+      "name": "region_064",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 372
+    },
+    {
+      "id": 144,
+      "color": "#f03f84",
+      "regionId": "region_057",
+      "name": "region_057",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 373
+    },
+    {
+      "id": 145,
+      "color": "#df316e",
+      "regionId": "region_016",
+      "name": "region_016",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 374
+    },
+    {
+      "id": 146,
+      "color": "#c41d51",
+      "regionId": "region_056",
+      "name": "region_056",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 375
+    },
+    {
+      "id": 147,
+      "color": "#ed396a",
+      "regionId": "region_126",
+      "name": "region_126",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 376
+    },
+    {
+      "id": 148,
+      "color": "#e92c59",
+      "regionId": "region_102",
+      "name": "region_102",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 377
+    },
+    {
+      "id": 149,
+      "color": "#e1183f",
+      "regionId": "region_108",
+      "name": "region_108",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 378
+    },
+    {
+      "id": 150,
+      "color": "#e42e4a",
+      "regionId": "region_023",
+      "name": "region_023",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 379
+    },
+    {
+      "id": 151,
+      "color": "#da2a3f",
+      "regionId": "region_049",
+      "name": "region_049",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 380
+    },
+    {
+      "id": 152,
+      "color": "#e44a56",
+      "regionId": "region_111",
+      "name": "region_111",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 381
+    },
+    {
+      "id": 153,
+      "color": "#d81119",
+      "regionId": "region_051",
+      "name": "region_051",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data.json",
+      "file_index": 3,
+      "global_id": 382
+    },
+    {
+      "id": 1,
+      "color": "#ff3366",
+      "regionId": "region_001",
+      "name": "Region 1",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data_test1.json",
+      "file_index": 4,
+      "global_id": 383
+    },
+    {
+      "id": 2,
+      "color": "#00e5ff",
+      "regionId": "region_002",
+      "name": "Region 2",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data_test1.json",
+      "file_index": 4,
+      "global_id": 384
+    },
+    {
+      "id": 1,
+      "color": "#00ff88",
+      "regionId": "region_003",
+      "name": "Region 3",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data_test2.json",
+      "file_index": 5,
+      "global_id": 385
+    },
+    {
+      "id": 2,
+      "color": "#ff9500",
+      "regionId": "region_004",
+      "name": "Region 4",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data_test2.json",
+      "file_index": 5,
+      "global_id": 386
+    },
+    {
+      "id": 3,
+      "color": "#bf00ff",
+      "regionId": "region_005",
+      "name": "Region 5",
+      "original_file": "C:\\Users\\Chance\\Desktop\\F22 Mapper\\Images\\mapping_data_test2.json",
+      "file_index": 5,
+      "global_id": 387
+    }
+  ]
+}

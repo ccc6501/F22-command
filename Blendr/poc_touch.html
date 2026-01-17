@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>F-22 Panel Touch POC</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            background: #05060a;
+            color: #d7e6ff;
+            font-family: system-ui;
+        }
+
+        #hud {
+            position: fixed;
+            left: 12px;
+            top: 12px;
+            z-index: 10;
+            background: rgba(10, 18, 30, .55);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(120, 180, 255, .18);
+            padding: 10px 12px;
+            border-radius: 12px;
+            min-width: 240px;
+        }
+
+        #pick {
+            font-weight: 700
+        }
+
+        canvas {
+            display: block
+        }
+    </style>
+</head>
+
+<body>
+    <div id="hud">
+        <div><b>Tap/click a red panel</b></div>
+        <div id="pick">Nothing selected</div>
+    </div>
+
+    <script>
+        // Some browsers may have a Service Worker registered for localhost from another project.
+        // That can cause noisy /sw.js requests in simple servers; unregister them for this POC.
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations()
+                .then(regs => Promise.all(regs.map(r => r.unregister())))
+                .catch(() => { });
+        }
+    </script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/examples/": "https://unpkg.com/three@0.160.0/examples/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from "three";
+        import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+        import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+
+        const pickEl = document.getElementById("pick");
+
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.Fog(0x05060a, 4, 30);
+
+        const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.01, 200);
+        camera.position.set(2.5, 1.2, 3.2);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.setPixelRatio(devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+
+        // lights
+        scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+        const dir = new THREE.DirectionalLight(0xffffff, 0.9);
+        dir.position.set(3, 5, 2);
+        scene.add(dir);
+
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+
+        let root = null;
+        let selected = null;
+        let prevEmissive = null;
+
+        const loader = new GLTFLoader();
+        loader.load("./f22_zones_10_poc.glb", (gltf) => {
+            root = gltf.scene;
+            scene.add(root);
+
+            // Make non-panel meshes a bit darker so red pops
+            root.traverse((o) => {
+                if (o.isMesh && o.material) {
+                    o.material = o.material.clone();
+                    if (!(o.name.startsWith("PANEL_") || o.name.startsWith("F22_Zone_"))) {
+                        o.material.color.multiplyScalar(0.55);
+                    }
+                }
+            });
+
+        }, undefined, (err) => {
+            console.error(err);
+            pickEl.textContent = "Failed to load GLB (check server + filename).";
+        });
+
+        function setSelected(mesh) {
+            if (selected && selected.material) {
+                // restore previous emissive
+                if (prevEmissive) selected.material.emissive.copy(prevEmissive);
+            }
+            selected = mesh;
+
+            if (selected && selected.material) {
+                prevEmissive = selected.material.emissive ? selected.material.emissive.clone() : new THREE.Color(0x000000);
+                // highlight (yellow-ish emissive)
+                if (!selected.material.emissive) selected.material.emissive = new THREE.Color(0x000000);
+                selected.material.emissive.set(0xffff66);
+                selected.material.emissiveIntensity = 0.8;
+            }
+            pickEl.textContent = selected ? `Selected: ${selected.name}` : "Nothing selected";
+        }
+
+        function onPointer(e) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+            pointer.y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+
+            raycaster.setFromCamera(pointer, camera);
+            const hits = raycaster.intersectObjects(scene.children, true);
+            const hit = hits.find(h => h.object && h.object.name && (h.object.name.startsWith("PANEL_") || h.object.name.startsWith("F22_Zone_")));
+            if (hit) setSelected(hit.object);
+        }
+
+        window.addEventListener("pointerdown", onPointer);
+
+        window.addEventListener("resize", () => {
+            camera.aspect = innerWidth / innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(innerWidth, innerHeight);
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+
+</html>

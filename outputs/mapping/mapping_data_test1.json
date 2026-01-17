@@ -1,0 +1,26 @@
+{
+    "timestamp": "20240116_120000",
+    "processing_date": "2024-01-16T12:00:00.000000",
+    "imageName": "test_image_1.png",
+    "regions": [
+        {
+            "id": 1,
+            "color": "#ff3366",
+            "regionId": "region_001",
+            "name": "Region 1"
+        },
+        {
+            "id": 2,
+            "color": "#00e5ff",
+            "regionId": "region_002",
+            "name": "Region 2"
+        }
+    ],
+    "summary": {
+        "totalRegions": 2,
+        "colors": [
+            "#ff3366",
+            "#00e5ff"
+        ]
+    }
+}

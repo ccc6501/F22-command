@@ -1,0 +1,446 @@
+{
+  "timestamp": "2026-01-16T08:29:55.604Z",
+  "imageName": "SIDE",
+  "viewType": "R",
+  "regions": [
+    {
+      "id": "R1",
+      "color": "#ce1515",
+      "regionId": "region_004",
+      "name": "region_004"
+    },
+    {
+      "id": "R2",
+      "color": "#ee5343",
+      "regionId": "region_039",
+      "name": "region_039"
+    },
+    {
+      "id": "R3",
+      "color": "#e36446",
+      "regionId": "region_003",
+      "name": "region_003"
+    },
+    {
+      "id": "R4",
+      "color": "#dc551e",
+      "regionId": "region_042",
+      "name": "region_042"
+    },
+    {
+      "id": "R5",
+      "color": "#ef650e",
+      "regionId": "region_006",
+      "name": "region_006"
+    },
+    {
+      "id": "R6",
+      "color": "#eb780d",
+      "regionId": "region_002",
+      "name": "region_002"
+    },
+    {
+      "id": "R7",
+      "color": "#ee9212",
+      "regionId": "region_035",
+      "name": "region_035"
+    },
+    {
+      "id": "R8",
+      "color": "#d4981a",
+      "regionId": "region_053",
+      "name": "region_053"
+    },
+    {
+      "id": "R9",
+      "color": "#e1b620",
+      "regionId": "region_056",
+      "name": "region_056"
+    },
+    {
+      "id": "R10",
+      "color": "#e2c818",
+      "regionId": "region_005",
+      "name": "region_005"
+    },
+    {
+      "id": "R11",
+      "color": "#b9b415",
+      "regionId": "region_043",
+      "name": "region_043"
+    },
+    {
+      "id": "R12",
+      "color": "#b0ba19",
+      "regionId": "region_046",
+      "name": "region_046"
+    },
+    {
+      "id": "R13",
+      "color": "#cdf20e",
+      "regionId": "region_016",
+      "name": "region_016"
+    },
+    {
+      "id": "R14",
+      "color": "#b5e134",
+      "regionId": "region_063",
+      "name": "region_063"
+    },
+    {
+      "id": "R15",
+      "color": "#a2f014",
+      "regionId": "region_011",
+      "name": "region_011"
+    },
+    {
+      "id": "R16",
+      "color": "#84e312",
+      "regionId": "region_025",
+      "name": "region_025"
+    },
+    {
+      "id": "R17",
+      "color": "#73d621",
+      "regionId": "region_027",
+      "name": "region_027"
+    },
+    {
+      "id": "R18",
+      "color": "#60cd24",
+      "regionId": "region_012",
+      "name": "region_012"
+    },
+    {
+      "id": "R19",
+      "color": "#45d613",
+      "regionId": "region_020",
+      "name": "region_020"
+    },
+    {
+      "id": "R20",
+      "color": "#2cc40e",
+      "regionId": "region_045",
+      "name": "region_045"
+    },
+    {
+      "id": "R21",
+      "color": "#3be22f",
+      "regionId": "region_028",
+      "name": "region_028"
+    },
+    {
+      "id": "R22",
+      "color": "#14d71a",
+      "regionId": "region_024",
+      "name": "region_024"
+    },
+    {
+      "id": "R23",
+      "color": "#1ef139",
+      "regionId": "region_009",
+      "name": "region_009"
+    },
+    {
+      "id": "R24",
+      "color": "#20eb4e",
+      "regionId": "region_015",
+      "name": "region_015"
+    },
+    {
+      "id": "R25",
+      "color": "#3be371",
+      "regionId": "region_037",
+      "name": "region_037"
+    },
+    {
+      "id": "R26",
+      "color": "#1de571",
+      "regionId": "region_019",
+      "name": "region_019"
+    },
+    {
+      "id": "R27",
+      "color": "#44e899",
+      "regionId": "region_014",
+      "name": "region_014"
+    },
+    {
+      "id": "R28",
+      "color": "#42edab",
+      "regionId": "region_049",
+      "name": "region_049"
+    },
+    {
+      "id": "R29",
+      "color": "#2bdfab",
+      "regionId": "region_040",
+      "name": "region_040"
+    },
+    {
+      "id": "R30",
+      "color": "#29efc9",
+      "regionId": "region_041",
+      "name": "region_041"
+    },
+    {
+      "id": "R31",
+      "color": "#10c6b4",
+      "regionId": "region_017",
+      "name": "region_017"
+    },
+    {
+      "id": "R32",
+      "color": "#2bdbdb",
+      "regionId": "region_010",
+      "name": "region_010"
+    },
+    {
+      "id": "R33",
+      "color": "#0fbcce",
+      "regionId": "region_051",
+      "name": "region_051"
+    },
+    {
+      "id": "R34",
+      "color": "#109fc1",
+      "regionId": "region_033",
+      "name": "region_033"
+    },
+    {
+      "id": "R35",
+      "color": "#168ebf",
+      "regionId": "region_032",
+      "name": "region_032"
+    },
+    {
+      "id": "R36",
+      "color": "#1e77af",
+      "regionId": "region_055",
+      "name": "region_055"
+    },
+    {
+      "id": "R37",
+      "color": "#2279ca",
+      "regionId": "region_060",
+      "name": "region_060"
+    },
+    {
+      "id": "R38",
+      "color": "#0e6ced",
+      "regionId": "region_050",
+      "name": "region_050"
+    },
+    {
+      "id": "R39",
+      "color": "#144cc2",
+      "regionId": "region_058",
+      "name": "region_058"
+    },
+    {
+      "id": "R40",
+      "color": "#1c3fb7",
+      "regionId": "region_008",
+      "name": "region_008"
+    },
+    {
+      "id": "R41",
+      "color": "#455ae7",
+      "regionId": "region_031",
+      "name": "region_031"
+    },
+    {
+      "id": "R42",
+      "color": "#1b21db",
+      "regionId": "region_036",
+      "name": "region_036"
+    },
+    {
+      "id": "R43",
+      "color": "#3428f0",
+      "regionId": "region_059",
+      "name": "region_059"
+    },
+    {
+      "id": "R44",
+      "color": "#5032ed",
+      "regionId": "region_038",
+      "name": "region_038"
+    },
+    {
+      "id": "R45",
+      "color": "#521fe5",
+      "regionId": "region_026",
+      "name": "region_026"
+    },
+    {
+      "id": "R46",
+      "color": "#681cf1",
+      "regionId": "region_022",
+      "name": "region_022"
+    },
+    {
+      "id": "R47",
+      "color": "#8235e0",
+      "regionId": "region_034",
+      "name": "region_034"
+    },
+    {
+      "id": "R48",
+      "color": "#8923dc",
+      "regionId": "region_023",
+      "name": "region_023"
+    },
+    {
+      "id": "R49",
+      "color": "#9913e3",
+      "regionId": "region_065",
+      "name": "region_065"
+    },
+    {
+      "id": "R50",
+      "color": "#b41be9",
+      "regionId": "region_057",
+      "name": "region_057"
+    },
+    {
+      "id": "R51",
+      "color": "#bb1fd9",
+      "regionId": "region_007",
+      "name": "region_007"
+    },
+    {
+      "id": "R52",
+      "color": "#e331f0",
+      "regionId": "region_021",
+      "name": "region_021"
+    },
+    {
+      "id": "R53",
+      "color": "#da2dd5",
+      "regionId": "region_061",
+      "name": "region_061"
+    },
+    {
+      "id": "R54",
+      "color": "#ed30d4",
+      "regionId": "region_044",
+      "name": "region_044"
+    },
+    {
+      "id": "R55",
+      "color": "#f02fc4",
+      "regionId": "region_047",
+      "name": "region_047"
+    },
+    {
+      "id": "R56",
+      "color": "#da169b",
+      "regionId": "region_054",
+      "name": "region_054"
+    },
+    {
+      "id": "R57",
+      "color": "#e2198e",
+      "regionId": "region_048",
+      "name": "region_048"
+    },
+    {
+      "id": "R58",
+      "color": "#b31e66",
+      "regionId": "region_029",
+      "name": "region_029"
+    },
+    {
+      "id": "R59",
+      "color": "#ef186b",
+      "regionId": "region_030",
+      "name": "region_030"
+    },
+    {
+      "id": "R60",
+      "color": "#e50d4c",
+      "regionId": "region_018",
+      "name": "region_018"
+    },
+    {
+      "id": "R61",
+      "color": "#bf0d30",
+      "regionId": "region_013",
+      "name": "region_013"
+    },
+    {
+      "id": "R62",
+      "color": "#ea2d3f",
+      "regionId": "region_062",
+      "name": "region_062"
+    }
+  ],
+  "summary": {
+    "totalRegions": 62,
+    "colors": [
+      "#ce1515",
+      "#ee5343",
+      "#e36446",
+      "#dc551e",
+      "#ef650e",
+      "#eb780d",
+      "#ee9212",
+      "#d4981a",
+      "#e1b620",
+      "#e2c818",
+      "#b9b415",
+      "#b0ba19",
+      "#cdf20e",
+      "#b5e134",
+      "#a2f014",
+      "#84e312",
+      "#73d621",
+      "#60cd24",
+      "#45d613",
+      "#2cc40e",
+      "#3be22f",
+      "#14d71a",
+      "#1ef139",
+      "#20eb4e",
+      "#3be371",
+      "#1de571",
+      "#44e899",
+      "#42edab",
+      "#2bdfab",
+      "#29efc9",
+      "#10c6b4",
+      "#2bdbdb",
+      "#0fbcce",
+      "#109fc1",
+      "#168ebf",
+      "#1e77af",
+      "#2279ca",
+      "#0e6ced",
+      "#144cc2",
+      "#1c3fb7",
+      "#455ae7",
+      "#1b21db",
+      "#3428f0",
+      "#5032ed",
+      "#521fe5",
+      "#681cf1",
+      "#8235e0",
+      "#8923dc",
+      "#9913e3",
+      "#b41be9",
+      "#bb1fd9",
+      "#e331f0",
+      "#da2dd5",
+      "#ed30d4",
+      "#f02fc4",
+      "#da169b",
+      "#e2198e",
+      "#b31e66",
+      "#ef186b",
+      "#e50d4c",
+      "#bf0d30",
+      "#ea2d3f"
+    ]
+  }
+}

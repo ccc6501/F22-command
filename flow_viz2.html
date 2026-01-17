@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>F-22 System Topology</title>
+  <style>
+    :root {
+      --bg: #020408;
+      --panel: #0a0e17;
+      --border: #1e293b;
+      --accent-cyan: #22d3ee;
+      --accent-gold: #ffd700;
+      --accent-purple: #a855f7;
+      --text: #f8fafc;
+    }
+    body, html { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow: hidden; }
+    canvas { display: block; }
+
+    /* HUD Styling */
+    .hud { position: absolute; inset: 0; pointer-events: none; z-index: 10; display: flex; flex-direction: column; padding: 20px; }
+    .header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .title-group { border-left: 4px solid var(--accent-gold); padding-left: 15px; }
+    .title-group h1 { margin: 0; font-size: 20px; letter-spacing: 2px; }
+    .title-group p { margin: 5px 0 0; font-size: 10px; color: #64748b; text-transform: uppercase; }
+
+    .legend { margin-top: auto; display: flex; gap: 20px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; border: 1px solid var(--border); width: fit-content; pointer-events: auto; }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+  </style>
+</head>
+<body>
+
+<div class="hud">
+  <div class="header">
+    <div class="title-group">
+      <h1>F-22 RAPTOR DATA TOPOLOGY</h1>
+      <p>System-wide creation paths & Web App endpoints</p>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:var(--accent-gold)"></div> RAW DATA (INBOX)</div>
+    <div class="legend-item"><div class="dot" style="background:var(--accent-cyan)"></div> STORAGE (SQL/JSON)</div>
+    <div class="legend-item"><div class="dot" style="background:var(--accent-purple)"></div> APPS / UI</div>
+  </div>
+</div>
+
+<canvas id="viz"></canvas>
+
+<script>
+const canvas = document.getElementById('viz');
+const ctx = canvas.getContext('2d');
+let w, h;
+
+// Logical grouping based on your file structure
+const nodes = {
+  // SOURCE
+  inbox:    { x: 0.1, y: 0.5, label: 'data/inbox/', color: '#ffd700', type: 'source' },
+  
+  // LOGIC
+  manager:  { x: 0.3, y: 0.5, label: 'f22_data_manager.py', color: '#ffffff', type: 'logic' },
+  scanner:  { x: 0.3, y: 0.3, label: 'Region Scanner', color: '#ffffff', type: 'logic' },
+  
+  // STORAGE (Creation Paths)
+  mapping:  { x: 0.5, y: 0.3, label: 'outputs/mapping/', color: '#22d3ee', type: 'storage' },
+  regions:  { x: 0.5, y: 0.5, label: 'outputs/regions/', color: '#22d3ee', type: 'storage' },
+  db:       { x: 0.5, y: 0.7, label: 'SQLite / JSON DB', color: '#22d3ee', type: 'storage' },
+
+  // WEB APPS
+  control:  { x: 0.8, y: 0.2, label: 'Control Center', color: '#a855f7', type: 'app' },
+  blueprint:{ x: 0.8, y: 0.5, label: 'Blueprint Mapper', color: '#a855f7', type: 'app' },
+  viewer3d: { x: 0.8, y: 0.8, label: '3D Raptor Viewer', color: '#a855f7', type: 'app' }
+};
+
+const paths = [
+  { from: 'inbox', to: 'manager' },
+  { from: 'manager', to: 'scanner' },
+  { from: 'scanner', to: 'mapping' },
+  { from: 'scanner', to: 'regions' },
+  { from: 'manager', to: 'db' },
+  { from: 'db', to: 'control' },
+  { from: 'mapping', to: 'blueprint' },
+  { from: 'regions', to: 'blueprint' },
+  { from: 'db', to: 'viewer3d' }
+];
+
+let particles = [];
+
+function init() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  animate();
+}
+
+class Flow {
+  constructor(path) {
+    this.path = path;
+    this.t = Math.random();
+    this.speed = 0.002 + Math.random() * 0.003;
+  }
+  update() {
+    this.t += this.speed;
+    if(this.t > 1) this.t = 0;
+  }
+  draw() {
+    const f = nodes[this.path.from];
+    const t = nodes[this.path.to];
+    const x = w * (f.x + (t.x - f.x) * this.t);
+    const y = h * (f.y + (t.y - f.y) * this.t);
+    
+    ctx.fillStyle = f.color;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = f.color;
+    ctx.beginPath();
+    ctx.arc(x, y, 2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+}
+
+// Populate initial flow
+paths.forEach(p => {
+  for(let i=0; i<5; i++) particles.push(new Flow(p));
+});
+
+function animate() {
+  ctx.fillStyle = '#020408';
+  ctx.fillRect(0,0,w,h);
+
+  // Draw Static Paths
+  ctx.setLineDash([5, 5]);
+  ctx.strokeStyle = '#1e293b';
+  paths.forEach(p => {
+    ctx.beginPath();
+    ctx.moveTo(nodes[p.from].x * w, nodes[p.from].y * h);
+    ctx.lineTo(nodes[p.to].x * w, nodes[p.to].y * h);
+    ctx.stroke();
+  });
+  ctx.setLineDash([]);
+
+  // Draw Particles
+  particles.forEach(p => { p.update(); p.draw(); });
+
+  // Draw Nodes
+  Object.values(nodes).forEach(n => {
+    const nx = n.x * w;
+    const ny = n.y * h;
+    
+    // Glow effect for Apps
+    if(n.type === 'app') {
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = n.color;
+    }
+
+    ctx.fillStyle = n.color;
+    ctx.beginPath();
+    ctx.arc(nx, ny, n.type === 'logic' ? 4 : 8, 0, Math.PI*2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(n.label.toUpperCase(), nx, ny + 25);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', init);
+init();
+</script>
+</body>
+</html>
