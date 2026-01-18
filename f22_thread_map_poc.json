@@ -1,0 +1,35 @@
+[
+    {
+        "part_id": "5HY03206-117A",
+        "name": "SOB to Bump LH",
+        "uv_bounds": {
+            "uMin": "0.1463",
+            "uMax": "0.2772",
+            "vMin": "0.0492",
+            "vMax": "0.3453"
+        },
+        "timestamp": "2026-01-18T06:57:11.784Z"
+    },
+    {
+        "part_id": "YY17201-01",
+        "name": "Nose Landing Gear Door",
+        "uv_bounds": {
+            "uMin": "0.0463",
+            "uMax": "0.0537",
+            "vMin": "0.4826",
+            "vMax": "0.5428"
+        },
+        "timestamp": "2026-01-18T06:58:02.523Z"
+    },
+    {
+        "part_id": "5HY03205-111A",
+        "name": "Inlet Bleed Screen LH",
+        "uv_bounds": {
+            "uMin": "0.3159",
+            "uMax": "0.3946",
+            "vMin": "0.0236",
+            "vMax": "0.0862"
+        },
+        "timestamp": "2026-01-18T07:21:18.065Z"
+    }
+]

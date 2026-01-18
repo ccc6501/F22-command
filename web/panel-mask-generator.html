@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F-22 Panel UV Mask Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap');
+
+        :root {
+            --bg: #0a0c10;
+            --surface: rgba(15, 20, 30, 0.95);
+            --elevated: rgba(25, 32, 45, 0.95);
+            --border: rgba(100, 180, 255, 0.2);
+            --accent: #4a9eff;
+            --gold: #ffd700;
+            --cyan: #00ffff;
+            --green: #00ff88;
+            --red: #ff4466;
+            --text: #e0e8f0;
+            --muted: rgba(224, 232, 240, 0.5);
+            --editor-height: 0px;
+            --header-height: 56px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .app {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            grid-template-rows: auto 1fr;
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        header {
+            grid-column: 1 / -1;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1.5rem;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            min-height: 56px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .steps {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background: var(--elevated);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .step.active {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .step.done {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .step-num {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--border);
+            border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
+        .step.active .step-num {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .step.done .step-num {
+            background: var(--green);
+            color: var(--bg);
+        }
+
+        .header-spacer {
+            flex: 1 1 120px;
+            min-width: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 1rem;
+            background: var(--elevated);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn:hover {
+            border-color: var(--accent);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-success {
+            border-color: var(--green);
+            color: var(--green);
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .btn-gold {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .main-area {
+            background: var(--bg);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .canvas-container {
+            position: relative;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #mainCanvas {
+            max-width: 100%;
+            max-height: calc(100vh - var(--header-height) - var(--editor-height));
+            max-height: calc(100dvh - var(--header-height) - var(--editor-height));
+            display: block;
+            border: 1px solid var(--border);
+        }
+
+        .highlight-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .drop-zone {
+            position: absolute;
+            inset: 0 0 var(--editor-height) 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 12, 16, 0.95);
+            border: 3px dashed var(--border);
+            margin: 2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .drop-zone:hover,
+        .drop-zone.dragover {
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .drop-zone.hidden {
+            display: none;
+        }
+
+        .drop-zone svg {
+            width: 80px;
+            height: 80px;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .drop-zone h2 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .drop-zone p {
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar {
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .sidebar-header {
+            padding: 0.75rem 1rem;
+            background: var(--elevated);
+            border-bottom: 1px solid var(--border);
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-count {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cyan);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+
+        .panel-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--elevated);
+            border: 1px solid transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .panel-item:hover {
+            border-color: var(--border);
+        }
+
+        .panel-item.selected {
+            border-color: var(--gold);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.15);
+        }
+
+        .panel-item.labeled {
+            border-left: 3px solid var(--green);
+        }
+
+        .panel-swatch {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .panel-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .panel-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .panel-hex {
+            font-size: 0.65rem;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .panel-pixels {
+            font-size: 0.6rem;
+            color: var(--cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sidebar-footer {
+            padding: 0.75rem;
+            border-top: 1px solid var(--border);
+            background: var(--elevated);
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-row span:last-child {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cyan);
+        }
+
+        .sidebar-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .sidebar-actions .btn {
+            flex: 1;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        /* Editor Panel */
+        .editor-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 360px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: none;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .editor-panel.visible {
+            display: flex;
+        }
+
+        .editor-swatch {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .editor-fields {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .editor-field label {
+            display: block;
+            font-size: 0.65rem;
+            color: var(--muted);
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+        }
+
+        .editor-field input,
+        .editor-field select {
+            width: 100%;
+            padding: 0.5rem 0.6rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .editor-field input:focus,
+        .editor-field select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .editor-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 0.75rem 1.5rem;
+            background: var(--green);
+            color: var(--bg);
+            border-radius: 8px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        /* View selector */
+        .view-tabs {
+            display: flex;
+            gap: 2px;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .view-tab {
+            padding: 0.4rem 0.75rem;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+
+        .view-tab:hover {
+            color: var(--text);
+        }
+
+        .view-tab.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .tools-area {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 12, 16, 0.6);
+        }
+
+        .tool-panel {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--elevated);
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+
+        .tool-header {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tool-body {
+            padding: 0.7rem 0.75rem;
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .tool-field {
+            display: grid;
+            gap: 0.3rem;
+            font-size: 0.7rem;
+        }
+
+        .tool-field label {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .tool-value {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cyan);
+        }
+
+        .tool-row {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tool-row .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        .tool-hint {
+            font-size: 0.6rem;
+            color: var(--muted);
+            line-height: 1.3;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* =========================================================
+           UI FIX: Pro-grade Sidebar (Fixed Header/Footer + Collapsible Tools)
+           ========================================================= */
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            /* Sidebar itself doesn't scroll */
+            background: var(--surface);
+            height: 100%;
+        }
+
+        .sidebar-header,
+        .view-tabs {
+            flex: 0 0 auto;
+        }
+
+        /* The container that actually scrolls */
+        .sidebar-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 2rem;
+        }
+
+        .sidebar-content {
+            flex: 1 0 auto;
+            /* Allow list to grow */
+            overflow: visible;
+        }
+
+        .sidebar-footer {
+            flex: 0 0 auto;
+            position: relative;
+            /* Not sticky anymore, just flexed at bottom */
+            background: var(--elevated);
+            z-index: 30;
+            border-top: 2px solid var(--border);
+            padding: 1rem;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Collapsible Tool HUDs */
+        .tool-panel {
+            margin: 0.5rem;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tool-header {
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(100, 180, 255, 0.05);
+            padding: 0.6rem 0.75rem !important;
+        }
+
+        .tool-header:hover {
+            background: rgba(100, 180, 255, 0.1);
+            color: var(--accent);
+        }
+
+        .tool-header::after {
+            content: '▼';
+            font-size: 0.5rem;
+            transition: transform 0.2s;
+            opacity: 0.5;
+        }
+
+        .tool-panel.collapsed .tool-header::after {
+            transform: rotate(-90deg);
+        }
+
+        .tool-panel.collapsed .tool-body {
+            display: none;
+        }
+
+        /* Compact list */
+        .panel-item {
+            margin: 0.25rem 0.5rem;
+            padding: 0.4rem 0.6rem;
+        }
+
+        /* ===== Responsive Fixes ===== */
+        @media (max-width: 980px) {
+            .app {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr 300px;
+            }
+
+            .sidebar {
+                grid-row: 3;
+                border-top: 1px solid var(--border);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <header>
+            <div class="logo">✈️ Panel UV Mask Generator</div>
+
+            <div class="steps">
+                <div class="step active" data-step="1">
+                    <span class="step-num">1</span>
+                    <span>Load Image</span>
+                </div>
+                <div class="step" data-step="2">
+                    <span class="step-num">2</span>
+                    <span>Label Panels</span>
+                </div>
+                <div class="step" data-step="3">
+                    <span class="step-num">3</span>
+                    <span>Export</span>
+                </div>
+            </div>
+
+            <div class="header-spacer"></div>
+
+            <button class="btn" id="btnAddImage">Add View</button>
+            <button class="btn btn-import-glb" id="btnImportGLBHeader">Import GLB</button>
+            <button class="btn btn-gold" id="btnExportAll">Export All</button>
+
+            <input type="file" id="fileInput" accept=".png,.jpg,.jpeg">
+            <input type="file" id="glbInput" accept=".glb,.gltf">
+            <input type="file" id="blenderJsonInput" accept=".json">
+        </header>
+
+        <div class="main-area" id="mainArea">
+            <div class="drop-zone" id="dropZone">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <path d="M21 15l-5-5L5 21" />
+                </svg>
+                <h2>Load Panel Map Image</h2>
+                <p>Drop your color-coded PNG here or click to browse</p>
+                <button class="btn btn-primary">Choose File</button>
+            </div>
+
+            <div class="canvas-container" id="canvasContainer" style="display:none;">
+                <canvas id="mainCanvas"></canvas>
+            </div>
+        </div>
+
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span>Detected Panels</span>
+                <span class="panel-count" id="panelCount">0</span>
+            </div>
+
+            <div class="view-tabs" id="viewTabs">
+                <button class="view-tab active" data-view="top">Top</button>
+            </div>
+
+            <div class="sidebar-scroll-area">
+                <div class="tools-area">
+                    <div class="tool-panel">
+                        <div class="tool-header">Image Adjustments</div>
+                        <div class="tool-body">
+                            <div class="tool-field">
+                                <label>Brightness <span class="tool-value" id="valBrightness">0</span></label>
+                                <input type="range" id="adjBrightness" min="-100" max="100" step="1" value="0">
+                            </div>
+                            <div class="tool-field">
+                                <label>Contrast <span class="tool-value" id="valContrast">0</span></label>
+                                <input type="range" id="adjContrast" min="-100" max="100" step="1" value="0">
+                            </div>
+                            <div class="tool-field">
+                                <label>Saturation <span class="tool-value" id="valSaturation">0</span></label>
+                                <input type="range" id="adjSaturation" min="-100" max="100" step="1" value="0">
+                            </div>
+                            <div class="tool-row">
+                                <button class="btn" id="btnApplyAdjust">Apply</button>
+                                <button class="btn" id="btnResetAdjust">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-panel collapsed">
+                        <div class="tool-header">Detection</div>
+                        <div class="tool-body">
+                            <div class="tool-field">
+                                <label>Color Tolerance <span class="tool-value" id="valTolerance">8</span></label>
+                                <input type="range" id="colorTolerance" min="0" max="32" step="1" value="8">
+                            </div>
+                            <div class="tool-field">
+                                <label>Quantize Step <span class="tool-value" id="valQuantize">4</span></label>
+                                <input type="range" id="quantizeStep" min="1" max="16" step="1" value="4">
+                            </div>
+                            <div class="tool-field">
+                                <label>Min Panel Size % <span class="tool-value" id="valMinPanel">0.010</span></label>
+                                <input type="range" id="minPanelPct" min="0.001" max="1" step="0.001" value="0.01">
+                            </div>
+                            <button class="btn" id="btnReextract">Re-Detect</button>
+                        </div>
+                    </div>
+
+                    <div class="tool-panel collapsed">
+                        <div class="tool-header">GLB Import</div>
+                        <div class="tool-body">
+                            <div class="tool-field">
+                                <label>Feature Mode</label>
+                                <select id="glbFeatureMode">
+                                    <option value="mesh">Mesh</option>
+                                    <option value="material">Material</option>
+                                </select>
+                            </div>
+                            <div class="tool-field">
+                                <label>Mask Size</label>
+                                <select id="glbResolution">
+                                    <option value="512">512</option>
+                                    <option value="1024" selected>1024</option>
+                                    <option value="2048">2048</option>
+                                    <option value="4096">4096</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary btn-import-glb">Import GLB</button>
+                            <button class="btn" id="btnImportBlender">Import Blender JSON</button>
+                            <div class="tool-hint">Uses UVs to bake a color ID mask from your model.</div>
+                            <div class="tool-hint">Blender JSON can auto-label panels from exported colors.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-header" style="border-top:1px solid var(--border); margin-top:1rem;">
+                    <span>Detected Panels</span>
+                </div>
+
+                <div class="sidebar-content" id="panelList">
+                    <div style="padding:2rem 1rem;text-align:center;color:var(--muted);">
+                        Load an image to detect panels
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="stats-row">
+                    <span>Total Panels</span>
+                    <span id="statTotal">0</span>
+                </div>
+                <div class="stats-row">
+                    <span>Labeled</span>
+                    <span id="statLabeled">0 / 0</span>
+                </div>
+                <div class="sidebar-actions">
+                    <button class="btn" id="btnAutoLabel">Auto-Label</button>
+                    <button class="btn btn-success" id="btnExportJSON">Export JSON</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="editor-panel" id="editorPanel">
+        <div class="editor-swatch" id="editorSwatch"></div>
+        <div class="editor-fields">
+            <div class="editor-field">
+                <label>Panel ID</label>
+                <input type="text" id="editId" placeholder="e.g., BL103">
+            </div>
+            <div class="editor-field">
+                <label>Panel Name</label>
+                <input type="text" id="editName" placeholder="e.g., Left Wing Access">
+            </div>
+            <div class="editor-field">
+                <label>Type</label>
+                <select id="editType">
+                    <option value="">-- Select --</option>
+                    <option value="fuel">Fuel</option>
+                    <option value="avionics">Avionics</option>
+                    <option value="engine">Engine</option>
+                    <option value="weapons">Weapons</option>
+                    <option value="hydraulic">Hydraulic</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="ecs">ECS</option>
+                    <option value="structural">Structural</option>
+                    <option value="landing_gear">Landing Gear</option>
+                    <option value="control_surface">Control Surface</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+        <div class="editor-actions">
+            <button class="btn" id="btnPrevPanel">← Prev</button>
+            <button class="btn btn-primary" id="btnSavePanel">Save</button>
+            <button class="btn" id="btnNextPanel">Next →</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.158.0/examples/js/loaders/DRACOLoader.js"></script>
+    <script src="https://unpkg.com/three@0.158.0/examples/js/libs/meshopt_decoder.js"></script>
+
+    <script>
+        // ========================================
+        // STATE
+        // ========================================
+        const defaultAdjustments = {
+            brightness: 0,
+            contrast: 0,
+            saturation: 0
+        };
+
+        const State = {
+            views: {},          // viewName -> { imageData, baseImageData, panels, adjustments, colorLabels }
+            currentView: null,
+            selectedPanel: null,
+            allPanels: [],      // Merged panel list across views
+            colorTolerance: 8,
+            quantizeStep: 4,
+            minPanelRatio: 0.0001,
+            pendingColorLabels: new Map()
+        };
+
+        // ========================================
+        // DOM ELEMENTS
+        // ========================================
+        const $ = id => document.getElementById(id);
+        const dropZone = $('dropZone');
+        const canvasContainer = $('canvasContainer');
+        const mainCanvas = $('mainCanvas');
+        const ctx = mainCanvas.getContext('2d');
+        const panelList = $('panelList');
+        const editorPanel = $('editorPanel');
+        const headerEl = document.querySelector('header');
+        const glbInput = $('glbInput');
+        const blenderJsonInput = $('blenderJsonInput');
+        const adjBrightness = $('adjBrightness');
+        const adjContrast = $('adjContrast');
+        const adjSaturation = $('adjSaturation');
+        const colorToleranceInput = $('colorTolerance');
+        const quantizeStepInput = $('quantizeStep');
+        const minPanelPctInput = $('minPanelPct');
+
+        // ========================================
+        // HELPERS
+        // ========================================
+        function cloneImageData(imageData) {
+            return new ImageData(new Uint8ClampedArray(imageData.data), imageData.width, imageData.height);
+        }
+
+        function normalizeViewName(name) {
+            const base = name
+                .toLowerCase()
+                .replace(/\.[^/.]+$/, '')
+                .replace(/[^a-z0-9]+/g, '_')
+                .replace(/^_+|_+$/g, '');
+
+            if (!base) return `view_${Object.keys(State.views).length + 1}`;
+            if (!State.views[base]) return base;
+
+            let i = 2;
+            while (State.views[`${base}_${i}`]) i += 1;
+            return `${base}_${i}`;
+        }
+
+        function colorKey(r, g, b) {
+            return `${r},${g},${b}`;
+        }
+
+        function clampByte(value) {
+            return Math.max(0, Math.min(255, Math.round(value)));
+        }
+
+        function quantizeChannel(value, step) {
+            return Math.max(0, Math.min(255, Math.round(value / step) * step));
+        }
+
+        function updateEditorLayout() {
+            const isOpen = editorPanel.classList.contains('visible');
+            const height = isOpen ? editorPanel.offsetHeight : 0;
+            document.documentElement.style.setProperty('--editor-height', `${height}px`);
+            const headerHeight = headerEl ? headerEl.offsetHeight : 56;
+            document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
+            document.body.classList.toggle('editor-open', isOpen);
+        }
+
+        function parseColorLabelsFromJSON(raw) {
+            const map = new Map();
+            const mode = raw.featureMode || raw.mode || 'blender';
+            const colors = raw.colors || raw.colorLabels || [];
+
+            if (Array.isArray(colors)) {
+                colors.forEach(item => {
+                    if (!item) return;
+                    const rgb = item.color || item.rgb || item;
+                    let r, g, b;
+
+                    if (Array.isArray(rgb)) {
+                        [r, g, b] = rgb;
+                    } else if (typeof rgb === 'object') {
+                        r = rgb.r;
+                        g = rgb.g;
+                        b = rgb.b;
+                    } else if (typeof rgb === 'string' && rgb.startsWith('#')) {
+                        const hex = rgb.replace('#', '');
+                        if (hex.length === 6) {
+                            r = parseInt(hex.slice(0, 2), 16);
+                            g = parseInt(hex.slice(2, 4), 16);
+                            b = parseInt(hex.slice(4, 6), 16);
+                        }
+                    }
+
+                    if (![r, g, b].every(n => Number.isFinite(n))) return;
+                    const label = item.label || item.name || item.id || '';
+                    const name = item.name || item.label || label;
+                    const type = item.type || mode;
+                    map.set(colorKey(clampByte(r), clampByte(g), clampByte(b)), { label, name, type });
+                });
+            } else if (colors && typeof colors === 'object') {
+                Object.keys(colors).forEach(key => {
+                    const meta = colors[key];
+                    if (!meta) return;
+                    const parts = key.split(',').map(Number);
+                    if (parts.length !== 3) return;
+                    const [r, g, b] = parts;
+                    map.set(colorKey(clampByte(r), clampByte(g), clampByte(b)), {
+                        label: meta.label || meta.name || '',
+                        name: meta.name || meta.label || '',
+                        type: meta.type || mode
+                    });
+                });
+            }
+
+            return map;
+        }
+
+        function renderView(view) {
+            if (!view || !view.imageData) return;
+            mainCanvas.width = view.imageData.width;
+            mainCanvas.height = view.imageData.height;
+            ctx.putImageData(view.imageData, 0, 0);
+        }
+
+        function syncAdjustmentUI(view) {
+            const adjustments = view?.adjustments || defaultAdjustments;
+            adjBrightness.value = adjustments.brightness;
+            adjContrast.value = adjustments.contrast;
+            adjSaturation.value = adjustments.saturation;
+            $('valBrightness').textContent = adjustments.brightness;
+            $('valContrast').textContent = adjustments.contrast;
+            $('valSaturation').textContent = adjustments.saturation;
+        }
+
+        function syncDetectionUI() {
+            colorToleranceInput.value = State.colorTolerance;
+            quantizeStepInput.value = State.quantizeStep;
+            minPanelPctInput.value = (State.minPanelRatio * 100).toFixed(3);
+            $('valTolerance').textContent = State.colorTolerance;
+            $('valQuantize').textContent = State.quantizeStep;
+            $('valMinPanel').textContent = (State.minPanelRatio * 100).toFixed(3);
+        }
+
+        // ========================================
+        // IMAGE LOADING
+        // ========================================
+        function loadImageDataToView(viewName, imageData, options = {}) {
+            const safeName = normalizeViewName(viewName);
+            const baseImageData = cloneImageData(imageData);
+            const workingImageData = cloneImageData(imageData);
+            const pendingLabels = options.colorLabels || State.pendingColorLabels;
+            const colorLabels = pendingLabels instanceof Map ? pendingLabels : new Map();
+
+            State.views[safeName] = {
+                imageData: workingImageData,
+                baseImageData: baseImageData,
+                panels: [],
+                adjustments: { ...defaultAdjustments },
+                colorLabels: colorLabels,
+                source: options.source || 'image'
+            };
+
+            if (!options.colorLabels && State.pendingColorLabels.size) {
+                State.pendingColorLabels = new Map();
+            }
+
+            extractPanels(safeName, { preserveMeta: false });
+
+            dropZone.classList.add('hidden');
+            canvasContainer.style.display = 'block';
+
+            switchView(safeName);
+            updateSteps(2);
+
+            const panelCount = State.views[safeName].panels.length;
+            const toastMessage = options.toast || `Loaded ${safeName} view - ${panelCount} panels detected`;
+            showToast(toastMessage);
+        }
+
+        function loadImage(file, viewName = 'top') {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const tempCtx = canvas.getContext('2d');
+                    tempCtx.drawImage(img, 0, 0);
+                    const imageData = tempCtx.getImageData(0, 0, img.width, img.height);
+
+                    loadImageDataToView(viewName, imageData, { source: 'image' });
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ========================================
+        // IMAGE ADJUSTMENTS
+        // ========================================
+        function getAdjustmentValues() {
+            return {
+                brightness: parseInt(adjBrightness.value, 10) || 0,
+                contrast: parseInt(adjContrast.value, 10) || 0,
+                saturation: parseInt(adjSaturation.value, 10) || 0
+            };
+        }
+
+        function applyAdjustmentsToImage(imageData, adjustments, quantizeStep) {
+            const { brightness, contrast, saturation } = adjustments;
+            const data = new Uint8ClampedArray(imageData.data);
+            const out = new ImageData(data, imageData.width, imageData.height);
+            const bright = brightness * 2.55;
+            const contrastValue = contrast * 2.55;
+            const factor = (259 * (contrastValue + 255)) / (255 * (259 - contrastValue));
+            const sat = 1 + saturation / 100;
+            const step = Math.max(1, quantizeStep);
+
+            for (let i = 0; i < data.length; i += 4) {
+                const alpha = data[i + 3];
+                if (alpha === 0) continue;
+
+                let r = data[i] + bright;
+                let g = data[i + 1] + bright;
+                let b = data[i + 2] + bright;
+
+                r = factor * (r - 128) + 128;
+                g = factor * (g - 128) + 128;
+                b = factor * (b - 128) + 128;
+
+                const gray = 0.2989 * r + 0.587 * g + 0.114 * b;
+                r = gray + (r - gray) * sat;
+                g = gray + (g - gray) * sat;
+                b = gray + (b - gray) * sat;
+
+                r = clampByte(r);
+                g = clampByte(g);
+                b = clampByte(b);
+
+                if (step > 1) {
+                    r = quantizeChannel(r, step);
+                    g = quantizeChannel(g, step);
+                    b = quantizeChannel(b, step);
+                }
+
+                data[i] = r;
+                data[i + 1] = g;
+                data[i + 2] = b;
+                data[i + 3] = alpha;
+            }
+
+            return out;
+        }
+
+        function applyImageAdjustments() {
+            const view = State.views[State.currentView];
+            if (!view) {
+                showToast('Load an image first');
+                return;
+            }
+
+            const adjustments = getAdjustmentValues();
+            view.imageData = applyAdjustmentsToImage(view.baseImageData, adjustments, State.quantizeStep);
+            view.adjustments = { ...adjustments };
+            State.selectedPanel = null;
+            editorPanel.classList.remove('visible');
+            updateEditorLayout();
+
+            extractPanels(State.currentView, { preserveMeta: true });
+            renderView(view);
+            updatePanelList();
+            updateStats();
+            updateEditorLayout();
+            showToast('Applied image adjustments');
+        }
+
+        function resetAdjustments() {
+            const view = State.views[State.currentView];
+            if (!view) {
+                showToast('Load an image first');
+                return;
+            }
+
+            view.imageData = cloneImageData(view.baseImageData);
+            view.adjustments = { ...defaultAdjustments };
+            syncAdjustmentUI(view);
+            State.selectedPanel = null;
+            editorPanel.classList.remove('visible');
+
+            extractPanels(State.currentView, { preserveMeta: true });
+            renderView(view);
+            updatePanelList();
+            updateStats();
+            updateEditorLayout();
+            showToast('Reset image adjustments');
+        }
+
+        function extractPanels(viewName, options = {}) {
+            const view = State.views[viewName];
+            if (!view || !view.imageData) return;
+            const data = view.imageData.data;
+            const width = view.imageData.width;
+            const height = view.imageData.height;
+            const quantizeStep = Math.max(1, State.quantizeStep);
+            const preserveMeta = options.preserveMeta !== false;
+            const metaByColor = new Map();
+
+            if (view.colorLabels) {
+                view.colorLabels.forEach((meta, key) => metaByColor.set(key, meta));
+            }
+
+            if (preserveMeta && view.panels) {
+                view.panels.forEach(panel => {
+                    if (panel.label || panel.name || panel.type) {
+                        metaByColor.set(colorKey(panel.color.r, panel.color.g, panel.color.b), {
+                            label: panel.label,
+                            name: panel.name,
+                            type: panel.type
+                        });
+                    }
+                });
+            }
+
+            // Count colors
+            const colorCounts = new Map();
+
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                const a = data[i + 3];
+
+                if (a < 128) continue; // Skip transparent
+
+                // Quantize to reduce noise
+                const qr = quantizeChannel(r, quantizeStep);
+                const qg = quantizeChannel(g, quantizeStep);
+                const qb = quantizeChannel(b, quantizeStep);
+
+                // Skip near-black and gray
+                if (qr < 40 && qg < 40 && qb < 40) continue;
+                if (Math.abs(qr - qg) < 20 && Math.abs(qg - qb) < 20 && qr > 80 && qr < 200) continue;
+
+                const key = colorKey(qr, qg, qb);
+                colorCounts.set(key, (colorCounts.get(key) || 0) + 1);
+            }
+
+            // Convert to panel objects
+            const panels = [];
+            const minPixels = Math.max(100, width * height * State.minPanelRatio);
+
+            for (const [key, count] of colorCounts.entries()) {
+                if (count < minPixels) continue;
+
+                const [r, g, b] = key.split(',').map(Number);
+                const hex = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+                const meta = metaByColor.get(key) || {};
+
+                panels.push({
+                    id: `panel_${panels.length + 1}`,
+                    color: { r, g, b, hex },
+                    pixelCount: count,
+                    percentage: (count / (width * height) * 100).toFixed(2),
+                    label: meta.label || '',
+                    name: meta.name || '',
+                    type: meta.type || '',
+                    view: viewName
+                });
+            }
+
+            // Sort by size
+            panels.sort((a, b) => b.pixelCount - a.pixelCount);
+
+            // Assign IDs
+            panels.forEach((p, i) => p.id = `${viewName}_panel_${i + 1}`);
+
+            view.panels = panels;
+
+            // Merge into all panels
+            updateAllPanels();
+        }
+
+        function reextractPanels() {
+            const view = State.views[State.currentView];
+            if (!view) {
+                showToast('Load an image first');
+                return;
+            }
+
+            State.selectedPanel = null;
+            editorPanel.classList.remove('visible');
+
+            extractPanels(State.currentView, { preserveMeta: true });
+            renderView(view);
+            updatePanelList();
+            updateStats();
+            showToast('Panels re-detected');
+        }
+
+        function updateAllPanels() {
+            State.allPanels = [];
+            for (const viewName in State.views) {
+                State.allPanels.push(...State.views[viewName].panels);
+            }
+            updatePanelList();
+            updateStats();
+        }
+
+        // ========================================
+        // VIEW SWITCHING
+        // ========================================
+        function switchView(viewName) {
+            State.currentView = viewName;
+            const view = State.views[viewName];
+
+            if (!view) return;
+
+            State.selectedPanel = null;
+            editorPanel.classList.remove('visible');
+
+            renderView(view);
+            updateViewTabs();
+            updatePanelList();
+            updateStats();
+            syncAdjustmentUI(view);
+            syncDetectionUI();
+            updateEditorLayout();
+        }
+
+        function updateViewTabs() {
+            const tabs = $('viewTabs');
+            tabs.innerHTML = Object.keys(State.views).map(name => `
+            <button class="view-tab ${name === State.currentView ? 'active' : ''}" data-view="${name}">
+                ${name.charAt(0).toUpperCase() + name.slice(1)}
+            </button>
+        `).join('');
+
+            tabs.querySelectorAll('.view-tab').forEach(btn => {
+                btn.onclick = () => switchView(btn.dataset.view);
+            });
+        }
+
+        // ========================================
+        // PANEL LIST
+        // ========================================
+        function updatePanelList() {
+            if (!State.currentView || !State.views[State.currentView]) {
+                panelList.innerHTML = '<div style="padding:2rem 1rem;text-align:center;color:var(--muted);">Load an image to detect panels</div>';
+                return;
+            }
+
+            const panels = State.views[State.currentView].panels;
+
+            panelList.innerHTML = panels.map(p => `
+            <div class="panel-item ${p.label ? 'labeled' : ''} ${State.selectedPanel?.id === p.id ? 'selected' : ''}" data-id="${p.id}">
+                <div class="panel-swatch" style="background:${p.color.hex}"></div>
+                <div class="panel-info">
+                    <div class="panel-label">${p.label || p.id}</div>
+                    <div class="panel-hex">${p.color.hex}</div>
+                    <div class="panel-pixels">${p.pixelCount.toLocaleString()} px (${p.percentage}%)</div>
+                </div>
+            </div>
+        `).join('');
+
+            panelList.querySelectorAll('.panel-item').forEach(el => {
+                el.onclick = () => selectPanel(el.dataset.id);
+            });
+
+            $('panelCount').textContent = panels.length;
+        }
+
+        function selectPanel(id) {
+            const panels = State.views[State.currentView]?.panels || [];
+            const panel = panels.find(p => p.id === id);
+
+            State.selectedPanel = panel;
+
+            if (panel) {
+                // Show editor
+                editorPanel.classList.add('visible');
+                $('editorSwatch').style.background = panel.color.hex;
+                $('editId').value = panel.label || '';
+                $('editName').value = panel.name || '';
+                $('editType').value = panel.type || '';
+
+                // Highlight on canvas
+                highlightPanel(panel);
+            } else {
+                editorPanel.classList.remove('visible');
+            }
+
+            updateEditorLayout();
+
+            updatePanelList();
+        }
+
+        function highlightPanel(panel) {
+            const view = State.views[State.currentView];
+            if (!view) return;
+
+            // Redraw image
+            renderView(view);
+
+            // Create highlight overlay
+            const imageData = ctx.getImageData(0, 0, mainCanvas.width, mainCanvas.height);
+            const data = imageData.data;
+            const { r, g, b } = panel.color;
+            const tol = State.colorTolerance;
+            const step = Math.max(1, State.quantizeStep);
+
+            for (let i = 0; i < data.length; i += 4) {
+                const pr = quantizeChannel(data[i], step);
+                const pg = quantizeChannel(data[i + 1], step);
+                const pb = quantizeChannel(data[i + 2], step);
+
+                if (Math.abs(pr - r) <= tol && Math.abs(pg - g) <= tol && Math.abs(pb - b) <= tol) {
+                    // Highlight matching pixels
+                    data[i] = 255;
+                    data[i + 1] = 255;
+                    data[i + 2] = 100;
+                } else {
+                    // Dim others
+                    data[i] = data[i] * 0.4;
+                    data[i + 1] = data[i + 1] * 0.4;
+                    data[i + 2] = data[i + 2] * 0.4;
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        // ========================================
+        // PANEL EDITING
+        // ========================================
+        function savePanel() {
+            if (!State.selectedPanel) return;
+
+            State.selectedPanel.label = $('editId').value.trim();
+            State.selectedPanel.name = $('editName').value.trim();
+            State.selectedPanel.type = $('editType').value;
+
+            updatePanelList();
+            updateStats();
+            showToast('Panel saved');
+        }
+
+        function navigatePanel(direction) {
+            const panels = State.views[State.currentView]?.panels || [];
+            if (!panels.length) return;
+
+            const currentIdx = State.selectedPanel ? panels.findIndex(p => p.id === State.selectedPanel.id) : -1;
+            let newIdx = currentIdx + direction;
+
+            if (newIdx < 0) newIdx = panels.length - 1;
+            if (newIdx >= panels.length) newIdx = 0;
+
+            selectPanel(panels[newIdx].id);
+        }
+
+        function autoLabel() {
+            // Try to extract labels from common naming patterns
+            const panels = State.views[State.currentView]?.panels || [];
+
+            // Sort by position (approximate based on color distribution)
+            // This is a simple heuristic - real implementation would use centroid detection
+            let labeled = 0;
+
+            panels.forEach((panel, i) => {
+                if (!panel.label) {
+                    // Generate a label based on position and color
+                    const hue = rgbToHue(panel.color.r, panel.color.g, panel.color.b);
+                    let prefix = '';
+
+                    // Guess type based on color
+                    if (hue < 30 || hue > 330) prefix = 'R'; // Red
+                    else if (hue >= 30 && hue < 90) prefix = 'Y'; // Yellow
+                    else if (hue >= 90 && hue < 150) prefix = 'G'; // Green
+                    else if (hue >= 150 && hue < 210) prefix = 'C'; // Cyan
+                    else if (hue >= 210 && hue < 270) prefix = 'B'; // Blue
+                    else prefix = 'M'; // Magenta
+
+                    panel.label = `${prefix}${(i + 1).toString().padStart(2, '0')}`;
+                    labeled++;
+                }
+            });
+
+            updatePanelList();
+            updateStats();
+            showToast(`Auto-labeled ${labeled} panels`);
+        }
+
+        function rgbToHue(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h = 0;
+
+            if (max !== min) {
+                const d = max - min;
+                switch (max) {
+                    case r: h = ((g - b) / d + (g < b ? 6 : 0)) * 60; break;
+                    case g: h = ((b - r) / d + 2) * 60; break;
+                    case b: h = ((r - g) / d + 4) * 60; break;
+                }
+            }
+            return h;
+        }
+
+        // ========================================
+        // GLB IMPORT
+        // ========================================
+        function getGLBOptions() {
+            const featureMode = $('glbFeatureMode').value;
+            const size = parseInt($('glbResolution').value, 10) || 1024;
+            return { featureMode, size };
+        }
+
+        async function loadBlenderJSON(file) {
+            try {
+                const content = await file.text();
+                const raw = JSON.parse(content);
+                const map = parseColorLabelsFromJSON(raw);
+
+                if (!map.size) {
+                    showToast('No color labels found in Blender JSON');
+                    return;
+                }
+
+                State.pendingColorLabels = map;
+
+                if (State.currentView && State.views[State.currentView]) {
+                    const view = State.views[State.currentView];
+                    view.colorLabels = map;
+                    extractPanels(State.currentView, { preserveMeta: false });
+                    renderView(view);
+                    updatePanelList();
+                    updateStats();
+                    showToast(`Applied Blender labels to ${State.currentView}`);
+                    return;
+                }
+
+                showToast('Blender labels ready - load a mask image or GLB');
+            } catch (error) {
+                console.error(error);
+                showToast('Failed to import Blender JSON');
+            }
+        }
+
+        async function loadGLBFile(file) {
+            if (!window.THREE || !THREE.GLTFLoader) {
+                showToast('GLB loader not ready');
+                return;
+            }
+
+            try {
+                const isTextGLTF = /\.gltf$/i.test(file.name);
+                const payload = isTextGLTF ? await file.text() : await file.arrayBuffer();
+                const loader = new THREE.GLTFLoader();
+                if (THREE.DRACOLoader) {
+                    const dracoLoader = new THREE.DRACOLoader();
+                    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+                    loader.setDRACOLoader(dracoLoader);
+                }
+                if (window.MeshoptDecoder) {
+                    if (MeshoptDecoder.ready) await MeshoptDecoder.ready;
+                    loader.setMeshoptDecoder(MeshoptDecoder);
+                }
+                const gltf = await new Promise((resolve, reject) => {
+                    loader.parse(payload, '', resolve, reject);
+                });
+
+                const options = getGLBOptions();
+                const result = buildMaskFromGLTF(gltf, options);
+
+                if (!result) {
+                    showToast('No UVs found in GLB');
+                    return;
+                }
+
+                const baseName = file.name.replace(/\.(glb|gltf)$/i, '');
+                const defaultName = normalizeViewName(baseName);
+                const viewName = prompt('View name for GLB mask:', defaultName) || defaultName;
+
+                loadImageDataToView(viewName, result.imageData, {
+                    source: 'glb',
+                    colorLabels: result.colorLabels,
+                    toast: `Generated ${options.featureMode} mask - ${result.featureCount} features`
+                });
+            } catch (error) {
+                console.error(error);
+                showToast(`Failed to import GLB: ${error?.message || 'unknown error'}`);
+            }
+        }
+
+        function buildMaskFromGLTF(gltf, options) {
+            const { featureMode, size } = options;
+            const imageData = new ImageData(size, size);
+            const data = imageData.data;
+            const colorLabels = new Map();
+            const step = Math.max(1, State.quantizeStep);
+            let featureCount = 0;
+            let hasUVs = false;
+
+            gltf.scene.traverse(obj => {
+                if (!obj.isMesh) return;
+
+                const geometry = obj.geometry;
+                const uvAttr = geometry.attributes?.uv || geometry.attributes?.uv2;
+                if (!uvAttr) return;
+
+                hasUVs = true;
+                const uvArray = uvAttr.array;
+                const indexArray = geometry.index ? geometry.index.array : null;
+
+                if (featureMode === 'mesh') {
+                    const label = obj.name || `mesh_${featureCount + 1}`;
+                    const color = getFeatureColor(featureCount, step);
+                    colorLabels.set(colorKey(color.r, color.g, color.b), { label, name: label, type: 'mesh' });
+
+                    drawTriangles(uvArray, indexArray, 0, indexArray ? indexArray.length : uvAttr.count, size, color, data);
+                    featureCount += 1;
+                    return;
+                }
+
+                const groups = geometry.groups && geometry.groups.length
+                    ? geometry.groups
+                    : [{ start: 0, count: indexArray ? indexArray.length : uvAttr.count, materialIndex: 0 }];
+
+                groups.forEach(group => {
+                    const materials = Array.isArray(obj.material) ? obj.material : [obj.material];
+                    const material = materials[group.materialIndex] || {};
+                    const labelBase = material.name || obj.name || 'material';
+                    const label = `${labelBase}_${featureCount + 1}`;
+                    const color = getFeatureColor(featureCount, step);
+
+                    colorLabels.set(colorKey(color.r, color.g, color.b), { label, name: label, type: 'material' });
+                    drawTriangles(uvArray, indexArray, group.start, group.count, size, color, data);
+                    featureCount += 1;
+                });
+            });
+
+            if (!hasUVs) return null;
+            return { imageData, colorLabels, featureCount };
+        }
+
+        function getFeatureColor(index, step) {
+            const hue = (index * 47) % 360;
+            const rgb = hslToRgb(hue / 360, 0.75, 0.55);
+            let r = clampByte(rgb.r * 255);
+            let g = clampByte(rgb.g * 255);
+            let b = clampByte(rgb.b * 255);
+
+            if (step > 1) {
+                r = quantizeChannel(r, step);
+                g = quantizeChannel(g, step);
+                b = quantizeChannel(b, step);
+            }
+
+            return { r, g, b };
+        }
+
+        function hslToRgb(h, s, l) {
+            if (s === 0) return { r: l, g: l, b: l };
+
+            const hue2rgb = (p, q, t) => {
+                if (t < 0) t += 1;
+                if (t > 1) t -= 1;
+                if (t < 1 / 6) return p + (q - p) * 6 * t;
+                if (t < 1 / 2) return q;
+                if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                return p;
+            };
+
+            const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+            const p = 2 * l - q;
+            return {
+                r: hue2rgb(p, q, h + 1 / 3),
+                g: hue2rgb(p, q, h),
+                b: hue2rgb(p, q, h - 1 / 3)
+            };
+        }
+
+        function drawTriangles(uvArray, indexArray, start, count, size, color, data) {
+            const max = start + count;
+
+            for (let i = start; i + 2 < max; i += 3) {
+                const ia = indexArray ? indexArray[i] : i;
+                const ib = indexArray ? indexArray[i + 1] : i + 1;
+                const ic = indexArray ? indexArray[i + 2] : i + 2;
+
+                let u0 = uvArray[ia * 2];
+                let v0 = uvArray[ia * 2 + 1];
+                let u1 = uvArray[ib * 2];
+                let v1 = uvArray[ib * 2 + 1];
+                let u2 = uvArray[ic * 2];
+                let v2 = uvArray[ic * 2 + 1];
+
+                if ([u0, v0, u1, v1, u2, v2].some(val => val === undefined || Number.isNaN(val))) continue;
+
+                u0 = Math.max(0, Math.min(1, u0));
+                v0 = Math.max(0, Math.min(1, v0));
+                u1 = Math.max(0, Math.min(1, u1));
+                v1 = Math.max(0, Math.min(1, v1));
+                u2 = Math.max(0, Math.min(1, u2));
+                v2 = Math.max(0, Math.min(1, v2));
+
+                const ax = u0 * (size - 1);
+                const ay = (1 - v0) * (size - 1);
+                const bx = u1 * (size - 1);
+                const by = (1 - v1) * (size - 1);
+                const cx = u2 * (size - 1);
+                const cy = (1 - v2) * (size - 1);
+
+                rasterizeTriangle(ax, ay, bx, by, cx, cy, color, size, data);
+            }
+        }
+
+        function edge(ax, ay, bx, by, cx, cy) {
+            return (cx - ax) * (by - ay) - (cy - ay) * (bx - ax);
+        }
+
+        function rasterizeTriangle(ax, ay, bx, by, cx, cy, color, size, data) {
+            let minX = Math.floor(Math.min(ax, bx, cx));
+            let maxX = Math.ceil(Math.max(ax, bx, cx));
+            let minY = Math.floor(Math.min(ay, by, cy));
+            let maxY = Math.ceil(Math.max(ay, by, cy));
+
+            if (maxX < 0 || maxY < 0 || minX >= size || minY >= size) return;
+
+            minX = Math.max(0, minX);
+            minY = Math.max(0, minY);
+            maxX = Math.min(size - 1, maxX);
+            maxY = Math.min(size - 1, maxY);
+
+            const area = edge(ax, ay, bx, by, cx, cy);
+            if (area === 0) return;
+
+            const sign = area < 0 ? -1 : 1;
+
+            for (let y = minY; y <= maxY; y++) {
+                const py = y + 0.5;
+                for (let x = minX; x <= maxX; x++) {
+                    const px = x + 0.5;
+                    const w0 = edge(bx, by, cx, cy, px, py);
+                    const w1 = edge(cx, cy, ax, ay, px, py);
+                    const w2 = edge(ax, ay, bx, by, px, py);
+
+                    if (sign * w0 >= 0 && sign * w1 >= 0 && sign * w2 >= 0) {
+                        const idx = (y * size + x) * 4;
+                        data[idx] = color.r;
+                        data[idx + 1] = color.g;
+                        data[idx + 2] = color.b;
+                        data[idx + 3] = 255;
+                    }
+                }
+            }
+        }
+
+        // ========================================
+        // STATS
+        // ========================================
+        function updateStats() {
+            const panels = State.views[State.currentView]?.panels || [];
+            const labeled = panels.filter(p => p.label).length;
+
+            $('statTotal').textContent = panels.length;
+            $('statLabeled').textContent = `${labeled} / ${panels.length}`;
+        }
+
+        function updateSteps(step) {
+            document.querySelectorAll('.step').forEach(el => {
+                const s = parseInt(el.dataset.step);
+                el.classList.toggle('active', s === step);
+                el.classList.toggle('done', s < step);
+            });
+        }
+
+        // ========================================
+        // EXPORT
+        // ========================================
+        function buildPanelConfig() {
+            const allPanels = [];
+
+            for (const viewName in State.views) {
+                const view = State.views[viewName];
+                view.panels.forEach(p => {
+                    allPanels.push({
+                        id: p.label || p.id,
+                        name: p.name || p.label || p.id,
+                        type: p.type || 'unknown',
+                        color: p.color,
+                        view: viewName,
+                        pixelCount: p.pixelCount
+                    });
+                });
+            }
+
+            return {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                panels: allPanels,
+                views: Object.keys(State.views)
+            };
+        }
+
+        function buildMaskList() {
+            const masks = [];
+            for (const viewName in State.views) {
+                const view = State.views[viewName];
+                if (view?.imageData) {
+                    masks.push({
+                        view: viewName,
+                        file: `panel_mask_${viewName}.png`,
+                        width: view.imageData.width,
+                        height: view.imageData.height
+                    });
+                }
+            }
+            return masks;
+        }
+
+        function exportJSON() {
+            const config = buildPanelConfig();
+            const masks = buildMaskList();
+            exportManifest(config, masks);
+            showToast('Exported panel manifest');
+            updateSteps(3);
+        }
+
+        function exportAll() {
+            const config = buildPanelConfig();
+            const masks = buildMaskList();
+
+            // Export individual panel masks
+            masks.forEach(mask => {
+                exportPanelMask(mask.view);
+            });
+
+            exportManifest(config, masks);
+            showToast('Exported panel masks and manifest');
+            updateSteps(3);
+        }
+
+        function exportManifest(config, masks) {
+            const manifest = {
+                version: config?.version || '1.0',
+                exportDate: config?.exportDate || new Date().toISOString(),
+                panelCount: config?.panels?.length || 0,
+                panels: config?.panels || [],
+                views: config?.views || [],
+                masks: masks || []
+            };
+            downloadJSON(manifest, 'panel_manifest.json');
+        }
+
+        function exportPanelMask(viewName) {
+            const view = State.views[viewName];
+            if (!view) return;
+
+            // Create a clean mask with only the panel colors
+            const canvas = document.createElement('canvas');
+            canvas.width = view.imageData.width;
+            canvas.height = view.imageData.height;
+            const ctx = canvas.getContext('2d');
+
+            const imageData = new ImageData(
+                new Uint8ClampedArray(view.imageData.data),
+                view.imageData.width,
+                view.imageData.height
+            );
+
+            ctx.putImageData(imageData, 0, 0);
+
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `panel_mask_${viewName}.png`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }, 'image/png');
+        }
+
+        function downloadJSON(data, filename) {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // ========================================
+        // UI HELPERS
+        // ========================================
+        function showToast(message) {
+            const toast = $('toast');
+            toast.textContent = message;
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 3000);
+        }
+
+        // ========================================
+        // EVENT HANDLERS
+        // ========================================
+        function setupEvents() {
+            // File input
+            $('fileInput').onchange = e => {
+                if (e.target.files[0]) {
+                    const viewCount = Object.keys(State.views).length;
+                    const viewName = viewCount === 0 ? 'top' : prompt('View name (e.g., bottom, left, right):', 'view_' + (viewCount + 1)) || 'view_' + (viewCount + 1);
+                    loadImage(e.target.files[0], viewName);
+                    e.target.value = '';
+                }
+            };
+
+            glbInput.onchange = e => {
+                if (e.target.files[0]) {
+                    loadGLBFile(e.target.files[0]);
+                    e.target.value = '';
+                }
+            };
+
+            blenderJsonInput.onchange = e => {
+                if (e.target.files[0]) {
+                    loadBlenderJSON(e.target.files[0]);
+                    e.target.value = '';
+                }
+            };
+
+            // Drop zone
+            dropZone.onclick = () => $('fileInput').click();
+            dropZone.ondragover = e => { e.preventDefault(); dropZone.classList.add('dragover'); };
+            dropZone.ondragleave = () => dropZone.classList.remove('dragover');
+            dropZone.ondrop = e => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (!file) return;
+                if (/\.(glb|gltf)$/i.test(file.name)) {
+                    loadGLBFile(file);
+                } else {
+                    loadImage(file, 'top');
+                }
+            };
+
+            // Header buttons
+            $('btnAddImage').onclick = () => $('fileInput').click();
+            $('btnExportAll').onclick = exportAll;
+            document.querySelectorAll('.btn-import-glb').forEach(btn => {
+                btn.onclick = () => glbInput.click();
+            });
+            $('btnImportBlender').onclick = () => blenderJsonInput.click();
+
+            // Sidebar buttons
+            $('btnAutoLabel').onclick = autoLabel;
+            $('btnExportJSON').onclick = exportJSON;
+            $('btnApplyAdjust').onclick = applyImageAdjustments;
+            $('btnResetAdjust').onclick = resetAdjustments;
+            $('btnReextract').onclick = reextractPanels;
+
+            // Adjustment sliders
+            adjBrightness.oninput = e => { $('valBrightness').textContent = e.target.value; };
+            adjContrast.oninput = e => { $('valContrast').textContent = e.target.value; };
+            adjSaturation.oninput = e => { $('valSaturation').textContent = e.target.value; };
+
+            // Detection sliders
+            colorToleranceInput.oninput = e => {
+                State.colorTolerance = parseInt(e.target.value, 10) || 0;
+                $('valTolerance').textContent = State.colorTolerance;
+                if (State.selectedPanel) highlightPanel(State.selectedPanel);
+            };
+            quantizeStepInput.oninput = e => {
+                State.quantizeStep = Math.max(1, parseInt(e.target.value, 10) || 1);
+                $('valQuantize').textContent = State.quantizeStep;
+            };
+            quantizeStepInput.onchange = reextractPanels;
+
+            minPanelPctInput.oninput = e => {
+                const value = parseFloat(e.target.value) || 0.01;
+                State.minPanelRatio = value / 100;
+                $('valMinPanel').textContent = value.toFixed(3);
+            };
+            minPanelPctInput.onchange = reextractPanels;
+
+            // Editor buttons
+            $('btnSavePanel').onclick = savePanel;
+            $('btnPrevPanel').onclick = () => navigatePanel(-1);
+            $('btnNextPanel').onclick = () => navigatePanel(1);
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', e => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+
+                if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    navigatePanel(-1);
+                } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    navigatePanel(1);
+                } else if (e.key === 'Enter' && State.selectedPanel) {
+                    savePanel();
+                }
+            });
+
+            // Canvas click for panel selection
+            mainCanvas.onclick = e => {
+                const rect = mainCanvas.getBoundingClientRect();
+                const scaleX = mainCanvas.width / rect.width;
+                const scaleY = mainCanvas.height / rect.height;
+
+                const x = Math.floor((e.clientX - rect.left) * scaleX);
+                const y = Math.floor((e.clientY - rect.top) * scaleY);
+
+                const view = State.views[State.currentView];
+                if (!view) return;
+
+                const idx = (y * view.imageData.width + x) * 4;
+                const step = Math.max(1, State.quantizeStep);
+                const r = quantizeChannel(view.imageData.data[idx], step);
+                const g = quantizeChannel(view.imageData.data[idx + 1], step);
+                const b = quantizeChannel(view.imageData.data[idx + 2], step);
+
+                // Find matching panel
+                const tol = State.colorTolerance;
+                const panel = view.panels.find(p =>
+                    Math.abs(p.color.r - r) <= tol &&
+                    Math.abs(p.color.g - g) <= tol &&
+                    Math.abs(p.color.b - b) <= tol
+                );
+
+                if (panel) {
+                    selectPanel(panel.id);
+                }
+            };
+
+            // Sidebar Accordion Handler
+            document.querySelector('.sidebar').addEventListener('click', e => {
+                const header = e.target.closest('.tool-header');
+                if (header) {
+                    header.parentElement.classList.toggle('collapsed');
+                }
+            });
+        }
+
+        // ========================================
+        // INIT
+        // ========================================
+        setupEvents();
+        syncAdjustmentUI(null);
+        syncDetectionUI();
+        updateEditorLayout();
+        window.addEventListener('resize', updateEditorLayout);
+        console.log('Panel UV Mask Generator Ready');
+    </script>
+</body>
+
+</html>

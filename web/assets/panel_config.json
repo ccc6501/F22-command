@@ -1,0 +1,4833 @@
+{
+  "version": "1.0",
+  "exportDate": "2026-01-18T14:43:05.677Z",
+  "panels": [
+    {
+      "id": "top_panel_1",
+      "name": "top_panel_1",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 128,
+        "b": 208,
+        "hex": "#1880d0"
+      },
+      "view": "top",
+      "pixelCount": 47134
+    },
+    {
+      "id": "top_panel_2",
+      "name": "top_panel_2",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 224,
+        "b": 84,
+        "hex": "#d0e054"
+      },
+      "view": "top",
+      "pixelCount": 47077
+    },
+    {
+      "id": "top_panel_3",
+      "name": "top_panel_3",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 116,
+        "b": 36,
+        "hex": "#c47424"
+      },
+      "view": "top",
+      "pixelCount": 22626
+    },
+    {
+      "id": "top_panel_4",
+      "name": "top_panel_4",
+      "type": "unknown",
+      "color": {
+        "r": 100,
+        "g": 60,
+        "b": 244,
+        "hex": "#643cf4"
+      },
+      "view": "top",
+      "pixelCount": 22447
+    },
+    {
+      "id": "top_panel_5",
+      "name": "top_panel_5",
+      "type": "unknown",
+      "color": {
+        "r": 192,
+        "g": 60,
+        "b": 244,
+        "hex": "#c03cf4"
+      },
+      "view": "top",
+      "pixelCount": 10512
+    },
+    {
+      "id": "top_panel_6",
+      "name": "top_panel_6",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 44,
+        "b": 220,
+        "hex": "#0c2cdc"
+      },
+      "view": "top",
+      "pixelCount": 9882
+    },
+    {
+      "id": "top_panel_7",
+      "name": "top_panel_7",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 136,
+        "b": 84,
+        "hex": "#e08854"
+      },
+      "view": "top",
+      "pixelCount": 6552
+    },
+    {
+      "id": "top_panel_8",
+      "name": "top_panel_8",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 208,
+        "b": 148,
+        "hex": "#18d094"
+      },
+      "view": "top",
+      "pixelCount": 6441
+    },
+    {
+      "id": "top_panel_9",
+      "name": "top_panel_9",
+      "type": "unknown",
+      "color": {
+        "r": 100,
+        "g": 24,
+        "b": 208,
+        "hex": "#6418d0"
+      },
+      "view": "top",
+      "pixelCount": 3662
+    },
+    {
+      "id": "top_panel_10",
+      "name": "top_panel_10",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 36,
+        "b": 36,
+        "hex": "#c42424"
+      },
+      "view": "top",
+      "pixelCount": 3612
+    },
+    {
+      "id": "top_panel_11",
+      "name": "top_panel_11",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 224,
+        "b": 100,
+        "hex": "#54e064"
+      },
+      "view": "top",
+      "pixelCount": 3546
+    },
+    {
+      "id": "top_panel_12",
+      "name": "top_panel_12",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 68,
+        "b": 68,
+        "hex": "#404444"
+      },
+      "view": "top",
+      "pixelCount": 2886
+    },
+    {
+      "id": "top_panel_13",
+      "name": "top_panel_13",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 72,
+        "b": 236,
+        "hex": "#5048ec"
+      },
+      "view": "top",
+      "pixelCount": 2881
+    },
+    {
+      "id": "top_panel_14",
+      "name": "top_panel_14",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 64,
+        "b": 64,
+        "hex": "#404040"
+      },
+      "view": "top",
+      "pixelCount": 2870
+    },
+    {
+      "id": "top_panel_15",
+      "name": "top_panel_15",
+      "type": "unknown",
+      "color": {
+        "r": 44,
+        "g": 44,
+        "b": 44,
+        "hex": "#2c2c2c"
+      },
+      "view": "top",
+      "pixelCount": 2706
+    },
+    {
+      "id": "top_panel_16",
+      "name": "top_panel_16",
+      "type": "unknown",
+      "color": {
+        "r": 48,
+        "g": 48,
+        "b": 48,
+        "hex": "#303030"
+      },
+      "view": "top",
+      "pixelCount": 2693
+    },
+    {
+      "id": "top_panel_17",
+      "name": "top_panel_17",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 80,
+        "b": 80,
+        "hex": "#4c5050"
+      },
+      "view": "top",
+      "pixelCount": 2552
+    },
+    {
+      "id": "top_panel_18",
+      "name": "top_panel_18",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 196,
+        "b": 36,
+        "hex": "#4cc424"
+      },
+      "view": "top",
+      "pixelCount": 2549
+    },
+    {
+      "id": "top_panel_19",
+      "name": "top_panel_19",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 60,
+        "b": 60,
+        "hex": "#3c3c3c"
+      },
+      "view": "top",
+      "pixelCount": 2478
+    },
+    {
+      "id": "top_panel_20",
+      "name": "top_panel_20",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 40,
+        "b": 40,
+        "hex": "#282828"
+      },
+      "view": "top",
+      "pixelCount": 2368
+    },
+    {
+      "id": "top_panel_21",
+      "name": "top_panel_21",
+      "type": "unknown",
+      "color": {
+        "r": 52,
+        "g": 52,
+        "b": 52,
+        "hex": "#343434"
+      },
+      "view": "top",
+      "pixelCount": 2306
+    },
+    {
+      "id": "top_panel_22",
+      "name": "top_panel_22",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 24,
+        "b": 36,
+        "hex": "#d01824"
+      },
+      "view": "top",
+      "pixelCount": 2173
+    },
+    {
+      "id": "top_panel_23",
+      "name": "top_panel_23",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 56,
+        "b": 56,
+        "hex": "#383838"
+      },
+      "view": "top",
+      "pixelCount": 2144
+    },
+    {
+      "id": "top_panel_24",
+      "name": "top_panel_24",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 84,
+        "b": 84,
+        "hex": "#505454"
+      },
+      "view": "top",
+      "pixelCount": 2134
+    },
+    {
+      "id": "top_panel_25",
+      "name": "top_panel_25",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 76,
+        "b": 76,
+        "hex": "#484c4c"
+      },
+      "view": "top",
+      "pixelCount": 2118
+    },
+    {
+      "id": "top_panel_26",
+      "name": "top_panel_26",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 72,
+        "b": 72,
+        "hex": "#484848"
+      },
+      "view": "top",
+      "pixelCount": 2012
+    },
+    {
+      "id": "top_panel_27",
+      "name": "top_panel_27",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 64,
+        "b": 64,
+        "hex": "#3c4040"
+      },
+      "view": "top",
+      "pixelCount": 1992
+    },
+    {
+      "id": "top_panel_28",
+      "name": "top_panel_28",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 80,
+        "b": 84,
+        "hex": "#505054"
+      },
+      "view": "top",
+      "pixelCount": 1973
+    },
+    {
+      "id": "top_panel_29",
+      "name": "top_panel_29",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 12,
+        "b": 44,
+        "hex": "#dc0c2c"
+      },
+      "view": "top",
+      "pixelCount": 1956
+    },
+    {
+      "id": "top_panel_30",
+      "name": "top_panel_30",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 244,
+        "b": 100,
+        "hex": "#3cf464"
+      },
+      "view": "top",
+      "pixelCount": 1914
+    },
+    {
+      "id": "top_panel_31",
+      "name": "top_panel_31",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 72,
+        "b": 72,
+        "hex": "#444848"
+      },
+      "view": "top",
+      "pixelCount": 1815
+    },
+    {
+      "id": "top_panel_32",
+      "name": "top_panel_32",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 144,
+        "b": 236,
+        "hex": "#4890ec"
+      },
+      "view": "top",
+      "pixelCount": 1807
+    },
+    {
+      "id": "top_panel_33",
+      "name": "top_panel_33",
+      "type": "unknown",
+      "color": {
+        "r": 120,
+        "g": 72,
+        "b": 236,
+        "hex": "#7848ec"
+      },
+      "view": "top",
+      "pixelCount": 1682
+    },
+    {
+      "id": "top_panel_34",
+      "name": "top_panel_34",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 196,
+        "b": 36,
+        "hex": "#24c424"
+      },
+      "view": "top",
+      "pixelCount": 1632
+    },
+    {
+      "id": "top_panel_35",
+      "name": "top_panel_35",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 64,
+        "b": 68,
+        "hex": "#404044"
+      },
+      "view": "top",
+      "pixelCount": 1595
+    },
+    {
+      "id": "top_panel_36",
+      "name": "top_panel_36",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 132,
+        "b": 12,
+        "hex": "#dc840c"
+      },
+      "view": "top",
+      "pixelCount": 1582
+    },
+    {
+      "id": "top_panel_37",
+      "name": "top_panel_37",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 68,
+        "b": 72,
+        "hex": "#444448"
+      },
+      "view": "top",
+      "pixelCount": 1577
+    },
+    {
+      "id": "top_panel_38",
+      "name": "top_panel_38",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 60,
+        "b": 60,
+        "hex": "#383c3c"
+      },
+      "view": "top",
+      "pixelCount": 1575
+    },
+    {
+      "id": "top_panel_39",
+      "name": "top_panel_39",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 68,
+        "b": 68,
+        "hex": "#444444"
+      },
+      "view": "top",
+      "pixelCount": 1560
+    },
+    {
+      "id": "top_panel_40",
+      "name": "top_panel_40",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 196,
+        "b": 196,
+        "hex": "#24c4c4"
+      },
+      "view": "top",
+      "pixelCount": 1531
+    },
+    {
+      "id": "top_panel_41",
+      "name": "top_panel_41",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 72,
+        "b": 184,
+        "hex": "#ec48b8"
+      },
+      "view": "top",
+      "pixelCount": 1475
+    },
+    {
+      "id": "top_panel_42",
+      "name": "top_panel_42",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 60,
+        "b": 116,
+        "hex": "#f43c74"
+      },
+      "view": "top",
+      "pixelCount": 1465
+    },
+    {
+      "id": "top_panel_43",
+      "name": "top_panel_43",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 208,
+        "b": 24,
+        "hex": "#54d018"
+      },
+      "view": "top",
+      "pixelCount": 1455
+    },
+    {
+      "id": "top_panel_44",
+      "name": "top_panel_44",
+      "type": "unknown",
+      "color": {
+        "r": 52,
+        "g": 56,
+        "b": 56,
+        "hex": "#343838"
+      },
+      "view": "top",
+      "pixelCount": 1383
+    },
+    {
+      "id": "top_panel_45",
+      "name": "top_panel_45",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 76,
+        "b": 80,
+        "hex": "#4c4c50"
+      },
+      "view": "top",
+      "pixelCount": 1362
+    },
+    {
+      "id": "top_panel_46",
+      "name": "top_panel_46",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 60,
+        "b": 64,
+        "hex": "#3c3c40"
+      },
+      "view": "top",
+      "pixelCount": 1348
+    },
+    {
+      "id": "top_panel_47",
+      "name": "top_panel_47",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 236,
+        "b": 160,
+        "hex": "#48eca0"
+      },
+      "view": "top",
+      "pixelCount": 1337
+    },
+    {
+      "id": "top_panel_48",
+      "name": "top_panel_48",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 68,
+        "b": 244,
+        "hex": "#3c44f4"
+      },
+      "view": "top",
+      "pixelCount": 1270
+    },
+    {
+      "id": "top_panel_49",
+      "name": "top_panel_49",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 72,
+        "b": 76,
+        "hex": "#48484c"
+      },
+      "view": "top",
+      "pixelCount": 1239
+    },
+    {
+      "id": "top_panel_50",
+      "name": "top_panel_50",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 44,
+        "b": 44,
+        "hex": "#282c2c"
+      },
+      "view": "top",
+      "pixelCount": 1223
+    },
+    {
+      "id": "top_panel_51",
+      "name": "top_panel_51",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 76,
+        "b": 36,
+        "hex": "#c44c24"
+      },
+      "view": "top",
+      "pixelCount": 1169
+    },
+    {
+      "id": "top_panel_52",
+      "name": "top_panel_52",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 80,
+        "b": 12,
+        "hex": "#dc500c"
+      },
+      "view": "top",
+      "pixelCount": 1135
+    },
+    {
+      "id": "top_panel_53",
+      "name": "top_panel_53",
+      "type": "unknown",
+      "color": {
+        "r": 48,
+        "g": 52,
+        "b": 52,
+        "hex": "#303434"
+      },
+      "view": "top",
+      "pixelCount": 1078
+    },
+    {
+      "id": "top_panel_54",
+      "name": "top_panel_54",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 76,
+        "b": 76,
+        "hex": "#4c4c4c"
+      },
+      "view": "top",
+      "pixelCount": 1037
+    },
+    {
+      "id": "top_panel_55",
+      "name": "top_panel_55",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 100,
+        "b": 84,
+        "hex": "#e06454"
+      },
+      "view": "top",
+      "pixelCount": 1029
+    },
+    {
+      "id": "top_panel_56",
+      "name": "top_panel_56",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 56,
+        "b": 60,
+        "hex": "#38383c"
+      },
+      "view": "top",
+      "pixelCount": 967
+    },
+    {
+      "id": "top_panel_57",
+      "name": "top_panel_57",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 80,
+        "b": 80,
+        "hex": "#505050"
+      },
+      "view": "top",
+      "pixelCount": 926
+    },
+    {
+      "id": "top_panel_58",
+      "name": "top_panel_58",
+      "type": "unknown",
+      "color": {
+        "r": 44,
+        "g": 44,
+        "b": 48,
+        "hex": "#2c2c30"
+      },
+      "view": "top",
+      "pixelCount": 795
+    },
+    {
+      "id": "top_panel_59",
+      "name": "top_panel_59",
+      "type": "unknown",
+      "color": {
+        "r": 96,
+        "g": 220,
+        "b": 12,
+        "hex": "#60dc0c"
+      },
+      "view": "top",
+      "pixelCount": 787
+    },
+    {
+      "id": "top_panel_60",
+      "name": "top_panel_60",
+      "type": "unknown",
+      "color": {
+        "r": 52,
+        "g": 52,
+        "b": 56,
+        "hex": "#343438"
+      },
+      "view": "top",
+      "pixelCount": 771
+    },
+    {
+      "id": "top_panel_61",
+      "name": "top_panel_61",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 36,
+        "b": 40,
+        "hex": "#242428"
+      },
+      "view": "top",
+      "pixelCount": 762
+    },
+    {
+      "id": "top_panel_62",
+      "name": "top_panel_62",
+      "type": "unknown",
+      "color": {
+        "r": 44,
+        "g": 48,
+        "b": 48,
+        "hex": "#2c3030"
+      },
+      "view": "top",
+      "pixelCount": 736
+    },
+    {
+      "id": "top_panel_63",
+      "name": "top_panel_63",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 196,
+        "b": 36,
+        "hex": "#c4c424"
+      },
+      "view": "top",
+      "pixelCount": 684
+    },
+    {
+      "id": "top_panel_64",
+      "name": "top_panel_64",
+      "type": "unknown",
+      "color": {
+        "r": 200,
+        "g": 200,
+        "b": 200,
+        "hex": "#c8c8c8"
+      },
+      "view": "top",
+      "pixelCount": 631
+    },
+    {
+      "id": "top_panel_65",
+      "name": "top_panel_65",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 192,
+        "b": 60,
+        "hex": "#f4c03c"
+      },
+      "view": "top",
+      "pixelCount": 630
+    },
+    {
+      "id": "top_panel_66",
+      "name": "top_panel_66",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 208,
+        "b": 100,
+        "hex": "#18d064"
+      },
+      "view": "top",
+      "pixelCount": 620
+    },
+    {
+      "id": "top_panel_67",
+      "name": "top_panel_67",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 40,
+        "b": 40,
+        "hex": "#242828"
+      },
+      "view": "top",
+      "pixelCount": 619
+    },
+    {
+      "id": "top_panel_68",
+      "name": "top_panel_68",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 64,
+        "b": 255,
+        "hex": "#cc40ff"
+      },
+      "view": "top",
+      "pixelCount": 605
+    },
+    {
+      "id": "top_panel_69",
+      "name": "top_panel_69",
+      "type": "unknown",
+      "color": {
+        "r": 192,
+        "g": 24,
+        "b": 208,
+        "hex": "#c018d0"
+      },
+      "view": "top",
+      "pixelCount": 598
+    },
+    {
+      "id": "top_panel_70",
+      "name": "top_panel_70",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 204,
+        "b": 244,
+        "hex": "#3cccf4"
+      },
+      "view": "top",
+      "pixelCount": 587
+    },
+    {
+      "id": "top_panel_71",
+      "name": "top_panel_71",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 40,
+        "b": 44,
+        "hex": "#28282c"
+      },
+      "view": "top",
+      "pixelCount": 570
+    },
+    {
+      "id": "top_panel_72",
+      "name": "top_panel_72",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 224,
+        "b": 172,
+        "hex": "#54e0ac"
+      },
+      "view": "top",
+      "pixelCount": 562
+    },
+    {
+      "id": "top_panel_73",
+      "name": "top_panel_73",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 84,
+        "b": 172,
+        "hex": "#e054ac"
+      },
+      "view": "top",
+      "pixelCount": 559
+    },
+    {
+      "id": "top_panel_74",
+      "name": "top_panel_74",
+      "type": "unknown",
+      "color": {
+        "r": 48,
+        "g": 48,
+        "b": 52,
+        "hex": "#303034"
+      },
+      "view": "top",
+      "pixelCount": 557
+    },
+    {
+      "id": "top_panel_75",
+      "name": "top_panel_75",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 36,
+        "b": 112,
+        "hex": "#c42470"
+      },
+      "view": "top",
+      "pixelCount": 556
+    },
+    {
+      "id": "top_panel_76",
+      "name": "top_panel_76",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 148,
+        "b": 220,
+        "hex": "#0c94dc"
+      },
+      "view": "top",
+      "pixelCount": 471
+    },
+    {
+      "id": "top_panel_77",
+      "name": "top_panel_77",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 132,
+        "b": 208,
+        "hex": "#1884d0"
+      },
+      "view": "top",
+      "pixelCount": 469
+    },
+    {
+      "id": "top_panel_78",
+      "name": "top_panel_78",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 236,
+        "b": 72,
+        "hex": "#e4ec48"
+      },
+      "view": "top",
+      "pixelCount": 466
+    },
+    {
+      "id": "top_panel_79",
+      "name": "top_panel_79",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 132,
+        "b": 212,
+        "hex": "#1884d4"
+      },
+      "view": "top",
+      "pixelCount": 465
+    },
+    {
+      "id": "top_panel_80",
+      "name": "top_panel_80",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 208,
+        "b": 84,
+        "hex": "#e0d054"
+      },
+      "view": "top",
+      "pixelCount": 445
+    },
+    {
+      "id": "top_panel_81",
+      "name": "top_panel_81",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 208,
+        "b": 208,
+        "hex": "#d0d0d0"
+      },
+      "view": "top",
+      "pixelCount": 432
+    },
+    {
+      "id": "top_panel_82",
+      "name": "top_panel_82",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 204,
+        "b": 204,
+        "hex": "#cccccc"
+      },
+      "view": "top",
+      "pixelCount": 428
+    },
+    {
+      "id": "top_panel_83",
+      "name": "top_panel_83",
+      "type": "unknown",
+      "color": {
+        "r": 156,
+        "g": 36,
+        "b": 196,
+        "hex": "#9c24c4"
+      },
+      "view": "top",
+      "pixelCount": 426
+    },
+    {
+      "id": "top_panel_84",
+      "name": "top_panel_84",
+      "type": "unknown",
+      "color": {
+        "r": 200,
+        "g": 200,
+        "b": 36,
+        "hex": "#c8c824"
+      },
+      "view": "top",
+      "pixelCount": 420
+    },
+    {
+      "id": "top_panel_85",
+      "name": "top_panel_85",
+      "type": "unknown",
+      "color": {
+        "r": 200,
+        "g": 120,
+        "b": 36,
+        "hex": "#c87824"
+      },
+      "view": "top",
+      "pixelCount": 408
+    },
+    {
+      "id": "top_panel_86",
+      "name": "top_panel_86",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 244,
+        "b": 148,
+        "hex": "#3cf494"
+      },
+      "view": "top",
+      "pixelCount": 402
+    },
+    {
+      "id": "top_panel_87",
+      "name": "top_panel_87",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 204,
+        "b": 36,
+        "hex": "#cccc24"
+      },
+      "view": "top",
+      "pixelCount": 399
+    },
+    {
+      "id": "top_panel_88",
+      "name": "top_panel_88",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 224,
+        "b": 224,
+        "hex": "#e0e0e0"
+      },
+      "view": "top",
+      "pixelCount": 358
+    },
+    {
+      "id": "top_panel_89",
+      "name": "top_panel_89",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 228,
+        "b": 84,
+        "hex": "#d0e454"
+      },
+      "view": "top",
+      "pixelCount": 355
+    },
+    {
+      "id": "top_panel_90",
+      "name": "top_panel_90",
+      "type": "unknown",
+      "color": {
+        "r": 104,
+        "g": 64,
+        "b": 248,
+        "hex": "#6840f8"
+      },
+      "view": "top",
+      "pixelCount": 336
+    },
+    {
+      "id": "top_panel_91",
+      "name": "top_panel_91",
+      "type": "unknown",
+      "color": {
+        "r": 216,
+        "g": 216,
+        "b": 216,
+        "hex": "#d8d8d8"
+      },
+      "view": "top",
+      "pixelCount": 330
+    },
+    {
+      "id": "top_panel_92",
+      "name": "top_panel_92",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 120,
+        "b": 36,
+        "hex": "#c47824"
+      },
+      "view": "top",
+      "pixelCount": 329
+    },
+    {
+      "id": "top_panel_93",
+      "name": "top_panel_93",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 220,
+        "b": 220,
+        "hex": "#dcdcdc"
+      },
+      "view": "top",
+      "pixelCount": 325
+    },
+    {
+      "id": "top_panel_94",
+      "name": "top_panel_94",
+      "type": "unknown",
+      "color": {
+        "r": 132,
+        "g": 44,
+        "b": 172,
+        "hex": "#842cac"
+      },
+      "view": "top",
+      "pixelCount": 314
+    },
+    {
+      "id": "top_panel_95",
+      "name": "top_panel_95",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 252,
+        "b": 104,
+        "hex": "#40fc68"
+      },
+      "view": "top",
+      "pixelCount": 312
+    },
+    {
+      "id": "top_panel_96",
+      "name": "top_panel_96",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 212,
+        "b": 212,
+        "hex": "#d4d4d4"
+      },
+      "view": "top",
+      "pixelCount": 311
+    },
+    {
+      "id": "top_panel_97",
+      "name": "top_panel_97",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 196,
+        "b": 244,
+        "hex": "#4cc4f4"
+      },
+      "view": "top",
+      "pixelCount": 306
+    },
+    {
+      "id": "top_panel_98",
+      "name": "top_panel_98",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 228,
+        "b": 228,
+        "hex": "#e4e4e4"
+      },
+      "view": "top",
+      "pixelCount": 302
+    },
+    {
+      "id": "top_panel_99",
+      "name": "top_panel_99",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 24,
+        "b": 40,
+        "hex": "#d41828"
+      },
+      "view": "top",
+      "pixelCount": 299
+    },
+    {
+      "id": "top_panel_100",
+      "name": "top_panel_100",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 76,
+        "b": 12,
+        "hex": "#4c4c0c"
+      },
+      "view": "top",
+      "pixelCount": 297
+    },
+    {
+      "id": "top_panel_101",
+      "name": "top_panel_101",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 48,
+        "b": 232,
+        "hex": "#0c30e8"
+      },
+      "view": "top",
+      "pixelCount": 296
+    },
+    {
+      "id": "top_panel_102",
+      "name": "top_panel_102",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 180,
+        "b": 224,
+        "hex": "#44b4e0"
+      },
+      "view": "top",
+      "pixelCount": 295
+    },
+    {
+      "id": "top_panel_103",
+      "name": "top_panel_103",
+      "type": "unknown",
+      "color": {
+        "r": 16,
+        "g": 40,
+        "b": 48,
+        "hex": "#102830"
+      },
+      "view": "top",
+      "pixelCount": 290
+    },
+    {
+      "id": "top_panel_104",
+      "name": "top_panel_104",
+      "type": "unknown",
+      "color": {
+        "r": 232,
+        "g": 232,
+        "b": 232,
+        "hex": "#e8e8e8"
+      },
+      "view": "top",
+      "pixelCount": 289
+    },
+    {
+      "id": "top_panel_105",
+      "name": "top_panel_105",
+      "type": "unknown",
+      "color": {
+        "r": 8,
+        "g": 28,
+        "b": 144,
+        "hex": "#081c90"
+      },
+      "view": "top",
+      "pixelCount": 288
+    },
+    {
+      "id": "top_panel_106",
+      "name": "top_panel_106",
+      "type": "unknown",
+      "color": {
+        "r": 104,
+        "g": 64,
+        "b": 252,
+        "hex": "#6840fc"
+      },
+      "view": "top",
+      "pixelCount": 287
+    },
+    {
+      "id": "top_panel_107",
+      "name": "top_panel_107",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 236,
+        "b": 236,
+        "hex": "#ececec"
+      },
+      "view": "top",
+      "pixelCount": 286
+    },
+    {
+      "id": "top_panel_108",
+      "name": "top_panel_108",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 248,
+        "b": 100,
+        "hex": "#3cf864"
+      },
+      "view": "top",
+      "pixelCount": 283
+    },
+    {
+      "id": "top_panel_109",
+      "name": "top_panel_109",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 184,
+        "b": 236,
+        "hex": "#48b8ec"
+      },
+      "view": "top",
+      "pixelCount": 281
+    },
+    {
+      "id": "top_panel_110",
+      "name": "top_panel_110",
+      "type": "unknown",
+      "color": {
+        "r": 136,
+        "g": 44,
+        "b": 172,
+        "hex": "#882cac"
+      },
+      "view": "top",
+      "pixelCount": 277
+    },
+    {
+      "id": "top_panel_111",
+      "name": "top_panel_111",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 228,
+        "b": 84,
+        "hex": "#d4e454"
+      },
+      "view": "top",
+      "pixelCount": 270
+    },
+    {
+      "id": "top_panel_112",
+      "name": "top_panel_112",
+      "type": "unknown",
+      "color": {
+        "r": 240,
+        "g": 240,
+        "b": 240,
+        "hex": "#f0f0f0"
+      },
+      "view": "top",
+      "pixelCount": 241
+    },
+    {
+      "id": "top_panel_113",
+      "name": "top_panel_113",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 48,
+        "b": 224,
+        "hex": "#0c30e0"
+      },
+      "view": "top",
+      "pixelCount": 238
+    },
+    {
+      "id": "top_panel_114",
+      "name": "top_panel_114",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 72,
+        "b": 196,
+        "hex": "#2448c4"
+      },
+      "view": "top",
+      "pixelCount": 238
+    },
+    {
+      "id": "top_panel_115",
+      "name": "top_panel_115",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 148,
+        "b": 240,
+        "hex": "#4894f0"
+      },
+      "view": "top",
+      "pixelCount": 238
+    },
+    {
+      "id": "top_panel_116",
+      "name": "top_panel_116",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 72,
+        "b": 72,
+        "hex": "#4c4848"
+      },
+      "view": "top",
+      "pixelCount": 235
+    },
+    {
+      "id": "top_panel_117",
+      "name": "top_panel_117",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 24,
+        "b": 208,
+        "hex": "#3818d0"
+      },
+      "view": "top",
+      "pixelCount": 233
+    },
+    {
+      "id": "top_panel_118",
+      "name": "top_panel_118",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 248,
+        "b": 100,
+        "hex": "#40f864"
+      },
+      "view": "top",
+      "pixelCount": 227
+    },
+    {
+      "id": "top_panel_119",
+      "name": "top_panel_119",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 228,
+        "b": 104,
+        "hex": "#54e468"
+      },
+      "view": "top",
+      "pixelCount": 227
+    },
+    {
+      "id": "top_panel_120",
+      "name": "top_panel_120",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 80,
+        "b": 72,
+        "hex": "#ec5048"
+      },
+      "view": "top",
+      "pixelCount": 224
+    },
+    {
+      "id": "top_panel_121",
+      "name": "top_panel_121",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 224,
+        "b": 84,
+        "hex": "#cce054"
+      },
+      "view": "top",
+      "pixelCount": 218
+    },
+    {
+      "id": "top_panel_122",
+      "name": "top_panel_122",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 212,
+        "b": 104,
+        "hex": "#18d468"
+      },
+      "view": "top",
+      "pixelCount": 217
+    },
+    {
+      "id": "top_panel_123",
+      "name": "top_panel_123",
+      "type": "unknown",
+      "color": {
+        "r": 160,
+        "g": 244,
+        "b": 60,
+        "hex": "#a0f43c"
+      },
+      "view": "top",
+      "pixelCount": 213
+    },
+    {
+      "id": "top_panel_124",
+      "name": "top_panel_124",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 72,
+        "b": 240,
+        "hex": "#5048f0"
+      },
+      "view": "top",
+      "pixelCount": 212
+    },
+    {
+      "id": "top_panel_125",
+      "name": "top_panel_125",
+      "type": "unknown",
+      "color": {
+        "r": 216,
+        "g": 236,
+        "b": 88,
+        "hex": "#d8ec58"
+      },
+      "view": "top",
+      "pixelCount": 212
+    },
+    {
+      "id": "top_panel_126",
+      "name": "top_panel_126",
+      "type": "unknown",
+      "color": {
+        "r": 232,
+        "g": 104,
+        "b": 84,
+        "hex": "#e86854"
+      },
+      "view": "top",
+      "pixelCount": 211
+    },
+    {
+      "id": "top_panel_127",
+      "name": "top_panel_127",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 220,
+        "b": 108,
+        "hex": "#18dc6c"
+      },
+      "view": "top",
+      "pixelCount": 211
+    },
+    {
+      "id": "top_panel_128",
+      "name": "top_panel_128",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 200,
+        "b": 96,
+        "hex": "#18c860"
+      },
+      "view": "top",
+      "pixelCount": 211
+    },
+    {
+      "id": "top_panel_129",
+      "name": "top_panel_129",
+      "type": "unknown",
+      "color": {
+        "r": 240,
+        "g": 108,
+        "b": 88,
+        "hex": "#f06c58"
+      },
+      "view": "top",
+      "pixelCount": 211
+    },
+    {
+      "id": "top_panel_130",
+      "name": "top_panel_130",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 244,
+        "b": 244,
+        "hex": "#f4f4f4"
+      },
+      "view": "top",
+      "pixelCount": 210
+    },
+    {
+      "id": "top_panel_131",
+      "name": "top_panel_131",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 28,
+        "b": 24,
+        "hex": "#401c18"
+      },
+      "view": "top",
+      "pixelCount": 210
+    },
+    {
+      "id": "top_panel_132",
+      "name": "top_panel_132",
+      "type": "unknown",
+      "color": {
+        "r": 104,
+        "g": 24,
+        "b": 212,
+        "hex": "#6818d4"
+      },
+      "view": "top",
+      "pixelCount": 210
+    },
+    {
+      "id": "top_panel_133",
+      "name": "top_panel_133",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 96,
+        "b": 80,
+        "hex": "#dc6050"
+      },
+      "view": "top",
+      "pixelCount": 209
+    },
+    {
+      "id": "top_panel_134",
+      "name": "top_panel_134",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 216,
+        "b": 104,
+        "hex": "#18d868"
+      },
+      "view": "top",
+      "pixelCount": 209
+    },
+    {
+      "id": "top_panel_135",
+      "name": "top_panel_135",
+      "type": "unknown",
+      "color": {
+        "r": 4,
+        "g": 44,
+        "b": 24,
+        "hex": "#042c18"
+      },
+      "view": "top",
+      "pixelCount": 208
+    },
+    {
+      "id": "top_panel_136",
+      "name": "top_panel_136",
+      "type": "unknown",
+      "color": {
+        "r": 152,
+        "g": 68,
+        "b": 56,
+        "hex": "#984438"
+      },
+      "view": "top",
+      "pixelCount": 208
+    },
+    {
+      "id": "top_panel_137",
+      "name": "top_panel_137",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 100,
+        "b": 48,
+        "hex": "#0c6430"
+      },
+      "view": "top",
+      "pixelCount": 207
+    },
+    {
+      "id": "top_panel_138",
+      "name": "top_panel_138",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 12,
+        "b": 44,
+        "hex": "#e00c2c"
+      },
+      "view": "top",
+      "pixelCount": 206
+    },
+    {
+      "id": "top_panel_139",
+      "name": "top_panel_139",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 72,
+        "b": 228,
+        "hex": "#ec48e4"
+      },
+      "view": "top",
+      "pixelCount": 205
+    },
+    {
+      "id": "top_panel_140",
+      "name": "top_panel_140",
+      "type": "unknown",
+      "color": {
+        "r": 148,
+        "g": 220,
+        "b": 12,
+        "hex": "#94dc0c"
+      },
+      "view": "top",
+      "pixelCount": 202
+    },
+    {
+      "id": "top_panel_141",
+      "name": "top_panel_141",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 84,
+        "b": 88,
+        "hex": "#505458"
+      },
+      "view": "top",
+      "pixelCount": 198
+    },
+    {
+      "id": "top_panel_142",
+      "name": "top_panel_142",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 136,
+        "b": 224,
+        "hex": "#5488e0"
+      },
+      "view": "top",
+      "pixelCount": 196
+    },
+    {
+      "id": "top_panel_143",
+      "name": "top_panel_143",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 44,
+        "b": 40,
+        "hex": "#282c28"
+      },
+      "view": "top",
+      "pixelCount": 194
+    },
+    {
+      "id": "top_panel_144",
+      "name": "top_panel_144",
+      "type": "unknown",
+      "color": {
+        "r": 200,
+        "g": 36,
+        "b": 36,
+        "hex": "#c82424"
+      },
+      "view": "top",
+      "pixelCount": 191
+    },
+    {
+      "id": "top_panel_145",
+      "name": "top_panel_145",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 212,
+        "b": 152,
+        "hex": "#18d498"
+      },
+      "view": "top",
+      "pixelCount": 186
+    },
+    {
+      "id": "top_panel_146",
+      "name": "top_panel_146",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 136,
+        "b": 12,
+        "hex": "#e0880c"
+      },
+      "view": "top",
+      "pixelCount": 184
+    },
+    {
+      "id": "top_panel_147",
+      "name": "top_panel_147",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 200,
+        "b": 36,
+        "hex": "#24c824"
+      },
+      "view": "top",
+      "pixelCount": 183
+    },
+    {
+      "id": "top_panel_148",
+      "name": "top_panel_148",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 220,
+        "b": 84,
+        "hex": "#0cdc54"
+      },
+      "view": "top",
+      "pixelCount": 183
+    },
+    {
+      "id": "top_panel_149",
+      "name": "top_panel_149",
+      "type": "unknown",
+      "color": {
+        "r": 248,
+        "g": 248,
+        "b": 248,
+        "hex": "#f8f8f8"
+      },
+      "view": "top",
+      "pixelCount": 178
+    },
+    {
+      "id": "top_panel_150",
+      "name": "top_panel_150",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 148,
+        "b": 60,
+        "hex": "#f4943c"
+      },
+      "view": "top",
+      "pixelCount": 177
+    },
+    {
+      "id": "top_panel_151",
+      "name": "top_panel_151",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 140,
+        "b": 84,
+        "hex": "#e48c54"
+      },
+      "view": "top",
+      "pixelCount": 174
+    },
+    {
+      "id": "top_panel_152",
+      "name": "top_panel_152",
+      "type": "unknown",
+      "color": {
+        "r": 100,
+        "g": 60,
+        "b": 248,
+        "hex": "#643cf8"
+      },
+      "view": "top",
+      "pixelCount": 173
+    },
+    {
+      "id": "top_panel_153",
+      "name": "top_panel_153",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 236,
+        "b": 120,
+        "hex": "#48ec78"
+      },
+      "view": "top",
+      "pixelCount": 171
+    },
+    {
+      "id": "top_panel_154",
+      "name": "top_panel_154",
+      "type": "unknown",
+      "color": {
+        "r": 132,
+        "g": 12,
+        "b": 220,
+        "hex": "#840cdc"
+      },
+      "view": "top",
+      "pixelCount": 169
+    },
+    {
+      "id": "top_panel_155",
+      "name": "top_panel_155",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 84,
+        "b": 12,
+        "hex": "#e4540c"
+      },
+      "view": "top",
+      "pixelCount": 167
+    },
+    {
+      "id": "top_panel_156",
+      "name": "top_panel_156",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 196,
+        "b": 156,
+        "hex": "#24c49c"
+      },
+      "view": "top",
+      "pixelCount": 167
+    },
+    {
+      "id": "top_panel_157",
+      "name": "top_panel_157",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 232,
+        "b": 84,
+        "hex": "#d4e854"
+      },
+      "view": "top",
+      "pixelCount": 165
+    },
+    {
+      "id": "top_panel_158",
+      "name": "top_panel_158",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 180,
+        "b": 212,
+        "hex": "#18b4d4"
+      },
+      "view": "top",
+      "pixelCount": 161
+    },
+    {
+      "id": "top_panel_159",
+      "name": "top_panel_159",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 220,
+        "b": 28,
+        "hex": "#0cdc1c"
+      },
+      "view": "top",
+      "pixelCount": 155
+    },
+    {
+      "id": "top_panel_160",
+      "name": "top_panel_160",
+      "type": "unknown",
+      "color": {
+        "r": 252,
+        "g": 252,
+        "b": 252,
+        "hex": "#fcfcfc"
+      },
+      "view": "top",
+      "pixelCount": 151
+    },
+    {
+      "id": "top_panel_161",
+      "name": "top_panel_161",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 208,
+        "b": 36,
+        "hex": "#50d024"
+      },
+      "view": "top",
+      "pixelCount": 150
+    },
+    {
+      "id": "top_panel_162",
+      "name": "top_panel_162",
+      "type": "unknown",
+      "color": {
+        "r": 136,
+        "g": 84,
+        "b": 224,
+        "hex": "#8854e0"
+      },
+      "view": "top",
+      "pixelCount": 150
+    },
+    {
+      "id": "Y01",
+      "name": "Y01",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 236,
+        "b": 72,
+        "hex": "#e4ec48"
+      },
+      "view": "view_2",
+      "pixelCount": 50647
+    },
+    {
+      "id": "M02",
+      "name": "M02",
+      "type": "unknown",
+      "color": {
+        "r": 156,
+        "g": 36,
+        "b": 196,
+        "hex": "#9c24c4"
+      },
+      "view": "view_2",
+      "pixelCount": 49022
+    },
+    {
+      "id": "Y03",
+      "name": "Y03",
+      "type": "unknown",
+      "color": {
+        "r": 128,
+        "g": 208,
+        "b": 24,
+        "hex": "#80d018"
+      },
+      "view": "view_2",
+      "pixelCount": 23282
+    },
+    {
+      "id": "M04",
+      "name": "M04",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 84,
+        "b": 204,
+        "hex": "#e054cc"
+      },
+      "view": "view_2",
+      "pixelCount": 22877
+    },
+    {
+      "id": "B05",
+      "name": "B05",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 36,
+        "b": 196,
+        "hex": "#2424c4"
+      },
+      "view": "view_2",
+      "pixelCount": 12461
+    },
+    {
+      "id": "G06",
+      "name": "G06",
+      "type": "unknown",
+      "color": {
+        "r": 112,
+        "g": 244,
+        "b": 60,
+        "hex": "#70f43c"
+      },
+      "view": "view_2",
+      "pixelCount": 12354
+    },
+    {
+      "id": "B07",
+      "name": "B07",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 104,
+        "b": 236,
+        "hex": "#4868ec"
+      },
+      "view": "view_2",
+      "pixelCount": 7711
+    },
+    {
+      "id": "G08",
+      "name": "G08",
+      "type": "unknown",
+      "color": {
+        "r": 112,
+        "g": 196,
+        "b": 36,
+        "hex": "#70c424"
+      },
+      "view": "view_2",
+      "pixelCount": 7645
+    },
+    {
+      "id": "M09",
+      "name": "M09",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 84,
+        "b": 172,
+        "hex": "#e054ac"
+      },
+      "view": "view_2",
+      "pixelCount": 5538
+    },
+    {
+      "id": "C10",
+      "name": "C10",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 236,
+        "b": 160,
+        "hex": "#48eca0"
+      },
+      "view": "view_2",
+      "pixelCount": 4774
+    },
+    {
+      "id": "M11",
+      "name": "M11",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 72,
+        "b": 184,
+        "hex": "#ec48b8"
+      },
+      "view": "view_2",
+      "pixelCount": 4554
+    },
+    {
+      "id": "R12",
+      "name": "R12",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 36,
+        "b": 36,
+        "hex": "#c42424"
+      },
+      "view": "view_2",
+      "pixelCount": 4459
+    },
+    {
+      "id": "C13",
+      "name": "C13",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 196,
+        "b": 196,
+        "hex": "#24c4c4"
+      },
+      "view": "view_2",
+      "pixelCount": 4444
+    },
+    {
+      "id": "C14",
+      "name": "C14",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 48,
+        "b": 48,
+        "hex": "#003030"
+      },
+      "view": "view_2",
+      "pixelCount": 4297
+    },
+    {
+      "id": "B15",
+      "name": "B15",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 12,
+        "b": 220,
+        "hex": "#540cdc"
+      },
+      "view": "view_2",
+      "pixelCount": 3557
+    },
+    {
+      "id": "Y16",
+      "name": "Y16",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 172,
+        "b": 84,
+        "hex": "#e0ac54"
+      },
+      "view": "view_2",
+      "pixelCount": 3506
+    },
+    {
+      "id": "G17",
+      "name": "G17",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 208,
+        "b": 24,
+        "hex": "#54d018"
+      },
+      "view": "view_2",
+      "pixelCount": 3277
+    },
+    {
+      "id": "R18",
+      "name": "R18",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 12,
+        "b": 44,
+        "hex": "#dc0c2c"
+      },
+      "view": "view_2",
+      "pixelCount": 3130
+    },
+    {
+      "id": "M19",
+      "name": "M19",
+      "type": "unknown",
+      "color": {
+        "r": 184,
+        "g": 12,
+        "b": 220,
+        "hex": "#b80cdc"
+      },
+      "view": "view_2",
+      "pixelCount": 3076
+    },
+    {
+      "id": "Y20",
+      "name": "Y20",
+      "type": "unknown",
+      "color": {
+        "r": 152,
+        "g": 196,
+        "b": 36,
+        "hex": "#98c424"
+      },
+      "view": "view_2",
+      "pixelCount": 2956
+    },
+    {
+      "id": "B21",
+      "name": "B21",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 144,
+        "b": 236,
+        "hex": "#4890ec"
+      },
+      "view": "view_2",
+      "pixelCount": 2937
+    },
+    {
+      "id": "M22",
+      "name": "M22",
+      "type": "unknown",
+      "color": {
+        "r": 116,
+        "g": 36,
+        "b": 196,
+        "hex": "#7424c4"
+      },
+      "view": "view_2",
+      "pixelCount": 2675
+    },
+    {
+      "id": "B23",
+      "name": "B23",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 68,
+        "b": 244,
+        "hex": "#3c44f4"
+      },
+      "view": "view_2",
+      "pixelCount": 2478
+    },
+    {
+      "id": "C24",
+      "name": "C24",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 152,
+        "b": 196,
+        "hex": "#2498c4"
+      },
+      "view": "view_2",
+      "pixelCount": 1986
+    },
+    {
+      "id": "R25",
+      "name": "R25",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 72,
+        "b": 144,
+        "hex": "#ec4890"
+      },
+      "view": "view_2",
+      "pixelCount": 1961
+    },
+    {
+      "id": "Y26",
+      "name": "Y26",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 192,
+        "b": 60,
+        "hex": "#f4c03c"
+      },
+      "view": "view_2",
+      "pixelCount": 1851
+    },
+    {
+      "id": "R27",
+      "name": "R27",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 40,
+        "b": 40,
+        "hex": "#282828"
+      },
+      "view": "view_2",
+      "pixelCount": 1848
+    },
+    {
+      "id": "C28",
+      "name": "C28",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 160,
+        "b": 244,
+        "hex": "#3ca0f4"
+      },
+      "view": "view_2",
+      "pixelCount": 1682
+    },
+    {
+      "id": "C29",
+      "name": "C29",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 60,
+        "b": 60,
+        "hex": "#383c3c"
+      },
+      "view": "view_2",
+      "pixelCount": 1452
+    },
+    {
+      "id": "Y30",
+      "name": "Y30",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 224,
+        "b": 84,
+        "hex": "#d0e054"
+      },
+      "view": "view_2",
+      "pixelCount": 1427
+    },
+    {
+      "id": "R31",
+      "name": "R31",
+      "type": "unknown",
+      "color": {
+        "r": 44,
+        "g": 44,
+        "b": 44,
+        "hex": "#2c2c2c"
+      },
+      "view": "view_2",
+      "pixelCount": 1422
+    },
+    {
+      "id": "R32",
+      "name": "R32",
+      "type": "unknown",
+      "color": {
+        "r": 48,
+        "g": 48,
+        "b": 48,
+        "hex": "#303030"
+      },
+      "view": "view_2",
+      "pixelCount": 1415
+    },
+    {
+      "id": "R33",
+      "name": "R33",
+      "type": "unknown",
+      "color": {
+        "r": 240,
+        "g": 240,
+        "b": 240,
+        "hex": "#f0f0f0"
+      },
+      "view": "view_2",
+      "pixelCount": 1304
+    },
+    {
+      "id": "B34",
+      "name": "B34",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 36,
+        "b": 40,
+        "hex": "#242428"
+      },
+      "view": "view_2",
+      "pixelCount": 1287
+    },
+    {
+      "id": "M35",
+      "name": "M35",
+      "type": "unknown",
+      "color": {
+        "r": 148,
+        "g": 24,
+        "b": 208,
+        "hex": "#9418d0"
+      },
+      "view": "view_2",
+      "pixelCount": 1270
+    },
+    {
+      "id": "B36",
+      "name": "B36",
+      "type": "unknown",
+      "color": {
+        "r": 100,
+        "g": 24,
+        "b": 208,
+        "hex": "#6418d0"
+      },
+      "view": "view_2",
+      "pixelCount": 1234
+    },
+    {
+      "id": "R37",
+      "name": "R37",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 56,
+        "b": 56,
+        "hex": "#383838"
+      },
+      "view": "view_2",
+      "pixelCount": 1233
+    },
+    {
+      "id": "C38",
+      "name": "C38",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 236,
+        "b": 204,
+        "hex": "#48eccc"
+      },
+      "view": "view_2",
+      "pixelCount": 1222
+    },
+    {
+      "id": "Y39",
+      "name": "Y39",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 240,
+        "b": 60,
+        "hex": "#f4f03c"
+      },
+      "view": "view_2",
+      "pixelCount": 1198
+    },
+    {
+      "id": "R40",
+      "name": "R40",
+      "type": "unknown",
+      "color": {
+        "r": 200,
+        "g": 200,
+        "b": 200,
+        "hex": "#c8c8c8"
+      },
+      "view": "view_2",
+      "pixelCount": 1178
+    },
+    {
+      "id": "R41",
+      "name": "R41",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 236,
+        "b": 236,
+        "hex": "#ececec"
+      },
+      "view": "view_2",
+      "pixelCount": 1123
+    },
+    {
+      "id": "B42",
+      "name": "B42",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 64,
+        "b": 68,
+        "hex": "#404044"
+      },
+      "view": "view_2",
+      "pixelCount": 1109
+    },
+    {
+      "id": "B43",
+      "name": "B43",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 60,
+        "b": 64,
+        "hex": "#3c3c40"
+      },
+      "view": "view_2",
+      "pixelCount": 1105
+    },
+    {
+      "id": "R44",
+      "name": "R44",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 120,
+        "b": 72,
+        "hex": "#ec7848"
+      },
+      "view": "view_2",
+      "pixelCount": 1105
+    },
+    {
+      "id": "C45",
+      "name": "C45",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 220,
+        "b": 136,
+        "hex": "#0cdc88"
+      },
+      "view": "view_2",
+      "pixelCount": 1089
+    },
+    {
+      "id": "R46",
+      "name": "R46",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 80,
+        "b": 80,
+        "hex": "#505050"
+      },
+      "view": "view_2",
+      "pixelCount": 1080
+    },
+    {
+      "id": "B47",
+      "name": "B47",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 40,
+        "b": 44,
+        "hex": "#28282c"
+      },
+      "view": "view_2",
+      "pixelCount": 1067
+    },
+    {
+      "id": "R48",
+      "name": "R48",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 56,
+        "b": 24,
+        "hex": "#d03818"
+      },
+      "view": "view_2",
+      "pixelCount": 1064
+    },
+    {
+      "id": "R49",
+      "name": "R49",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 32,
+        "b": 12,
+        "hex": "#dc200c"
+      },
+      "view": "view_2",
+      "pixelCount": 1059
+    },
+    {
+      "id": "C50",
+      "name": "C50",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 44,
+        "b": 44,
+        "hex": "#002c2c"
+      },
+      "view": "view_2",
+      "pixelCount": 1053
+    },
+    {
+      "id": "B51",
+      "name": "B51",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 56,
+        "b": 60,
+        "hex": "#38383c"
+      },
+      "view": "view_2",
+      "pixelCount": 1041
+    },
+    {
+      "id": "R52",
+      "name": "R52",
+      "type": "unknown",
+      "color": {
+        "r": 52,
+        "g": 52,
+        "b": 52,
+        "hex": "#343434"
+      },
+      "view": "view_2",
+      "pixelCount": 1035
+    },
+    {
+      "id": "G53",
+      "name": "G53",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 224,
+        "b": 136,
+        "hex": "#54e088"
+      },
+      "view": "view_2",
+      "pixelCount": 1025
+    },
+    {
+      "id": "R54",
+      "name": "R54",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 60,
+        "b": 60,
+        "hex": "#3c3c3c"
+      },
+      "view": "view_2",
+      "pixelCount": 1019
+    },
+    {
+      "id": "B55",
+      "name": "B55",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 72,
+        "b": 76,
+        "hex": "#48484c"
+      },
+      "view": "view_2",
+      "pixelCount": 998
+    },
+    {
+      "id": "B56",
+      "name": "B56",
+      "type": "unknown",
+      "color": {
+        "r": 120,
+        "g": 72,
+        "b": 236,
+        "hex": "#7848ec"
+      },
+      "view": "view_2",
+      "pixelCount": 953
+    },
+    {
+      "id": "C57",
+      "name": "C57",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 40,
+        "b": 40,
+        "hex": "#242828"
+      },
+      "view": "view_2",
+      "pixelCount": 897
+    },
+    {
+      "id": "G58",
+      "name": "G58",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 236,
+        "b": 120,
+        "hex": "#48ec78"
+      },
+      "view": "view_2",
+      "pixelCount": 897
+    },
+    {
+      "id": "R59",
+      "name": "R59",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 212,
+        "b": 212,
+        "hex": "#d4d4d4"
+      },
+      "view": "view_2",
+      "pixelCount": 896
+    },
+    {
+      "id": "B60",
+      "name": "B60",
+      "type": "unknown",
+      "color": {
+        "r": 48,
+        "g": 48,
+        "b": 52,
+        "hex": "#303034"
+      },
+      "view": "view_2",
+      "pixelCount": 853
+    },
+    {
+      "id": "B61",
+      "name": "B61",
+      "type": "unknown",
+      "color": {
+        "r": 52,
+        "g": 52,
+        "b": 56,
+        "hex": "#343438"
+      },
+      "view": "view_2",
+      "pixelCount": 829
+    },
+    {
+      "id": "R62",
+      "name": "R62",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 208,
+        "b": 208,
+        "hex": "#d0d0d0"
+      },
+      "view": "view_2",
+      "pixelCount": 825
+    },
+    {
+      "id": "Y63",
+      "name": "Y63",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 160,
+        "b": 36,
+        "hex": "#c4a024"
+      },
+      "view": "view_2",
+      "pixelCount": 823
+    },
+    {
+      "id": "R64",
+      "name": "R64",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 64,
+        "b": 64,
+        "hex": "#404040"
+      },
+      "view": "view_2",
+      "pixelCount": 816
+    },
+    {
+      "id": "B65",
+      "name": "B65",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 68,
+        "b": 72,
+        "hex": "#444448"
+      },
+      "view": "view_2",
+      "pixelCount": 804
+    },
+    {
+      "id": "B66",
+      "name": "B66",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 80,
+        "b": 84,
+        "hex": "#505054"
+      },
+      "view": "view_2",
+      "pixelCount": 798
+    },
+    {
+      "id": "R67",
+      "name": "R67",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 204,
+        "b": 204,
+        "hex": "#cccccc"
+      },
+      "view": "view_2",
+      "pixelCount": 789
+    },
+    {
+      "id": "R68",
+      "name": "R68",
+      "type": "unknown",
+      "color": {
+        "r": 236,
+        "g": 80,
+        "b": 72,
+        "hex": "#ec5048"
+      },
+      "view": "view_2",
+      "pixelCount": 771
+    },
+    {
+      "id": "B69",
+      "name": "B69",
+      "type": "unknown",
+      "color": {
+        "r": 44,
+        "g": 44,
+        "b": 48,
+        "hex": "#2c2c30"
+      },
+      "view": "view_2",
+      "pixelCount": 757
+    },
+    {
+      "id": "C70",
+      "name": "C70",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 224,
+        "b": 236,
+        "hex": "#48e0ec"
+      },
+      "view": "view_2",
+      "pixelCount": 753
+    },
+    {
+      "id": "B71",
+      "name": "B71",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 76,
+        "b": 80,
+        "hex": "#4c4c50"
+      },
+      "view": "view_2",
+      "pixelCount": 747
+    },
+    {
+      "id": "B72",
+      "name": "B72",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 100,
+        "b": 224,
+        "hex": "#5464e0"
+      },
+      "view": "view_2",
+      "pixelCount": 733
+    },
+    {
+      "id": "B73",
+      "name": "B73",
+      "type": "unknown",
+      "color": {
+        "r": 232,
+        "g": 232,
+        "b": 236,
+        "hex": "#e8e8ec"
+      },
+      "view": "view_2",
+      "pixelCount": 685
+    },
+    {
+      "id": "R74",
+      "name": "R74",
+      "type": "unknown",
+      "color": {
+        "r": 216,
+        "g": 216,
+        "b": 216,
+        "hex": "#d8d8d8"
+      },
+      "view": "view_2",
+      "pixelCount": 682
+    },
+    {
+      "id": "R75",
+      "name": "R75",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 228,
+        "b": 228,
+        "hex": "#e4e4e4"
+      },
+      "view": "view_2",
+      "pixelCount": 669
+    },
+    {
+      "id": "R76",
+      "name": "R76",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 72,
+        "b": 72,
+        "hex": "#484848"
+      },
+      "view": "view_2",
+      "pixelCount": 656
+    },
+    {
+      "id": "C77",
+      "name": "C77",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 44,
+        "b": 44,
+        "hex": "#282c2c"
+      },
+      "view": "view_2",
+      "pixelCount": 649
+    },
+    {
+      "id": "R78",
+      "name": "R78",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 224,
+        "b": 224,
+        "hex": "#e0e0e0"
+      },
+      "view": "view_2",
+      "pixelCount": 632
+    },
+    {
+      "id": "R79",
+      "name": "R79",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 220,
+        "b": 220,
+        "hex": "#dcdcdc"
+      },
+      "view": "view_2",
+      "pixelCount": 630
+    },
+    {
+      "id": "R80",
+      "name": "R80",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 104,
+        "b": 24,
+        "hex": "#d06818"
+      },
+      "view": "view_2",
+      "pixelCount": 603
+    },
+    {
+      "id": "R81",
+      "name": "R81",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 68,
+        "b": 68,
+        "hex": "#444444"
+      },
+      "view": "view_2",
+      "pixelCount": 599
+    },
+    {
+      "id": "C82",
+      "name": "C82",
+      "type": "unknown",
+      "color": {
+        "r": 200,
+        "g": 208,
+        "b": 212,
+        "hex": "#c8d0d4"
+      },
+      "view": "view_2",
+      "pixelCount": 585
+    },
+    {
+      "id": "M83",
+      "name": "M83",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 56,
+        "b": 60,
+        "hex": "#3c383c"
+      },
+      "view": "view_2",
+      "pixelCount": 581
+    },
+    {
+      "id": "C84",
+      "name": "C84",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 208,
+        "b": 208,
+        "hex": "#ccd0d0"
+      },
+      "view": "view_2",
+      "pixelCount": 578
+    },
+    {
+      "id": "M85",
+      "name": "M85",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 52,
+        "b": 56,
+        "hex": "#383438"
+      },
+      "view": "view_2",
+      "pixelCount": 564
+    },
+    {
+      "id": "M86",
+      "name": "M86",
+      "type": "unknown",
+      "color": {
+        "r": 160,
+        "g": 36,
+        "b": 200,
+        "hex": "#a024c8"
+      },
+      "view": "view_2",
+      "pixelCount": 550
+    },
+    {
+      "id": "C87",
+      "name": "C87",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 52,
+        "b": 52,
+        "hex": "#003434"
+      },
+      "view": "view_2",
+      "pixelCount": 542
+    },
+    {
+      "id": "C88",
+      "name": "C88",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 72,
+        "b": 72,
+        "hex": "#444848"
+      },
+      "view": "view_2",
+      "pixelCount": 541
+    },
+    {
+      "id": "M89",
+      "name": "M89",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 12,
+        "b": 148,
+        "hex": "#dc0c94"
+      },
+      "view": "view_2",
+      "pixelCount": 535
+    },
+    {
+      "id": "C90",
+      "name": "C90",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 244,
+        "b": 196,
+        "hex": "#3cf4c4"
+      },
+      "view": "view_2",
+      "pixelCount": 533
+    },
+    {
+      "id": "R91",
+      "name": "R91",
+      "type": "unknown",
+      "color": {
+        "r": 232,
+        "g": 232,
+        "b": 232,
+        "hex": "#e8e8e8"
+      },
+      "view": "view_2",
+      "pixelCount": 531
+    },
+    {
+      "id": "M92",
+      "name": "M92",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 68,
+        "b": 72,
+        "hex": "#484448"
+      },
+      "view": "view_2",
+      "pixelCount": 527
+    },
+    {
+      "id": "M93",
+      "name": "M93",
+      "type": "unknown",
+      "color": {
+        "r": 160,
+        "g": 36,
+        "b": 196,
+        "hex": "#a024c4"
+      },
+      "view": "view_2",
+      "pixelCount": 514
+    },
+    {
+      "id": "C94",
+      "name": "C94",
+      "type": "unknown",
+      "color": {
+        "r": 48,
+        "g": 52,
+        "b": 52,
+        "hex": "#303434"
+      },
+      "view": "view_2",
+      "pixelCount": 511
+    },
+    {
+      "id": "G95",
+      "name": "G95",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 236,
+        "b": 80,
+        "hex": "#48ec50"
+      },
+      "view": "view_2",
+      "pixelCount": 510
+    },
+    {
+      "id": "R96",
+      "name": "R96",
+      "type": "unknown",
+      "color": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "hex": "#ffffff"
+      },
+      "view": "view_2",
+      "pixelCount": 504
+    },
+    {
+      "id": "C97",
+      "name": "C97",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 56,
+        "b": 56,
+        "hex": "#003838"
+      },
+      "view": "view_2",
+      "pixelCount": 501
+    },
+    {
+      "id": "Y98",
+      "name": "Y98",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 132,
+        "b": 12,
+        "hex": "#dc840c"
+      },
+      "view": "view_2",
+      "pixelCount": 500
+    },
+    {
+      "id": "C99",
+      "name": "C99",
+      "type": "unknown",
+      "color": {
+        "r": 52,
+        "g": 56,
+        "b": 56,
+        "hex": "#343838"
+      },
+      "view": "view_2",
+      "pixelCount": 494
+    },
+    {
+      "id": "C100",
+      "name": "C100",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 68,
+        "b": 68,
+        "hex": "#004444"
+      },
+      "view": "view_2",
+      "pixelCount": 494
+    },
+    {
+      "id": "M101",
+      "name": "M101",
+      "type": "unknown",
+      "color": {
+        "r": 44,
+        "g": 40,
+        "b": 44,
+        "hex": "#2c282c"
+      },
+      "view": "view_2",
+      "pixelCount": 487
+    },
+    {
+      "id": "R102",
+      "name": "R102",
+      "type": "unknown",
+      "color": {
+        "r": 252,
+        "g": 252,
+        "b": 252,
+        "hex": "#fcfcfc"
+      },
+      "view": "view_2",
+      "pixelCount": 483
+    },
+    {
+      "id": "R103",
+      "name": "R103",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 76,
+        "b": 76,
+        "hex": "#4c4c4c"
+      },
+      "view": "view_2",
+      "pixelCount": 483
+    },
+    {
+      "id": "C104",
+      "name": "C104",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 68,
+        "b": 68,
+        "hex": "#404444"
+      },
+      "view": "view_2",
+      "pixelCount": 482
+    },
+    {
+      "id": "M105",
+      "name": "M105",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 60,
+        "b": 64,
+        "hex": "#403c40"
+      },
+      "view": "view_2",
+      "pixelCount": 475
+    },
+    {
+      "id": "R106",
+      "name": "R106",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 36,
+        "b": 72,
+        "hex": "#c42448"
+      },
+      "view": "view_2",
+      "pixelCount": 472
+    },
+    {
+      "id": "R107",
+      "name": "R107",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 244,
+        "b": 244,
+        "hex": "#f4f4f4"
+      },
+      "view": "view_2",
+      "pixelCount": 469
+    },
+    {
+      "id": "M108",
+      "name": "M108",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 24,
+        "b": 128,
+        "hex": "#d01880"
+      },
+      "view": "view_2",
+      "pixelCount": 456
+    },
+    {
+      "id": "M109",
+      "name": "M109",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 72,
+        "b": 76,
+        "hex": "#4c484c"
+      },
+      "view": "view_2",
+      "pixelCount": 454
+    },
+    {
+      "id": "G110",
+      "name": "G110",
+      "type": "unknown",
+      "color": {
+        "r": 104,
+        "g": 236,
+        "b": 72,
+        "hex": "#68ec48"
+      },
+      "view": "view_2",
+      "pixelCount": 454
+    },
+    {
+      "id": "C111",
+      "name": "C111",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 224,
+        "b": 208,
+        "hex": "#54e0d0"
+      },
+      "view": "view_2",
+      "pixelCount": 443
+    },
+    {
+      "id": "C112",
+      "name": "C112",
+      "type": "unknown",
+      "color": {
+        "r": 44,
+        "g": 48,
+        "b": 48,
+        "hex": "#2c3030"
+      },
+      "view": "view_2",
+      "pixelCount": 427
+    },
+    {
+      "id": "C113",
+      "name": "C113",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 76,
+        "b": 76,
+        "hex": "#484c4c"
+      },
+      "view": "view_2",
+      "pixelCount": 426
+    },
+    {
+      "id": "B114",
+      "name": "B114",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 148,
+        "b": 240,
+        "hex": "#4894f0"
+      },
+      "view": "view_2",
+      "pixelCount": 421
+    },
+    {
+      "id": "M115",
+      "name": "M115",
+      "type": "unknown",
+      "color": {
+        "r": 48,
+        "g": 44,
+        "b": 48,
+        "hex": "#302c30"
+      },
+      "view": "view_2",
+      "pixelCount": 415
+    },
+    {
+      "id": "C116",
+      "name": "C116",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 64,
+        "b": 64,
+        "hex": "#3c4040"
+      },
+      "view": "view_2",
+      "pixelCount": 414
+    },
+    {
+      "id": "M117",
+      "name": "M117",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 72,
+        "b": 80,
+        "hex": "#4c4850"
+      },
+      "view": "view_2",
+      "pixelCount": 406
+    },
+    {
+      "id": "C118",
+      "name": "C118",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 84,
+        "b": 84,
+        "hex": "#505454"
+      },
+      "view": "view_2",
+      "pixelCount": 397
+    },
+    {
+      "id": "B119",
+      "name": "B119",
+      "type": "unknown",
+      "color": {
+        "r": 148,
+        "g": 60,
+        "b": 244,
+        "hex": "#943cf4"
+      },
+      "view": "view_2",
+      "pixelCount": 395
+    },
+    {
+      "id": "C120",
+      "name": "C120",
+      "type": "unknown",
+      "color": {
+        "r": 216,
+        "g": 224,
+        "b": 228,
+        "hex": "#d8e0e4"
+      },
+      "view": "view_2",
+      "pixelCount": 394
+    },
+    {
+      "id": "C121",
+      "name": "C121",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 204,
+        "b": 224,
+        "hex": "#54cce0"
+      },
+      "view": "view_2",
+      "pixelCount": 394
+    },
+    {
+      "id": "Y122",
+      "name": "Y122",
+      "type": "unknown",
+      "color": {
+        "r": 156,
+        "g": 200,
+        "b": 36,
+        "hex": "#9cc824"
+      },
+      "view": "view_2",
+      "pixelCount": 392
+    },
+    {
+      "id": "C123",
+      "name": "C123",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 40,
+        "b": 40,
+        "hex": "#002828"
+      },
+      "view": "view_2",
+      "pixelCount": 391
+    },
+    {
+      "id": "G124",
+      "name": "G124",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 208,
+        "b": 24,
+        "hex": "#24d018"
+      },
+      "view": "view_2",
+      "pixelCount": 389
+    },
+    {
+      "id": "B125",
+      "name": "B125",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 44,
+        "b": 48,
+        "hex": "#282c30"
+      },
+      "view": "view_2",
+      "pixelCount": 387
+    },
+    {
+      "id": "R126",
+      "name": "R126",
+      "type": "unknown",
+      "color": {
+        "r": 248,
+        "g": 248,
+        "b": 248,
+        "hex": "#f8f8f8"
+      },
+      "view": "view_2",
+      "pixelCount": 384
+    },
+    {
+      "id": "M127",
+      "name": "M127",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 64,
+        "b": 68,
+        "hex": "#444044"
+      },
+      "view": "view_2",
+      "pixelCount": 384
+    },
+    {
+      "id": "C128",
+      "name": "C128",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 212,
+        "b": 216,
+        "hex": "#ccd4d8"
+      },
+      "view": "view_2",
+      "pixelCount": 384
+    },
+    {
+      "id": "R129",
+      "name": "R129",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 24,
+        "b": 36,
+        "hex": "#d01824"
+      },
+      "view": "view_2",
+      "pixelCount": 383
+    },
+    {
+      "id": "C130",
+      "name": "C130",
+      "type": "unknown",
+      "color": {
+        "r": 200,
+        "g": 204,
+        "b": 208,
+        "hex": "#c8ccd0"
+      },
+      "view": "view_2",
+      "pixelCount": 379
+    },
+    {
+      "id": "M131",
+      "name": "M131",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 36,
+        "b": 40,
+        "hex": "#282428"
+      },
+      "view": "view_2",
+      "pixelCount": 376
+    },
+    {
+      "id": "Y132",
+      "name": "Y132",
+      "type": "unknown",
+      "color": {
+        "r": 176,
+        "g": 208,
+        "b": 24,
+        "hex": "#b0d018"
+      },
+      "view": "view_2",
+      "pixelCount": 375
+    },
+    {
+      "id": "M133",
+      "name": "M133",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 84,
+        "b": 208,
+        "hex": "#e454d0"
+      },
+      "view": "view_2",
+      "pixelCount": 373
+    },
+    {
+      "id": "C134",
+      "name": "C134",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 216,
+        "b": 220,
+        "hex": "#d0d8dc"
+      },
+      "view": "view_2",
+      "pixelCount": 372
+    },
+    {
+      "id": "M135",
+      "name": "M135",
+      "type": "unknown",
+      "color": {
+        "r": 52,
+        "g": 48,
+        "b": 52,
+        "hex": "#343034"
+      },
+      "view": "view_2",
+      "pixelCount": 358
+    },
+    {
+      "id": "M136",
+      "name": "M136",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 84,
+        "b": 224,
+        "hex": "#d054e0"
+      },
+      "view": "view_2",
+      "pixelCount": 350
+    },
+    {
+      "id": "B137",
+      "name": "B137",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 76,
+        "b": 80,
+        "hex": "#484c50"
+      },
+      "view": "view_2",
+      "pixelCount": 348
+    },
+    {
+      "id": "G138",
+      "name": "G138",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 244,
+        "b": 100,
+        "hex": "#3cf464"
+      },
+      "view": "view_2",
+      "pixelCount": 347
+    },
+    {
+      "id": "C139",
+      "name": "C139",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 64,
+        "b": 64,
+        "hex": "#004040"
+      },
+      "view": "view_2",
+      "pixelCount": 344
+    },
+    {
+      "id": "C140",
+      "name": "C140",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 144,
+        "b": 144,
+        "hex": "#009090"
+      },
+      "view": "view_2",
+      "pixelCount": 341
+    },
+    {
+      "id": "R141",
+      "name": "R141",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 36,
+        "b": 112,
+        "hex": "#c42470"
+      },
+      "view": "view_2",
+      "pixelCount": 340
+    },
+    {
+      "id": "B142",
+      "name": "B142",
+      "type": "unknown",
+      "color": {
+        "r": 216,
+        "g": 224,
+        "b": 232,
+        "hex": "#d8e0e8"
+      },
+      "view": "view_2",
+      "pixelCount": 337
+    },
+    {
+      "id": "C143",
+      "name": "C143",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 80,
+        "b": 80,
+        "hex": "#4c5050"
+      },
+      "view": "view_2",
+      "pixelCount": 327
+    },
+    {
+      "id": "M144",
+      "name": "M144",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 76,
+        "b": 84,
+        "hex": "#504c54"
+      },
+      "view": "view_2",
+      "pixelCount": 326
+    },
+    {
+      "id": "M145",
+      "name": "M145",
+      "type": "unknown",
+      "color": {
+        "r": 232,
+        "g": 84,
+        "b": 176,
+        "hex": "#e854b0"
+      },
+      "view": "view_2",
+      "pixelCount": 326
+    },
+    {
+      "id": "C146",
+      "name": "C146",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 72,
+        "b": 72,
+        "hex": "#004848"
+      },
+      "view": "view_2",
+      "pixelCount": 324
+    },
+    {
+      "id": "B147",
+      "name": "B147",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 216,
+        "b": 220,
+        "hex": "#d4d8dc"
+      },
+      "view": "view_2",
+      "pixelCount": 321
+    },
+    {
+      "id": "C148",
+      "name": "C148",
+      "type": "unknown",
+      "color": {
+        "r": 0,
+        "g": 60,
+        "b": 60,
+        "hex": "#003c3c"
+      },
+      "view": "view_2",
+      "pixelCount": 314
+    },
+    {
+      "id": "B149",
+      "name": "B149",
+      "type": "unknown",
+      "color": {
+        "r": 100,
+        "g": 60,
+        "b": 244,
+        "hex": "#643cf4"
+      },
+      "view": "view_2",
+      "pixelCount": 313
+    },
+    {
+      "id": "M150",
+      "name": "M150",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 68,
+        "b": 76,
+        "hex": "#48444c"
+      },
+      "view": "view_2",
+      "pixelCount": 303
+    },
+    {
+      "id": "Y151",
+      "name": "Y151",
+      "type": "unknown",
+      "color": {
+        "r": 232,
+        "g": 240,
+        "b": 72,
+        "hex": "#e8f048"
+      },
+      "view": "view_2",
+      "pixelCount": 303
+    },
+    {
+      "id": "C152",
+      "name": "C152",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 216,
+        "b": 216,
+        "hex": "#d4d8d8"
+      },
+      "view": "view_2",
+      "pixelCount": 299
+    },
+    {
+      "id": "G153",
+      "name": "G153",
+      "type": "unknown",
+      "color": {
+        "r": 116,
+        "g": 200,
+        "b": 36,
+        "hex": "#74c824"
+      },
+      "view": "view_2",
+      "pixelCount": 296
+    },
+    {
+      "id": "C154",
+      "name": "C154",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 128,
+        "b": 208,
+        "hex": "#1880d0"
+      },
+      "view": "view_2",
+      "pixelCount": 287
+    },
+    {
+      "id": "G155",
+      "name": "G155",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 220,
+        "b": 84,
+        "hex": "#0cdc54"
+      },
+      "view": "view_2",
+      "pixelCount": 287
+    },
+    {
+      "id": "R156",
+      "name": "R156",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 60,
+        "b": 116,
+        "hex": "#f43c74"
+      },
+      "view": "view_2",
+      "pixelCount": 285
+    },
+    {
+      "id": "M157",
+      "name": "M157",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 64,
+        "b": 72,
+        "hex": "#444048"
+      },
+      "view": "view_2",
+      "pixelCount": 284
+    },
+    {
+      "id": "Y158",
+      "name": "Y158",
+      "type": "unknown",
+      "color": {
+        "r": 156,
+        "g": 196,
+        "b": 36,
+        "hex": "#9cc424"
+      },
+      "view": "view_2",
+      "pixelCount": 279
+    },
+    {
+      "id": "B159",
+      "name": "B159",
+      "type": "unknown",
+      "color": {
+        "r": 40,
+        "g": 36,
+        "b": 208,
+        "hex": "#2824d0"
+      },
+      "view": "view_2",
+      "pixelCount": 275
+    },
+    {
+      "id": "G160",
+      "name": "G160",
+      "type": "unknown",
+      "color": {
+        "r": 120,
+        "g": 255,
+        "b": 64,
+        "hex": "#78ff40"
+      },
+      "view": "view_2",
+      "pixelCount": 267
+    },
+    {
+      "id": "M161",
+      "name": "M161",
+      "type": "unknown",
+      "color": {
+        "r": 124,
+        "g": 36,
+        "b": 208,
+        "hex": "#7c24d0"
+      },
+      "view": "view_2",
+      "pixelCount": 264
+    },
+    {
+      "id": "G162",
+      "name": "G162",
+      "type": "unknown",
+      "color": {
+        "r": 116,
+        "g": 252,
+        "b": 64,
+        "hex": "#74fc40"
+      },
+      "view": "view_2",
+      "pixelCount": 264
+    },
+    {
+      "id": "R163",
+      "name": "R163",
+      "type": "unknown",
+      "color": {
+        "r": 244,
+        "g": 104,
+        "b": 60,
+        "hex": "#f4683c"
+      },
+      "view": "view_2",
+      "pixelCount": 256
+    },
+    {
+      "id": "G164",
+      "name": "G164",
+      "type": "unknown",
+      "color": {
+        "r": 84,
+        "g": 212,
+        "b": 24,
+        "hex": "#54d418"
+      },
+      "view": "view_2",
+      "pixelCount": 249
+    },
+    {
+      "id": "B165",
+      "name": "B165",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 36,
+        "b": 200,
+        "hex": "#2424c8"
+      },
+      "view": "view_2",
+      "pixelCount": 249
+    },
+    {
+      "id": "Y166",
+      "name": "Y166",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 188,
+        "b": 12,
+        "hex": "#dcbc0c"
+      },
+      "view": "view_2",
+      "pixelCount": 246
+    },
+    {
+      "id": "C167",
+      "name": "C167",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 220,
+        "b": 224,
+        "hex": "#d4dce0"
+      },
+      "view": "view_2",
+      "pixelCount": 244
+    },
+    {
+      "id": "B168",
+      "name": "B168",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 84,
+        "b": 88,
+        "hex": "#505458"
+      },
+      "view": "view_2",
+      "pixelCount": 240
+    },
+    {
+      "id": "Y169",
+      "name": "Y169",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 196,
+        "b": 36,
+        "hex": "#c4c424"
+      },
+      "view": "view_2",
+      "pixelCount": 239
+    },
+    {
+      "id": "M170",
+      "name": "M170",
+      "type": "unknown",
+      "color": {
+        "r": 164,
+        "g": 72,
+        "b": 236,
+        "hex": "#a448ec"
+      },
+      "view": "view_2",
+      "pixelCount": 229
+    },
+    {
+      "id": "C171",
+      "name": "C171",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 212,
+        "b": 212,
+        "hex": "#d0d4d4"
+      },
+      "view": "view_2",
+      "pixelCount": 228
+    },
+    {
+      "id": "M172",
+      "name": "M172",
+      "type": "unknown",
+      "color": {
+        "r": 184,
+        "g": 68,
+        "b": 140,
+        "hex": "#b8448c"
+      },
+      "view": "view_2",
+      "pixelCount": 225
+    },
+    {
+      "id": "M173",
+      "name": "M173",
+      "type": "unknown",
+      "color": {
+        "r": 64,
+        "g": 60,
+        "b": 68,
+        "hex": "#403c44"
+      },
+      "view": "view_2",
+      "pixelCount": 220
+    },
+    {
+      "id": "B174",
+      "name": "B174",
+      "type": "unknown",
+      "color": {
+        "r": 24,
+        "g": 24,
+        "b": 124,
+        "hex": "#18187c"
+      },
+      "view": "view_2",
+      "pixelCount": 218
+    },
+    {
+      "id": "G175",
+      "name": "G175",
+      "type": "unknown",
+      "color": {
+        "r": 108,
+        "g": 232,
+        "b": 60,
+        "hex": "#6ce83c"
+      },
+      "view": "view_2",
+      "pixelCount": 218
+    },
+    {
+      "id": "B176",
+      "name": "B176",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 80,
+        "b": 84,
+        "hex": "#4c5054"
+      },
+      "view": "view_2",
+      "pixelCount": 212
+    },
+    {
+      "id": "B177",
+      "name": "B177",
+      "type": "unknown",
+      "color": {
+        "r": 68,
+        "g": 72,
+        "b": 76,
+        "hex": "#44484c"
+      },
+      "view": "view_2",
+      "pixelCount": 208
+    },
+    {
+      "id": "B178",
+      "name": "B178",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 32,
+        "b": 184,
+        "hex": "#2420b8"
+      },
+      "view": "view_2",
+      "pixelCount": 208
+    },
+    {
+      "id": "M179",
+      "name": "M179",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 76,
+        "b": 80,
+        "hex": "#504c50"
+      },
+      "view": "view_2",
+      "pixelCount": 207
+    },
+    {
+      "id": "C180",
+      "name": "C180",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 228,
+        "b": 228,
+        "hex": "#e0e4e4"
+      },
+      "view": "view_2",
+      "pixelCount": 206
+    },
+    {
+      "id": "G181",
+      "name": "G181",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 156,
+        "b": 40,
+        "hex": "#489c28"
+      },
+      "view": "view_2",
+      "pixelCount": 206
+    },
+    {
+      "id": "C182",
+      "name": "C182",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 224,
+        "b": 224,
+        "hex": "#dce0e0"
+      },
+      "view": "view_2",
+      "pixelCount": 201
+    },
+    {
+      "id": "Y183",
+      "name": "Y183",
+      "type": "unknown",
+      "color": {
+        "r": 224,
+        "g": 236,
+        "b": 72,
+        "hex": "#e0ec48"
+      },
+      "view": "view_2",
+      "pixelCount": 201
+    },
+    {
+      "id": "M184",
+      "name": "M184",
+      "type": "unknown",
+      "color": {
+        "r": 248,
+        "g": 76,
+        "b": 196,
+        "hex": "#f84cc4"
+      },
+      "view": "view_2",
+      "pixelCount": 201
+    },
+    {
+      "id": "C185",
+      "name": "C185",
+      "type": "unknown",
+      "color": {
+        "r": 36,
+        "g": 204,
+        "b": 208,
+        "hex": "#24ccd0"
+      },
+      "view": "view_2",
+      "pixelCount": 199
+    },
+    {
+      "id": "B186",
+      "name": "B186",
+      "type": "unknown",
+      "color": {
+        "r": 56,
+        "g": 24,
+        "b": 208,
+        "hex": "#3818d0"
+      },
+      "view": "view_2",
+      "pixelCount": 198
+    },
+    {
+      "id": "C187",
+      "name": "C187",
+      "type": "unknown",
+      "color": {
+        "r": 216,
+        "g": 220,
+        "b": 220,
+        "hex": "#d8dcdc"
+      },
+      "view": "view_2",
+      "pixelCount": 195
+    },
+    {
+      "id": "C188",
+      "name": "C188",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 216,
+        "b": 220,
+        "hex": "#ccd8dc"
+      },
+      "view": "view_2",
+      "pixelCount": 192
+    },
+    {
+      "id": "B189",
+      "name": "B189",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 148,
+        "b": 236,
+        "hex": "#4894ec"
+      },
+      "view": "view_2",
+      "pixelCount": 190
+    },
+    {
+      "id": "M190",
+      "name": "M190",
+      "type": "unknown",
+      "color": {
+        "r": 196,
+        "g": 12,
+        "b": 232,
+        "hex": "#c40ce8"
+      },
+      "view": "view_2",
+      "pixelCount": 189
+    },
+    {
+      "id": "C191",
+      "name": "C191",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 212,
+        "b": 216,
+        "hex": "#d0d4d8"
+      },
+      "view": "view_2",
+      "pixelCount": 186
+    },
+    {
+      "id": "G192",
+      "name": "G192",
+      "type": "unknown",
+      "color": {
+        "r": 60,
+        "g": 244,
+        "b": 148,
+        "hex": "#3cf494"
+      },
+      "view": "view_2",
+      "pixelCount": 185
+    },
+    {
+      "id": "B193",
+      "name": "B193",
+      "type": "unknown",
+      "color": {
+        "r": 204,
+        "g": 208,
+        "b": 212,
+        "hex": "#ccd0d4"
+      },
+      "view": "view_2",
+      "pixelCount": 184
+    },
+    {
+      "id": "G194",
+      "name": "G194",
+      "type": "unknown",
+      "color": {
+        "r": 100,
+        "g": 224,
+        "b": 84,
+        "hex": "#64e054"
+      },
+      "view": "view_2",
+      "pixelCount": 184
+    },
+    {
+      "id": "M195",
+      "name": "M195",
+      "type": "unknown",
+      "color": {
+        "r": 120,
+        "g": 8,
+        "b": 140,
+        "hex": "#78088c"
+      },
+      "view": "view_2",
+      "pixelCount": 183
+    },
+    {
+      "id": "B196",
+      "name": "B196",
+      "type": "unknown",
+      "color": {
+        "r": 76,
+        "g": 108,
+        "b": 248,
+        "hex": "#4c6cf8"
+      },
+      "view": "view_2",
+      "pixelCount": 183
+    },
+    {
+      "id": "C197",
+      "name": "C197",
+      "type": "unknown",
+      "color": {
+        "r": 80,
+        "g": 88,
+        "b": 92,
+        "hex": "#50585c"
+      },
+      "view": "view_2",
+      "pixelCount": 182
+    },
+    {
+      "id": "G198",
+      "name": "G198",
+      "type": "unknown",
+      "color": {
+        "r": 212,
+        "g": 216,
+        "b": 212,
+        "hex": "#d4d8d4"
+      },
+      "view": "view_2",
+      "pixelCount": 181
+    },
+    {
+      "id": "Y199",
+      "name": "Y199",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 240,
+        "b": 72,
+        "hex": "#e4f048"
+      },
+      "view": "view_2",
+      "pixelCount": 179
+    },
+    {
+      "id": "Y200",
+      "name": "Y200",
+      "type": "unknown",
+      "color": {
+        "r": 128,
+        "g": 212,
+        "b": 24,
+        "hex": "#80d418"
+      },
+      "view": "view_2",
+      "pixelCount": 177
+    },
+    {
+      "id": "C201",
+      "name": "C201",
+      "type": "unknown",
+      "color": {
+        "r": 12,
+        "g": 200,
+        "b": 220,
+        "hex": "#0cc8dc"
+      },
+      "view": "view_2",
+      "pixelCount": 176
+    },
+    {
+      "id": "Y202",
+      "name": "Y202",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 176,
+        "b": 84,
+        "hex": "#e4b054"
+      },
+      "view": "view_2",
+      "pixelCount": 175
+    },
+    {
+      "id": "C203",
+      "name": "C203",
+      "type": "unknown",
+      "color": {
+        "r": 72,
+        "g": 188,
+        "b": 236,
+        "hex": "#48bcec"
+      },
+      "view": "view_2",
+      "pixelCount": 174
+    },
+    {
+      "id": "M204",
+      "name": "M204",
+      "type": "unknown",
+      "color": {
+        "r": 172,
+        "g": 84,
+        "b": 224,
+        "hex": "#ac54e0"
+      },
+      "view": "view_2",
+      "pixelCount": 173
+    },
+    {
+      "id": "C205",
+      "name": "C205",
+      "type": "unknown",
+      "color": {
+        "r": 228,
+        "g": 232,
+        "b": 232,
+        "hex": "#e4e8e8"
+      },
+      "view": "view_2",
+      "pixelCount": 172
+    },
+    {
+      "id": "B206",
+      "name": "B206",
+      "type": "unknown",
+      "color": {
+        "r": 208,
+        "g": 216,
+        "b": 224,
+        "hex": "#d0d8e0"
+      },
+      "view": "view_2",
+      "pixelCount": 171
+    },
+    {
+      "id": "B207",
+      "name": "B207",
+      "type": "unknown",
+      "color": {
+        "r": 220,
+        "g": 224,
+        "b": 232,
+        "hex": "#dce0e8"
+      },
+      "view": "view_2",
+      "pixelCount": 171
+    },
+    {
+      "id": "R208",
+      "name": "R208",
+      "type": "unknown",
+      "color": {
+        "r": 200,
+        "g": 36,
+        "b": 36,
+        "hex": "#c82424"
+      },
+      "view": "view_2",
+      "pixelCount": 168
+    },
+    {
+      "id": "Y209",
+      "name": "Y209",
+      "type": "unknown",
+      "color": {
+        "r": 44,
+        "g": 44,
+        "b": 40,
+        "hex": "#2c2c28"
+      },
+      "view": "view_2",
+      "pixelCount": 168
+    }
+  ],
+  "views": [
+    "top",
+    "view_2"
+  ]
+}

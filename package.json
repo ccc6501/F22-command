@@ -1,0 +1,13 @@
+{
+    "name": "f22-arcana-calibrator",
+    "version": "1.0.0",
+    "description": "F-22 Digital Thread Calibration Tool",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "dev": "electron ."
+    },
+    "dependencies": {
+        "electron": "^28.0.0"
+    }
+}

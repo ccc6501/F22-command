@@ -1,0 +1,200 @@
+[
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "F-22-airframe",
+    "uv_bounds": {
+      "uMin": "0.0000",
+      "uMax": "0.9995",
+      "vMin": "0.0000",
+      "vMax": "0.9995"
+    },
+    "timestamp": "2026-01-18T15:46:35.573842Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "F-22-canopy",
+    "uv_bounds": {
+      "uMin": "0.0157",
+      "uMax": "0.9883",
+      "vMin": "0.0161",
+      "vMax": "0.9839"
+    },
+    "timestamp": "2026-01-18T15:46:35.573842Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "F-22-cockpit",
+    "uv_bounds": {
+      "uMin": "-8.1328",
+      "uMax": "0.8887",
+      "vMin": "0.2397",
+      "vMax": "7.3164"
+    },
+    "timestamp": "2026-01-18T15:46:35.588399Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "F-22-hud",
+    "uv_bounds": {
+      "uMin": "0.1250",
+      "uMax": "0.3750",
+      "vMin": "0.0000",
+      "vMax": "0.2500"
+    },
+    "timestamp": "2026-01-18T15:46:35.588399Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "F-22-instrGlass",
+    "uv_bounds": {
+      "uMin": "-0.0005",
+      "uMax": "1.0000",
+      "vMin": "0.3335",
+      "vMax": "0.6667"
+    },
+    "timestamp": "2026-01-18T15:46:35.588399Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "F-22-landingOff",
+    "uv_bounds": {
+      "uMin": "0.0008",
+      "uMax": "0.8022",
+      "vMin": "0.1279",
+      "vMax": "0.7290"
+    },
+    "timestamp": "2026-01-18T15:46:35.588399Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "F-22-landingOn",
+    "uv_bounds": {
+      "uMin": "0.0026",
+      "uMax": "0.9990",
+      "vMin": "0.1270",
+      "vMax": "0.9975"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "F-22-landingOnLight",
+    "uv_bounds": {
+      "uMin": "0.9844",
+      "uMax": "0.9976",
+      "vMin": "0.1655",
+      "vMax": "0.1782"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "LH AVI DOOR",
+    "uv_bounds": {
+      "uMin": "0.2296",
+      "uMax": "0.2465",
+      "vMin": "0.7689",
+      "vMax": "0.8558"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "RH AVI DOOR",
+    "uv_bounds": {
+      "uMin": "0.1843",
+      "uMax": "0.2012",
+      "vMin": "0.8271",
+      "vMax": "0.9140"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "LH UPR SWBD",
+    "uv_bounds": {
+      "uMin": "0.6680",
+      "uMax": "0.6812",
+      "vMin": "0.5142",
+      "vMax": "0.6484"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "LH LWR SWBD",
+    "uv_bounds": {
+      "uMin": "0.6543",
+      "uMax": "0.6680",
+      "vMin": "0.5142",
+      "vMax": "0.6484"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "RH ACFC",
+    "uv_bounds": {
+      "uMin": "0.3098",
+      "uMax": "0.3364",
+      "vMin": "0.5857",
+      "vMax": "0.6292"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "RH IFR DOOR",
+    "uv_bounds": {
+      "uMin": "0.2920",
+      "uMax": "0.2998",
+      "vMin": "0.4805",
+      "vMax": "0.5129"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "RH UPPER BETA",
+    "uv_bounds": {
+      "uMin": "0.2610",
+      "uMax": "0.2810",
+      "vMin": "0.8563",
+      "vMax": "0.9057"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "RH ALPHA",
+    "uv_bounds": {
+      "uMin": "0.2462",
+      "uMax": "0.2571",
+      "vMin": "0.8556",
+      "vMax": "0.9039"
+    },
+    "timestamp": "2026-01-18T15:46:35.637013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "RH LWR BETA",
+    "uv_bounds": {
+      "uMin": "0.2278",
+      "uMax": "0.2467",
+      "vMin": "0.8814",
+      "vMax": "0.9143"
+    },
+    "timestamp": "2026-01-18T15:46:35.638013Z"
+  },
+  {
+    "part_id": "UNKNOWN_ID",
+    "name": "RH SHOULDER BAY",
+    "uv_bounds": {
+      "uMin": "0.2673",
+      "uMax": "0.2871",
+      "vMin": "0.7244",
+      "vMax": "0.8021"
+    },
+    "timestamp": "2026-01-18T15:46:35.638013Z"
+  }
+]

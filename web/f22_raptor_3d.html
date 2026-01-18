@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F-22 Blueprint Mapper | 3D Touch Zones</title>
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        img-src 'self' data: blob:;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+        connect-src 'self' https://cdn.jsdelivr.net blob:;
+        object-src 'none';
+        base-uri 'none';
+      ">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --bg-void: #050508;
             --bg-panel: rgba(12, 14, 20, 0.92);
@@ -19,177 +36,951 @@
             --text-primary: #e8e8f0;
             --text-secondary: #8888a0;
         }
-        html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-void); font-family: 'Rajdhani', sans-serif; color: var(--text-primary); }
-        #canvas-container { width: 100%; height: 100%; position: relative; }
-        canvas { display: block; touch-action: none; }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-void);
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--text-primary);
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        canvas {
+            display: block;
+            touch-action: none;
+        }
 
         /* Header */
         .header {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            display: flex; align-items: center; justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 0.6rem 1.25rem;
-            background: var(--bg-panel); backdrop-filter: blur(20px);
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
         }
-        .header h1 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--neon-gold); letter-spacing: 0.15em; text-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
-        .header-subtitle { font-size: 0.7rem; color: var(--text-secondary); letter-spacing: 0.3em; text-transform: uppercase; margin-top: 0.15rem; }
-        .status-indicator { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--neon-cyan); }
-        .status-dot { width: 8px; height: 8px; background: var(--neon-cyan); border-radius: 50%; animation: pulse 2s ease-in-out infinite; box-shadow: 0 0 10px var(--neon-cyan); }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--neon-gold);
+            letter-spacing: 0.15em;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .header-subtitle {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-top: 0.15rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--neon-cyan);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
 
         /* Info Panel (Right) */
         .info-panel {
-            position: fixed; top: 60px; right: 0; bottom: 60px; width: 320px; z-index: 90;
-            background: var(--bg-panel); backdrop-filter: blur(20px);
+            position: fixed;
+            top: 60px;
+            right: 0;
+            bottom: 60px;
+            width: 320px;
+            z-index: 90;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-left: 1px solid var(--glass-border);
-            padding: 1rem; overflow-y: auto;
-            transform: translateX(100%); opacity: 0; pointer-events: none;
+            padding: 1rem;
+            overflow-y: auto;
+            transform: translateX(100%);
+            opacity: 0;
+            pointer-events: none;
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
-        .info-panel.visible { opacity: 1; pointer-events: auto; transform: translateX(0); }
-        .info-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: linear-gradient(180deg, var(--neon-gold), transparent); }
-        .info-header { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.75rem; padding-right: 2rem; }
-        .info-title { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--neon-gold); letter-spacing: 0.03em; }
-        .info-category { font-size: 0.6rem; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 0.1em; padding: 0.2rem 0.4rem; background: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 20px; width: fit-content; }
-        .info-specs { display: flex; flex-direction: column; gap: 0.5rem; }
-        .spec-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 215, 0, 0.15); border-radius: 8px; padding: 0.5rem 0.75rem; display: flex; justify-content: space-between; align-items: center; }
-        .spec-label { font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.1em; }
-        .spec-value { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: var(--neon-cyan); text-align: right; word-break: break-all; max-width: 60%; }
-        .close-btn { position: absolute; top: 0.75rem; right: 0.75rem; width: 24px; height: 24px; background: rgba(255, 51, 102, 0.1); border: 1px solid rgba(255, 51, 102, 0.3); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
-        .close-btn:hover { background: rgba(255, 51, 102, 0.2); border-color: var(--neon-red); }
-        .close-btn svg { width: 12px; height: 12px; stroke: var(--neon-red); stroke-width: 2; }
+
+        .info-panel.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+
+        .info-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--neon-gold), transparent);
+        }
+
+        .info-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            padding-right: 2rem;
+        }
+
+        .info-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--neon-gold);
+            letter-spacing: 0.03em;
+        }
+
+        .info-category {
+            font-size: 0.6rem;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.2rem 0.4rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .info-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .spec-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .spec-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .spec-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            text-align: right;
+            word-break: break-all;
+            max-width: 60%;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 51, 102, 0.1);
+            border: 1px solid rgba(255, 51, 102, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 51, 102, 0.2);
+            border-color: var(--neon-red);
+        }
+
+        .close-btn svg {
+            width: 12px;
+            height: 12px;
+            stroke: var(--neon-red);
+            stroke-width: 2;
+        }
 
         /* Left Panel (Config) */
         .config-panel {
-            position: fixed; top: 60px; left: 0; bottom: 60px; width: 300px; z-index: 90;
-            background: var(--bg-panel); backdrop-filter: blur(20px);
+            position: fixed;
+            top: 60px;
+            left: 0;
+            bottom: 60px;
+            width: 300px;
+            z-index: 90;
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-right: 1px solid var(--glass-border);
-            display: flex; flex-direction: column; overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
             transform: translateX(-100%);
             transition: transform 0.3s ease;
         }
-        .config-panel.visible { transform: translateX(0); }
-        .config-panel::after { content: ''; position: absolute; top: 0; right: 0; width: 2px; height: 100%; background: linear-gradient(180deg, var(--neon-gold), transparent); }
-        .config-header { padding: 0.75rem; border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-        .config-title { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 1px; }
-        .config-content { flex: 1; overflow-y: auto; padding: 0.75rem; }
-        .config-content::-webkit-scrollbar { width: 6px; }
-        .config-content::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 3px; }
-        .config-content::-webkit-scrollbar-thumb { background: var(--neon-cyan); border-radius: 3px; }
-        .config-section { margin-bottom: 1rem; }
-        .config-section-title { font-size: 0.7rem; color: var(--neon-gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid rgba(255, 215, 0, 0.2); }
-        .config-row { margin-bottom: 0.6rem; }
-        .config-row label { display: block; font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.25rem; }
-        .config-row input[type="file"] { width: 100%; padding: 0.4rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 215, 0, 0.12); border-radius: 6px; color: var(--text-secondary); font-size: 0.7rem; }
-        .config-row select { width: 100%; padding: 0.5rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 215, 0, 0.12); border-radius: 6px; color: var(--text-primary); font-size: 0.75rem; }
-        .config-row input[type="range"] { width: 100%; }
-        .range-value { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--neon-cyan); float: right; }
-        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }
-        .btn { cursor: pointer; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid rgba(255, 215, 0, 0.18); background: rgba(255, 215, 0, 0.08); color: var(--text-primary); font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 0.7rem; transition: all 0.2s ease; }
-        .btn:hover { background: rgba(255, 215, 0, 0.15); border-color: var(--neon-gold); }
-        .btn:active { transform: translateY(1px); }
-        .btn.danger { border-color: rgba(255, 51, 102, 0.3); background: rgba(255, 51, 102, 0.1); }
-        .btn.danger:hover { background: rgba(255, 51, 102, 0.2); border-color: var(--neon-red); }
+
+        .config-panel.visible {
+            transform: translateX(0);
+        }
+
+        .config-panel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--neon-gold), transparent);
+        }
+
+        .config-header {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .config-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .config-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+
+        /* Wizard Specific Styles */
+        .wizard-sidebar {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .wizard-header {
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .wizard-header h2 {
+            font-family: Orbitron;
+            font-size: 0.9rem;
+            color: var(--neon-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-export {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-family: Rajdhani;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-export:hover {
+            background: rgba(0, 212, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .file-hidden {
+            display: none;
+        }
+
+        .sidebar-actions {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-import {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            font-family: Rajdhani;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-import:hover {
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+        }
+
+        .btn-reset-survey {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(255, 51, 102, 0.05);
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            font-family: Rajdhani;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px;
+            opacity: 0.7;
+            transition: all 0.2s;
+        }
+
+        .btn-reset-survey:hover {
+            opacity: 1;
+            background: rgba(255, 51, 102, 0.1);
+        }
+
+        .btn-calibrate {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(157, 78, 221, 0.1);
+            border: 1px solid var(--neon-violet);
+            color: var(--neon-violet);
+            font-family: Rajdhani;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-calibrate:hover {
+            background: rgba(157, 78, 221, 0.2);
+            box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+        }
+
+        .survey-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .survey-card:hover {
+            border-color: rgba(255, 215, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .survey-card.active {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 212, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
+        }
+
+        .survey-card.approved {
+            border-left: 4px solid var(--neon-green);
+            opacity: 0.8;
+        }
+
+        .btn-reset-survey {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 20px;
+            background: rgba(255, 60, 60, 0.1);
+            border: 1px solid rgba(255, 60, 60, 0.4);
+            border-radius: 4px;
+            color: #ff6060;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn-reset-survey:hover {
+            background: rgba(255, 60, 60, 0.2);
+            border-color: #ff6060;
+            box-shadow: 0 0 10px rgba(255, 60, 60, 0.2);
+        }
+
+        .survey-loading {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hidden-config {
+            display: none;
+        }
+
+        .config-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .config-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .config-content::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            border-radius: 3px;
+        }
+
+        .config-section {
+            margin-bottom: 1rem;
+        }
+
+        .config-section-title {
+            font-size: 0.7rem;
+            color: var(--neon-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .config-row {
+            margin-bottom: 0.6rem;
+        }
+
+        .config-row label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .config-row input[type="file"] {
+            width: 100%;
+            padding: 0.4rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+        }
+
+        .config-row select {
+            width: 100%;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.75rem;
+        }
+
+        .config-row input[type="range"] {
+            width: 100%;
+        }
+
+        .range-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: var(--neon-cyan);
+            float: right;
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn {
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.18);
+            background: rgba(255, 215, 0, 0.08);
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 0.7rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: var(--neon-gold);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn.danger {
+            border-color: rgba(255, 51, 102, 0.3);
+            background: rgba(255, 51, 102, 0.1);
+        }
+
+        .btn.danger:hover {
+            background: rgba(255, 51, 102, 0.2);
+            border-color: var(--neon-red);
+        }
 
         /* Toggle Buttons */
         .panel-toggle {
-            position: fixed; top: 50%; z-index: 95;
-            width: 32px; height: 64px;
-            background: var(--bg-panel); backdrop-filter: blur(10px);
+            position: fixed;
+            top: 50%;
+            z-index: 95;
+            width: 32px;
+            height: 64px;
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .panel-toggle:hover { border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(0, 212, 255, 0.3); }
-        .panel-toggle svg { width: 18px; height: 18px; stroke: var(--neon-cyan); fill: none; transition: transform 0.3s ease; }
-        .panel-toggle.left { left: 0; border-radius: 0 8px 8px 0; transform: translateY(-50%); }
-        .panel-toggle.right { right: 0; border-radius: 8px 0 0 8px; transform: translateY(-50%); }
-        .panel-toggle.left.open { left: 300px; }
-        .panel-toggle.left.open svg { transform: rotate(180deg); }
-        .panel-toggle.right.open { right: 320px; }
-        .panel-toggle.right.open svg { transform: rotate(180deg); }
+
+        .panel-toggle:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .panel-toggle svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--neon-cyan);
+            fill: none;
+            transition: transform 0.3s ease;
+        }
+
+        .panel-toggle.left {
+            left: 0;
+            border-radius: 0 8px 8px 0;
+            transform: translateY(-50%);
+        }
+
+        .panel-toggle.right {
+            right: 0;
+            border-radius: 8px 0 0 8px;
+            transform: translateY(-50%);
+        }
+
+        .panel-toggle.left.open {
+            left: 300px;
+        }
+
+        .panel-toggle.left.open svg {
+            transform: rotate(180deg);
+        }
+
+        .panel-toggle.right.open {
+            right: 320px;
+        }
+
+        .panel-toggle.right.open svg {
+            transform: rotate(180deg);
+        }
 
         /* Toolbar at Bottom */
         .toolbar {
-            position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: var(--bg-panel); backdrop-filter: blur(20px);
+            background: var(--bg-panel);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid var(--glass-border);
         }
-        .toolbar-btn { width: 40px; height: 40px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; position: relative; }
-        .toolbar-btn:hover { background: rgba(0, 255, 255, 0.1); border-color: var(--neon-cyan); }
-        .toolbar-btn.active { background: rgba(255, 215, 0, 0.2); border-color: var(--neon-gold); }
-        .toolbar-btn svg { width: 18px; height: 18px; stroke: var(--text-primary); stroke-width: 1.5; fill: none; }
-        .toolbar-btn:hover svg { stroke: var(--neon-cyan); }
-        .toolbar-btn.active svg { stroke: var(--neon-gold); }
-        .toolbar-separator { width: 1px; height: 24px; background: var(--glass-border); }
-        .toolbar-info { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--text-secondary); padding: 0 1rem; }
-        .toolbar-info span { color: var(--neon-gold); }
+
+        .toolbar-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .toolbar-btn:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--neon-cyan);
+        }
+
+        .toolbar-btn.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--neon-gold);
+        }
+
+        .toolbar-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-primary);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .toolbar-btn:hover svg {
+            stroke: var(--neon-cyan);
+        }
+
+        .toolbar-btn.active svg {
+            stroke: var(--neon-gold);
+        }
+
+        .toolbar-separator {
+            width: 1px;
+            height: 24px;
+            background: var(--glass-border);
+        }
+
+        .toolbar-info {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            padding: 0 1rem;
+        }
+
+        .toolbar-info span {
+            color: var(--neon-gold);
+        }
 
         /* HUD Overlay */
         .hud {
-            position: fixed; left: 50%; bottom: 70px; transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border); border-radius: 10px;
+            position: fixed;
+            left: 50%;
+            bottom: 70px;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
             padding: 0.6rem 1.25rem;
-            display: flex; gap: 1.5rem; align-items: center;
-            pointer-events: none; z-index: 80;
-            opacity: 0; transition: opacity 0.3s ease;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            pointer-events: none;
+            z-index: 80;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .hud.visible { opacity: 1; }
-        .hud-item { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; }
-        .hud-label { font-size: 0.6rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
-        .hud-value { font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: var(--neon-cyan); }
-        .hud-value.gold { color: var(--neon-gold); }
+
+        .hud.visible {
+            opacity: 1;
+        }
+
+        .hud-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+        }
+
+        .hud-label {
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hud-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+        }
+
+        .hud-value.gold {
+            color: var(--neon-gold);
+        }
 
         /* Corner Decorations */
-        .corner-decor { position: fixed; width: 60px; height: 60px; pointer-events: none; z-index: 10; }
-        .corner-decor.top-left { top: 60px; left: 0; }
-        .corner-decor.top-right { top: 60px; right: 0; transform: scaleX(-1); }
-        .corner-decor.bottom-left { bottom: 60px; left: 0; transform: scaleY(-1); }
-        .corner-decor.bottom-right { bottom: 60px; right: 0; transform: scale(-1); }
-        .corner-decor svg { width: 100%; height: 100%; stroke: var(--neon-gold); stroke-width: 1; opacity: 0.4; fill: none; }
+        .corner-decor {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .corner-decor.top-left {
+            top: 60px;
+            left: 0;
+        }
+
+        .corner-decor.top-right {
+            top: 60px;
+            right: 0;
+            transform: scaleX(-1);
+        }
+
+        .corner-decor.bottom-left {
+            bottom: 60px;
+            left: 0;
+            transform: scaleY(-1);
+        }
+
+        .corner-decor.bottom-right {
+            bottom: 60px;
+            right: 0;
+            transform: scale(-1);
+        }
+
+        .corner-decor svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--neon-gold);
+            stroke-width: 1;
+            opacity: 0.4;
+            fill: none;
+        }
 
         /* Canvas Previews in Config */
-        .preview-wrap { position: relative; background: rgba(0,0,0,0.4); border: 1px solid rgba(255, 215, 0, 0.12); border-radius: 6px; overflow: hidden; height: 100px; margin-top: 0.5rem; }
-        .preview-wrap canvas { width: 100%; height: 100%; display: block; }
+        .preview-wrap {
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.12);
+            border-radius: 6px;
+            overflow: hidden;
+            height: 100px;
+            margin-top: 0.5rem;
+        }
+
+        .preview-wrap canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
 
         /* Upload Overlay */
         .upload-screen {
-            position: fixed; inset: 0; z-index: 200;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
             background: var(--bg-void);
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: opacity 0.5s ease, visibility 0.5s ease;
         }
-        .upload-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        .upload-box { background: var(--bg-panel); border: 2px dashed var(--glass-border); border-radius: 16px; padding: 3rem; text-align: center; max-width: 500px; cursor: pointer; transition: all 0.3s ease; }
-        .upload-box:hover, .upload-box.dragover { border-color: var(--neon-cyan); box-shadow: 0 0 30px rgba(0, 255, 255, 0.2); }
-        .upload-icon { width: 80px; height: 80px; margin: 0 auto 1.5rem; stroke: var(--neon-gold); stroke-width: 1.5; }
-        .upload-title { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--neon-gold); letter-spacing: 0.1em; margin-bottom: 0.75rem; }
-        .upload-subtitle { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
-        .upload-formats { font-size: 0.75rem; color: var(--text-secondary); padding: 0.5rem 1rem; background: rgba(0, 0, 0, 0.3); border-radius: 20px; display: inline-block; }
-        .upload-formats span { color: var(--neon-cyan); }
-        #file-input { display: none; }
+
+        .upload-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .upload-box {
+            background: var(--bg-panel);
+            border: 2px dashed var(--glass-border);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-box:hover,
+        .upload-box.dragover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .upload-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            stroke: var(--neon-gold);
+            stroke-width: 1.5;
+        }
+
+        .upload-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-gold);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .upload-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-formats {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .upload-formats span {
+            color: var(--neon-cyan);
+        }
+
+        #file-input {
+            display: none;
+        }
 
         /* Loading Overlay */
-        .loading-overlay { position: fixed; inset: 0; z-index: 300; background: var(--bg-void); display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-        .loading-overlay.visible { opacity: 1; visibility: visible; }
-        .loading-ring { width: 80px; height: 80px; position: relative; }
-        .loading-ring::before, .loading-ring::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 3px solid transparent; }
-        .loading-ring::before { border-top-color: var(--neon-gold); animation: spin 1s linear infinite; }
-        .loading-ring::after { border-right-color: var(--neon-cyan); animation: spin 1.5s linear infinite reverse; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text { margin-top: 2rem; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; letter-spacing: 0.3em; color: var(--text-secondary); }
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: var(--bg-void);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-ring {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .loading-ring::before,
+        .loading-ring::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid transparent;
+        }
+
+        .loading-ring::before {
+            border-top-color: var(--neon-gold);
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-ring::after {
+            border-right-color: var(--neon-cyan);
+            animation: spin 1.5s linear infinite reverse;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            margin-top: 2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.3em;
+            color: var(--text-secondary);
+        }
+
+        .mini-terminal {
+            position: fixed;
+            left: 12px;
+            bottom: 86px;
+            width: min(560px, 46vw);
+            max-height: 34vh;
+            overflow: auto;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 12px;
+            z-index: 120;
+            font: 12px/1.25 ui-monospace, SFMono-Regular, Menlo, monospace;
+            color: #bff;
+            pointer-events: none;
+        }
+
+        .mini-terminal.hidden {
+            display: none;
+        }
     </style>
-    <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+    <script
+        type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 </head>
+
 <body>
     <!-- Upload Screen -->
     <div class="upload-screen" id="upload-screen">
         <div class="upload-box" id="upload-box">
             <svg class="upload-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
             </svg>
             <div class="upload-title">LOAD 3D MODEL</div>
             <div class="upload-subtitle">Drop GLB/GLTF file or click to browse</div>
@@ -205,10 +996,22 @@
     </div>
 
     <!-- Corner Decorations -->
-    <div class="corner-decor top-left"><svg viewBox="0 0 60 60"><path d="M0 30 L0 0 L30 0" /><path d="M0 20 L0 10 L10 10 L10 0" /></svg></div>
-    <div class="corner-decor top-right"><svg viewBox="0 0 60 60"><path d="M0 30 L0 0 L30 0" /><path d="M0 20 L0 10 L10 10 L10 0" /></svg></div>
-    <div class="corner-decor bottom-left"><svg viewBox="0 0 60 60"><path d="M0 30 L0 0 L30 0" /><path d="M0 20 L0 10 L10 10 L10 0" /></svg></div>
-    <div class="corner-decor bottom-right"><svg viewBox="0 0 60 60"><path d="M0 30 L0 0 L30 0" /><path d="M0 20 L0 10 L10 10 L10 0" /></svg></div>
+    <div class="corner-decor top-left"><svg viewBox="0 0 60 60">
+            <path d="M0 30 L0 0 L30 0" />
+            <path d="M0 20 L0 10 L10 10 L10 0" />
+        </svg></div>
+    <div class="corner-decor top-right"><svg viewBox="0 0 60 60">
+            <path d="M0 30 L0 0 L30 0" />
+            <path d="M0 20 L0 10 L10 10 L10 0" />
+        </svg></div>
+    <div class="corner-decor bottom-left"><svg viewBox="0 0 60 60">
+            <path d="M0 30 L0 0 L30 0" />
+            <path d="M0 20 L0 10 L10 10 L10 0" />
+        </svg></div>
+    <div class="corner-decor bottom-right"><svg viewBox="0 0 60 60">
+            <path d="M0 30 L0 0 L30 0" />
+            <path d="M0 20 L0 10 L10 10 L10 0" />
+        </svg></div>
 
     <!-- Header -->
     <header class="header">
@@ -224,132 +1027,117 @@
 
     <!-- Left Panel Toggle -->
     <div class="panel-toggle left" id="config-toggle">
-        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        <svg viewBox="0 0 24 24">
+            <path d="M9 18l6-6-6-6" />
+        </svg>
     </div>
 
     <!-- Config Panel (Left) -->
     <div class="config-panel" id="config-panel">
         <div class="config-header">
-            <div class="config-title">Configuration</div>
+            <div class="config-title">DIGITAL THREAD CALIBRATOR</div>
         </div>
         <div class="config-content">
-            <div class="config-section">
-                <div class="config-section-title">Model & Textures</div>
-                <div class="config-row">
-                    <label>GLB Model</label>
-                    <input type="file" id="glbFile" accept=".glb,.gltf">
+            <div class="wizard-sidebar">
+                <div class="sidebar-header">
+                    <h3>RAPTOR SURVEYOR [POC]</h3>
+                    <p>4-Corner UV Calibration</p>
                 </div>
-                <div class="config-row">
-                    <label>Texture (optional)</label>
-                    <input type="file" id="textureFile" accept="image/*">
+
+                <div id="surveyList">
+                    <!-- Populated by JavaScript -->
+                    <div class="survey-loading">Loading parts...</div>
                 </div>
-                <div class="config-row">
-                    <label>Panel ID Map (UV-space PNG)</label>
-                    <input type="file" id="panelIdMapFile" accept="image/*">
-                    <div class="preview-wrap"><canvas id="panelIdPreview"></canvas></div>
-                </div>
-                <div class="config-row">
-                    <label>Panel JSON</label>
-                    <input type="file" id="panelJsonFile" accept=".json">
+
+                <div class="sidebar-actions">
+                    <button class="btn-calibrate" onclick="startOrientationCalibration()">ORIENT CALIBRATION</button>
+                    <button class="btn-export" onclick="exportPOCMap()">EXPORT THREAD MAP (.JSON)</button>
+                    <label for="loadPartsFile" class="btn-import">LOAD PARTS LIST</label>
+                    <input type="file" id="loadPartsFile" class="file-hidden" onchange="handleLoadParts(event)"
+                        accept=".json">
+                    <label for="importMapFile" class="btn-import">IMPORT MAP</label>
+                    <input type="file" id="importMapFile" class="file-hidden" onchange="handleImportMap(event)"
+                        accept=".json">
+                    <button class="btn-reset-survey" onclick="resetCalibrationSession()">RESET REGISTRY / CLEAR
+                        ALL</button>
                 </div>
             </div>
 
-            <div class="config-section">
-                <div class="config-section-title">Display</div>
-                <div class="config-row">
-                    <label>Material Mode</label>
-                    <select id="materialMode">
-                        <option value="untextured">Untextured (Normal)</option>
-                        <option value="textured">Textured</option>
-                    </select>
-                </div>
-                <div class="config-row">
-                    <label>Color Tolerance <span class="range-value" id="toleranceLabel">30</span></label>
-                    <input type="range" id="tolerance" min="0" max="150" value="30">
-                </div>
-            </div>
-
-            <div class="config-section">
-                <div class="config-section-title"> Panel Calibration Wizard</div>
-                
-                <!-- Calibration Controls -->
-                <div class="btn-row" style="margin-bottom: 0.5rem;">
-                    <button class="btn" id="startCalibrationBtn" style="background: linear-gradient(135deg, var(--neon-green), #00aa55);">? Start</button>
-                    <button class="btn" id="skipPanelBtn" style="display: none;">Skip ?</button>
-                    <button class="btn danger" id="stopCalibrationBtn" style="display: none;"> Stop</button>
-                </div>
-                
-                <!-- Current Target Panel -->
-                <div id="calibrationTarget" style="display: none; padding: 0.6rem; margin-bottom: 0.5rem; background: rgba(0,212,255,0.15); border: 1px solid var(--neon-cyan); border-radius: 6px;">
-                    <div style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.3rem;">CLICK ON PANEL:</div>
-                    <div id="targetPanelName" style="font-size: 0.95rem; color: var(--neon-cyan); font-weight: 600;">-</div>
-                    <div id="targetExpectedColor" style="font-size: 0.75rem; color: var(--neon-gold); margin-top: 0.2rem;">Expected RGB: -</div>
-                    <div id="targetExpectedColor" style="font-size: 0.75rem; color: var(--neon-gold); margin-top: 0.2rem;">Expected RGB: -</div>
-                    <div style="margin-top: 0.4rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="font-size: 0.7rem; color: var(--text-secondary);">Expected RGB:</span>
-                        <span id="expectedColorBox" style="display: inline-block; width: 20px; height: 20px; border: 1px solid #fff; border-radius: 3px;"></span>
-                        <span id="expectedColorText" style="font-size: 0.8rem; color: var(--neon-green); font-family: monospace;">-</span>
-                    </div>
-                    <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.3rem;">
-                        Progress: <span id="calibProgress">0</span> / <span id="calibTotal">0</span>
-                    </div>
-                </div>
-                
-                <!-- Panel List with Status -->
-                <div id="panelCalibList" style="max-height: 200px; overflow-y: auto; font-size: 0.75rem; border: 1px solid var(--glass-border); border-radius: 6px; padding: 0.3rem;">
-                    <div style="color: var(--text-secondary); padding: 0.3rem;">Load model to see panels...</div>
-                </div>
-                
-                <!-- Manual Mode Toggle -->
-                <div class="config-row" style="margin-top: 0.5rem;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem;">
-                        <input type="checkbox" id="calibrationMode" style="width: 14px; height: 14px;">
-                        Manual Marker Mode
-                    </label>
-                </div>
-                
-                <!-- Export/Clear -->
-                <div class="btn-row" style="margin-top: 0.5rem;">
-                    <button class="btn" id="exportMarkersBtn"> Export</button>
-                    <button class="btn danger" id="clearMarkersBtn"> Clear All</button>
-                </div>
-                <div class="config-row" style="margin-top: 0.3rem;">
-                    <span style="font-size: 0.7rem; color: var(--text-secondary);">Calibrated: <span id="markerCount" style="color: var(--neon-green);">0</span></span>
-                </div>
-            </div>
-
-            <div class="config-section">
-                <div class="config-section-title">Session</div>
-                <div class="btn-row">
-                    <button class="btn" id="saveSessionBtn">Save</button>
-                    <button class="btn" id="loadSessionBtn">Load</button>
-                </div>
+            <!-- Hidden original config fields to prevent errors in existing script -->
+            <div class="hidden-config">
+                <input type="file" id="glbFile">
+                <input type="file" id="textureFile">
+                <input type="file" id="panelIdMapFile">
+                <input type="file" id="panelJsonFile">
+                <canvas id="panelIdPreview"></canvas>
+                <select id="materialMode">
+                    <option value="untextured">Untextured</option>
+                    <option value="textured">Textured</option>
+                </select>
+                <input type="range" id="tolerance" value="30"><span id="toleranceLabel">30</span>
+                <input type="checkbox" id="calibrationMode">
+                <button id="exportMarkersBtn"></button>
+                <button id="clearMarkersBtn"></button>
+                <span id="markerCount">0</span>
+                <button id="startCalibrationBtn"></button>
+                <button id="skipPanelBtn"></button>
+                <button id="stopCalibrationBtn"></button>
+                <div id="calibrationTarget"></div>
+                <span id="targetPanelName"></span>
+                <span id="calibProgress">0</span>
+                <span id="calibTotal">0</span>
+                <div id="panelCalibList"></div>
+                <div id="targetExpectedColor"></div>
+                <div id="expectedColorBox"></div>
+                <div id="expectedColorText"></div>
+                <button id="saveSessionBtn"></button>
+                <button id="loadSessionBtn"></button>
             </div>
         </div>
     </div>
 
     <!-- Right Panel Toggle -->
     <div class="panel-toggle right" id="info-toggle">
-        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        <svg viewBox="0 0 24 24">
+            <path d="M15 18l-6-6 6-6" />
+        </svg>
     </div>
 
     <!-- Info Panel (Right) -->
     <div class="info-panel" id="info-panel">
         <button class="close-btn" id="info-close">
-            <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
         </button>
         <div class="info-header">
             <div class="info-title" id="panelTitle">SELECT A PANEL</div>
             <div class="info-category" id="panelCategory">—</div>
         </div>
         <div class="info-specs" id="panelSpecs">
-            <div class="spec-item"><div class="spec-label">UV</div><div class="spec-value" id="specUv">—</div></div>
-            <div class="spec-item"><div class="spec-label">RGB</div><div class="spec-value" id="specRgb">—</div></div>
-            <div class="spec-item"><div class="spec-label">Face</div><div class="spec-value" id="specFace">—</div></div>
+            <div class="spec-item">
+                <div class="spec-label">UV</div>
+                <div class="spec-value" id="specUv">—</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">RGB</div>
+                <div class="spec-value" id="specRgb">—</div>
+            </div>
+            <div class="spec-item">
+                <div class="spec-label">Face</div>
+                <div class="spec-value" id="specFace">—</div>
+            </div>
         </div>
         <div style="margin-top: 1rem;">
             <div class="config-section-title">Panel Data</div>
-            <pre id="panelDataPre" style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; color: var(--text-secondary); white-space: pre-wrap; max-height: 200px; overflow-y: auto;">No panel selected</pre>
+            <pre id="panelDataPre"
+                style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; color: var(--text-secondary); white-space: pre-wrap; max-height: 200px; overflow-y: auto;">No panel selected</pre>
+        </div>
+        <div style="margin-top: 1rem;">
+            <div class="config-section-title">Approval Log</div>
+            <div id="approvalLog"
+                style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; color: var(--text-secondary); max-height: 200px; overflow-y: auto; white-space: pre-wrap;">
+                No approvals yet</div>
         </div>
     </div>
 
@@ -358,28 +1146,82 @@
 
     <!-- HUD -->
     <div class="hud" id="hud">
-        <div class="hud-item"><div class="hud-label">Panel</div><div class="hud-value gold" id="hudPanel">—</div></div>
-        <div class="hud-item"><div class="hud-label">UV</div><div class="hud-value" id="hudUv">—</div></div>
-        <div class="hud-item"><div class="hud-label">RGB</div><div class="hud-value" id="hudRgb">—</div></div>
+        <div class="hud-item">
+            <div class="hud-label">Panel</div>
+            <div class="hud-value gold" id="hudPanel">—</div>
+        </div>
+        <div class="hud-item">
+            <div class="hud-label">UV</div>
+            <div class="hud-value" id="hudUv">—</div>
+        </div>
+        <div class="hud-item">
+            <div class="hud-label">RGB</div>
+            <div class="hud-value" id="hudRgb">—</div>
+        </div>
     </div>
+
+    <div class="mini-terminal hidden" id="mini-terminal"></div>
 
     <!-- Toolbar -->
     <div class="toolbar" id="toolbar">
         <button class="toolbar-btn" id="btn-reset" title="Reset View">
-            <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                <path d="M3 3v5h5" />
+            </svg>
         </button>
         <button class="toolbar-btn" id="btn-front" title="Front View">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M12 8v8M8 12h8" />
+            </svg>
         </button>
         <button class="toolbar-btn" id="btn-top" title="Top View">
-            <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M12 8v8"/></svg>
+            <svg viewBox="0 0 24 24">
+                <ellipse cx="12" cy="12" rx="9" ry="4" />
+                <path d="M12 8v8" />
+            </svg>
         </button>
         <button class="toolbar-btn" id="btn-side" title="Side View">
-            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
         </button>
         <div class="toolbar-separator"></div>
         <button class="toolbar-btn" id="btn-material" title="Toggle Material">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/></svg>
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a10 10 0 0 1 0 20" />
+            </svg>
+        </button>
+        <button class="toolbar-btn" id="btn-terminal" title="Toggle Terminal">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M7 9l3 3-3 3M12 15h5" />
+            </svg>
+        </button>
+        <button class="toolbar-btn" id="btn-select-folder" title="Select Project Folder">
+            <svg viewBox="0 0 24 24">
+                <path d="M3 7v10a2 2 0 0 0 2 2h14V7H3zm2-4h6l2 2h6v2H5V3z" />
+            </svg>
+        </button>
+        <button class="toolbar-btn" id="btn-reload-assets" title="Reload Assets">
+            <svg viewBox="0 0 24 24">
+                <path d="M21 12a9 9 0 1 1-3.1-6.4L21 6v6z" />
+            </svg>
+        </button>
+        <button class="toolbar-btn" id="btn-approve" title="Approve Panel">
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M8 12l2.5 2.5L16 9" />
+            </svg>
+        </button>
+        <button class="toolbar-btn" id="btn-mirror" title="Mirror Approved">
+            <svg viewBox="0 0 24 24">
+                <path d="M7 7l-3 3 3 3" />
+                <path d="M17 7l3 3-3 3" />
+                <path d="M4 10h16" />
+            </svg>
         </button>
         <div class="toolbar-separator"></div>
         <div class="toolbar-info">Meshes: <span id="meshCount">0</span></div>
@@ -405,6 +1247,7 @@
             infoToggle: document.getElementById('info-toggle'),
             infoClose: document.getElementById('info-close'),
             hud: document.getElementById('hud'),
+            miniTerminal: document.getElementById('mini-terminal'),
             toolbar: document.getElementById('toolbar'),
             // Config inputs
             glbFile: document.getElementById('glbFile'),
@@ -442,6 +1285,7 @@
             specRgb: document.getElementById('specRgb'),
             specFace: document.getElementById('specFace'),
             panelDataPre: document.getElementById('panelDataPre'),
+            approvalLog: document.getElementById('approvalLog'),
             // HUD
             hudPanel: document.getElementById('hudPanel'),
             hudUv: document.getElementById('hudUv'),
@@ -453,23 +1297,116 @@
             btnFront: document.getElementById('btn-front'),
             btnTop: document.getElementById('btn-top'),
             btnSide: document.getElementById('btn-side'),
-            btnMaterial: document.getElementById('btn-material')
+            btnMaterial: document.getElementById('btn-material'),
+            btnTerminal: document.getElementById('btn-terminal'),
+            btnSelectFolder: document.getElementById('btn-select-folder'),
+            btnReloadAssets: document.getElementById('btn-reload-assets'),
+            btnApprove: document.getElementById('btn-approve'),
+            btnMirror: document.getElementById('btn-mirror')
         };
 
         // State
         const state = {
-            renderer: null, scene: null, camera: null, controls: null,
+            renderer: null,
+            scene: null,
+            camera: null,
+            controls: null,
             raycaster: new THREE.Raycaster(),
             pointerNdc: new THREE.Vector2(),
-            modelRoot: null, meshList: [], originalMaterials: new Map(),
+            modelRoot: null,
+            meshList: [],
+            originalMaterials: new Map(),
             texture: null,
-            panelIdImage: null, panelIdCanvas: document.createElement('canvas'),
-            panelIdCtx: null, panelIdImageData: null,
-            panels: [], panelsRgb: [],
-            lastUv: null, lastRgb: null, lastPanel: null,
+            panelIdImage: null,
+            panelIdCanvas: document.createElement('canvas'),
+            panelIdCtx: null,
+            panelIdImageData: null,
+            panels: [],
+            panelsRgb: [],
+            panelsByRgb: new Map(),
+            lastUv: null,
+            lastRgb: null,
+            lastPanel: null,
+            selectedUv: null,
+            selectedRgb: null,
+            selectedPanel: null,
+            selectedFace: null,
+            threadMap: null,
             pointerDown: null,
-            calibrationMarkers: [], markerMeshes: [],
-            // Calibration Wizard State
+            calibrationMarkers: [],
+            markerMeshes: [],
+            approvals: [],
+
+            // --- RGB INDEX + APPROVED PANELS (LOCK IT IN) ---
+            rgbIndex: new Map(),           // key:int -> panel (fast exact lookup)
+            approvedPanels: [],            // list of approved entries
+            approvedById: new Map(),       // panelId -> entry
+            mirror: { enabled: true },
+            ping: { mesh: null, t0: 0, enabled: true },
+
+            // --- PALETTE CONSTRAINTS + AUTHORITY MESH ---
+            palette: [],                   // [{r,g,b,hex,id,view}, ...]
+            paletteKeys: new Set(),        // "r,g,b" quick membership check
+            rangeRules: null,              // optional {r:[min,max], g:[], b:[], reject:[[r,g,b],...]}
+            toleranceRgb: 12,              // max color distance for quantization
+            authMeshList: [],              // authority meshes only (for fast raycast)
+            authMeshNames: new Set(['F-22', 'F22', 'Airframe', 'PANEL_AUTH', 'Body', 'Fuselage']),
+            useAuthMeshOnly: false,        // toggle for performance mode
+
+            // --- NEW PRECISION WIZARD STATE ---
+            wizard: {
+                activePart: null,
+                tempPoints: [], // { uv, world }
+                ghostLine: null,
+                manifest: [],    // Final Export Data
+                centerlineU: 0.3251 // Derived from NOSE datum
+            },
+
+            mappings: [], // Imported mapping data
+
+            // --- ORIENTATION CALIBRATION STATE ---
+            orientCal: {
+                active: false,
+                step: 0,
+                samples: {},   // { NOSE: {uv}, TAIL: {uv}, ... }
+                // Expected ideal UV positions (from known Blender data)
+                expected: {
+                    NOSE: { u: 0.3251, v: 0.8188 },
+                    TAIL: { u: 0.3251, v: 0.0500 },
+                    LH_WINGTIP: { u: 0.0207, v: 0.3543 },
+                    RH_WINGTIP: { u: 0.6295, v: 0.3543 },
+                    LH_VERT: { u: 0.1500, v: 0.1200 },
+                    RH_VERT: { u: 0.5000, v: 0.1200 },
+                    LH_HORIZ: { u: 0.0800, v: 0.0800 },
+                    RH_HORIZ: { u: 0.5700, v: 0.0800 }
+                },
+                sequence: ['NOSE', 'LH_WINGTIP', 'RH_WINGTIP'],
+                labels: {
+                    NOSE: 'Nose Tip (Forward)',
+                    TAIL: 'Tail / Exhaust Center',
+                    LH_WINGTIP: 'Left Wingtip',
+                    RH_WINGTIP: 'Right Wingtip',
+                    LH_VERT: 'Left Upper Vertical Stab',
+                    RH_VERT: 'Right Upper Vertical Stab',
+                    LH_HORIZ: 'Left Horizontal Stab',
+                    RH_HORIZ: 'Right Horizontal Stab'
+                },
+                // Corrections derived after calibration
+                flipV: false,
+                flipU: false,
+                rotation: 0 // degrees if rotated
+            },
+
+            pocParts: [
+                { id: "DATUM_NOSE", name: "Nose Datum (FS 0.0)", approved: true, type: "SYSTEM_ANCHOR", locked: true, uv_bounds: { uMin: "0.3250", uMax: "0.3252", vMin: "0.8179", vMax: "0.8197" } },
+                { id: "DATUM_WT_LH", name: "LH Wingtip Datum", approved: true, type: "SYSTEM_ANCHOR", locked: true, uv_bounds: { uMin: "0.0201", uMax: "0.0214", vMin: "0.3418", vMax: "0.3667" } },
+                { id: "5HY03205-111A", name: "Inlet Bleed Screen LH", approved: false },
+                { id: "5HY03206-117A", name: "SOB to Bump LH", approved: false },
+                { id: "YY17201-01", name: "Nose Landing Gear Door", approved: false }
+            ],
+            // ----------------------------------
+
+            // Calibration Wizard State (Old)
             calibrationWizardActive: false,
             calibrationQueue: [],           // Panels left to calibrate
             currentCalibrationTarget: null, // Current panel being calibrated
@@ -482,46 +1419,847 @@
         const clamp01 = v => Math.min(1, Math.max(0, v));
         const fmt3 = v => Number.isFinite(v) ? v.toFixed(3) : '—';
         const rgbKey = (r, g, b) => `${r},${g},${b}`;
+        const sameRGB = (a, b) => !!a && !!b && a.r === b.r && a.g === b.g && a.b === b.b;
+
+        // ============================================================
+        // F22 MAPPER - ORIENTATION LOCK + OVERLAY + REPLAY + MIRROR MODE
+        // - Replaces "wizard guess" with datum-solved lock
+        // - Enforces one canonical UV pipeline (no drift)
+        // - Adds Texture button cycling: SOLID -> TEXTURE -> TEXTURE+OVERLAY
+        // - Adds stage grid / ground surface
+        // - Adds mirror-mode export for symmetric mapping
+        // ============================================================
+
+        // 1) Canonical UV pipeline
+        function applyOrientationToUv(rawUv) {
+            let u = rawUv.x;
+            let v = rawUv.y;
+            if (state.orientCal.flipU) u = 1 - u;
+            if (state.orientCal.flipV) v = 1 - v;
+            return { x: u, y: v };
+        }
+
+        function snapUvToPixelCenter(uv) {
+            if (!state.panelIdCanvas?.width || !state.panelIdCanvas?.height) return uv;
+            const w = state.panelIdCanvas.width;
+            const h = state.panelIdCanvas.height;
+            const px = Math.floor(clamp01(uv.x) * w);
+            const py = Math.floor(clamp01(uv.y) * h);
+            return { x: (px + 0.5) / w, y: (py + 0.5) / h };
+        }
+
+        function samplePanelIdMapAtUv_CANONICAL(uv) {
+            if (!state.panelIdImageData) return null;
+            const w = state.panelIdCanvas.width;
+            const h = state.panelIdCanvas.height;
+            const x = Math.min(w - 1, Math.max(0, Math.floor(clamp01(uv.x) * w)));
+            const y = Math.min(h - 1, Math.max(0, Math.floor(clamp01(uv.y) * h)));
+            const idx = (y * w + x) * 4;
+            const d = state.panelIdImageData.data;
+            return { r: d[idx], g: d[idx + 1], b: d[idx + 2], a: d[idx + 3] };
+        }
+
+        function stableSampleAtUv(uv) {
+            const base = samplePanelIdMapAtUv_CANONICAL(uv);
+            if (!base) return { rgb: null, confidence: 0 };
+            const w = state.panelIdCanvas.width || 2048;
+            const h = state.panelIdCanvas.height || 2048;
+            const eps = 1 / Math.max(w, h);
+            const n1 = samplePanelIdMapAtUv_CANONICAL({ x: uv.x + eps, y: uv.y });
+            const n2 = samplePanelIdMapAtUv_CANONICAL({ x: uv.x - eps, y: uv.y });
+            const n3 = samplePanelIdMapAtUv_CANONICAL({ x: uv.x, y: uv.y + eps });
+            const n4 = samplePanelIdMapAtUv_CANONICAL({ x: uv.x, y: uv.y - eps });
+            const votes = [n1, n2, n3, n4].filter(n => sameRGB(n, base)).length;
+            return { rgb: base, confidence: votes / 4 };
+        }
+
+        // 2) Datum-solved orientation (no guessing loops)
+        function solveOrientationFromDatums(samples) {
+            const nose = samples.NOSE;
+            const lh = samples.LH_WINGTIP;
+            const rh = samples.RH_WINGTIP;
+            if (!nose || !lh || !rh) return null;
+
+            const wingV = (lh.v + rh.v) / 2;
+            const flipV = nose.v < wingV;
+            const flipU = lh.u > rh.u;
+
+            return { flipU, flipV };
+        }
+
+        function orientationConfidence(samples) {
+            let score = 1.0;
+            const nose = samples.NOSE;
+            const lh = samples.LH_WINGTIP;
+            const rh = samples.RH_WINGTIP;
+            const tail = samples.TAIL;
+
+            if (!nose || !lh || !rh) return 0;
+
+            const wingV = (lh.v + rh.v) / 2;
+            const midU = (lh.u + rh.u) / 2;
+            const symErr = Math.abs(midU - nose.u);
+            if (symErr > 0.03) score -= 0.35;
+            else if (symErr > 0.015) score -= 0.15;
+
+            const forwardErr = nose.v < wingV ? 0 : 0.2;
+            score -= forwardErr;
+
+            if (tail && tail.v > wingV) score -= 0.2;
+
+            return Math.max(0, Math.min(1, score));
+        }
+
+        function finishOrientationCalibration_LOCKED() {
+            state.orientCal.active = false;
+
+            const s = state.orientCal.samples || {};
+            const solved = solveOrientationFromDatums(s);
+            if (!solved) {
+                alert("ORIENT LOCK FAILED: Need NOSE + LH_WINGTIP + RH_WINGTIP samples.");
+                showNotification("CAL: Failed (missing datums)");
+                return;
+            }
+
+            const conf = orientationConfidence(s);
+            state.orientCal.flipU = !!solved.flipU;
+            state.orientCal.flipV = !!solved.flipV;
+            state.orientCal.locked = conf >= 0.80;
+            state.orientCal.confidence = conf;
+
+            localStorage.setItem("f22_orientCal", JSON.stringify({
+                flipU: state.orientCal.flipU,
+                flipV: state.orientCal.flipV,
+                locked: state.orientCal.locked,
+                confidence: conf,
+                samples: s,
+                version: 2,
+                ts: new Date().toISOString()
+            }));
+
+            const report = [
+                "ORIENTATION SOLVED (DATUM LOCK v2)",
+                `U Mirrored: ${state.orientCal.flipU ? "YES" : "NO"}`,
+                `V Flipped:  ${state.orientCal.flipV ? "YES" : "NO"}`,
+                `Confidence: ${(conf * 100).toFixed(0)}%`,
+                `Locked:     ${state.orientCal.locked ? "YES" : "NO"}`
+            ].join("\n");
+
+            alert(report);
+            showNotification(state.orientCal.locked ? "CAL: LOCKED" : "CAL: LOW CONF (not locked)");
+        }
+
+        function loadOrientationCalibration_LOCKED() {
+            const saved = localStorage.getItem("f22_orientCal");
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+                state.orientCal.flipU = !!data.flipU;
+                state.orientCal.flipV = !!data.flipV;
+                state.orientCal.locked = !!data.locked;
+                state.orientCal.confidence = data.confidence ?? 0;
+                state.orientCal.samples = data.samples ?? {};
+                console.log("Orientation calibration restored:", data);
+            } catch (e) {
+                console.warn("Failed to parse orientCal", e);
+            }
+        }
+
+        // 3) Replay debugger (proves determinism)
+        state.debug = state.debug || {};
+        state.debug.lastPick = null;
+
+        function capturePickDebug(e, hit, uvRaw, uvOriented, uvSnapped, rgb, stableConf) {
+            state.debug.lastPick = {
+                t: Date.now(),
+                ndc: { x: state.pointerNdc.x, y: state.pointerNdc.y },
+                uvRaw: { x: uvRaw.x, y: uvRaw.y },
+                uvOriented,
+                uvSnapped,
+                rgb,
+                rgbConfidence: stableConf,
+                faceIndex: hit.faceIndex ?? null,
+                meshName: hit.object?.name ?? "",
+                camera: {
+                    pos: state.camera.position.clone(),
+                    quat: state.camera.quaternion.clone(),
+                    fov: state.camera.fov,
+                    near: state.camera.near,
+                    far: state.camera.far
+                },
+                orient: {
+                    flipU: state.orientCal.flipU,
+                    flipV: state.orientCal.flipV,
+                    locked: !!state.orientCal.locked,
+                    confidence: state.orientCal.confidence ?? 0
+                }
+            };
+        }
+
+        function replayLastPick() {
+            const rec = state.debug.lastPick;
+            if (!rec) {
+                showNotification("REPLAY: No pick recorded yet");
+                return;
+            }
+            const rgb2 = samplePanelIdMapAtUv_CANONICAL(rec.uvSnapped);
+            const ok = sameRGB(rgb2, rec.rgb);
+            console.log("REPLAY RESULT:", { ok, recorded: rec.rgb, now: rgb2, rec });
+            showNotification(ok ? "REPLAY: MATCH" : "REPLAY: MISMATCH");
+        }
+
+        window.addEventListener("keydown", ev => {
+            if (ev.key === "r" || ev.key === "R") replayLastPick();
+        });
+
+        // 4) Overlay HUD (datums + arrows)
+        state.view = state.view || { mode: 0 };
+        state.overlay = state.overlay || { enabled: false, canvas: null, ctx: null };
+
+        function ensureOverlayCanvas() {
+            if (state.overlay.canvas) return;
+            const c = document.createElement("canvas");
+            c.style.position = "absolute";
+            c.style.left = "0";
+            c.style.top = "0";
+            c.style.pointerEvents = "none";
+            c.style.zIndex = "5";
+            const parent = state.renderer.domElement.parentElement || document.body;
+            parent.style.position = parent.style.position || "relative";
+            parent.appendChild(c);
+            state.overlay.canvas = c;
+            state.overlay.ctx = c.getContext("2d");
+        }
+
+        function resizeOverlayToRenderer() {
+            if (!state.overlay.canvas) return;
+            const r = state.renderer.domElement.getBoundingClientRect();
+            state.overlay.canvas.width = Math.floor(r.width * devicePixelRatio);
+            state.overlay.canvas.height = Math.floor(r.height * devicePixelRatio);
+            state.overlay.canvas.style.width = `${r.width}px`;
+            state.overlay.canvas.style.height = `${r.height}px`;
+        }
+
+        function worldToScreen(pos) {
+            const v = pos.clone().project(state.camera);
+            const r = state.renderer.domElement.getBoundingClientRect();
+            return {
+                x: ((v.x + 1) * 0.5) * r.width,
+                y: ((-v.y + 1) * 0.5) * r.height
+            };
+        }
+
+        function drawOverlay() {
+            if (!state.overlay.enabled || !state.modelRoot) return;
+            ensureOverlayCanvas();
+            resizeOverlayToRenderer();
+
+            const ctx = state.overlay.ctx;
+            const r = state.renderer.domElement.getBoundingClientRect();
+            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+            ctx.clearRect(0, 0, r.width, r.height);
+
+            const locked = !!state.orientCal.locked;
+            const conf = state.orientCal.confidence ?? 0;
+            ctx.globalAlpha = 0.95;
+            ctx.fillStyle = "rgba(0,0,0,0.35)";
+            ctx.fillRect(12, 12, 320, 62);
+            ctx.fillStyle = "rgba(200,255,255,0.95)";
+            ctx.font = "12px system-ui, -apple-system, Segoe UI, Roboto";
+            ctx.fillText(`ORIENT: ${locked ? "LOCKED" : "UNLOCKED"}  U:${state.orientCal.flipU ? "flip" : "ok"}  V:${state.orientCal.flipV ? "flip" : "ok"}`, 22, 34);
+            ctx.fillText(`CONF: ${(conf * 100).toFixed(0)}%   MirrorMode: ${state.mirror?.enabled ? "ON" : "OFF"}`, 22, 54);
+
+            const s = state.orientCal.samples || {};
+            const keys = Object.keys(s);
+            if (!keys.length) return;
+
+            ctx.fillStyle = "rgba(0,0,0,0.35)";
+            ctx.fillRect(12, 86, 320, 18 + keys.length * 14);
+            ctx.fillStyle = "rgba(255,255,255,0.90)";
+            ctx.fillText("DATUM SAMPLES (UV, post-correct display):", 22, 106);
+
+            keys.forEach((k, i) => {
+                const raw = s[k];
+                const corrected = applyOrientationToUv({ x: raw.u, y: raw.v });
+                ctx.fillText(`${k}: U ${fmt3(corrected.x)}  V ${fmt3(corrected.y)}`, 22, 126 + i * 14);
+            });
+
+            if (state.debug.lastPick) {
+                const lp = state.debug.lastPick;
+                const x = ((lp.ndc.x + 1) * 0.5) * r.width;
+                const y = ((-lp.ndc.y + 1) * 0.5) * r.height;
+                ctx.strokeStyle = "rgba(0,255,255,0.9)";
+                ctx.beginPath();
+                ctx.moveTo(x - 10, y);
+                ctx.lineTo(x + 10, y);
+                ctx.moveTo(x, y - 10);
+                ctx.lineTo(x, y + 10);
+                ctx.stroke();
+                ctx.fillStyle = "rgba(0,0,0,0.35)";
+                ctx.fillRect(x + 12, y - 16, 210, 44);
+                ctx.fillStyle = "rgba(255,255,255,0.95)";
+                ctx.fillText(`UV: ${fmt3(lp.uvSnapped.x)}, ${fmt3(lp.uvSnapped.y)}`, x + 18, y + 4);
+                ctx.fillText(`RGB: ${lp.rgb?.r},${lp.rgb?.g},${lp.rgb?.b}  (${(lp.rgbConfidence * 100).toFixed(0)}%)`, x + 18, y + 22);
+            }
+        }
+
+        function overlayFrameTick() {
+            if (state.overlay.enabled) drawOverlay();
+        }
+
+        // 5) Texture button cycle: SOLID -> TEXTURE -> TEXTURE+OVERLAY
+        function setViewMode(mode) {
+            state.view.mode = mode;
+            state.overlay.enabled = mode === 2;
+
+            if (els.materialMode) {
+                els.materialMode.value = mode === 0 ? "untextured" : "textured";
+            }
+            if (typeof applyMaterialMode === "function") {
+                applyMaterialMode(mode === 0 ? "untextured" : "textured");
+            }
+
+            if (state.overlay.enabled) {
+                ensureOverlayCanvas();
+                resizeOverlayToRenderer();
+                drawOverlay();
+            } else if (state.overlay.ctx) {
+                const r = state.renderer.domElement.getBoundingClientRect();
+                state.overlay.ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+                state.overlay.ctx.clearRect(0, 0, r.width, r.height);
+            }
+
+            const label = mode === 0 ? "SOLID" : mode === 1 ? "TEXTURE" : "TEXTURE+OVERLAY";
+            showNotification(`VIEW: ${label}`);
+        }
+
+        function bindTextureButtonCycle() {
+            if (!els?.btnMaterial) return;
+            els.btnMaterial.addEventListener("click", () => {
+                const next = (state.view.mode + 1) % 3;
+                setViewMode(next);
+            });
+        }
+
+        // 6) Stage / Grid ground surface
+        state.stage = state.stage || { grid: null, floor: null };
+
+        function ensureStage() {
+            if (!state.scene) return;
+
+            if (!state.stage.grid) {
+                const grid = new THREE.GridHelper(30, 60, 0x223344, 0x111820);
+                grid.position.y = -1.6;
+                grid.material.opacity = 0.55;
+                grid.material.transparent = true;
+                state.scene.add(grid);
+                state.stage.grid = grid;
+            }
+
+            if (!state.stage.floor) {
+                const geo = new THREE.PlaneGeometry(30, 30);
+                const mat = new THREE.MeshStandardMaterial({
+                    color: 0x05070b,
+                    roughness: 0.95,
+                    metalness: 0.05
+                });
+                const floor = new THREE.Mesh(geo, mat);
+                floor.rotation.x = -Math.PI / 2;
+                floor.position.y = -1.6;
+                floor.receiveShadow = true;
+                state.scene.add(floor);
+                state.stage.floor = floor;
+            }
+        }
+
+        // 7) Mirror mode (map one side -> auto-generate opposite)
+        state.mirror = state.mirror || { enabled: false };
+
+        // 7.5) Pick debug + blocker filter (helps when an invisible bbox/collider blocks the nose)
+        state.pickDebug = state.pickDebug || {
+            overlayEl: null,
+            ignoreBlockers: true,
+            last: null,
+            enabled: false
+        };
+
+        function ensurePickDebugOverlay() {
+            if (state.pickDebug.overlayEl) return;
+            const el = document.createElement('div');
+            el.style.cssText = [
+                'position:fixed',
+                'left:12px',
+                'bottom:12px',
+                'padding:6px 10px',
+                'background:rgba(0,0,0,0.72)',
+                'border:1px solid rgba(0,212,255,0.35)',
+                'border-radius:6px',
+                'color:#00d4ff',
+                'font:12px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                'z-index:9999',
+                'pointer-events:none',
+                'max-width:60vw',
+                'white-space:nowrap',
+                'overflow:hidden',
+                'text-overflow:ellipsis'
+            ].join(';');
+            el.textContent = 'HIT: (none)';
+            document.body.appendChild(el);
+            state.pickDebug.overlayEl = el;
+        }
+
+        function updatePickDebugOverlay(info) {
+            if (!state.pickDebug.enabled) {
+                if (state.pickDebug.overlayEl) state.pickDebug.overlayEl.style.display = 'none';
+                return;
+            }
+            ensurePickDebugOverlay();
+            state.pickDebug.last = info;
+            const n = info?.name || '(unnamed)';
+            const p = info?.parent || '(none)';
+            const uv = info?.hasUv ? 'uv' : 'no-uv';
+            const dist = Number.isFinite(info?.distance) ? info.distance.toFixed(3) : '—';
+            const mode = state.pickDebug.ignoreBlockers ? 'IGNORE=ON' : 'IGNORE=OFF';
+            state.pickDebug.overlayEl.style.display = 'block';
+            state.pickDebug.overlayEl.textContent = `HIT: ${n} | parent: ${p} | ${uv} | d=${dist} | ${mode} (press B)`;
+        }
+
+        function toggleBlockerIgnore() {
+            state.pickDebug.ignoreBlockers = !state.pickDebug.ignoreBlockers;
+            showNotification(`PICK BLOCKERS: ${state.pickDebug.ignoreBlockers ? 'IGNORING' : 'ALLOWING'} (press B)`);
+        }
+
+        window.addEventListener('keydown', ev => {
+            if (ev.key === 'b' || ev.key === 'B') toggleBlockerIgnore();
+        });
+
+        function toggleMirrorMode() {
+            state.mirror.enabled = !state.mirror.enabled;
+            showNotification(`MIRROR MODE: ${state.mirror.enabled ? "ON" : "OFF"}`);
+        }
+
+        window.addEventListener("keydown", ev => {
+            if (ev.key === "m" || ev.key === "M") toggleMirrorMode();
+        });
+
+        function mirrorU(u) {
+            const c = state.wizard?.centerlineU ?? 0.5;
+            return clamp01(c + (c - u));
+        }
+
+        function mirrorUvPoint(p) {
+            return { x: mirrorU(p.x), y: p.y };
+        }
+
+        function mirrorBounds(b) {
+            const uMin = parseFloat(b.uMin);
+            const uMax = parseFloat(b.uMax);
+            const muMin = mirrorU(uMax);
+            const muMax = mirrorU(uMin);
+            return {
+                uMin: Math.min(muMin, muMax),
+                uMax: Math.max(muMin, muMax),
+                vMin: parseFloat(b.vMin),
+                vMax: parseFloat(b.vMax)
+            };
+        }
+
+        function maybeEmitMirroredPart(part) {
+            if (!state.mirror.enabled || !part) return null;
+
+            const pid = part.id || part.part_id || part.name || "PART";
+            if (String(pid).endsWith("_M")) return null;
+
+            const mirrored = JSON.parse(JSON.stringify(part));
+            mirrored.id = `${pid}_M`;
+            mirrored.name = mirrored.name ? `${mirrored.name} (Mirrored)` : `${pid}_M`;
+
+            if (mirrored.uv_bounds) {
+                const mb = mirrorBounds(mirrored.uv_bounds);
+                mirrored.uv_bounds.uMin = String(mb.uMin);
+                mirrored.uv_bounds.uMax = String(mb.uMax);
+                mirrored.uv_bounds.vMin = String(mb.vMin);
+                mirrored.uv_bounds.vMax = String(mb.vMax);
+            }
+
+            if (Array.isArray(mirrored.points)) {
+                mirrored.points = mirrored.points.map(pt => {
+                    if (pt.uv) return { ...pt, uv: mirrorUvPoint(pt.uv) };
+                    if (pt.x != null && pt.y != null) return { ...pt, x: mirrorU(pt.x), y: pt.y };
+                    return pt;
+                });
+            }
+
+            return mirrored;
+        }
+
+        // 8) Replace tryPick() to enforce no drift
+        let __highlightMesh = null;
+
+        function ensureHighlightMesh() {
+            if (__highlightMesh) return __highlightMesh;
+            const geom = new THREE.BufferGeometry();
+            geom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(9), 3));
+            const mat = new THREE.MeshBasicMaterial({
+                color: 0x00d4ff,
+                transparent: true,
+                opacity: 0.35,
+                depthTest: false,
+                side: THREE.DoubleSide
+            });
+            __highlightMesh = new THREE.Mesh(geom, mat);
+            __highlightMesh.renderOrder = 9999;
+            __highlightMesh.visible = false;
+            state.scene.add(__highlightMesh);
+            return __highlightMesh;
+        }
+
+        function setHighlightTriangleFromHit(hit) {
+            if (!hit?.object || hit.faceIndex == null) return;
+            const hm = ensureHighlightMesh();
+            const geo = hit.object.geometry;
+            const pos = geo?.attributes?.position;
+            if (!pos) return;
+
+            const idx = geo.index;
+            let a, b, c;
+            if (idx) {
+                const i3 = hit.faceIndex * 3;
+                a = idx.getX(i3 + 0);
+                b = idx.getX(i3 + 1);
+                c = idx.getX(i3 + 2);
+            } else {
+                const i3 = hit.faceIndex * 3;
+                a = i3 + 0;
+                b = i3 + 1;
+                c = i3 + 2;
+            }
+
+            const vA = new THREE.Vector3().fromBufferAttribute(pos, a);
+            const vB = new THREE.Vector3().fromBufferAttribute(pos, b);
+            const vC = new THREE.Vector3().fromBufferAttribute(pos, c);
+
+            hit.object.localToWorld(vA);
+            hit.object.localToWorld(vB);
+            hit.object.localToWorld(vC);
+
+            const arr = hm.geometry.attributes.position.array;
+            arr[0] = vA.x; arr[1] = vA.y; arr[2] = vA.z;
+            arr[3] = vB.x; arr[4] = vB.y; arr[5] = vB.z;
+            arr[6] = vC.x; arr[7] = vC.y; arr[8] = vC.z;
+            hm.geometry.attributes.position.needsUpdate = true;
+            hm.visible = true;
+        }
+
+        function tryPick_LOCKED(e, showInfo) {
+            if (!state.modelRoot || !state.meshList.length) {
+                console.log("No model loaded");
+                return null;
+            }
+
+            // Some GLBs contain helper meshes (bounds/colliders) that can sit "in front" of
+            // the nose and steal ray hits. We filter those out and prioritize the closest
+            // hit that actually has UVs.
+            const isBlockingHelper = (obj) => {
+                const n = (obj?.name || '').toLowerCase();
+                if (!n) return false;
+                return n.includes('bound') || n.includes('bbox') || n.includes('box') || n.includes('collider') || n.includes('collision') || n.includes('proxy');
+            };
+
+            const rect = state.renderer.domElement.getBoundingClientRect();
+            state.pointerNdc.set(((e.clientX - rect.left) / rect.width) * 2 - 1,
+                -((e.clientY - rect.top) / rect.height) * 2 + 1);
+
+            state.raycaster.setFromCamera(state.pointerNdc, state.camera);
+            // Use authority mesh list if enabled for performance, otherwise full mesh list
+            const raycastMeshes = getRaycastMeshList();
+            const hits = state.raycaster.intersectObjects(raycastMeshes, true);
+            // Closest-first is already guaranteed by three.js, but we defensively sort anyway.
+            hits.sort((a, b) => a.distance - b.distance);
+
+            // Prefer the nearest intersection that has UVs. Optionally ignore helper meshes
+            // (bbox/colliders) that commonly block nose clicks.
+            const hit = hits.find(h => {
+                if (!h?.uv) return false;
+                if (state.pickDebug.ignoreBlockers && isBlockingHelper(h.object)) return false;
+                return true;
+            });
+
+            // Update debug overlay using the closest hit overall (even if it gets filtered out)
+            const top = hits[0];
+            if (top?.object) {
+                updatePickDebugOverlay({
+                    name: top.object?.name || '',
+                    parent: top.object?.parent?.name || '',
+                    hasUv: !!top.uv,
+                    distance: top.distance
+                });
+            } else {
+                updatePickDebugOverlay(null);
+            }
+
+            if (!hit?.uv) {
+                if (hits.length > 0 && showInfo) {
+                    console.log("Hit found but no UV:", hits[0]);
+                    updateInfoPanel(null, null, null, hits[0].faceIndex);
+                }
+                if (showInfo) {
+                    updateHud(null, null, null);
+                    state.selectedPanel = null;
+                    state.selectedUv = null;
+                    state.selectedRgb = null;
+                    state.selectedFace = null;
+                }
+                return null;
+            }
+
+            // Always show a triangle highlight for both hover and click
+            setHighlightTriangleFromHit(hit);
+
+            const uvRaw = hit.uv.clone();
+            const uvOriented = applyOrientationToUv(uvRaw);
+            const uvSnapped = snapUvToPixelCenter(uvOriented);
+
+            const stab = stableSampleAtUv(uvSnapped);
+            const rgb = stab.rgb;
+
+            state.lastUv = new THREE.Vector2(uvSnapped.x, uvSnapped.y);
+            state.lastRgb = rgb ? { r: rgb.r, g: rgb.g, b: rgb.b, a: rgb.a } : null;
+
+            capturePickDebug(e, hit, uvRaw, uvOriented, uvSnapped, rgb, stab.confidence);
+
+            const meshPanel = findPanelByMeshName(hit.object?.name);
+            const tolerance = Number(els.tolerance.value);
+            const nearest = (!meshPanel && rgb) ? findNearestPanel(rgb.r, rgb.g, rgb.b, tolerance) : null;
+
+            // findNearestPanel returns { panel, dist }, so ensure we store the panel object.
+            state.lastPanel = meshPanel || nearest?.panel || null;
+            updateHud(state.lastPanel, state.lastUv, state.lastRgb);
+
+            if (state.lastPanel) {
+                const p = state.lastPanel;
+                const src = meshPanel ? "MESH" : "MAP";
+                console.log(`[PICK] ${src}: ${p.id} (${p.name})`);
+                logTerminal(`PID: ${p.id} (${src})`);
+                showNotification(`PANEL: ${p.id}`);
+            } else if (rgb && rgb.a > 0) {
+                console.log(`[PICK] NO MATCH: RGB(${rgb.r},${rgb.g},${rgb.b})`);
+                logTerminal(`RGB: ${rgb.r},${rgb.g},${rgb.b} (No Match)`);
+                showNotification(`UNKNOWN RGB: ${rgb.r},${rgb.g},${rgb.b}`);
+            } else {
+                showNotification("NO PANEL HIT");
+            }
+
+            // LOCK IT IN: Use onPanelPicked for click events - sets state, pings, updates UI
+            if (showInfo) {
+                onPanelPicked({
+                    panel: state.lastPanel,
+                    uv: uvSnapped,
+                    rgb: rgb,
+                    faceIndex: hit.faceIndex ?? null,
+                    hitPoint: hit.point ?? null
+                });
+            }
+
+            if (activePartForMapping) {
+                handleMappingClick(state.lastUv);
+            } else {
+                checkMasterThread(state.lastUv);
+            }
+
+            if (state.overlay.enabled) drawOverlay();
+
+            if (stab.confidence < 0.75) {
+                showNotification("EDGE HIT: zoom in / re-tap (low stability)");
+            }
+
+            return state.lastPanel;
+        }
+
+        // 9) Minimal hook points for your existing flow
+        function installLockPatch() {
+            ensureStage();
+            loadOrientationCalibration_LOCKED();
+            bindTextureButtonCycle();
+
+            finishOrientationCalibration = finishOrientationCalibration_LOCKED;
+            loadOrientationCalibration = loadOrientationCalibration_LOCKED;
+            tryPick = tryPick_LOCKED;
+            state.lockPatchInstalled = true;
+
+            window.replayLastPick = replayLastPick;
+            showNotification("LOCK PATCH INSTALLED");
+        }
+
+        // --- IMPROVED parsePanelJson: handles all formats ---
+        function hexToRgb(hex) {
+            if (!hex) return null;
+            const h = String(hex).replace('#', '').trim();
+            if (h.length !== 6) return null;
+            const r = parseInt(h.slice(0, 2), 16);
+            const g = parseInt(h.slice(2, 4), 16);
+            const b = parseInt(h.slice(4, 6), 16);
+            if ([r, g, b].some(Number.isNaN)) return null;
+            return { r, g, b, hex: '#' + h };
+        }
 
         function parsePanelJson(raw) {
             try {
                 const p = JSON.parse(raw);
-                // Handle array format
+
+                // A) Array format
                 if (Array.isArray(p)) return { panels: p };
-                // Handle {panels: [...]} format
-                if (p?.panels) return p;
-                // Handle {mapping: {"#RRGGBB": {...}}} format (from panel_id_map_colors.json)
-                if (p?.mapping) {
-                    const panels = Object.entries(p.mapping).map(([hex, info]) => {
-                        const r = parseInt(hex.slice(1, 3), 16);
-                        const g = parseInt(hex.slice(3, 5), 16);
-                        const b = parseInt(hex.slice(5, 7), 16);
+
+                // B) panel_config.json: { panels:[...] }
+                if (p?.panels && Array.isArray(p.panels)) {
+                    const panels = p.panels.map(panel => {
+                        // Already has numeric color
+                        if (panel?.color && typeof panel.color.r === 'number') {
+                            return { ...panel, id: panel.id ?? panel.panel_id ?? panel.name ?? 'UNKNOWN' };
+                        }
+                        // Convert hex string to rgb
+                        const c = (typeof panel?.color === 'string')
+                            ? hexToRgb(panel.color)
+                            : hexToRgb(panel?.color?.hex);
+
                         return {
-                            id: info.panel_id || info.id || hex,
-                            name: info.object_name || info.name || info.panel_id || hex,
-                            color: { r, g, b },
-                            data: { panel_index: info.panel_index, object_name: info.object_name }
+                            ...panel,
+                            id: panel.id ?? panel.panel_id ?? panel.name ?? 'UNKNOWN',
+                            name: panel.name ?? panel.object_name ?? panel.id ?? 'UNKNOWN',
+                            color: c ?? panel.color
                         };
                     });
+                    return { panels, views: p.views || ['top'] };
+                }
+
+                // C) mapping formats
+                if (p?.mapping && typeof p.mapping === 'object') {
+                    const panels = [];
+
+                    for (const [k, info] of Object.entries(p.mapping)) {
+                        // C1) legacy: key is "#RRGGBB"
+                        if (k.startsWith('#') && k.length === 7) {
+                            const c = hexToRgb(k);
+                            if (!c) continue;
+                            panels.push({
+                                id: info?.panel_id ?? info?.id ?? info?.name ?? k,
+                                name: info?.object_name ?? info?.name ?? info?.panel_id ?? k,
+                                color: c,
+                                data: { ...info }
+                            });
+                            continue;
+                        }
+
+                        // C2) Blender export: key is object name, info has r/g/b
+                        if (info && typeof info === 'object' && Number.isFinite(info.r) && Number.isFinite(info.g) && Number.isFinite(info.b)) {
+                            const r = info.r | 0, g = info.g | 0, b = info.b | 0;
+                            panels.push({
+                                id: info?.panel_id ?? info?.id ?? k,
+                                name: info?.object_name ?? info?.name ?? k,
+                                color: { r, g, b, hex: `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}` },
+                                data: { ...info, object_key: k }
+                            });
+                            continue;
+                        }
+
+                        // C3) key is panel id, info has hex or rgb
+                        const c = hexToRgb(info?.hex || info?.color || info?.color_hex);
+                        if (c) {
+                            panels.push({
+                                id: info?.panel_id ?? info?.id ?? k,
+                                name: info?.object_name ?? info?.name ?? k,
+                                color: c,
+                                data: { ...info }
+                            });
+                        }
+                    }
+
                     return { panels };
                 }
+
                 return { panels: [] };
-            } catch { return { panels: [] }; }
+            } catch (e) {
+                console.warn("parsePanelJson failed:", e);
+                return { panels: [] };
+            }
         }
 
-        function normalizePanelList(panels) {
-            return (panels || []).filter(p => {
-                const c = p?.color;
-                return Number.isFinite(Number(c?.r)) && Number.isFinite(Number(c?.g)) && Number.isFinite(Number(c?.b));
-            }).map(p => ({
-                id: String(p.id ?? ''), name: String(p.name ?? ''), data: p.data ?? null,
-                color: { r: Math.round(Number(p.color.r)), g: Math.round(Number(p.color.g)), b: Math.round(Number(p.color.b)) }
-            }));
+        let activePartForMapping = null;
+        let master3DData = [];
+
+        function renderSurveyList(parts) {
+            const container = document.getElementById('surveyList');
+            container.innerHTML = parts.map(part => `
+                <div class="survey-card ${part.uv_bounds ? 'approved' : ''}" 
+                     onclick="selectPartForMapping('${part.part_id}')" 
+                     id="card-${part.part_id}">
+                    <div style="color: var(--neon-gold); font-weight: bold;">${part.part_id}</div>
+                    <div style="font-size: 0.7rem; color: var(--text-secondary);">${part.name}</div>
+                    ${part.uv_bounds ? '<div style="font-size: 0.6rem; color: var(--neon-green);">MAPPED ✓</div>' : ''}
+                </div>
+            `).join('');
         }
 
-        function findNearestPanel(r, g, b, tolerance) {
+        function selectPartForMapping(partId) {
+            activePartForMapping = partId;
+            document.querySelectorAll('.survey-card').forEach(c => c.classList.remove('active'));
+            document.getElementById(`card-${partId}`).classList.add('active');
+            addActivity(`Mapping Mode: ${partId}`);
+        }
+
+        function handleMappingClick(uv) {
+            const part = master3DData.find(p => p.part_id === activePartForMapping);
+            if (part) {
+                part.uv_bounds = {
+                    uMin: (uv.x - 0.01).toFixed(4),
+                    uMax: (uv.x + 0.01).toFixed(4),
+                    vMin: (uv.y - 0.01).toFixed(4),
+                    vMax: (uv.y + 0.01).toFixed(4)
+                };
+                part.timestamp = new Date().toISOString();
+                renderSurveyList(master3DData);
+                activePartForMapping = null;
+                showNotification("Part mapped successfully");
+            }
+        }
+
+        function normalizePanelList(list) {
+            if (!Array.isArray(list)) return [];
+            return list
+                .filter(Boolean)
+                .map(p => {
+                    const id = p.id ?? p.panel_id ?? p.name ?? 'UNKNOWN';
+                    const name = p.name ?? p.object_name ?? id;
+                    let color = p.color;
+
+                    // normalize any leftover hex into rgb
+                    if (typeof color === 'string') color = hexToRgb(color);
+                    if (color?.hex && (typeof color.r !== 'number')) {
+                        const c = hexToRgb(color.hex);
+                        if (c) color = c;
+                    }
+
+                    // ensure we have valid numeric color
+                    if (!color || typeof color.r !== 'number') {
+                        color = { r: 0, g: 0, b: 0, hex: '#000000' };
+                    }
+                    return { ...p, id, name, color };
+                })
+                .filter(p => {
+                    const c = p?.color;
+                    return Number.isFinite(Number(c?.r)) && Number.isFinite(Number(c?.g)) && Number.isFinite(Number(c?.b));
+                });
+        }
+
+        function findNearestPanel(r, g, b, tolerance = 20) {
+            // Try exact match first (fast path)
+            const exact = findPanelByExactRgb(r, g, b);
+            if (exact) return { panel: exact, dist: 0 };
+
+            // Fallback: distance scan
             if (!state.panelsRgb.length) return null;
-            let best = null, bestDist = Infinity;
+            let best = null,
+                bestDist = Infinity;
             for (const p of state.panelsRgb) {
                 const dist = Math.sqrt((r - p.r) ** 2 + (g - p.g) ** 2 + (b - p.b) ** 2);
                 if (dist < bestDist) { bestDist = dist; best = p; }
@@ -582,35 +2320,35 @@
             // Hemisphere light (sky + ground ambient)
             const hemi = new THREE.HemisphereLight(0xffffff, 0x444466, 2.0);  // BRIGHTER
             scene.add(hemi);
-            
+
             // Main key light (front-top-right)
             const dir = new THREE.DirectionalLight(0xffffff, 2.5);  // MUCH BRIGHTER
             dir.position.set(5, 8, 5);
             scene.add(dir);
-            
+
             // Fill light (front-left)
             const dir2 = new THREE.DirectionalLight(0xaaccff, 1.5);  // Cool fill
             dir2.position.set(-5, 3, 3);
             scene.add(dir2);
-            
+
             // Back rim light
             const dir3 = new THREE.DirectionalLight(0xffffee, 1.0);
             dir3.position.set(0, 2, -8);
             scene.add(dir3);
-            
+
             // Bottom fill (reduce harsh shadows)
             const dir4 = new THREE.DirectionalLight(0x6688aa, 0.8);
             dir4.position.set(0, -5, 0);
             scene.add(dir4);
-            
+
             // Ambient for overall minimum brightness
             const ambient = new THREE.AmbientLight(0xffffff, 0.5);
             scene.add(ambient);
-            
+
             // Ground plane / stage
             const stageGeo = new THREE.CircleGeometry(15, 64);
-            const stageMat = new THREE.MeshStandardMaterial({ 
-                color: 0x2a2a3a, 
+            const stageMat = new THREE.MeshStandardMaterial({
+                color: 0x2a2a3a,
                 roughness: 0.8,
                 metalness: 0.2
             });
@@ -637,7 +2375,9 @@
 
             const tick = () => {
                 controls.update();
+                updatePing(); // LOCK IT IN: animate ping sphere
                 renderer.render(scene, camera);
+                overlayFrameTick();
                 requestAnimationFrame(tick);
             };
             tick();
@@ -723,6 +2463,7 @@
                 frameObject(state.modelRoot);
                 applyMaterialMode(els.materialMode.value);
                 els.meshCount.textContent = state.meshList.length;
+                buildAuthMeshList(); // Build authority mesh list for fast raycasting
                 els.uploadScreen.classList.add('hidden');
                 els.hud.classList.add('visible');
                 els.statusText.textContent = 'MODEL LOADED';
@@ -741,6 +2482,21 @@
             img.src = url;
             await img.decode();
             setTimeout(() => URL.revokeObjectURL(url), 1000);
+            return img;
+        }
+
+        async function loadImageFromUrl(url) {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`Failed fetch ${url} (${res.status})`);
+            const blob = await res.blob();
+            const objectUrl = URL.createObjectURL(blob);
+            const img = new Image();
+            await new Promise((resolve, reject) => {
+                img.onload = () => resolve();
+                img.onerror = reject;
+                img.src = objectUrl;
+            });
+            URL.revokeObjectURL(objectUrl);
             return img;
         }
 
@@ -773,8 +2529,18 @@
             els.loading.classList.add('visible');
             els.statusText.textContent = 'LOADING MODEL...';
             try {
+                let buf;
+                if (window.api?.readBinary) {
+                    buf = await window.api.readBinary(url);
+                } else {
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`Failed fetch ${url} (${res.status})`);
+                    buf = await res.arrayBuffer();
+                }
+                const blob = new Blob([buf]);
+                const blobUrl = URL.createObjectURL(blob);
                 const loader = new GLTFLoader();
-                const gltf = await new Promise((res, rej) => loader.load(url, res, undefined, rej));
+                const gltf = await new Promise((res, rej) => loader.load(blobUrl, res, undefined, rej));
                 clearModel();
                 state.modelRoot = gltf.scene || gltf.scenes?.[0];
                 if (!state.modelRoot) throw new Error('No scene in GLB');
@@ -785,6 +2551,7 @@
                 frameObject(state.modelRoot);
                 applyMaterialMode(els.materialMode.value);
                 els.meshCount.textContent = state.meshList.length;
+                buildAuthMeshList(); // Build authority mesh list for fast raycasting
                 els.uploadScreen.classList.add('hidden');
                 els.hud.classList.add('visible');
                 els.statusText.textContent = 'MODEL LOADED';
@@ -798,13 +2565,93 @@
             }
         }
 
+        async function loadImageFromDisk(absPath) {
+            const buf = await window.api.readBinary(absPath);
+            const blob = new Blob([buf]);
+            const url = URL.createObjectURL(blob);
+            const img = new Image();
+            await new Promise((res, rej) => {
+                img.onload = () => res();
+                img.onerror = rej;
+                img.src = url;
+            });
+            return { img, url };
+        }
+
+        // NOTE: applyPanelList is now defined in the "LOCK IT IN" section below
+
+        function resolveAssetPath(basePath, file) {
+            if (!file) return null;
+            if (/^[a-z]:\\/i.test(file)) return file;
+            if (/^(https?:)?\/\//i.test(file)) return file;
+            if (file.startsWith('/') || file.startsWith('./') || file.startsWith('../')) return file;
+            return basePath + file;
+        }
+
+        function normalizeAssetsBase(folder) {
+            const base = String(folder || '').replace(/[\\/]+$/, '');
+            if (/[\\/]assets$/i.test(base)) return base + '\\';
+            if (/[\\/]web$/i.test(base)) return base + '\\assets\\';
+            return base + '\\web\\assets\\';
+        }
+
+        async function loadPanelJsonFromUrl(url) {
+            try {
+                let text = '';
+                if (window.api?.readText) {
+                    text = await window.api.readText(url);
+                } else {
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`Failed fetch ${url} (${res.status})`);
+                    text = await res.text();
+                }
+
+                const parsed = parsePanelJson(text);
+                console.log('Parsed Panel JSON:', parsed);
+
+                applyPanelList(parsed.panels);
+                return true;
+            } catch (e) {
+                console.error('Panel JSON load failed:', e);
+                return false;
+            }
+        }
+
+        async function loadPanelManifestFromUrl(url, basePath) {
+            try {
+                let text = '';
+                if (window.api?.readText) {
+                    text = await window.api.readText(url);
+                } else {
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`Failed fetch ${url} (${res.status})`);
+                    text = await res.text();
+                }
+                const data = JSON.parse(text);
+                const parsed = parsePanelJson(text);
+                console.log('Parsed Panel Manifest:', parsed);
+                applyPanelList(parsed.panels);
+
+                const masks = Array.isArray(data?.masks) ? data.masks : [];
+                const preferred = masks.find(m => m?.view === 'top') || masks[0] || null;
+                const maskFile = resolveAssetPath(basePath, preferred?.file);
+                return { ok: true, maskFile, maskView: preferred?.view || null };
+            } catch (e) {
+                console.error('Panel manifest load failed:', e);
+                return { ok: false, maskFile: null, maskView: null };
+            }
+        }
+
         async function loadPanelIdMapFromUrl(url) {
             try {
-                const img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.src = url;
-                await img.decode();
-                state.panelIdImage = img;
+                let img;
+                if (window.api?.readBinary) {
+                    const result = await loadImageFromDisk(url);
+                    img = result.img;
+                } else {
+                    img = await loadImageFromUrl(url);
+                }
+                // MUST draw to canvas before getImageData or we get empty pixels
                 state.panelIdCanvas.width = img.width;
                 state.panelIdCanvas.height = img.height;
                 state.panelIdCtx.drawImage(img, 0, 0);
@@ -822,42 +2669,46 @@
             }
         }
 
-        async function loadPanelJsonFromUrl(url) {
-            try {
-                const res = await fetch(url);
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const text = await res.text();
-                state.panels = normalizePanelList(parsePanelJson(text).panels);
-                state.panelsRgb = state.panels.map(p => ({ r: p.color.r, g: p.color.g, b: p.color.b, panel: p }));
-                els.panelCount.textContent = state.panels.length;
-                els.calibTotal.textContent = state.panels.length;
-                updatePanelCalibList();
-                console.log('Panels loaded:', state.panels.length);
-                return true;
-            } catch (e) {
-                console.error('Panel JSON load failed:', e);
-                return false;
-            }
-        }
-
         async function autoLoadAssets() {
+            const isFileProtocol = window.location.protocol === 'file:';
+            if (isFileProtocol && !window.api?.readBinary && !window.api?.readText) {
+                const msg = 'AUTO-LOAD BLOCKED: file:// requires local server or Electron';
+                els.statusText.textContent = msg;
+                showNotification(msg);
+                logTerminal(`${msg}. Run a local server from /web (python -m http.server)`);
+                return;
+            }
             const basePath = './assets/';
             const assets = {
                 glb: basePath + 'F22Raptor.glb',
-                panelMap: basePath + 'panel_id_map.png',
-                panelJson: basePath + 'panel_id_map_colors.json'
+                panelManifest: basePath + 'panel_manifest.json',
+                panelMap: basePath + 'panel_mask_top.png',
+                panelJson: basePath + 'panel_config.json'
             };
-            
+
             console.log('Auto-loading assets from:', basePath);
             els.statusText.textContent = 'AUTO-LOADING...';
-            
+
             // Load panel data first (needed for panel detection)
-            const jsonOk = await loadPanelJsonFromUrl(assets.panelJson);
-            const mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
-            
+            let jsonOk = false;
+            let mapOk = false;
+            const manifestResult = await loadPanelManifestFromUrl(assets.panelManifest, basePath);
+            if (manifestResult.ok) {
+                jsonOk = true;
+                if (manifestResult.maskFile) {
+                    mapOk = await loadPanelIdMapFromUrl(manifestResult.maskFile);
+                } else {
+                    console.warn('Panel manifest missing masks; falling back to panel map');
+                    mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+                }
+            } else {
+                jsonOk = await loadPanelJsonFromUrl(assets.panelJson);
+                mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+            }
+
             // Load the 3D model
             const glbOk = await loadGlbFromUrl(assets.glb);
-            
+
             if (glbOk && jsonOk && mapOk) {
                 els.statusText.textContent = 'READY - CLICK TO IDENTIFY PANELS';
                 console.log('All assets loaded successfully!');
@@ -866,13 +2717,53 @@
                 console.warn('Asset load status:', { glbOk, jsonOk, mapOk });
             }
         }
+
+        async function autoLoadAssetsFromFolder(folder) {
+            if (!folder) return;
+            const assetsBase = normalizeAssetsBase(folder);
+            const assets = {
+                glb: `${assetsBase}F22Raptor.glb`,
+                panelManifest: `${assetsBase}panel_manifest.json`,
+                panelMap: `${assetsBase}panel_mask_top.png`,
+                panelJson: `${assetsBase}panel_config.json`
+            };
+
+            console.log('Auto-loading assets from folder:', assetsBase);
+            els.statusText.textContent = 'AUTO-LOADING (FOLDER)...';
+
+            let jsonOk = false;
+            let mapOk = false;
+            const manifestResult = await loadPanelManifestFromUrl(assets.panelManifest, assetsBase);
+            if (manifestResult.ok) {
+                jsonOk = true;
+                if (manifestResult.maskFile) {
+                    mapOk = await loadPanelIdMapFromUrl(manifestResult.maskFile);
+                } else {
+                    console.warn('Panel manifest missing masks; falling back to panel map');
+                    mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+                }
+            } else {
+                jsonOk = await loadPanelJsonFromUrl(assets.panelJson);
+                mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+            }
+            const glbOk = await loadGlbFromUrl(assets.glb);
+
+            if (glbOk && jsonOk && mapOk) {
+                els.statusText.textContent = 'READY - CLICK TO IDENTIFY PANELS';
+                console.log('All assets loaded successfully from folder!');
+            } else {
+                els.statusText.textContent = 'SOME ASSETS FAILED (FOLDER)';
+                console.warn('Folder asset load status:', { glbOk, jsonOk, mapOk });
+            }
+        }
         // === END URL-BASED LOADING ===
 
         function samplePanelIdMapAtUv(uv) {
             if (!state.panelIdImageData) return null;
-            const w = state.panelIdCanvas.width, h = state.panelIdCanvas.height;
+            const w = state.panelIdCanvas.width,
+                h = state.panelIdCanvas.height;
             const x = Math.min(w - 1, Math.max(0, Math.floor(clamp01(uv.x) * w)));
-            const y = Math.min(h - 1, Math.max(0, Math.floor((1 - clamp01(uv.y)) * h)));
+            const y = Math.min(h - 1, Math.max(0, Math.floor(clamp01(uv.y) * h)));
             const idx = (y * w + x) * 4;
             const d = state.panelIdImageData.data;
             return { r: d[idx], g: d[idx + 1], b: d[idx + 2], a: d[idx + 3] };
@@ -885,23 +2776,44 @@
         }
 
         function updateInfoPanel(panel, uv, rgb, faceIdx) {
-            els.panelTitle.textContent = panel?.id || (rgb ? `RGB(${rgb.r},${rgb.g},${rgb.b})` : 'NO HIT');
+            // Update panel title
+            if (panel?.id) {
+                els.panelTitle.textContent = panel.id;
+                els.panelTitle.style.color = 'var(--neon-gold)';
+            } else if (rgb && rgb.a > 0) {
+                els.panelTitle.textContent = `RGB(${rgb.r},${rgb.g},${rgb.b})`;
+                els.panelTitle.style.color = 'var(--neon-red)';
+            } else {
+                els.panelTitle.textContent = 'NO HIT';
+                els.panelTitle.style.color = 'var(--text-secondary)';
+            }
+
             els.panelCategory.textContent = panel?.name || (panel ? '' : 'No matching panel');
             els.specUv.textContent = uv ? `${fmt3(uv.x)}, ${fmt3(uv.y)}` : '—';
             els.specRgb.textContent = rgb ? `${rgb.r}, ${rgb.g}, ${rgb.b}` : '—';
             els.specFace.textContent = faceIdx ?? '—';
+
+            // Build debug/detail JSON
             const debugInfo = {
                 panelIdMapLoaded: !!state.panelIdImageData,
-                panelsLoaded: state.panelsRgb.length,
-                tolerance: Number(els.tolerance.value),
+                panelsLoaded: state.panelsRgb?.length || state.panels?.length || 0,
+                tolerance: Number(els.tolerance?.value || 20),
                 sampledColor: rgb,
                 matchedPanel: panel ? { id: panel.id, color: panel.color } : null
             };
-            els.panelDataPre.textContent = panel 
+            els.panelDataPre.textContent = panel
                 ? JSON.stringify({ id: panel.id, name: panel.name, color: panel.color, data: panel.data }, null, 2)
                 : JSON.stringify(debugInfo, null, 2);
+
+            // ALWAYS show info panel on pick
             els.infoPanel.classList.add('visible');
             els.infoToggle.classList.add('open');
+        }
+
+        // Legacy compatibility: some newer interaction code expects selectPanel().
+        // In this app, selecting a panel means opening the info panel with the current HUD values.
+        function selectPanel(panel) {
+            updateInfoPanel(panel ?? null, state.lastUv ?? null, state.lastRgb ?? null, null);
         }
 
         function tryPick(e, showInfo) {
@@ -912,7 +2824,9 @@
             const rect = state.renderer.domElement.getBoundingClientRect();
             state.pointerNdc.set(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
             state.raycaster.setFromCamera(state.pointerNdc, state.camera);
-            const hits = state.raycaster.intersectObjects(state.meshList, true);
+            // Use authority mesh list if enabled for performance
+            const raycastMeshes = getRaycastMeshList();
+            const hits = state.raycaster.intersectObjects(raycastMeshes, true);
             const hit = hits.find(h => h.uv);
             if (!hit?.uv) {
                 // Try first hit even without UV
@@ -935,17 +2849,17 @@
             });
             const rgb = samplePanelIdMapAtUv(state.lastUv);
             state.lastRgb = rgb;
-            
+
             // PRIMARY: Try to find panel by mesh name first (most reliable)
             const meshPanel = findPanelByMeshName(hit.object?.name);
-            
+
             // FALLBACK: Use UV-based color detection if mesh name didn't match
             const tolerance = Number(els.tolerance.value);
             const nearest = !meshPanel && rgb ? findNearestPanel(rgb.r, rgb.g, rgb.b, tolerance) : null;
-            
+
             // Use mesh-based detection if found, otherwise UV-based
             state.lastPanel = meshPanel ?? nearest?.panel ?? null;
-            
+
             // Log detection method for debugging
             if (meshPanel) {
                 console.log('Panel detected by MESH NAME:', meshPanel.id);
@@ -1068,178 +2982,1232 @@
             advanceToNextPanel();
         }
 
+        // DEPRECATED: Legacy mesh-based wizard replaced by Precision Surveyor
+        /*
         function handleWizardClick(uv, rgb, panel, point, hitMeshName) {
-            if (!state.calibrationWizardActive || !state.currentCalibrationTarget) return false;
-            
-            // Create marker for this calibration
-            const target = state.currentCalibrationTarget;
-            const marker = {
-                id: state.calibrationMarkers.length + 1,
-                panel_id: target.id,
-                panel_name: target.name,
-                expected_color: target.color,
-                clicked_rgb: rgb,
-                uv: { x: uv.x, y: uv.y },
-                worldPos: point ? { x: point.x, y: point.y, z: point.z } : null,
-                hit_mesh: hitMeshName || 'unknown',
-                timestamp: new Date().toISOString()
-            };
-            
-            state.calibrationMarkers.push(marker);
-            state.calibratedPanels.set(target.id, marker);
-            
-            // Add visual marker
-            if (point) {
-                const geo = new THREE.SphereGeometry(state.modelSize * 0.012, 16, 16);
-                const mat = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
-                const sphere = new THREE.Mesh(geo, mat);
-                sphere.position.copy(point);
-                state.scene.add(sphere);
-                state.markerMeshes.push(sphere);
-            }
-            
-            els.markerCount.textContent = state.calibratedPanels.size;
-            els.calibProgress.textContent = state.calibratedPanels.size;
-            
-            // Move to next panel
-            advanceToNextPanel();
-            return true;
+            // ... (legacy code suppressed)
         }
+        */
         // ========== END CALIBRATION WIZARD ==========
 
-        function exportMarkers() {
-            if (!state.calibrationMarkers.length) { alert('No markers'); return; }
-            const blob = new Blob([JSON.stringify({ hit_mesh: hitMeshName || 'unknown',
-                timestamp: new Date().toISOString(), markers: state.calibrationMarkers }, null, 2)], { type: 'application/json' });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `calibration_${Date.now()}.json`; a.click();
+
+        // ========== HIGH-PRECISION CALIBRATION WIZARD (PRECISION MODE) ==========
+
+        function selectPart(id, name) {
+            const part = state.pocParts.find(p => p.id === id);
+            if (!part) return;
+
+            state.wizard.activePart = part;
+            state.wizard.tempPoints = [];
+
+            // UI Reset
+            clearWizardVisuals();
+            renderSidebar();
+
+            console.log(`Surveying: ${name}`);
+            showNotification(`SURVEYOR MODE: Mapping ${name}. Select 4 corners.`);
         }
 
-        function saveSession() {
-            localStorage.setItem('blueprint_mapper_session', JSON.stringify({
-                tolerance: Number(els.tolerance.value), materialMode: els.materialMode.value,
-                calibrationMode: els.calibrationMode.checked, calibrationMarkers: state.calibrationMarkers
-            }));
-            alert('Session saved');
+        function clearWizardVisuals() {
+            if (state.wizard.ghostLine) state.scene.remove(state.wizard.ghostLine);
+            state.wizard.ghostLine = null;
+
+            // Clear temporary spheres
+            state.markerMeshes.forEach(m => state.scene.remove(m));
+            state.markerMeshes = [];
         }
 
-        function loadSession() {
-            const s = localStorage.getItem('blueprint_mapper_session');
-            if (!s) { alert('No session'); return; }
+        function updateGhostBox() {
+            if (state.wizard.tempPoints.length < 2) return;
+            if (state.wizard.ghostLine) state.scene.remove(state.wizard.ghostLine);
+
+            const points = state.wizard.tempPoints.map(p => p.world);
+            const geometry = new THREE.BufferGeometry().setFromPoints([...points, points[0]]);
+            const material = new THREE.LineBasicMaterial({
+                color: 0x00ff88,
+                linewidth: 2,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            state.wizard.ghostLine = new THREE.LineLoop(geometry, material);
+            state.scene.add(state.wizard.ghostLine);
+        }
+
+        function handleWizardClick(uv, worldPoint) {
+            if (!state.wizard.activePart) return;
+
+            if (state.wizard.tempPoints.length < 4) {
+                state.wizard.tempPoints.push({ uv: uv.clone(), world: worldPoint.clone() });
+
+                // Add visual marker to 3D scene
+                const marker = new THREE.Mesh(
+                    new THREE.SphereGeometry(state.modelSize * 0.008, 16, 16),
+                    new THREE.MeshBasicMaterial({ color: 0x00ff88 })
+                );
+                marker.position.copy(worldPoint);
+                state.scene.add(marker);
+                state.markerMeshes.push(marker);
+
+                updateGhostBox();
+                renderSidebar();
+            }
+
+            if (state.wizard.tempPoints.length === 4) {
+                showNotification("4 CORNERS CAPTURED. REVIEW AND FINALIZE.");
+            }
+        }
+
+        function finalizePart(event) {
+            if (event) event.stopPropagation();
+            if (!state.wizard.activePart || state.wizard.tempPoints.length < 4) return;
+
+            if (state.wizard.activePart.locked) {
+                showNotification("SYSTEM ERROR: CANNOT OVERWRITE DATUMS");
+                return;
+            }
+
+            const uCoords = state.wizard.tempPoints.map(p => p.uv.x);
+            const vCoords = state.wizard.tempPoints.map(p => p.uv.y);
+
+            const entry = {
+                part_id: state.wizard.activePart.id,
+                name: state.wizard.activePart.name,
+                uv_bounds: {
+                    uMin: Math.min(...uCoords).toFixed(4),
+                    uMax: Math.max(...uCoords).toFixed(4),
+                    vMin: Math.min(...vCoords).toFixed(4),
+                    vMax: Math.max(...vCoords).toFixed(4)
+                },
+                timestamp: new Date().toISOString()
+            };
+
+            // AUTO-MIRROR LOGIC
+            if (entry.part_id.includes("LH")) {
+                const rhEntry = generateMirrorPart(entry);
+                state.wizard.manifest = state.wizard.manifest.filter(e => e.part_id !== rhEntry.part_id);
+                state.wizard.manifest.push(rhEntry);
+
+                // Also update the RH part in pocParts if it exists
+                const rhPartInList = state.pocParts.find(p => p.id === rhEntry.part_id);
+                if (rhPartInList) rhPartInList.approved = true;
+            }
+
+            // Remove existing entry if updating
+            state.wizard.manifest = state.wizard.manifest.filter(e => e.part_id !== entry.part_id);
+            state.wizard.manifest.push(entry);
+            state.wizard.activePart.approved = true;
+
+            state.wizard.activePart = null;
+            state.wizard.tempPoints = [];
+
+            clearWizardVisuals();
+            renderSidebar();
+
+            showNotification(`ZONE CAPTURED: ${entry.part_id}`);
+            saveWizardProgress();
+        }
+
+        function generateMirrorPart(lhZone) {
+            const rhId = lhZone.part_id.replace("LH", "RH");
+            const rhName = lhZone.name.replace("LH", "RH");
+            const centerU = state.wizard.centerlineU;
+
+            return {
+                part_id: rhId,
+                name: rhName,
+                uv_bounds: {
+                    uMin: (2 * centerU - parseFloat(lhZone.uv_bounds.uMax)).toFixed(4),
+                    uMax: (2 * centerU - parseFloat(lhZone.uv_bounds.uMin)).toFixed(4),
+                    vMin: lhZone.uv_bounds.vMin,
+                    vMax: lhZone.uv_bounds.vMax
+                },
+                mirrored: true,
+                timestamp: new Date().toISOString()
+            };
+        }
+
+        function renderSidebar() {
+            renderSurveyList(master3DData);
+        }
+
+        function exportPOCMap() {
+            if (master3DData.length === 0) {
+                alert("No data to export.");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," +
+                encodeURIComponent(JSON.stringify(master3DData, null, 2));
+            const downloadAnchor = document.createElement('a');
+
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "f22_raptor_master_thread.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        async function handleImportMap(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
             try {
-                const d = JSON.parse(s);
-                els.tolerance.value = d.tolerance || 30; els.toleranceLabel.textContent = els.tolerance.value;
-                els.materialMode.value = d.materialMode || 'untextured';
-                els.calibrationMode.checked = d.calibrationMode || false;
-                clearCalibrationMarkers();
-                state.calibrationMarkers = d.calibrationMarkers || [];
-                for (const m of state.calibrationMarkers) {
-                    if (m.worldPos) {
-                        const geo = new THREE.SphereGeometry(state.modelSize * 0.01, 16, 16);
-                        const mat = new THREE.MeshBasicMaterial({ color: 0x00e5ff });
-                        const sphere = new THREE.Mesh(geo, mat);
-                        sphere.position.set(m.worldPos.x, m.worldPos.y, m.worldPos.z);
-                        state.scene.add(sphere);
-                        state.markerMeshes.push(sphere);
+                const text = await file.text();
+                const data = JSON.parse(text);
+
+                if (data.mappings) {
+                    // Handle mapping data import (from combined_mapping_data files)
+                    state.mappings = data.mappings;
+                    showNotification("MAPPING DATA IMPORTED SUCCESSFULLY");
+                    console.log("Imported Mappings:", state.mappings);
+                } else if (data.inventory) {
+                    // Handle inventory import
+                    master3DData = data.inventory;
+                    state.wizard.manifest = data.inventory;
+                    saveWizardProgress();
+                    renderSidebar();
+                    showNotification("INVENTORY IMPORTED SUCCESSFULLY");
+                    console.log("Imported Inventory:", data.inventory);
+                } else if (data.panels) {
+                    // Handle panel config import - use applyPanelList for proper RGB indexing
+                    const parsed = parsePanelJson(JSON.stringify(data));
+                    applyPanelList(parsed.panels);
+                    showNotification(`PANEL CONFIG IMPORTED: ${state.panels.length} panels`);
+                    console.log("Imported Panels:", state.panels);
+                } else {
+                    // Try to find an array in the data (manifest, mappings, inventory, parts, etc.)
+                    let manifest = null;
+                    if (Array.isArray(data)) {
+                        manifest = data;
+                    } else {
+                        manifest = data.manifest || data.mappings || data.inventory || data.parts || data.panels;
+                    }
+
+                    if (Array.isArray(manifest)) {
+                        state.wizard.manifest = manifest;
+                        master3DData = manifest;
+
+                        // Auto-sync pocParts if they match by ID to maintain the UI state
+                        for (const m of manifest) {
+                            const partId = m.part_id || m.id;
+                            if (!partId) continue;
+                            const existing = state.pocParts.find(p => p.id === partId);
+                            if (existing) {
+                                existing.approved = true;
+                                existing.uv_bounds = m.uv_bounds;
+                            }
+                        }
+
+                        // Sync master3DData (redundant but defensive)
+                        for (const m of manifest) {
+                            const partId = m.part_id || m.id;
+                            if (!partId) continue;
+                            const existing = master3DData.find(p => (p.part_id || p.id) === partId);
+                            if (existing) {
+                                existing.uv_bounds = m.uv_bounds;
+                            }
+                        }
+
+                        saveWizardProgress();
+                        renderSidebar();
+                        showNotification("DATA IMPORTED SUCCESSFULLY");
+                        console.log("Imported Data:", manifest);
+                    } else {
+                        throw new Error("Invalid Format: No array found in (manifest, mappings, inventory, parts, panels)");
                     }
                 }
-                els.markerCount.textContent = state.calibrationMarkers.length;
-                applyMaterialMode(els.materialMode.value);
-                alert('Session loaded');
-            } catch (e) { alert('Load failed: ' + e.message); }
+            } catch (err) {
+                console.error("Import failed:", err);
+                alert("IMPORT FAILED: " + err.message);
+            } finally {
+                event.target.value = ''; // Reset input
+            }
         }
 
-        // Event Listeners
-        els.uploadBox.addEventListener('click', () => els.fileInput.click());
-        els.fileInput.addEventListener('change', e => { if (e.target.files[0]) loadGlb(e.target.files[0]); });
-        els.uploadBox.addEventListener('dragover', e => { e.preventDefault(); els.uploadBox.classList.add('dragover'); });
-        els.uploadBox.addEventListener('dragleave', () => els.uploadBox.classList.remove('dragover'));
-        els.uploadBox.addEventListener('drop', e => { e.preventDefault(); els.uploadBox.classList.remove('dragover'); if (e.dataTransfer.files[0]) loadGlb(e.dataTransfer.files[0]); });
+        async function handleLoadParts(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-        els.glbFile.addEventListener('change', e => { if (e.target.files[0]) loadGlb(e.target.files[0]); });
-        els.textureFile.addEventListener('change', e => { if (e.target.files[0]) loadTexture(e.target.files[0]); });
-        els.panelIdMapFile.addEventListener('change', e => { if (e.target.files[0]) loadPanelIdMap(e.target.files[0]); });
-        els.panelJsonFile.addEventListener('change', async e => {
-            if (!e.target.files[0]) return;
-            const text = await e.target.files[0].text();
-            state.panels = normalizePanelList(parsePanelJson(text).panels);
-            state.panelsRgb = state.panels.map(p => ({ r: p.color.r, g: p.color.g, b: p.color.b, panel: p }));
-            els.panelCount.textContent = state.panels.length;
-            els.calibTotal.textContent = state.panels.length;
-            updatePanelCalibList();
-        });
+            try {
+                const text = await file.text();
+                const data = JSON.parse(text);
 
-        els.materialMode.addEventListener('change', () => applyMaterialMode(els.materialMode.value));
-        els.tolerance.addEventListener('input', () => els.toleranceLabel.textContent = els.tolerance.value);
+                const newParts = [];
 
-        els.configToggle.addEventListener('click', () => {
-            els.configPanel.classList.toggle('visible');
-            els.configToggle.classList.toggle('open');
-        });
-        els.infoToggle.addEventListener('click', () => {
-            els.infoPanel.classList.toggle('visible');
-            els.infoToggle.classList.toggle('open');
-        });
-        els.infoClose.addEventListener('click', () => {
-            els.infoPanel.classList.remove('visible');
-            els.infoToggle.classList.remove('open');
-        });
-
-        els.exportMarkersBtn.addEventListener('click', exportMarkers);
-        // Calibration Wizard buttons
-        els.startCalibrationBtn.addEventListener('click', startCalibrationWizard);
-        els.skipPanelBtn.addEventListener('click', skipCurrentPanel);
-        els.stopCalibrationBtn.addEventListener('click', stopCalibrationWizard);
-        els.clearMarkersBtn.addEventListener('click', () => {
-            clearCalibrationMarkers();
-            state.calibratedPanels.clear();
-            updatePanelCalibList();
-        });
-        els.saveSessionBtn.addEventListener('click', saveSession);
-        els.loadSessionBtn.addEventListener('click', loadSession);
-
-        els.btnReset.addEventListener('click', () => state.modelRoot && frameObject(state.modelRoot));
-        els.btnFront.addEventListener('click', () => setCameraView('front'));
-        els.btnTop.addEventListener('click', () => setCameraView('top'));
-        els.btnSide.addEventListener('click', () => setCameraView('side'));
-        els.btnMaterial.addEventListener('click', () => {
-            els.materialMode.value = els.materialMode.value === 'untextured' ? 'textured' : 'untextured';
-            applyMaterialMode(els.materialMode.value);
-            els.btnMaterial.classList.toggle('active', els.materialMode.value === 'textured');
-        });
-
-        // Init
-        initThree();
-
-        // Auto-load assets from ./assets/ folder
-        autoLoadAssets();
-        
-        // Pointer events on canvas (must be after initThree)
-        let pDown = null;
-        state.renderer.domElement.addEventListener('pointerdown', e => {
-            pDown = { x: e.clientX, y: e.clientY };
-        });
-        state.renderer.domElement.addEventListener('pointerup', e => {
-            if (!pDown) return;
-            const moved = Math.hypot(e.clientX - pDown.x, e.clientY - pDown.y);
-            pDown = null;
-            if (moved <= 6) {
-                const result = tryPick(e, !els.calibrationMode.checked && !state.calibrationWizardActive);
-                if (result?.hit) {
-                    // Wizard mode takes priority
-                    if (state.calibrationWizardActive) {
-                        handleWizardClick(state.lastUv, state.lastRgb, state.lastPanel, result.hit.point, result.hit.object?.name);
+                // Format A: simple array of {id,name}
+                if (Array.isArray(data)) {
+                    for (const r of data) {
+                        const id = r?.id || r?.part_id || r?.dash;
+                        const name = r?.name || r?.part_name;
+                        if (id && name) newParts.push({ part_id: String(id).trim(), name: String(name).trim() });
                     }
-                    // Manual calibration mode
-                    else if (els.calibrationMode.checked) {
-                        addCalibrationMarker(state.lastUv, state.lastRgb, state.lastPanel, result.hit.point);
+                }
+
+                // Format B: master_parts.json structure (slides -> tables -> rows with dash/name)
+                if (!newParts.length && data?.slides) {
+                    for (const slide of data.slides) {
+                        for (const table of (slide.tables || [])) {
+                            for (const row of (table.rows || [])) {
+                                const id = row?.dash;
+                                const name = row?.name;
+                                if (id && name) newParts.push({ part_id: String(id).trim(), name: String(name).trim() });
+                            }
+                        }
                     }
+                }
+
+                if (!newParts.length) {
+                    throw new Error('No parts found in JSON.');
+                }
+
+                // Merge without duplicates
+                const existingIds = new Set(state.pocParts.map(p => p.part_id));
+                let added = 0;
+                for (const p of newParts) {
+                    if (!existingIds.has(p.part_id)) {
+                        state.pocParts.push({ part_id: p.part_id, name: p.name, approved: false });
+                        existingIds.add(p.part_id);
+                        added++;
+                    }
+                }
+
+                renderSidebar();
+                saveWizardProgress();
+                master3DData = state.pocParts.map(p => ({ part_id: p.part_id, name: p.name }));
+                showNotification(`PARTS LOADED: +${added} (Total ${state.pocParts.length})`);
+            } catch (err) {
+                console.error('Load parts failed:', err);
+                alert('LOAD PARTS FAILED: ' + err.message);
+            } finally {
+                event.target.value = '';
+            }
+        }
+
+        function saveWizardProgress() {
+            localStorage.setItem('f22_wizard_poc', JSON.stringify({
+                manifest: state.wizard.manifest,
+                pocParts: state.pocParts
+            }));
+        }
+
+        function loadWizardProgress() {
+            const saved = localStorage.getItem('f22_wizard_poc');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    state.wizard.manifest = data.manifest || [];
+                    state.pocParts = data.pocParts || state.pocParts;
+
+                    // Initialization logic for datums
+                    state.wizard.manifest = state.wizard.manifest.filter(e => !e.part_id.includes("DATUM"));
+                    const datums = state.pocParts.filter(p => p.locked).map(p => ({
+                        part_id: p.id,
+                        name: p.name,
+                        uv_bounds: p.uv_bounds,
+                        type: "SYSTEM_ANCHOR"
+                    }));
+                    state.wizard.manifest.push(...datums);
+
+                    renderSidebar();
+                    console.log("Wizard progress restored");
+                } catch (e) { console.error("Failed to load wizard progress", e); }
+            } else {
+                // Initial load: inject datums into manifest
+                const datums = state.pocParts.filter(p => p.locked).map(p => ({
+                    part_id: p.id,
+                    name: p.name,
+                    uv_bounds: p.uv_bounds,
+                    type: "SYSTEM_ANCHOR"
+                }));
+                state.wizard.manifest.push(...datums);
+            }
+        }
+
+        function resetCalibrationSession() {
+            if (confirm("Reset ALL calibration progress? This cannot be undone.")) {
+                localStorage.removeItem('f22_wizard_poc');
+                location.reload();
+            }
+        }
+
+        function showNotification(text) {
+            els.statusText.textContent = text;
+        }
+
+        function logTerminal(msg) {
+            const term = els.miniTerminal;
+            if (!term) return;
+            const t = new Date().toTimeString().slice(0, 8);
+            const line = document.createElement('div');
+            line.textContent = `${t} | ${msg}`;
+            term.appendChild(line);
+            while (term.childNodes.length > 200) term.removeChild(term.firstChild);
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function toggleTerminal() {
+            if (!els.miniTerminal) return;
+            els.miniTerminal.classList.toggle('hidden');
+        }
+
+        function updateApprovalLog() {
+            const el = els.approvalLog;
+            if (!el) return;
+            if (!state.approvals.length) {
+                el.textContent = 'No approvals yet';
+                return;
+            }
+            const lines = state.approvals.slice(-20).map(item => {
+                const uv = item.uv;
+                const mirror = item.mirrorOf ? ` mirrorOf=${item.mirrorOf}` : '';
+                return `${item.id} uv=${uv.x.toFixed(3)},${uv.y.toFixed(3)}${mirror}`;
+            });
+            el.textContent = lines.join('\n');
+        }
+
+        // ============================================================
+        // PALETTE CONSTRAINTS + FAST LOOKUP + QUANTIZATION
+        // ============================================================
+
+        /** Squared distance between two RGB colors */
+        function rgbDist2(a, b) {
+            const dr = (a.r - b.r), dg = (a.g - b.g), db = (a.b - b.b);
+            return dr * dr + dg * dg + db * db;
+        }
+
+        /** Optional: reject colors outside allowed ranges */
+        function rgbPassesRanges(r, g, b) {
+            const rules = state.rangeRules;
+            if (!rules) return true;
+
+            const rr = rules.r, gg = rules.g, bb = rules.b;
+            if (rr && (r < rr[0] || r > rr[1])) return false;
+            if (gg && (g < gg[0] || g > gg[1])) return false;
+            if (bb && (b < bb[0] || b > bb[1])) return false;
+
+            if (rules.reject) {
+                for (const trip of rules.reject) {
+                    if ((r | 0) === (trip[0] | 0) && (g | 0) === (trip[1] | 0) && (b | 0) === (trip[2] | 0)) return false;
                 }
             }
-        });
-        state.renderer.domElement.addEventListener('pointermove', e => {
-            if (e.buttons) return;
-            tryPick(e, false);
-        });
+            return true;
+        }
+
+        /** Quantize to nearest palette entry (fast enough for a few hundred) */
+        function quantizeToPalette(r, g, b) {
+            const sample = { r: r | 0, g: g | 0, b: b | 0 };
+            let best = null;
+            let bestD = Infinity;
+
+            for (const p of state.palette) {
+                const d = rgbDist2(sample, p);
+                if (d < bestD) {
+                    bestD = d;
+                    best = p;
+                }
+            }
+
+            const tol = state.toleranceRgb;
+            if (best && bestD <= tol * tol) return best;
+
+            return null;
+        }
+
+        /** 
+         * Resolve panel from mask RGB using palette constraints
+         * Call this after sampling mask RGB for robust matching
+         */
+        function resolvePanelFromMaskRGB(uv, rgb) {
+            if (!rgb || rgb.r == null) return null;
+
+            const r = rgb.r | 0, g = rgb.g | 0, b = rgb.b | 0;
+
+            // Fast reject via range rules (optional)
+            if (!rgbPassesRanges(r, g, b)) {
+                return null;
+            }
+
+            // Exact palette hit?
+            const key = rgbKey(r, g, b);
+            if (state.paletteKeys.has(key)) {
+                const p = state.panelsByRgb.get(key);
+                if (p) return { ...p, uv, rgb: { r, g, b }, source: "exact" };
+            }
+
+            // Otherwise quantize to nearest
+            const q = quantizeToPalette(r, g, b);
+            if (!q) return null;
+
+            return { ...q, uv, rgb: { r, g, b }, source: "quantized" };
+        }
+
+        /** Build palette from loaded panels */
+        function buildPaletteFromPanels() {
+            state.palette = [];
+            state.paletteKeys.clear();
+
+            for (const p of state.panels) {
+                const c = p.color;
+                if (!c || c.r == null) continue;
+
+                const entry = {
+                    id: p.id,
+                    name: p.name,
+                    view: p.view || 'unknown',
+                    r: c.r | 0,
+                    g: c.g | 0,
+                    b: c.b | 0,
+                    hex: c.hex || `#${(c.r | 0).toString(16).padStart(2, '0')}${(c.g | 0).toString(16).padStart(2, '0')}${(c.b | 0).toString(16).padStart(2, '0')}`
+                };
+
+                state.palette.push(entry);
+                state.paletteKeys.add(rgbKey(entry.r, entry.g, entry.b));
+            }
+
+            console.log(`Palette built: ${state.palette.length} colors`);
+        }
+
+        // ============================================================
+        // AUTHORITY MESH FILTERING (reduces raycast work)
+        // ============================================================
+
+        /** Build list of authority meshes for fast raycasting */
+        function buildAuthMeshList() {
+            state.authMeshList = [];
+            if (!state.modelRoot) return;
+
+            state.modelRoot.traverse(obj => {
+                if (!obj.isMesh) return;
+                const name = obj.name || '';
+                // Check if mesh name matches any authority pattern
+                for (const pattern of state.authMeshNames) {
+                    if (name.includes(pattern) || name.toLowerCase().includes(pattern.toLowerCase())) {
+                        state.authMeshList.push(obj);
+                        break;
+                    }
+                }
+            });
+
+            // If no authority meshes found, fall back to all meshes
+            if (state.authMeshList.length === 0) {
+                console.log('No authority meshes found, using full mesh list');
+                state.authMeshList = [...state.meshList];
+            } else {
+                console.log(`Authority mesh list: ${state.authMeshList.length} meshes (vs ${state.meshList.length} total)`);
+            }
+        }
+
+        /** Get the mesh list to use for raycasting based on mode */
+        function getRaycastMeshList() {
+            if (state.useAuthMeshOnly && state.authMeshList.length > 0) {
+                return state.authMeshList;
+            }
+            return state.meshList;
+        }
+
+        // ============================================================
+        // LOCK IT IN: UI + PING + APPROVE + MIRROR WORKFLOW
+        // ============================================================
+
+        // --- UI ACTION BUTTONS ---
+        function ensureActionButtons() {
+            const infoPanel = document.querySelector('.info-panel');
+            if (!infoPanel) return;
+            if (document.getElementById('btnApprovePanel')) return;
+
+            const actions = document.createElement('div');
+            actions.style.marginTop = '0.75rem';
+            actions.style.display = 'grid';
+            actions.style.gridTemplateColumns = '1fr 1fr';
+            actions.style.gap = '0.5rem';
+
+            actions.innerHTML = `
+                <button class="btn" id="btnApprovePanel" title="Add selected panel to approved log">APPROVE</button>
+                <button class="btn" id="btnMirrorApproved" title="Mirror approved LH panels to RH across centerlineU">MIRROR</button>
+                <button class="btn" id="btnToggleTerminal" style="grid-column: 1 / span 2;" title="Show/hide terminal">TOGGLE TERMINAL</button>
+                <div id="approvedPanelList" style="grid-column: 1 / span 2; margin-top:0.5rem; max-height: 220px; overflow:auto; border:1px solid rgba(255,215,0,0.12); border-radius:8px; padding:0.5rem; background: rgba(0,0,0,0.25);">
+                    <div style="color: var(--text-secondary); font-size:0.75rem;">No approved panels yet.</div>
+                </div>
+            `;
+            infoPanel.appendChild(actions);
+
+            document.getElementById('btnApprovePanel').onclick = approveSelectedPanel;
+            document.getElementById('btnMirrorApproved').onclick = mirrorApprovedPanels;
+            document.getElementById('btnToggleTerminal').onclick = toggleTerminalView;
+        }
+
+        function toggleTerminalView() {
+            const term = document.getElementById('terminal') || document.querySelector('.terminal') || document.getElementById('miniTerminal') || els.miniTerminal;
+            if (!term) {
+                showNotification("NO TERMINAL ELEMENT FOUND");
+                return;
+            }
+            const isHidden = term.style.display === 'none' || term.classList.contains('hidden');
+            if (term.classList.contains('hidden')) {
+                term.classList.remove('hidden');
+            } else {
+                term.style.display = isHidden ? '' : 'none';
+            }
+            showNotification(isHidden ? "TERMINAL ON" : "TERMINAL OFF");
+        }
+
+        function renderApprovedList() {
+            const box = document.getElementById('approvedPanelList');
+            if (!box) return;
+
+            if (!state.approvedPanels.length) {
+                box.innerHTML = `<div style="color: var(--text-secondary); font-size:0.75rem;">No approved panels yet.</div>`;
+                return;
+            }
+
+            box.innerHTML = state.approvedPanels
+                .slice()
+                .sort((a, b) => (a.id || '').localeCompare(b.id || ''))
+                .map(e => {
+                    const tag = e.mirrored ? `<span style="color: var(--neon-violet); font-size:0.65rem;">MIRROR</span>` : '';
+                    return `
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; padding:0.35rem 0.25rem; border-bottom:1px solid rgba(255,215,0,0.08);">
+                            <div style="min-width:0;">
+                                <div style="font-family:Orbitron; font-size:0.72rem; color: var(--neon-gold);">${e.id}</div>
+                                <div style="font-size:0.7rem; color: var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                    uv ${e.uv.x.toFixed(3)},${e.uv.y.toFixed(3)} • rgb ${e.rgb.r},${e.rgb.g},${e.rgb.b}
+                                </div>
+                            </div>
+                            ${tag}
+                        </div>
+                    `;
+                }).join('');
+        }
+
+        // --- RGB INDEX + APPLY PANELS ---
+        function rgbKeyInt(r, g, b) { return ((r & 255) << 16) | ((g & 255) << 8) | (b & 255); }
+
+        function applyPanelList(panels) {
+            state.panels = normalizePanelList(panels);
+            state.panelsRgb = state.panels.map(p => ({ r: p.color.r | 0, g: p.color.g | 0, b: p.color.b | 0, panel: p }));
+
+            // Build exact RGB lookup (rgbIndex) and panelsByRgb
+            state.rgbIndex = new Map();
+            state.panelsByRgb = new Map();
+            for (const p of state.panels) {
+                const r = p.color.r | 0, g = p.color.g | 0, b = p.color.b | 0;
+                const kInt = rgbKeyInt(r, g, b);
+                const kStr = rgbKey(r, g, b);
+                state.rgbIndex.set(kInt, p);
+                state.panelsByRgb.set(kStr, p);
+            }
+
+            // Build palette for quantization
+            buildPaletteFromPanels();
+
+            if (els?.panelCount) els.panelCount.textContent = String(state.panels.length);
+            if (els?.calibTotal) els.calibTotal.textContent = String(state.panels.length);
+            if (typeof updatePanelCalibList === 'function') updatePanelCalibList();
+
+            console.log("Panels loaded:", state.panels.length, "RGB index size:", state.rgbIndex.size, "Palette size:", state.palette.length);
+        }
+
+        function findPanelByExactRgb(r, g, b) {
+            return state.rgbIndex?.get(rgbKeyInt(r | 0, g | 0, b | 0)) ?? null;
+        }
+
+        // --- 3D PING HIGHLIGHT ---
+        function ensurePing(scene) {
+            if (state.ping.mesh) return state.ping.mesh;
+            const geo = new THREE.SphereGeometry(state.modelSize * 0.008, 16, 16);
+            const mat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.9 });
+            const m = new THREE.Mesh(geo, mat);
+            m.visible = false;
+            m.renderOrder = 9999;
+            scene.add(m);
+            state.ping.mesh = m;
+            return m;
+        }
+
+        function pingAt(point) {
+            if (!state.ping.enabled || !point || !state.scene) return;
+            const m = ensurePing(state.scene);
+            m.position.copy(point);
+            m.visible = true;
+            state.ping.t0 = performance.now();
+        }
+
+        function updatePing() {
+            const m = state.ping.mesh;
+            if (!m || !m.visible) return;
+            const t = (performance.now() - state.ping.t0) / 600; // ~0.6s
+            if (t >= 1) { m.visible = false; return; }
+            const s = 1 + t * 2.5;
+            m.scale.set(s, s, s);
+            m.material.opacity = 0.9 * (1 - t);
+        }
+
+        // --- APPROVE WORKFLOW ---
+        function approveSelectedPanel() {
+            const p = state.selectedPanel;
+            const uv = state.selectedUv;
+            const rgb = state.selectedRgb;
+
+            console.log('[APPROVE SELECTED]', { panel: p?.id, uv, rgb });
+
+            if (!p || !uv) {
+                showNotification("NO PANEL SELECTED");
+                logTerminal("APPROVE: no panel selected - click a panel first");
+                return;
+            }
+
+            const entry = {
+                id: p.id,
+                name: p.name,
+                uv: { x: uv.x, y: uv.y },
+                rgb: rgb ? { r: rgb.r | 0, g: rgb.g | 0, b: rgb.b | 0 } : { r: 0, g: 0, b: 0 },
+                face: state.selectedFace ?? null,
+                timestamp: new Date().toISOString(),
+                mirrored: false
+            };
+
+            // de-dupe by panel id
+            state.approvedById.set(entry.id, entry);
+            state.approvedPanels = Array.from(state.approvedById.values());
+
+            // Also add to legacy approvals array
+            state.approvals.push({
+                id: entry.id,
+                name: entry.name,
+                uv: entry.uv,
+                rgb: entry.rgb,
+                when: Date.now(),
+                mirrorOf: null
+            });
+
+            logTerminal(`APPROVED: ${entry.id}`);
+            showNotification(`APPROVED: ${entry.id}`);
+            renderApprovedList();
+            updateApprovalLog();
+        }
+
+        function mirrorIdGuess(id) {
+            if (!id) return id;
+            if (id.includes("LH")) return id.replace("LH", "RH");
+            if (id.includes("RH")) return id.replace("RH", "LH");
+            if (id.includes("_L")) return id.replace("_L", "_R");
+            if (id.includes("_R")) return id.replace("_R", "_L");
+            return id + "_MIRROR";
+        }
+
+        function mirrorApprovedPanels() {
+            const centerU = state.wizard?.centerlineU ?? 0.5;
+            if (!state.approvedPanels.length) {
+                showNotification("NOTHING TO MIRROR");
+                return;
+            }
+
+            let added = 0;
+            for (const e of state.approvedPanels.slice()) {
+                const isLeft = (String(e.id).includes("LH") || String(e.id).includes("_L") || e.uv.x < centerU);
+                if (!isLeft) continue;
+
+                const mirroredId = mirrorIdGuess(e.id);
+                const mu = (2 * centerU - e.uv.x);
+                const mirrored = {
+                    ...e,
+                    id: mirroredId,
+                    uv: { x: mu, y: e.uv.y },
+                    mirrored: true,
+                    timestamp: new Date().toISOString()
+                };
+
+                if (!state.approvedById.has(mirrored.id)) {
+                    state.approvedById.set(mirrored.id, mirrored);
+                    added++;
+                }
+            }
+
+            state.approvedPanels = Array.from(state.approvedById.values());
+            renderApprovedList();
+            logTerminal(`MIRROR: added ${added}`);
+            showNotification(`MIRROR: +${added}`);
+        }
+
+        // --- ON PANEL PICKED: Update state + ping + UI ---
+        // This is the SINGLE SOURCE OF TRUTH for the current hit
+        function onPanelPicked({ panel, uv, rgb, faceIndex, hitPoint }) {
+            // Store in state as the CANONICAL current selection
+            state.selectedPanel = panel ?? null;
+            state.selectedUv = uv ? new THREE.Vector2(uv.x, uv.y) : null;
+            state.selectedRgb = rgb ? { r: rgb.r | 0, g: rgb.g | 0, b: rgb.b | 0, a: rgb.a | 0 } : null;
+            state.selectedFace = faceIndex ?? null;
+
+            // Also keep lastX in sync so approve can use either
+            state.lastPanel = state.selectedPanel;
+            state.lastUv = state.selectedUv;
+            state.lastRgb = state.selectedRgb;
+
+            // Visual ping at hit point
+            if (hitPoint) pingAt(hitPoint);
+
+            // Update HUD (bottom overlay)
+            updateHud(state.selectedPanel, state.selectedUv, state.selectedRgb);
+
+            // Update right-side info panel (force visible)
+            updateInfoPanel(state.selectedPanel, state.selectedUv, state.selectedRgb, state.selectedFace);
+
+            // Debug log
+            const panelId = state.selectedPanel?.id ?? 'NO_MATCH';
+            const uvStr = state.selectedUv ? `${state.selectedUv.x.toFixed(3)},${state.selectedUv.y.toFixed(3)}` : 'null';
+            const rgbStr = state.selectedRgb ? `${state.selectedRgb.r},${state.selectedRgb.g},${state.selectedRgb.b}` : 'null';
+            console.log(`[ON PANEL PICKED] panel=${panelId} uv=${uvStr} rgb=${rgbStr}`);
+        }
+
+        function resolvePanelAtUv(uv) {
+            const rgb = samplePanelIdMapAtUv_CANONICAL(uv);
+            if (!rgb || rgb.a === 0) return { rgb: null, panel: null };
+            const panel = state.panelsByRgb.get(rgbKey(rgb.r, rgb.g, rgb.b)) || null;
+            return { rgb, panel };
+        }
+
+        function approveCurrent() {
+            // DEBUG: Log state at approval time
+            console.log('[APPROVE DEBUG]', {
+                selectedPanel: state.selectedPanel?.id ?? null,
+                lastPanel: state.lastPanel?.id ?? null,
+                selectedUv: state.selectedUv ? `${state.selectedUv.x.toFixed(3)},${state.selectedUv.y.toFixed(3)}` : null,
+                lastUv: state.lastUv ? `${state.lastUv.x.toFixed(3)},${state.lastUv.y.toFixed(3)}` : null,
+                panelsLoaded: state.panels.length,
+                panelsByRgbSize: state.panelsByRgb.size
+            });
+
+            const panel = state.selectedPanel || state.lastPanel;
+            const uv = state.selectedUv || state.lastUv;
+            const rgb = state.selectedRgb || state.lastRgb || panel?.color || null;
+            // Require at least a panel and a UV to approve. If a panel is present and a UV
+            // was sampled during the pick, allow approval even if the pixel map wasn't
+            // loaded via file:// (helps when running in dev with assets loaded from disk.)
+            if (!panel || !uv) {
+                console.log('[APPROVE FAIL]', { panel, uv });
+                if (!panel && !uv) {
+                    showNotification('APPROVE: No panel selected');
+                    logTerminal('APPROVE: no panel selected');
+                } else if (!panel) {
+                    showNotification('APPROVE: No panel identified');
+                    logTerminal('APPROVE: no panel identified (try clicking a known panel)');
+                } else {
+                    showNotification('APPROVE: No UV sampled (click on the model)');
+                    logTerminal('APPROVE: no UV available');
+                }
+                // If we lack both panel map and panel list, hint the user
+                if (!state.panelIdImageData || !state.panelsByRgb.size) {
+                    logTerminal('APPROVE HINT: load panel map + config (Select Folder -> Reload Assets)');
+                }
+                return;
+            }
+            const rgbValue = rgb ? { r: rgb.r, g: rgb.g, b: rgb.b } : null;
+            const p = panel;
+            const item = {
+                id: p.id || p.name || 'PANEL',
+                name: p.name || p.id || '',
+                uv: { x: uv.x, y: uv.y },
+                rgb: rgbValue,
+                when: Date.now(),
+                mirrorOf: null
+            };
+            state.approvals.push(item);
+            updateApprovalLog();
+            logTerminal(`APPROVED ${item.id} uv=${item.uv.x.toFixed(3)},${item.uv.y.toFixed(3)} rgb=${rgbValue ? rgbValue.r + ',' + rgbValue.g + ',' + rgbValue.b : '—'}`);
+            showNotification(`APPROVED: ${item.id}`);
+        }
+
+        function mirrorLastApproved() {
+            const src = state.approvals[state.approvals.length - 1];
+            if (!src) {
+                showNotification('MIRROR: No approvals');
+                logTerminal('MIRROR: no approvals');
+                return;
+            }
+            const uvM = { x: mirrorU(src.uv.x), y: src.uv.y };
+            const resolved = resolvePanelAtUv(uvM);
+            if (!resolved.rgb || !resolved.panel) {
+                showNotification('MIRROR: No panel at UV');
+                logTerminal(`MIRROR FAIL ${src.id} uv=${uvM.x.toFixed(3)},${uvM.y.toFixed(3)}`);
+                return;
+            }
+            const p = resolved.panel;
+            const item = {
+                id: p.id || p.name || 'PANEL_M',
+                name: p.name || p.id || '',
+                uv: { x: uvM.x, y: uvM.y },
+                rgb: { r: resolved.rgb.r, g: resolved.rgb.g, b: resolved.rgb.b },
+                when: Date.now(),
+                mirrorOf: src.id
+            };
+            state.approvals.push(item);
+            updateApprovalLog();
+            logTerminal(`MIRRORED ${src.id} -> ${item.id} uv=${item.uv.x.toFixed(3)},${item.uv.y.toFixed(3)}`);
+            showNotification(`MIRRORED: ${item.id}`);
+        }
+
+        // ========== ORIENTATION CALIBRATION WIZARD ==========
+
+        function startOrientationCalibration() {
+            state.orientCal.active = true;
+            state.orientCal.step = 0;
+            state.orientCal.samples = {};
+            promptOrientationStep();
+        }
+
+        function promptOrientationStep() {
+            const seq = state.orientCal.sequence;
+            const step = state.orientCal.step;
+            if (step >= seq.length) {
+                finishOrientationCalibration();
+                return;
+            }
+            const key = seq[step];
+            const label = state.orientCal.labels[key];
+            showNotification(`ORIENT CAL [${step + 1}/${seq.length}]: Tap the ${label}`);
+        }
+
+        function handleOrientationClick(uv) {
+            if (!state.orientCal.active) return false;
+            const seq = state.orientCal.sequence;
+            const step = state.orientCal.step;
+            if (step >= seq.length) return false;
+
+            const key = seq[step];
+            state.orientCal.samples[key] = { u: uv.x, v: uv.y };
+            console.log(`Orient Cal: ${key} => U=${uv.x.toFixed(4)}, V=${uv.y.toFixed(4)}`);
+
+            state.orientCal.step++;
+            promptOrientationStep();
+            return true; // consumed
+        }
+
+        function finishOrientationCalibration() {
+            state.orientCal.active = false;
+            const s = state.orientCal.samples || {};
+            const solved = solveOrientationFromDatums(s);
+            if (!solved) {
+                alert("ORIENT LOCK FAILED: Need NOSE + LH_WINGTIP + RH_WINGTIP samples.");
+                showNotification("CAL: Failed (missing datums)");
+                return;
+            }
+
+            const conf = orientationConfidence(s);
+            state.orientCal.flipU = !!solved.flipU;
+            state.orientCal.flipV = !!solved.flipV;
+            state.orientCal.locked = conf >= 0.80;
+            state.orientCal.confidence = conf;
+
+            localStorage.setItem("f22_orientCal", JSON.stringify({
+                flipU: state.orientCal.flipU,
+                flipV: state.orientCal.flipV,
+                locked: state.orientCal.locked,
+                confidence: conf,
+                samples: s,
+                version: 2,
+                ts: new Date().toISOString()
+            }));
+
+            const report = [
+                `ORIENTATION SOLVED (DATUM LOCK v2)`,
+                `U Mirrored: ${state.orientCal.flipU ? "YES" : "NO"}`,
+                `V Flipped:  ${state.orientCal.flipV ? "YES" : "NO"}`,
+                `Confidence: ${(conf * 100).toFixed(0)}%`,
+                `Locked:     ${state.orientCal.locked ? "YES" : "NO"}`
+            ].join('\n');
+
+            alert(report);
+            showNotification(state.orientCal.locked ? "CAL: LOCKED ✅" : "CAL: LOW CONF (not locked)");
+        }
+
+        function loadOrientationCalibration() {
+            const saved = localStorage.getItem("f22_orientCal");
+            if (!saved) return;
+            try {
+                const data = JSON.parse(saved);
+                state.orientCal.flipU = !!data.flipU;
+                state.orientCal.flipV = !!data.flipV;
+                state.orientCal.locked = !!data.locked;
+                state.orientCal.confidence = data.confidence ?? 0;
+                state.orientCal.samples = data.samples ?? {};
+                console.log("Orientation calibration restored:", data);
+            } catch (e) { console.warn("Failed to parse orientCal", e); }
+        }
+
+        // Helper: apply calibration corrections to a raw UV
+        function applyCorrectedUv(rawUv) {
+            let u = rawUv.x;
+            let v = rawUv.y;
+            if (state.orientCal.flipV) v = 1 - v;
+            if (state.orientCal.flipU) u = 1 - u;
+            return { x: u, y: v };
+        }
+
+        // ========== DIGITAL THREAD DETECTION LOGIC ==========
+
+        async function loadThreadMap() {
+            // Check protocol for CORS issues - skip fetch entirely for file:// protocol
+            const isLocal = window.location.protocol === 'file:';
+
+            if (!isLocal) {
+                try {
+                    // Try to load the POC map exported earlier (only if running via HTTP/Electron)
+                    const response = await fetch('./f22_thread_map_poc.json');
+
+                    if (response.ok) {
+                        state.threadMap = await response.json();
+                        console.log("Digital Thread Map Loaded via Fetch:", state.threadMap);
+
+                        if (state.threadMap) {
+                            // Handle both formats: { manifest: [...] } or direct array [...]
+                            const manifest = Array.isArray(state.threadMap) ? state.threadMap : state.threadMap.manifest;
+                            if (manifest) {
+                                state.wizard.manifest = manifest;
+                                master3DData = manifest;
+                                renderSidebar();
+                            }
+                        }
+                        showNotification("DIGITAL THREAD ACTIVE: POC Map Loaded");
+                        return;
+                    }
+                } catch (err) {
+                    console.log("Fetch failed, using session fallback.");
+                }
+            }
+
+            // FINAL FALLBACK: Use the manifest loaded from LocalStorage (via loadWizardProgress)
+            if (state.wizard.manifest && state.wizard.manifest.length > 0) {
+                console.log("Operational: Using Live Session Manifest.");
+                master3DData = state.wizard.manifest;
+                showNotification("DIGITAL THREAD: Using Session Data");
+            } else {
+                showNotification("THREAD OFFLINE: Calibrate a Part");
+            }
+        }
+
+        function checkMasterThread(uv) {
+            if (!master3DData || !master3DData.length) return null;
+
+            // Find the part where the click falls inside the uMin/Max and vMin/Max
+            const hit = master3DData.find(part => {
+                const b = part.uv_bounds;
+                if (!b || !b.uMin || !b.uMax || !b.vMin || !b.vMax) return false;
+
+                return uv.x >= parseFloat(b.uMin) &&
+                    uv.x <= parseFloat(b.uMax) &&
+                    uv.y >= parseFloat(b.vMin) &&
+                    uv.y <= parseFloat(b.vMax);
+            });
+
+            if (hit) {
+                triggerLockheedAgent(hit);
+                return hit;
+            }
+
+            // SPATIAL FALLBACK (Spatial Alarms)
+            // NOTE: Depending on UV conventions in the GLB, V can appear "flipped".
+            // Observed behavior: tapping Nose reported Tail. Correct by evaluating forward/aft using (1 - v).
+            const vForward = 1 - uv.y;
+            if (vForward > 0.81) {
+                showNotification("LOCATION: Forward Fuselage / Nose Section");
+            } else if (uv.x < 0.1) {
+                showNotification("LOCATION: Left Wing / Outboard Stabilizer");
+            } else if (vForward < 0.1) {
+                showNotification("LOCATION: Aft Section / Exhaust Vectoring");
+            } else {
+                showNotification("LOCATION: Ambient Airframe Surface");
+            }
+
+            return null;
+        }
+
+        function triggerLockheedAgent(part) {
+            console.log(`THREAD TRIGGERED: ${part.name} [${part.part_id}]`);
+
+            showNotification(`PART IDENTIFIED: ${part.name}`);
+
+            // Visual feedback on the jet (simple console log for POC)
+            // In production, this would fire an event to the main Electron window
+            window.dispatchEvent(new CustomEvent('digital-thread-navigation', {
+                detail: {
+                    partId: part.part_id,
+                    name: part.name
+                }
+            }));
+        }
+
+        // --- BOOTSTRAP SYSTEM ---
+        function initApp() {
+            try {
+                // 1. Initialize 3D Engine
+                initThree();
+
+                // 2. Load Progress & Thread Map
+                loadWizardProgress();
+                loadOrientationCalibration(); // Restore orientation corrections
+                renderSidebar();
+                loadThreadMap();
+
+                // 3. Install Lock Patch for UV determinism (if available)
+                // Always install the lock patch in this build: it enforces a single canonical
+                // UV pipeline (orientation -> snapping -> stable sample). Without it, raw UV
+                // sampling can drift and make left/right wing hits look wildly offset.
+                installLockPatch();
+
+                // 4. Attach Interaction Listeners
+                setupInteractions();
+
+                // 5. Setup File Upload Handlers
+                setupFileUpload();
+
+                // 6. Wire UI buttons/toggles
+                setupUiEvents();
+                updateApprovalLog();
+
+                // 6b. LOCK IT IN: Add action buttons + render approved list
+                ensureActionButtons();
+                renderApprovedList();
+
+                // 7. Auto-load GLB + panel assets on launch
+                autoLoadAssets();
+
+                // Inline handlers in HTML (module scope needs explicit export)
+                window.startOrientationCalibration = startOrientationCalibration;
+                window.exportPOCMap = exportPOCMap;
+                window.handleLoadParts = handleLoadParts;
+                window.handleImportMap = handleImportMap;
+                window.resetCalibrationSession = resetCalibrationSession;
+
+                console.log("F-22 3D MASTER INITIALIZED");
+            } catch (err) {
+                console.error("APP INIT FAILURE:", err);
+                showNotification("SYSTEM ERROR: Check Console");
+            }
+        }
+
+        function setupUiEvents() {
+            // Left config panel toggle
+            els.configToggle?.addEventListener('click', () => {
+                els.configPanel.classList.toggle('visible');
+                els.configToggle.classList.toggle('open');
+            });
+
+            // Right info panel toggle
+            els.infoToggle?.addEventListener('click', () => {
+                els.infoPanel.classList.toggle('visible');
+                els.infoToggle.classList.toggle('open');
+            });
+
+            // Explicit close button for info
+            els.infoClose?.addEventListener('click', () => {
+                els.infoPanel.classList.remove('visible');
+                els.infoToggle.classList.remove('open');
+            });
+
+            // Toolbar
+            els.btnReset?.addEventListener('click', () => location.reload());
+            els.btnFront?.addEventListener('click', () => setCameraView('front'));
+            els.btnTop?.addEventListener('click', () => setCameraView('top'));
+            els.btnSide?.addEventListener('click', () => setCameraView('side'));
+            if (!state.lockPatchInstalled) {
+                els.btnMaterial?.addEventListener('click', () => {
+                    // Toggle between textured/untextured
+                    const cur = els.materialMode?.value || 'untextured';
+                    const next = cur === 'textured' ? 'untextured' : 'textured';
+                    if (els.materialMode) els.materialMode.value = next;
+                    applyMaterialMode(next);
+                });
+            }
+
+            els.btnTerminal?.addEventListener('click', () => {
+                toggleTerminal();
+            });
+            els.btnSelectFolder?.addEventListener('click', async () => {
+                try {
+                    if (!window.api?.pickFolder) {
+                        showNotification('Folder picker requires Electron');
+                        logTerminal('Folder picker unavailable: window.api.pickFolder missing');
+                        return;
+                    }
+                    const folder = await window.api.pickFolder();
+                    if (!folder) return;
+                    state.selectedFolder = folder;
+                    logTerminal(`FOLDER SELECTED: ${folder}`);
+                    showNotification('FOLDER SELECTED');
+                    // Attempt to load assets from the selected folder
+                    await autoLoadAssetsFromFolder(folder);
+                } catch (e) {
+                    console.error('Select folder failed:', e);
+                    showNotification('SELECT FOLDER FAILED');
+                }
+            });
+            els.btnReloadAssets?.addEventListener('click', async () => {
+                if (!state.selectedFolder) {
+                    showNotification('Select a folder first');
+                    return;
+                }
+                showNotification('Reloading assets...');
+                await autoLoadAssetsFromFolder(state.selectedFolder);
+            });
+            els.btnApprove?.addEventListener('click', () => {
+                approveCurrent();
+            });
+            els.btnMirror?.addEventListener('click', () => {
+                mirrorLastApproved();
+            });
+        }
+
+        function setupInteractions() {
+            if (!state.renderer?.domElement) return;
+            const canvas = state.renderer.domElement;
+
+            canvas.addEventListener('mousemove', e => {
+                tryPick(e, false);
+            });
+
+            canvas.addEventListener('click', e => {
+                tryPick(e, true);
+            });
+        }
+
+        function setupFileUpload() {
+            // Click to open file picker
+            els.uploadBox.addEventListener('click', () => {
+                if (els.fileInput) els.fileInput.value = '';
+                els.fileInput.click();
+            });
+
+            // Handle file selection
+            els.fileInput.addEventListener('change', e => {
+                const file = e.target.files?.[0];
+                e.target.value = '';
+                if (file) loadGlb(file);
+            });
+
+            // Drag and drop support
+            els.uploadBox.addEventListener('dragover', e => {
+                e.preventDefault();
+                els.uploadBox.classList.add('dragover');
+            });
+
+            els.uploadBox.addEventListener('dragleave', e => {
+                e.preventDefault();
+                els.uploadBox.classList.remove('dragover');
+            });
+
+            els.uploadBox.addEventListener('drop', e => {
+                e.preventDefault();
+                els.uploadBox.classList.remove('dragover');
+                const file = e.dataTransfer?.files?.[0];
+                if (file && (file.name.endsWith('.glb') || file.name.endsWith('.gltf'))) {
+                    loadGlb(file);
+                }
+            });
+        }
+
+        // --- LAUNCH ---
+        initApp();
     </script>
 </body>
+
 </html>

@@ -1,0 +1,1749 @@
+{
+  "by_view": {
+    "image1_side_view": [
+      {
+        "section": "L10",
+        "hex": "#B24747",
+        "view": "Side"
+      },
+      {
+        "section": "L11",
+        "hex": "#C53631",
+        "view": "Side"
+      },
+      {
+        "section": "L15",
+        "hex": "#D82115",
+        "view": "Side"
+      },
+      {
+        "section": "C12",
+        "hex": "#EB6B5E",
+        "view": "Side"
+      },
+      {
+        "section": "C13",
+        "hex": "#B23D2C",
+        "view": "Side"
+      },
+      {
+        "section": "C15",
+        "hex": "#C52F13",
+        "view": "Side"
+      },
+      {
+        "section": "C17",
+        "hex": "#D86E56",
+        "view": "Side"
+      },
+      {
+        "section": "C18",
+        "hex": "#EB613A",
+        "view": "Side"
+      },
+      {
+        "section": "C19",
+        "hex": "#B23911",
+        "view": "Side"
+      },
+      {
+        "section": "R20",
+        "hex": "#C5704F",
+        "view": "Side"
+      },
+      {
+        "section": "BL14",
+        "hex": "#D86836",
+        "view": "Side"
+      },
+      {
+        "section": "BL21",
+        "hex": "#EB6017",
+        "view": "Side"
+      },
+      {
+        "section": "BL22",
+        "hex": "#B26F47",
+        "view": "Side"
+      },
+      {
+        "section": "BL23",
+        "hex": "#C56D31",
+        "view": "Side"
+      },
+      {
+        "section": "BL30",
+        "hex": "#D86A15",
+        "view": "Side"
+      },
+      {
+        "section": "BL31",
+        "hex": "#EBA05E",
+        "view": "Side"
+      },
+      {
+        "section": "BL32",
+        "hex": "#B26F2C",
+        "view": "Side"
+      },
+      {
+        "section": "BL33",
+        "hex": "#C57113",
+        "view": "Side"
+      },
+      {
+        "section": "BL45",
+        "hex": "#D89F56",
+        "view": "Side"
+      },
+      {
+        "section": "BC24",
+        "hex": "#EBA33A",
+        "view": "Side"
+      },
+      {
+        "section": "BC25",
+        "hex": "#B27511",
+        "view": "Side"
+      },
+      {
+        "section": "BC26",
+        "hex": "#C59C4F",
+        "view": "Side"
+      },
+      {
+        "section": "BC27",
+        "hex": "#D8A536",
+        "view": "Side"
+      },
+      {
+        "section": "BC28",
+        "hex": "#EBAF17",
+        "view": "Side"
+      },
+      {
+        "section": "BC34",
+        "hex": "#B29747",
+        "view": "Side"
+      },
+      {
+        "section": "BC35",
+        "hex": "#C5A431",
+        "view": "Side"
+      },
+      {
+        "section": "BC36",
+        "hex": "#D8B315",
+        "view": "Side"
+      },
+      {
+        "section": "BC37",
+        "hex": "#EBD55E",
+        "view": "Side"
+      },
+      {
+        "section": "BC38",
+        "hex": "#B2A12C",
+        "view": "Side"
+      },
+      {
+        "section": "BC40",
+        "hex": "#C5B413",
+        "view": "Side"
+      },
+      {
+        "section": "BC41",
+        "hex": "#D8CF56",
+        "view": "Side"
+      },
+      {
+        "section": "BC43",
+        "hex": "#EBE53A",
+        "view": "Side"
+      },
+      {
+        "section": "BC45",
+        "hex": "#B2B111",
+        "view": "Side"
+      },
+      {
+        "section": "BC48",
+        "hex": "#C2C54F",
+        "view": "Side"
+      },
+      {
+        "section": "BC49",
+        "hex": "#CFD836",
+        "view": "Side"
+      },
+      {
+        "section": "BR29",
+        "hex": "#D9EB17",
+        "view": "Side"
+      },
+      {
+        "section": "BR39",
+        "hex": "#A5B247",
+        "view": "Side"
+      },
+      {
+        "section": "BR40",
+        "hex": "#AFC531",
+        "view": "Side"
+      },
+      {
+        "section": "BR44",
+        "hex": "#B5D815",
+        "view": "Side"
+      },
+      {
+        "section": "BR45",
+        "hex": "#CDEB5E",
+        "view": "Side"
+      },
+      {
+        "section": "BR47",
+        "hex": "#91B22C",
+        "view": "Side"
+      },
+      {
+        "section": "BR48",
+        "hex": "#94C513",
+        "view": "Side"
+      },
+      {
+        "section": "TR1",
+        "hex": "#B0D856",
+        "view": "Side"
+      },
+      {
+        "section": "TR2",
+        "hex": "#B0EB3A",
+        "view": "Side"
+      },
+      {
+        "section": "TR3",
+        "hex": "#77B211",
+        "view": "Side"
+      },
+      {
+        "section": "TR5",
+        "hex": "#96C54F",
+        "view": "Side"
+      },
+      {
+        "section": "R4",
+        "hex": "#92D836",
+        "view": "Side"
+      },
+      {
+        "section": "R6",
+        "hex": "#89EB17",
+        "view": "Side"
+      },
+      {
+        "section": "R7",
+        "hex": "#7DB247",
+        "view": "Side"
+      }
+    ],
+    "image2_top_view": [
+      {
+        "section": "T1",
+        "hex": "#78C531",
+        "view": "Top"
+      },
+      {
+        "section": "T2",
+        "hex": "#6CD815",
+        "view": "Top"
+      },
+      {
+        "section": "T3",
+        "hex": "#99EB5E",
+        "view": "Top"
+      },
+      {
+        "section": "T4",
+        "hex": "#5FB22C",
+        "view": "Top"
+      },
+      {
+        "section": "T5",
+        "hex": "#52C513",
+        "view": "Top"
+      },
+      {
+        "section": "T6",
+        "hex": "#80D856",
+        "view": "Top"
+      },
+      {
+        "section": "T7",
+        "hex": "#6EEB3A",
+        "view": "Top"
+      },
+      {
+        "section": "T8",
+        "hex": "#3BB211",
+        "view": "Top"
+      },
+      {
+        "section": "T9",
+        "hex": "#6AC54F",
+        "view": "Top"
+      },
+      {
+        "section": "T10",
+        "hex": "#56D836",
+        "view": "Top"
+      },
+      {
+        "section": "T11",
+        "hex": "#3AEB17",
+        "view": "Top"
+      },
+      {
+        "section": "T12",
+        "hex": "#55B247",
+        "view": "Top"
+      },
+      {
+        "section": "T13",
+        "hex": "#40C531",
+        "view": "Top"
+      },
+      {
+        "section": "T14",
+        "hex": "#23D815",
+        "view": "Top"
+      },
+      {
+        "section": "T15",
+        "hex": "#64EB5E",
+        "view": "Top"
+      },
+      {
+        "section": "T16",
+        "hex": "#2EB22C",
+        "view": "Top"
+      },
+      {
+        "section": "T17",
+        "hex": "#13C517",
+        "view": "Top"
+      },
+      {
+        "section": "T18",
+        "hex": "#56D85D",
+        "view": "Top"
+      },
+      {
+        "section": "T19",
+        "hex": "#3AEB49",
+        "view": "Top"
+      },
+      {
+        "section": "T20",
+        "hex": "#11B224",
+        "view": "Top"
+      },
+      {
+        "section": "T21",
+        "hex": "#4FC560",
+        "view": "Top"
+      },
+      {
+        "section": "T22",
+        "hex": "#36D852",
+        "view": "Top"
+      },
+      {
+        "section": "T23",
+        "hex": "#17EB43",
+        "view": "Top"
+      },
+      {
+        "section": "T24",
+        "hex": "#47B260",
+        "view": "Top"
+      },
+      {
+        "section": "T25",
+        "hex": "#31C559",
+        "view": "Top"
+      },
+      {
+        "section": "T26",
+        "hex": "#15D850",
+        "view": "Top"
+      },
+      {
+        "section": "T27",
+        "hex": "#5EEB8D",
+        "view": "Top"
+      },
+      {
+        "section": "T28",
+        "hex": "#2CB25D",
+        "view": "Top"
+      },
+      {
+        "section": "T29",
+        "hex": "#13C559",
+        "view": "Top"
+      },
+      {
+        "section": "T30",
+        "hex": "#56D88D",
+        "view": "Top"
+      },
+      {
+        "section": "TL1",
+        "hex": "#3AEB8B",
+        "view": "Top"
+      },
+      {
+        "section": "TL2",
+        "hex": "#11B260",
+        "view": "Top"
+      },
+      {
+        "section": "TL3",
+        "hex": "#4FC58C",
+        "view": "Top"
+      },
+      {
+        "section": "TL4",
+        "hex": "#36D88F",
+        "view": "Top"
+      },
+      {
+        "section": "TL5",
+        "hex": "#17EB92",
+        "view": "Top"
+      },
+      {
+        "section": "TL6",
+        "hex": "#47B288",
+        "view": "Top"
+      },
+      {
+        "section": "TL7",
+        "hex": "#31C590",
+        "view": "Top"
+      },
+      {
+        "section": "TL8",
+        "hex": "#15D899",
+        "view": "Top"
+      },
+      {
+        "section": "TL9",
+        "hex": "#5EEBC2",
+        "view": "Top"
+      },
+      {
+        "section": "TL10",
+        "hex": "#2CB28F",
+        "view": "Top"
+      },
+      {
+        "section": "TR1_TOP",
+        "hex": "#13C59C",
+        "view": "Top"
+      },
+      {
+        "section": "TR2_TOP",
+        "hex": "#56D8BE",
+        "view": "Top"
+      },
+      {
+        "section": "TR3_TOP",
+        "hex": "#3AEBCD",
+        "view": "Top"
+      },
+      {
+        "section": "TR4",
+        "hex": "#11B29C",
+        "view": "Top"
+      },
+      {
+        "section": "TR5_TOP",
+        "hex": "#4FC5B8",
+        "view": "Top"
+      },
+      {
+        "section": "TR6",
+        "hex": "#36D8CC",
+        "view": "Top"
+      },
+      {
+        "section": "TR7",
+        "hex": "#17EBE1",
+        "view": "Top"
+      },
+      {
+        "section": "TR8",
+        "hex": "#47B2B0",
+        "view": "Top"
+      },
+      {
+        "section": "TR9",
+        "hex": "#31C3C5",
+        "view": "Top"
+      },
+      {
+        "section": "TR10",
+        "hex": "#15CFD8",
+        "view": "Top"
+      },
+      {
+        "section": "WL1",
+        "hex": "#5EE0EB",
+        "view": "Top"
+      },
+      {
+        "section": "WL2",
+        "hex": "#2CA3B2",
+        "view": "Top"
+      },
+      {
+        "section": "WL3",
+        "hex": "#13ACC5",
+        "view": "Top"
+      },
+      {
+        "section": "WL4",
+        "hex": "#56C2D8",
+        "view": "Top"
+      },
+      {
+        "section": "WL5",
+        "hex": "#3AC8EB",
+        "view": "Top"
+      },
+      {
+        "section": "WL6",
+        "hex": "#118DB2",
+        "view": "Top"
+      },
+      {
+        "section": "WR1",
+        "hex": "#4FA6C5",
+        "view": "Top"
+      },
+      {
+        "section": "WR2",
+        "hex": "#36A8D8",
+        "view": "Top"
+      },
+      {
+        "section": "WR3",
+        "hex": "#17A6EB",
+        "view": "Top"
+      },
+      {
+        "section": "WR4",
+        "hex": "#478CB2",
+        "view": "Top"
+      },
+      {
+        "section": "WR5",
+        "hex": "#318CC5",
+        "view": "Top"
+      },
+      {
+        "section": "WR6",
+        "hex": "#1586D8",
+        "view": "Top"
+      },
+      {
+        "section": "RL1",
+        "hex": "#5EACEB",
+        "view": "Top"
+      },
+      {
+        "section": "RL2",
+        "hex": "#2C71B2",
+        "view": "Top"
+      },
+      {
+        "section": "RL3",
+        "hex": "#136AC5",
+        "view": "Top"
+      },
+      {
+        "section": "RL4",
+        "hex": "#5691D8",
+        "view": "Top"
+      },
+      {
+        "section": "RL5",
+        "hex": "#3A86EB",
+        "view": "Top"
+      },
+      {
+        "section": "RR1",
+        "hex": "#1151B2",
+        "view": "Top"
+      },
+      {
+        "section": "RR2",
+        "hex": "#4F7AC5",
+        "view": "Top"
+      },
+      {
+        "section": "RR3",
+        "hex": "#366CD8",
+        "view": "Top"
+      },
+      {
+        "section": "RR4",
+        "hex": "#1757EB",
+        "view": "Top"
+      },
+      {
+        "section": "RR5",
+        "hex": "#4764B2",
+        "view": "Top"
+      }
+    ],
+    "image3_bottom_view": [
+      {
+        "section": "B1",
+        "hex": "#3154C5",
+        "view": "Bottom"
+      },
+      {
+        "section": "B2",
+        "hex": "#153ED8",
+        "view": "Bottom"
+      },
+      {
+        "section": "B3",
+        "hex": "#5E77EB",
+        "view": "Bottom"
+      },
+      {
+        "section": "B4",
+        "hex": "#2C40B2",
+        "view": "Bottom"
+      },
+      {
+        "section": "B5",
+        "hex": "#1328C5",
+        "view": "Bottom"
+      },
+      {
+        "section": "B6",
+        "hex": "#5661D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "B7",
+        "hex": "#3A44EB",
+        "view": "Bottom"
+      },
+      {
+        "section": "B8",
+        "hex": "#1115B2",
+        "view": "Bottom"
+      },
+      {
+        "section": "B9",
+        "hex": "#504FC5",
+        "view": "Bottom"
+      },
+      {
+        "section": "B10",
+        "hex": "#3C36D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "B11",
+        "hex": "#2617EB",
+        "view": "Bottom"
+      },
+      {
+        "section": "B12",
+        "hex": "#5247B2",
+        "view": "Bottom"
+      },
+      {
+        "section": "B13",
+        "hex": "#4531C5",
+        "view": "Bottom"
+      },
+      {
+        "section": "B14",
+        "hex": "#3615D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "B15",
+        "hex": "#7A5EEB",
+        "view": "Bottom"
+      },
+      {
+        "section": "B16",
+        "hex": "#4B2CB2",
+        "view": "Bottom"
+      },
+      {
+        "section": "B17",
+        "hex": "#4113C5",
+        "view": "Bottom"
+      },
+      {
+        "section": "B18",
+        "hex": "#7C56D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "B19",
+        "hex": "#733AEB",
+        "view": "Bottom"
+      },
+      {
+        "section": "B20",
+        "hex": "#4A11B2",
+        "view": "Bottom"
+      },
+      {
+        "section": "B21",
+        "hex": "#7C4FC5",
+        "view": "Bottom"
+      },
+      {
+        "section": "B22",
+        "hex": "#7936D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "B23",
+        "hex": "#7617EB",
+        "view": "Bottom"
+      },
+      {
+        "section": "B24",
+        "hex": "#7A47B2",
+        "view": "Bottom"
+      },
+      {
+        "section": "B25",
+        "hex": "#7C31C5",
+        "view": "Bottom"
+      },
+      {
+        "section": "B26",
+        "hex": "#7E15D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "B27",
+        "hex": "#AF5EEB",
+        "view": "Bottom"
+      },
+      {
+        "section": "B28",
+        "hex": "#7D2CB2",
+        "view": "Bottom"
+      },
+      {
+        "section": "B29",
+        "hex": "#8413C5",
+        "view": "Bottom"
+      },
+      {
+        "section": "B30",
+        "hex": "#AC56D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL1",
+        "hex": "#B53AEB",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL2",
+        "hex": "#8611B2",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL3",
+        "hex": "#A84FC5",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL4",
+        "hex": "#B636D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL5",
+        "hex": "#C517EB",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL6",
+        "hex": "#A247B2",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL7",
+        "hex": "#B331C5",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL8",
+        "hex": "#C715D8",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL9",
+        "hex": "#E35EEB",
+        "view": "Bottom"
+      },
+      {
+        "section": "BL10",
+        "hex": "#AF2CB2",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR1",
+        "hex": "#C513C4",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR2",
+        "hex": "#D856D4",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR3",
+        "hex": "#EB3ADF",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR4",
+        "hex": "#B211A2",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR5",
+        "hex": "#C54FB6",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR6",
+        "hex": "#D836BE",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR7",
+        "hex": "#EB17C3",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR8",
+        "hex": "#B2479A",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR9",
+        "hex": "#C5319F",
+        "view": "Bottom"
+      },
+      {
+        "section": "BR10",
+        "hex": "#D815A1",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBL1",
+        "hex": "#EB5EBF",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBL2",
+        "hex": "#B22C84",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBL3",
+        "hex": "#C51382",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBL4",
+        "hex": "#D856A3",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBL5",
+        "hex": "#EB3A9D",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBL6",
+        "hex": "#B21166",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBR1",
+        "hex": "#C54F8A",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBR2",
+        "hex": "#D83681",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBR3",
+        "hex": "#EB1773",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBR4",
+        "hex": "#B24772",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBR5",
+        "hex": "#C53168",
+        "view": "Bottom"
+      },
+      {
+        "section": "WBR6",
+        "hex": "#D81558",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBL1",
+        "hex": "#EB5E8A",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBL2",
+        "hex": "#B22C52",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBL3",
+        "hex": "#C5133F",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBL4",
+        "hex": "#D85673",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBL5",
+        "hex": "#EB3A5B",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBR1",
+        "hex": "#B2112A",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBR2",
+        "hex": "#C54F5D",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBR3",
+        "hex": "#D83645",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBR4",
+        "hex": "#EB1724",
+        "view": "Bottom"
+      },
+      {
+        "section": "RBR5",
+        "hex": "#B2474A",
+        "view": "Bottom"
+      }
+    ]
+  },
+  "lookup": {
+    "L10": {
+      "hex": "#B24747",
+      "view": "Side"
+    },
+    "L11": {
+      "hex": "#C53631",
+      "view": "Side"
+    },
+    "L15": {
+      "hex": "#D82115",
+      "view": "Side"
+    },
+    "C12": {
+      "hex": "#EB6B5E",
+      "view": "Side"
+    },
+    "C13": {
+      "hex": "#B23D2C",
+      "view": "Side"
+    },
+    "C15": {
+      "hex": "#C52F13",
+      "view": "Side"
+    },
+    "C17": {
+      "hex": "#D86E56",
+      "view": "Side"
+    },
+    "C18": {
+      "hex": "#EB613A",
+      "view": "Side"
+    },
+    "C19": {
+      "hex": "#B23911",
+      "view": "Side"
+    },
+    "R20": {
+      "hex": "#C5704F",
+      "view": "Side"
+    },
+    "BL14": {
+      "hex": "#D86836",
+      "view": "Side"
+    },
+    "BL21": {
+      "hex": "#EB6017",
+      "view": "Side"
+    },
+    "BL22": {
+      "hex": "#B26F47",
+      "view": "Side"
+    },
+    "BL23": {
+      "hex": "#C56D31",
+      "view": "Side"
+    },
+    "BL30": {
+      "hex": "#D86A15",
+      "view": "Side"
+    },
+    "BL31": {
+      "hex": "#EBA05E",
+      "view": "Side"
+    },
+    "BL32": {
+      "hex": "#B26F2C",
+      "view": "Side"
+    },
+    "BL33": {
+      "hex": "#C57113",
+      "view": "Side"
+    },
+    "BL45": {
+      "hex": "#D89F56",
+      "view": "Side"
+    },
+    "BC24": {
+      "hex": "#EBA33A",
+      "view": "Side"
+    },
+    "BC25": {
+      "hex": "#B27511",
+      "view": "Side"
+    },
+    "BC26": {
+      "hex": "#C59C4F",
+      "view": "Side"
+    },
+    "BC27": {
+      "hex": "#D8A536",
+      "view": "Side"
+    },
+    "BC28": {
+      "hex": "#EBAF17",
+      "view": "Side"
+    },
+    "BC34": {
+      "hex": "#B29747",
+      "view": "Side"
+    },
+    "BC35": {
+      "hex": "#C5A431",
+      "view": "Side"
+    },
+    "BC36": {
+      "hex": "#D8B315",
+      "view": "Side"
+    },
+    "BC37": {
+      "hex": "#EBD55E",
+      "view": "Side"
+    },
+    "BC38": {
+      "hex": "#B2A12C",
+      "view": "Side"
+    },
+    "BC40": {
+      "hex": "#C5B413",
+      "view": "Side"
+    },
+    "BC41": {
+      "hex": "#D8CF56",
+      "view": "Side"
+    },
+    "BC43": {
+      "hex": "#EBE53A",
+      "view": "Side"
+    },
+    "BC45": {
+      "hex": "#B2B111",
+      "view": "Side"
+    },
+    "BC48": {
+      "hex": "#C2C54F",
+      "view": "Side"
+    },
+    "BC49": {
+      "hex": "#CFD836",
+      "view": "Side"
+    },
+    "BR29": {
+      "hex": "#D9EB17",
+      "view": "Side"
+    },
+    "BR39": {
+      "hex": "#A5B247",
+      "view": "Side"
+    },
+    "BR40": {
+      "hex": "#AFC531",
+      "view": "Side"
+    },
+    "BR44": {
+      "hex": "#B5D815",
+      "view": "Side"
+    },
+    "BR45": {
+      "hex": "#CDEB5E",
+      "view": "Side"
+    },
+    "BR47": {
+      "hex": "#91B22C",
+      "view": "Side"
+    },
+    "BR48": {
+      "hex": "#94C513",
+      "view": "Side"
+    },
+    "TR1": {
+      "hex": "#B0D856",
+      "view": "Side"
+    },
+    "TR2": {
+      "hex": "#B0EB3A",
+      "view": "Side"
+    },
+    "TR3": {
+      "hex": "#77B211",
+      "view": "Side"
+    },
+    "TR5": {
+      "hex": "#96C54F",
+      "view": "Side"
+    },
+    "R4": {
+      "hex": "#92D836",
+      "view": "Side"
+    },
+    "R6": {
+      "hex": "#89EB17",
+      "view": "Side"
+    },
+    "R7": {
+      "hex": "#7DB247",
+      "view": "Side"
+    },
+    "T1": {
+      "hex": "#78C531",
+      "view": "Top"
+    },
+    "T2": {
+      "hex": "#6CD815",
+      "view": "Top"
+    },
+    "T3": {
+      "hex": "#99EB5E",
+      "view": "Top"
+    },
+    "T4": {
+      "hex": "#5FB22C",
+      "view": "Top"
+    },
+    "T5": {
+      "hex": "#52C513",
+      "view": "Top"
+    },
+    "T6": {
+      "hex": "#80D856",
+      "view": "Top"
+    },
+    "T7": {
+      "hex": "#6EEB3A",
+      "view": "Top"
+    },
+    "T8": {
+      "hex": "#3BB211",
+      "view": "Top"
+    },
+    "T9": {
+      "hex": "#6AC54F",
+      "view": "Top"
+    },
+    "T10": {
+      "hex": "#56D836",
+      "view": "Top"
+    },
+    "T11": {
+      "hex": "#3AEB17",
+      "view": "Top"
+    },
+    "T12": {
+      "hex": "#55B247",
+      "view": "Top"
+    },
+    "T13": {
+      "hex": "#40C531",
+      "view": "Top"
+    },
+    "T14": {
+      "hex": "#23D815",
+      "view": "Top"
+    },
+    "T15": {
+      "hex": "#64EB5E",
+      "view": "Top"
+    },
+    "T16": {
+      "hex": "#2EB22C",
+      "view": "Top"
+    },
+    "T17": {
+      "hex": "#13C517",
+      "view": "Top"
+    },
+    "T18": {
+      "hex": "#56D85D",
+      "view": "Top"
+    },
+    "T19": {
+      "hex": "#3AEB49",
+      "view": "Top"
+    },
+    "T20": {
+      "hex": "#11B224",
+      "view": "Top"
+    },
+    "T21": {
+      "hex": "#4FC560",
+      "view": "Top"
+    },
+    "T22": {
+      "hex": "#36D852",
+      "view": "Top"
+    },
+    "T23": {
+      "hex": "#17EB43",
+      "view": "Top"
+    },
+    "T24": {
+      "hex": "#47B260",
+      "view": "Top"
+    },
+    "T25": {
+      "hex": "#31C559",
+      "view": "Top"
+    },
+    "T26": {
+      "hex": "#15D850",
+      "view": "Top"
+    },
+    "T27": {
+      "hex": "#5EEB8D",
+      "view": "Top"
+    },
+    "T28": {
+      "hex": "#2CB25D",
+      "view": "Top"
+    },
+    "T29": {
+      "hex": "#13C559",
+      "view": "Top"
+    },
+    "T30": {
+      "hex": "#56D88D",
+      "view": "Top"
+    },
+    "TL1": {
+      "hex": "#3AEB8B",
+      "view": "Top"
+    },
+    "TL2": {
+      "hex": "#11B260",
+      "view": "Top"
+    },
+    "TL3": {
+      "hex": "#4FC58C",
+      "view": "Top"
+    },
+    "TL4": {
+      "hex": "#36D88F",
+      "view": "Top"
+    },
+    "TL5": {
+      "hex": "#17EB92",
+      "view": "Top"
+    },
+    "TL6": {
+      "hex": "#47B288",
+      "view": "Top"
+    },
+    "TL7": {
+      "hex": "#31C590",
+      "view": "Top"
+    },
+    "TL8": {
+      "hex": "#15D899",
+      "view": "Top"
+    },
+    "TL9": {
+      "hex": "#5EEBC2",
+      "view": "Top"
+    },
+    "TL10": {
+      "hex": "#2CB28F",
+      "view": "Top"
+    },
+    "TR1_TOP": {
+      "hex": "#13C59C",
+      "view": "Top"
+    },
+    "TR2_TOP": {
+      "hex": "#56D8BE",
+      "view": "Top"
+    },
+    "TR3_TOP": {
+      "hex": "#3AEBCD",
+      "view": "Top"
+    },
+    "TR4": {
+      "hex": "#11B29C",
+      "view": "Top"
+    },
+    "TR5_TOP": {
+      "hex": "#4FC5B8",
+      "view": "Top"
+    },
+    "TR6": {
+      "hex": "#36D8CC",
+      "view": "Top"
+    },
+    "TR7": {
+      "hex": "#17EBE1",
+      "view": "Top"
+    },
+    "TR8": {
+      "hex": "#47B2B0",
+      "view": "Top"
+    },
+    "TR9": {
+      "hex": "#31C3C5",
+      "view": "Top"
+    },
+    "TR10": {
+      "hex": "#15CFD8",
+      "view": "Top"
+    },
+    "WL1": {
+      "hex": "#5EE0EB",
+      "view": "Top"
+    },
+    "WL2": {
+      "hex": "#2CA3B2",
+      "view": "Top"
+    },
+    "WL3": {
+      "hex": "#13ACC5",
+      "view": "Top"
+    },
+    "WL4": {
+      "hex": "#56C2D8",
+      "view": "Top"
+    },
+    "WL5": {
+      "hex": "#3AC8EB",
+      "view": "Top"
+    },
+    "WL6": {
+      "hex": "#118DB2",
+      "view": "Top"
+    },
+    "WR1": {
+      "hex": "#4FA6C5",
+      "view": "Top"
+    },
+    "WR2": {
+      "hex": "#36A8D8",
+      "view": "Top"
+    },
+    "WR3": {
+      "hex": "#17A6EB",
+      "view": "Top"
+    },
+    "WR4": {
+      "hex": "#478CB2",
+      "view": "Top"
+    },
+    "WR5": {
+      "hex": "#318CC5",
+      "view": "Top"
+    },
+    "WR6": {
+      "hex": "#1586D8",
+      "view": "Top"
+    },
+    "RL1": {
+      "hex": "#5EACEB",
+      "view": "Top"
+    },
+    "RL2": {
+      "hex": "#2C71B2",
+      "view": "Top"
+    },
+    "RL3": {
+      "hex": "#136AC5",
+      "view": "Top"
+    },
+    "RL4": {
+      "hex": "#5691D8",
+      "view": "Top"
+    },
+    "RL5": {
+      "hex": "#3A86EB",
+      "view": "Top"
+    },
+    "RR1": {
+      "hex": "#1151B2",
+      "view": "Top"
+    },
+    "RR2": {
+      "hex": "#4F7AC5",
+      "view": "Top"
+    },
+    "RR3": {
+      "hex": "#366CD8",
+      "view": "Top"
+    },
+    "RR4": {
+      "hex": "#1757EB",
+      "view": "Top"
+    },
+    "RR5": {
+      "hex": "#4764B2",
+      "view": "Top"
+    },
+    "B1": {
+      "hex": "#3154C5",
+      "view": "Bottom"
+    },
+    "B2": {
+      "hex": "#153ED8",
+      "view": "Bottom"
+    },
+    "B3": {
+      "hex": "#5E77EB",
+      "view": "Bottom"
+    },
+    "B4": {
+      "hex": "#2C40B2",
+      "view": "Bottom"
+    },
+    "B5": {
+      "hex": "#1328C5",
+      "view": "Bottom"
+    },
+    "B6": {
+      "hex": "#5661D8",
+      "view": "Bottom"
+    },
+    "B7": {
+      "hex": "#3A44EB",
+      "view": "Bottom"
+    },
+    "B8": {
+      "hex": "#1115B2",
+      "view": "Bottom"
+    },
+    "B9": {
+      "hex": "#504FC5",
+      "view": "Bottom"
+    },
+    "B10": {
+      "hex": "#3C36D8",
+      "view": "Bottom"
+    },
+    "B11": {
+      "hex": "#2617EB",
+      "view": "Bottom"
+    },
+    "B12": {
+      "hex": "#5247B2",
+      "view": "Bottom"
+    },
+    "B13": {
+      "hex": "#4531C5",
+      "view": "Bottom"
+    },
+    "B14": {
+      "hex": "#3615D8",
+      "view": "Bottom"
+    },
+    "B15": {
+      "hex": "#7A5EEB",
+      "view": "Bottom"
+    },
+    "B16": {
+      "hex": "#4B2CB2",
+      "view": "Bottom"
+    },
+    "B17": {
+      "hex": "#4113C5",
+      "view": "Bottom"
+    },
+    "B18": {
+      "hex": "#7C56D8",
+      "view": "Bottom"
+    },
+    "B19": {
+      "hex": "#733AEB",
+      "view": "Bottom"
+    },
+    "B20": {
+      "hex": "#4A11B2",
+      "view": "Bottom"
+    },
+    "B21": {
+      "hex": "#7C4FC5",
+      "view": "Bottom"
+    },
+    "B22": {
+      "hex": "#7936D8",
+      "view": "Bottom"
+    },
+    "B23": {
+      "hex": "#7617EB",
+      "view": "Bottom"
+    },
+    "B24": {
+      "hex": "#7A47B2",
+      "view": "Bottom"
+    },
+    "B25": {
+      "hex": "#7C31C5",
+      "view": "Bottom"
+    },
+    "B26": {
+      "hex": "#7E15D8",
+      "view": "Bottom"
+    },
+    "B27": {
+      "hex": "#AF5EEB",
+      "view": "Bottom"
+    },
+    "B28": {
+      "hex": "#7D2CB2",
+      "view": "Bottom"
+    },
+    "B29": {
+      "hex": "#8413C5",
+      "view": "Bottom"
+    },
+    "B30": {
+      "hex": "#AC56D8",
+      "view": "Bottom"
+    },
+    "BL1": {
+      "hex": "#B53AEB",
+      "view": "Bottom"
+    },
+    "BL2": {
+      "hex": "#8611B2",
+      "view": "Bottom"
+    },
+    "BL3": {
+      "hex": "#A84FC5",
+      "view": "Bottom"
+    },
+    "BL4": {
+      "hex": "#B636D8",
+      "view": "Bottom"
+    },
+    "BL5": {
+      "hex": "#C517EB",
+      "view": "Bottom"
+    },
+    "BL6": {
+      "hex": "#A247B2",
+      "view": "Bottom"
+    },
+    "BL7": {
+      "hex": "#B331C5",
+      "view": "Bottom"
+    },
+    "BL8": {
+      "hex": "#C715D8",
+      "view": "Bottom"
+    },
+    "BL9": {
+      "hex": "#E35EEB",
+      "view": "Bottom"
+    },
+    "BL10": {
+      "hex": "#AF2CB2",
+      "view": "Bottom"
+    },
+    "BR1": {
+      "hex": "#C513C4",
+      "view": "Bottom"
+    },
+    "BR2": {
+      "hex": "#D856D4",
+      "view": "Bottom"
+    },
+    "BR3": {
+      "hex": "#EB3ADF",
+      "view": "Bottom"
+    },
+    "BR4": {
+      "hex": "#B211A2",
+      "view": "Bottom"
+    },
+    "BR5": {
+      "hex": "#C54FB6",
+      "view": "Bottom"
+    },
+    "BR6": {
+      "hex": "#D836BE",
+      "view": "Bottom"
+    },
+    "BR7": {
+      "hex": "#EB17C3",
+      "view": "Bottom"
+    },
+    "BR8": {
+      "hex": "#B2479A",
+      "view": "Bottom"
+    },
+    "BR9": {
+      "hex": "#C5319F",
+      "view": "Bottom"
+    },
+    "BR10": {
+      "hex": "#D815A1",
+      "view": "Bottom"
+    },
+    "WBL1": {
+      "hex": "#EB5EBF",
+      "view": "Bottom"
+    },
+    "WBL2": {
+      "hex": "#B22C84",
+      "view": "Bottom"
+    },
+    "WBL3": {
+      "hex": "#C51382",
+      "view": "Bottom"
+    },
+    "WBL4": {
+      "hex": "#D856A3",
+      "view": "Bottom"
+    },
+    "WBL5": {
+      "hex": "#EB3A9D",
+      "view": "Bottom"
+    },
+    "WBL6": {
+      "hex": "#B21166",
+      "view": "Bottom"
+    },
+    "WBR1": {
+      "hex": "#C54F8A",
+      "view": "Bottom"
+    },
+    "WBR2": {
+      "hex": "#D83681",
+      "view": "Bottom"
+    },
+    "WBR3": {
+      "hex": "#EB1773",
+      "view": "Bottom"
+    },
+    "WBR4": {
+      "hex": "#B24772",
+      "view": "Bottom"
+    },
+    "WBR5": {
+      "hex": "#C53168",
+      "view": "Bottom"
+    },
+    "WBR6": {
+      "hex": "#D81558",
+      "view": "Bottom"
+    },
+    "RBL1": {
+      "hex": "#EB5E8A",
+      "view": "Bottom"
+    },
+    "RBL2": {
+      "hex": "#B22C52",
+      "view": "Bottom"
+    },
+    "RBL3": {
+      "hex": "#C5133F",
+      "view": "Bottom"
+    },
+    "RBL4": {
+      "hex": "#D85673",
+      "view": "Bottom"
+    },
+    "RBL5": {
+      "hex": "#EB3A5B",
+      "view": "Bottom"
+    },
+    "RBR1": {
+      "hex": "#B2112A",
+      "view": "Bottom"
+    },
+    "RBR2": {
+      "hex": "#C54F5D",
+      "view": "Bottom"
+    },
+    "RBR3": {
+      "hex": "#D83645",
+      "view": "Bottom"
+    },
+    "RBR4": {
+      "hex": "#EB1724",
+      "view": "Bottom"
+    },
+    "RBR5": {
+      "hex": "#B2474A",
+      "view": "Bottom"
+    }
+  }
+}
