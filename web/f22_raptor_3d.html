@@ -2709,6 +2709,14 @@
             return basePath + file;
         }
 
+        // Mask file name candidates for different views
+        const MASK_CANDIDATES_BY_VIEW = {
+            panel_top: ['panel_mask_top.png', 'panel_top.png', 'panel_mask_view_top.png'],
+            panel_bottom: ['panel_mask_bottom.png', 'panel_bottom.png', 'panel_mask_view_bottom.png', 'panel_mask_view_2.png'],
+            zone_top: ['zone_top.png', 'zone_mask_top.png'],
+            zone_bottom: ['zone_bottom.png', 'zone_mask_bottom.png']
+        };
+
         function normalizeAssetsBase(folder) {
             const base = String(folder || '').replace(/[\\/]+$/, '');
             // Detect path separator from the input (preserve Windows/Unix style)
@@ -2885,21 +2893,13 @@
             // Shows what base path and mask path were actually used.
             try {
                 const view = String(maskView || 'panel_top');
-                const candidatesByView = {
-                    panel_top: ['panel_mask_top.png', 'panel_top.png', 'panel_mask_view_top.png'],
-                    panel_bottom: ['panel_mask_bottom.png', 'panel_bottom.png', 'panel_mask_view_bottom.png', 'panel_mask_view_2.png'],
-                    zone_top: ['zone_top.png', 'zone_mask_top.png'],
-                    zone_bottom: ['zone_bottom.png', 'zone_mask_bottom.png']
-                };
-                const candidates = candidatesByView[view] || candidatesByView.panel_top;
+                const candidates = MASK_CANDIDATES_BY_VIEW[view] || MASK_CANDIDATES_BY_VIEW.panel_top;
                 logTerminal(`LOADING FROM: ${basePath}`);
                 logTerminal(`MASK VIEW: ${maskView}`);
                 logTerminal(`MASK CANDIDATES: ${candidates.join(', ')}`);
                 logTerminal(`TRYING FIRST: ${basePath}${candidates[0]}`);
                 const loaded = Boolean(state.panelIdImageData);
                 const dims = state.panelIdImageData ? `${state.panelIdImageData.width}x${state.panelIdImageData.height}` : 'n/a';
-                logTerminal(`ASSETS BASE: ${basePath}`);
-                logTerminal(`MASK VIEW: ${maskView}`);
                 logTerminal(`MASK LOADED: ${loaded ? 'YES' : 'NO'} (${dims})`);
                 if (state.currentMaskPath) logTerminal(`MASK PATH: ${state.currentMaskPath}`);
             } catch { /* ignore */ }
@@ -2909,26 +2909,14 @@
             const view = String(maskView || 'panel_top');
             // Prefer explicit names if present in the folder/manifest you provide.
             // These are the filenames we support across the toolchain.
-            const candidatesByView = {
-                panel_top: ['panel_mask_top.png', 'panel_top.png', 'panel_mask_view_top.png'],
-                panel_bottom: ['panel_mask_bottom.png', 'panel_bottom.png', 'panel_mask_view_bottom.png', 'panel_mask_view_2.png'],
-                zone_top: ['zone_top.png', 'zone_mask_top.png'],
-                zone_bottom: ['zone_bottom.png', 'zone_mask_bottom.png']
-            };
-            const list = candidatesByView[view] || candidatesByView.panel_top;
+            const list = MASK_CANDIDATES_BY_VIEW[view] || MASK_CANDIDATES_BY_VIEW.panel_top;
             // In URL mode we can only return a path; existence probing happens in Electron via tryLoadMask.
             return basePath + list[0];
         }
 
         async function tryLoadMaskCandidates(assetsBase, maskView) {
             const view = String(maskView || 'panel_top');
-            const candidatesByView = {
-                panel_top: ['panel_mask_top.png', 'panel_top.png', 'panel_mask_view_top.png'],
-                panel_bottom: ['panel_mask_bottom.png', 'panel_bottom.png', 'panel_mask_view_bottom.png', 'panel_mask_view_2.png'],
-                zone_top: ['zone_top.png', 'zone_mask_top.png'],
-                zone_bottom: ['zone_bottom.png', 'zone_mask_bottom.png']
-            };
-            const candidates = candidatesByView[view] || candidatesByView.panel_top;
+            const candidates = MASK_CANDIDATES_BY_VIEW[view] || MASK_CANDIDATES_BY_VIEW.panel_top;
             for (const name of candidates) {
                 const p = `${assetsBase}${name}`;
                 const ok = await loadPanelIdMapFromUrl(p);
