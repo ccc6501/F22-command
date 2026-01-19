@@ -3,6 +3,7 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("api", {
     pickFolder: () => ipcRenderer.invoke("pick-folder"),
+    pickAssetsFile: () => ipcRenderer.invoke("pick-assets-file"),
 
     readText: (path) => ipcRenderer.invoke("read-text", path),
     writeText: (path, data) => ipcRenderer.invoke("write-text", path, data),
