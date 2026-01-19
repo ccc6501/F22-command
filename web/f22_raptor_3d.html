@@ -4529,8 +4529,8 @@
                     }
                     const file = await window.api.pickAssetsFile();
                     if (!file) return;
-                    // Derive folder from file path (use forward slashes for web compatibility)
-                    const folder = file.replace(/[/\\][^/\\]+$/, '/');
+                    // Derive folder from file path (keep path separator consistent)
+                    const folder = file.replace(/[/\\][^/\\]+$/, '');
                     state.selectedFolder = folder;
                     logTerminal(`FILE SELECTED: ${file}`);
                     showNotification('FOLDER SELECTED (via file)');
