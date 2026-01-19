@@ -2884,10 +2884,18 @@
             // Debug status to stop the "I'm lost" feeling.
             // Shows what base path and mask path were actually used.
             try {
+                const view = String(maskView || 'panel_top');
+                const candidatesByView = {
+                    panel_top: ['panel_mask_top.png', 'panel_top.png', 'panel_mask_view_top.png'],
+                    panel_bottom: ['panel_mask_bottom.png', 'panel_bottom.png', 'panel_mask_view_bottom.png', 'panel_mask_view_2.png'],
+                    zone_top: ['zone_top.png', 'zone_mask_top.png'],
+                    zone_bottom: ['zone_bottom.png', 'zone_mask_bottom.png']
+                };
+                const candidates = candidatesByView[view] || candidatesByView.panel_top;
                 logTerminal(`LOADING FROM: ${basePath}`);
                 logTerminal(`MASK VIEW: ${maskView}`);
-                logTerminal(`MASK CANDIDATES: ${candidatesByView[view].join(', ')}`);
-                logTerminal(`TRYING FIRST: ${basePath}${candidatesByView[view][0]}`);
+                logTerminal(`MASK CANDIDATES: ${candidates.join(', ')}`);
+                logTerminal(`TRYING FIRST: ${basePath}${candidates[0]}`);
                 const loaded = Boolean(state.panelIdImageData);
                 const dims = state.panelIdImageData ? `${state.panelIdImageData.width}x${state.panelIdImageData.height}` : 'n/a';
                 logTerminal(`ASSETS BASE: ${basePath}`);
