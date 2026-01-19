@@ -73,7 +73,13 @@ ipcMain.handle('pick-assets-file', async () => {
         ]
     });
     if (res.canceled || !res.filePaths?.length) return null;
-    return res.filePaths[0];
+    
+    // Update allowedRoot to the directory containing the selected file
+    // This allows subsequent reads from that directory
+    const selectedFile = res.filePaths[0];
+    allowedRoot = path.dirname(selectedFile);
+    
+    return selectedFile;
 });
 
 ipcMain.handle("read-text", async (_e, p) => {

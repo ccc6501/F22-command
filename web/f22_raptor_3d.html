@@ -2711,15 +2711,17 @@
 
         function normalizeAssetsBase(folder) {
             const base = String(folder || '').replace(/[\\/]+$/, '');
+            // Detect path separator from the input (preserve Windows/Unix style)
+            const sep = base.includes('\\') ? '\\' : '/';
             // If user selected a dedicated mask folder (e.g. Desktop\F22_Masks)
             // we keep it as-is and only use it for mask loading.
-            if (/[\\/]F22_Masks$/i.test(base)) return base + '\\';
+            if (/[\\/]F22_Masks$/i.test(base)) return base + sep;
             // If user selected the assets folder directly
-            if (/[\\/]assets$/i.test(base)) return base + '\\';
+            if (/[\\/]assets$/i.test(base)) return base + sep;
             // If user selected the web folder
-            if (/[\\/]web$/i.test(base)) return base + '\\assets\\';
+            if (/[\\/]web$/i.test(base)) return base + sep + 'assets' + sep;
             // If user selected the project root, assets live under web/assets
-            return base + '\\web\\assets\\';
+            return base + sep + 'web' + sep + 'assets' + sep;
         }
 
         function ensureExistingAssetsBase(folder) {
@@ -4527,8 +4529,8 @@
                     }
                     const file = await window.api.pickAssetsFile();
                     if (!file) return;
-                    // Derive folder from file path
-                    const folder = file.replace(/[/\\][^/\\]+$/, '\\');
+                    // Derive folder from file path (use forward slashes for web compatibility)
+                    const folder = file.replace(/[/\\][^/\\]+$/, '/');
                     state.selectedFolder = folder;
                     logTerminal(`FILE SELECTED: ${file}`);
                     showNotification('FOLDER SELECTED (via file)');
