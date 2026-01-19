@@ -970,6 +970,80 @@
         .mini-terminal.hidden {
             display: none;
         }
+
+        /* Recent Hits List */
+        .recentHits {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .hitsRow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 200, 0, 0.18);
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            padding: 10px 10px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .hitsRow:hover {
+            border-color: rgba(0, 212, 255, 0.4);
+            background: rgba(0, 212, 255, 0.08);
+        }
+
+        .hitsRow.isApproved {
+            border-color: rgba(0, 255, 136, 0.25);
+        }
+
+        .hitsMain {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .hitsId {
+            color: var(--neon-gold);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+        }
+
+        .hitsMeta {
+            color: rgba(210, 220, 235, 0.75);
+            font-size: 11px;
+        }
+
+        .hitsBtns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .miniBtn {
+            padding: 6px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            background: rgba(0, 0, 0, 0.25);
+            color: rgba(220, 240, 255, 0.9);
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.15s ease;
+        }
+
+        .miniBtn:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            background: rgba(0, 212, 255, 0.15);
+        }
+
+        .flash {
+            outline: 2px solid rgba(0, 212, 255, 0.55);
+        }
     </style>
     <script
         type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
@@ -1052,12 +1126,31 @@
                 <div class="sidebar-actions">
                     <button class="btn-calibrate" onclick="startOrientationCalibration()">ORIENT CALIBRATION</button>
                     <button class="btn-export" onclick="exportPOCMap()">EXPORT THREAD MAP (.JSON)</button>
+                    <div
+                        style="margin-top: 12px; padding: 10px; border: 1px solid rgba(255,215,0,0.18); border-radius: 10px; background: rgba(0,0,0,0.22);">
+                        <div
+                            style="font-weight: 700; letter-spacing: 0.2em; font-size: 12px; color: var(--neon-gold); margin-bottom: 6px;">
+                            MASK VIEW</div>
+                        <select id="maskViewSelect"
+                            style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid rgba(0,212,255,0.25); background: rgba(0,0,0,0.25); color: var(--text-primary);">
+                            <option value="panel_top" selected>Panel Top</option>
+                            <option value="panel_bottom">Panel Bottom</option>
+                            <option value="zone_top">Zone Top</option>
+                            <option value="zone_bottom">Zone Bottom</option>
+                        </select>
+                        <button id="btnReloadMask" class="btn-import"
+                            style="display:block; width:100%; margin-top: 8px; text-align:center;">RELOAD MASK</button>
+                        <div style="margin-top: 6px; font-size: 12px; color: var(--text-secondary);">If IDs look wrong,
+                            switch view here.</div>
+                    </div>
                     <label for="loadPartsFile" class="btn-import">LOAD PARTS LIST</label>
                     <input type="file" id="loadPartsFile" class="file-hidden" onchange="handleLoadParts(event)"
                         accept=".json">
                     <label for="importMapFile" class="btn-import">IMPORT MAP</label>
                     <input type="file" id="importMapFile" class="file-hidden" onchange="handleImportMap(event)"
                         accept=".json">
+                    <button id="btn-open-assets" class="btn-import" style="margin-top:8px;">OPEN ASSETS (SHOW
+                        FILES)</button>
                     <button class="btn-reset-survey" onclick="resetCalibrationSession()">RESET REGISTRY / CLEAR
                         ALL</button>
                 </div>
@@ -1138,6 +1231,10 @@
             <div id="approvalLog"
                 style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: 6px; font-size: 0.7rem; color: var(--text-secondary); max-height: 200px; overflow-y: auto; white-space: pre-wrap;">
                 No approvals yet</div>
+        </div>
+        <div style="margin-top: 1rem;">
+            <div class="config-section-title">RECENT HITS</div>
+            <div id="recentHits" class="recentHits"></div>
         </div>
     </div>
 
@@ -1246,6 +1343,9 @@
             infoPanel: document.getElementById('info-panel'),
             infoToggle: document.getElementById('info-toggle'),
             infoClose: document.getElementById('info-close'),
+            maskViewSelect: document.getElementById('maskViewSelect'),
+            btnReloadMask: document.getElementById('btnReloadMask'),
+            btnOpenAssets: document.getElementById('btn-open-assets'),
             hud: document.getElementById('hud'),
             miniTerminal: document.getElementById('mini-terminal'),
             toolbar: document.getElementById('toolbar'),
@@ -1343,6 +1443,27 @@
             approvedById: new Map(),       // panelId -> entry
             mirror: { enabled: true },
             ping: { mesh: null, t0: 0, enabled: true },
+
+            // --- MASK UV ORIENTATION (CRITICAL FIX) ---
+            // Per-view UV settings: trying all combinations
+            maskUvByView: {
+                panel_top: { flipV: false, flipU: false, rot: 0 },     // NO FLIPS
+                panel_bottom: { flipV: true, flipU: true, rot: 0 },    // BOTH FLIPS
+                zone_top: { flipV: false, flipU: false, rot: 0 },
+                zone_bottom: { flipV: true, flipU: true, rot: 0 }
+            },
+            maskUv: {
+                flipV: true,    // IMPORTANT: Three.js UV.y origin differs from canvas origin
+                flipU: false,
+                rot: 0          // 0, 90, 180, 270 (rarely needed)
+            },
+
+            // --- RECENT HITS TRACKING ---
+            recentHits: {
+                max: 16,
+                byId: new Map(),    // id -> entry
+                list: []            // newest first
+            },
 
             // --- PALETTE CONSTRAINTS + AUTHORITY MESH ---
             palette: [],                   // [{r,g,b,hex,id,view}, ...]
@@ -2590,9 +2711,23 @@
 
         function normalizeAssetsBase(folder) {
             const base = String(folder || '').replace(/[\\/]+$/, '');
+            // If user selected a dedicated mask folder (e.g. Desktop\F22_Masks)
+            // we keep it as-is and only use it for mask loading.
+            if (/[\\/]F22_Masks$/i.test(base)) return base + '\\';
+            // If user selected the assets folder directly
             if (/[\\/]assets$/i.test(base)) return base + '\\';
+            // If user selected the web folder
             if (/[\\/]web$/i.test(base)) return base + '\\assets\\';
+            // If user selected the project root, assets live under web/assets
             return base + '\\web\\assets\\';
+        }
+
+        function ensureExistingAssetsBase(folder) {
+            const base = normalizeAssetsBase(folder);
+            // In Electron we can probe the FS to avoid pointing to a non-existent folder.
+            // If readText isn't available, just return the computed base.
+            if (!window.api?.readText) return base;
+            return base;
         }
 
         async function loadPanelJsonFromUrl(url) {
@@ -2643,28 +2778,45 @@
         }
 
         async function loadPanelIdMapFromUrl(url) {
+            console.log('[MASK LOADER] Attempting to load:', url);
             try {
                 let img;
                 if (window.api?.readBinary) {
+                    console.log('[MASK LOADER] Using Electron readBinary');
                     const result = await loadImageFromDisk(url);
                     img = result.img;
                 } else {
+                    console.log('[MASK LOADER] Using fetch');
                     img = await loadImageFromUrl(url);
                 }
+                console.log('[MASK LOADER] Image loaded:', img.width, 'x', img.height);
+
+                // Initialize canvas context if needed
+                if (!state.panelIdCtx) {
+                    state.panelIdCtx = state.panelIdCanvas.getContext('2d');
+                }
+
                 // MUST draw to canvas before getImageData or we get empty pixels
                 state.panelIdCanvas.width = img.width;
                 state.panelIdCanvas.height = img.height;
                 state.panelIdCtx.drawImage(img, 0, 0);
                 state.panelIdImageData = state.panelIdCtx.getImageData(0, 0, img.width, img.height);
+
+                console.log('[MASK LOADER] ImageData created:', state.panelIdImageData.width, 'x', state.panelIdImageData.height);
+
                 const prev = els.panelIdPreview;
-                const pctx = prev.getContext('2d');
-                prev.width = prev.clientWidth * 2;
-                prev.height = prev.clientHeight * 2;
-                pctx.drawImage(img, 0, 0, prev.width, prev.height);
-                console.log('Panel ID Map loaded:', img.width, 'x', img.height);
+                if (prev) {
+                    const pctx = prev.getContext('2d');
+                    prev.width = prev.clientWidth * 2;
+                    prev.height = prev.clientHeight * 2;
+                    pctx.drawImage(img, 0, 0, prev.width, prev.height);
+                }
+                console.log('[MASK LOADER] SUCCESS - Panel ID Map loaded:', img.width, 'x', img.height);
+                logTerminal(`MASK LOADED: ${img.width}x${img.height}`);
                 return true;
             } catch (e) {
-                console.error('Panel ID map load failed:', e);
+                console.error('[MASK LOADER] FAILED:', e);
+                logTerminal(`MASK LOAD FAILED: ${e.message}`);
                 return false;
             }
         }
@@ -2678,11 +2830,16 @@
                 logTerminal(`${msg}. Run a local server from /web (python -m http.server)`);
                 return;
             }
-            const basePath = './assets/';
+            const maskView = String(els.maskViewSelect?.value || 'panel_top');
+            // In Electron we serve this HTML from /web, so the correct relative path is ./assets/.
+            // But some launch paths end up with CWD at repo root and resolve './assets' incorrectly.
+            // So: when running in Electron (window.api exists), prefer an explicit '/web/assets/' relative path.
+            const basePath = window.api ? './web/assets/' : './assets/';
+            const resolvedMask = resolveMaskPath(basePath, maskView);
             const assets = {
                 glb: basePath + 'F22Raptor.glb',
                 panelManifest: basePath + 'panel_manifest.json',
-                panelMap: basePath + 'panel_mask_top.png',
+                panelMap: resolvedMask,
                 panelJson: basePath + 'panel_config.json'
             };
 
@@ -2695,15 +2852,20 @@
             const manifestResult = await loadPanelManifestFromUrl(assets.panelManifest, basePath);
             if (manifestResult.ok) {
                 jsonOk = true;
-                if (manifestResult.maskFile) {
+                // IMPORTANT: UI maskView must be the single source of truth.
+                // The manifest may contain a default mask (often "top"), but users need to switch views.
+                mapOk = await tryLoadMaskCandidates(basePath, maskView);
+                if (!mapOk && manifestResult.maskFile) {
+                    console.warn('Mask candidates failed; trying manifest maskFile as fallback:', manifestResult.maskFile);
                     mapOk = await loadPanelIdMapFromUrl(manifestResult.maskFile);
-                } else {
-                    console.warn('Panel manifest missing masks; falling back to panel map');
-                    mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+                    if (mapOk) {
+                        state.currentMaskView = manifestResult.maskView || null;
+                        state.currentMaskPath = manifestResult.maskFile;
+                    }
                 }
             } else {
                 jsonOk = await loadPanelJsonFromUrl(assets.panelJson);
-                mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+                mapOk = await tryLoadMaskCandidates(basePath, maskView);
             }
 
             // Load the 3D model
@@ -2716,15 +2878,72 @@
                 els.statusText.textContent = 'SOME ASSETS FAILED';
                 console.warn('Asset load status:', { glbOk, jsonOk, mapOk });
             }
+
+            // Debug status to stop the "I'm lost" feeling.
+            // Shows what base path and mask path were actually used.
+            try {
+                logTerminal(`LOADING FROM: ${basePath}`);
+                logTerminal(`MASK VIEW: ${maskView}`);
+                logTerminal(`MASK CANDIDATES: ${candidatesByView[view].join(', ')}`);
+                logTerminal(`TRYING FIRST: ${basePath}${candidatesByView[view][0]}`);
+                const loaded = Boolean(state.panelIdImageData);
+                const dims = state.panelIdImageData ? `${state.panelIdImageData.width}x${state.panelIdImageData.height}` : 'n/a';
+                logTerminal(`ASSETS BASE: ${basePath}`);
+                logTerminal(`MASK VIEW: ${maskView}`);
+                logTerminal(`MASK LOADED: ${loaded ? 'YES' : 'NO'} (${dims})`);
+                if (state.currentMaskPath) logTerminal(`MASK PATH: ${state.currentMaskPath}`);
+            } catch { /* ignore */ }
+        }
+
+        function resolveMaskPath(basePath, maskView) {
+            const view = String(maskView || 'panel_top');
+            // Prefer explicit names if present in the folder/manifest you provide.
+            // These are the filenames we support across the toolchain.
+            const candidatesByView = {
+                panel_top: ['panel_mask_top.png', 'panel_top.png', 'panel_mask_view_top.png'],
+                panel_bottom: ['panel_mask_bottom.png', 'panel_bottom.png', 'panel_mask_view_bottom.png', 'panel_mask_view_2.png'],
+                zone_top: ['zone_top.png', 'zone_mask_top.png'],
+                zone_bottom: ['zone_bottom.png', 'zone_mask_bottom.png']
+            };
+            const list = candidatesByView[view] || candidatesByView.panel_top;
+            // In URL mode we can only return a path; existence probing happens in Electron via tryLoadMask.
+            return basePath + list[0];
+        }
+
+        async function tryLoadMaskCandidates(assetsBase, maskView) {
+            const view = String(maskView || 'panel_top');
+            const candidatesByView = {
+                panel_top: ['panel_mask_top.png', 'panel_top.png', 'panel_mask_view_top.png'],
+                panel_bottom: ['panel_mask_bottom.png', 'panel_bottom.png', 'panel_mask_view_bottom.png', 'panel_mask_view_2.png'],
+                zone_top: ['zone_top.png', 'zone_mask_top.png'],
+                zone_bottom: ['zone_bottom.png', 'zone_mask_bottom.png']
+            };
+            const candidates = candidatesByView[view] || candidatesByView.panel_top;
+            for (const name of candidates) {
+                const p = `${assetsBase}${name}`;
+                const ok = await loadPanelIdMapFromUrl(p);
+                if (ok) {
+                    state.currentMaskView = view;
+                    state.currentMaskPath = p;
+                    // CRITICAL: Apply per-view UV orientation settings
+                    const uvSettings = state.maskUvByView?.[view] || { flipV: true, flipU: false, rot: 0 };
+                    state.maskUv = { ...uvSettings };
+                    console.log(`[MASK] Loaded ${view} with UV settings:`, state.maskUv);
+                    logTerminal(`MASK UV: flipV=${uvSettings.flipV}, flipU=${uvSettings.flipU}, rot=${uvSettings.rot}`);
+                    return true;
+                }
+            }
+            return false;
         }
 
         async function autoLoadAssetsFromFolder(folder) {
             if (!folder) return;
             const assetsBase = normalizeAssetsBase(folder);
+            const maskView = String(els.maskViewSelect?.value || 'panel_top');
             const assets = {
                 glb: `${assetsBase}F22Raptor.glb`,
                 panelManifest: `${assetsBase}panel_manifest.json`,
-                panelMap: `${assetsBase}panel_mask_top.png`,
+                panelMap: resolveMaskPath(assetsBase, maskView),
                 panelJson: `${assetsBase}panel_config.json`
             };
 
@@ -2736,15 +2955,19 @@
             const manifestResult = await loadPanelManifestFromUrl(assets.panelManifest, assetsBase);
             if (manifestResult.ok) {
                 jsonOk = true;
-                if (manifestResult.maskFile) {
+                // IMPORTANT: UI maskView must be the single source of truth.
+                mapOk = await tryLoadMaskCandidates(assetsBase, maskView);
+                if (!mapOk && manifestResult.maskFile) {
+                    console.warn('Mask candidates failed; trying manifest maskFile as fallback:', manifestResult.maskFile);
                     mapOk = await loadPanelIdMapFromUrl(manifestResult.maskFile);
-                } else {
-                    console.warn('Panel manifest missing masks; falling back to panel map');
-                    mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+                    if (mapOk) {
+                        state.currentMaskView = manifestResult.maskView || null;
+                        state.currentMaskPath = manifestResult.maskFile;
+                    }
                 }
             } else {
                 jsonOk = await loadPanelJsonFromUrl(assets.panelJson);
-                mapOk = await loadPanelIdMapFromUrl(assets.panelMap);
+                mapOk = await tryLoadMaskCandidates(assetsBase, maskView);
             }
             const glbOk = await loadGlbFromUrl(assets.glb);
 
@@ -2760,13 +2983,144 @@
 
         function samplePanelIdMapAtUv(uv) {
             if (!state.panelIdImageData) return null;
-            const w = state.panelIdCanvas.width,
-                h = state.panelIdCanvas.height;
-            const x = Math.min(w - 1, Math.max(0, Math.floor(clamp01(uv.x) * w)));
-            const y = Math.min(h - 1, Math.max(0, Math.floor(clamp01(uv.y) * h)));
+
+            const w = state.panelIdCanvas.width;
+            const h = state.panelIdCanvas.height;
+
+            let u = clamp01(uv.x);
+            let v = clamp01(uv.y);
+
+            // DEBUG: Log UV transforms
+            const transforms = [];
+            if (state.maskUv?.flipU) { u = 1 - u; transforms.push('flipU'); }
+            if (state.maskUv?.flipV) { v = 1 - v; transforms.push('flipV'); }
+
+            // Apply optional rotation around center
+            const rot = (state.maskUv?.rot || 0) % 360;
+            if (rot !== 0) transforms.push(`rot${rot}`);
+
+            logTerminal(`UV: ${transforms.join('+')} → (${u.toFixed(3)}, ${v.toFixed(3)})`);
+            if (rot !== 0) {
+                const cx = 0.5, cy = 0.5;
+                let rx = u - cx, ry = v - cy;
+                const rad = (rot * Math.PI) / 180;
+                const nx = rx * Math.cos(rad) - ry * Math.sin(rad);
+                const ny = rx * Math.sin(rad) + ry * Math.cos(rad);
+                u = clamp01(nx + cx);
+                v = clamp01(ny + cy);
+            }
+
+            // Canvas image origin is top-left; after flipV above, v is now "canvas-correct"
+            const x = Math.min(w - 1, Math.max(0, Math.floor(u * w)));
+            const y = Math.min(h - 1, Math.max(0, Math.floor(v * h)));
+
             const idx = (y * w + x) * 4;
             const d = state.panelIdImageData.data;
             return { r: d[idx], g: d[idx + 1], b: d[idx + 2], a: d[idx + 3] };
+        }
+
+        // === RECENT HITS HELPERS ===
+        function flashEl(el) {
+            if (!el) return;
+            el.classList.add('flash');
+            setTimeout(() => el.classList.remove('flash'), 220);
+        }
+
+        function pushRecentHit(entry) {
+            if (!entry?.id) return;
+
+            // move to front (newest first)
+            state.recentHits.byId.set(entry.id, entry);
+
+            const arr = Array.from(state.recentHits.byId.values());
+            arr.sort((a, b) => (b.t || 0) - (a.t || 0));
+            state.recentHits.list = arr.slice(0, state.recentHits.max);
+
+            // rebuild map in trimmed order
+            state.recentHits.byId = new Map(state.recentHits.list.map(e => [e.id, e]));
+            renderRecentHits();
+        }
+
+        function renderRecentHits() {
+            const box = document.getElementById('recentHits');
+            if (!box) return;
+
+            const items = state.recentHits.list;
+            if (!items.length) {
+                box.innerHTML = `<div class="muted" style="color: var(--text-secondary); font-size: 0.75rem;">No recent hits yet</div>`;
+                return;
+            }
+
+            box.innerHTML = items.map(e => {
+                const uv = e.uv ? `${fmt3(e.uv.x)},${fmt3(e.uv.y)}` : '—';
+                const rgb = e.rgb ? `${e.rgb.r},${e.rgb.g},${e.rgb.b}` : '—';
+                const approved = state.approvedById.has(e.id);
+                return `
+                    <div class="hitsRow ${approved ? 'isApproved' : ''}" data-id="${e.id}">
+                        <div class="hitsMain">
+                            <div class="hitsId">${e.id}</div>
+                            <div class="hitsMeta">uv ${uv} • rgb ${rgb}</div>
+                        </div>
+                        <div class="hitsBtns">
+                            <button class="miniBtn" data-act="approve">Approve</button>
+                            <button class="miniBtn" data-act="focus">Focus</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // wire buttons
+            box.querySelectorAll('.hitsRow').forEach(row => {
+                const id = row.getAttribute('data-id');
+                row.addEventListener('click', (ev) => {
+                    const act = ev.target?.getAttribute?.('data-act');
+                    const entry = state.recentHits.byId.get(id);
+                    if (!entry) return;
+
+                    if (act === 'approve') {
+                        approveEntry(entry);
+                        flashEl(row);
+                        row.classList.add('isApproved');
+                        ev.stopPropagation();
+                    } else if (act === 'focus') {
+                        onPanelPicked({
+                            panel: entry.panel,
+                            uv: entry.uv,
+                            rgb: entry.rgb,
+                            faceIndex: entry.faceIndex ?? null,
+                            hitPoint: entry.hitPoint ?? null
+                        });
+                        flashEl(row);
+                        ev.stopPropagation();
+                    } else {
+                        // clicking the row focuses by default
+                        onPanelPicked({
+                            panel: entry.panel,
+                            uv: entry.uv,
+                            rgb: entry.rgb,
+                            faceIndex: entry.faceIndex ?? null,
+                            hitPoint: entry.hitPoint ?? null
+                        });
+                        flashEl(row);
+                    }
+                });
+            });
+        }
+
+        function approveEntry(entry) {
+            if (!entry?.id) return;
+            if (!state.approvedById.has(entry.id)) {
+                state.approvedById.set(entry.id, {
+                    id: entry.id,
+                    uv: entry.uv,
+                    rgb: entry.rgb,
+                    timestamp: new Date().toISOString()
+                });
+                state.approvedPanels = Array.from(state.approvedById.values());
+                renderApprovedList?.();
+                logTerminal(`APPROVED: ${entry.id}`);
+                showNotification(`APPROVED: ${entry.id}`);
+            }
         }
 
         function updateHud(panel, uv, rgb) {
@@ -3752,11 +4106,25 @@
             // Update right-side info panel (force visible)
             updateInfoPanel(state.selectedPanel, state.selectedUv, state.selectedRgb, state.selectedFace);
 
+            // Push to Recent Hits list (only if we have a matched panel id)
+            if (state.selectedPanel?.id && state.selectedUv) {
+                pushRecentHit({
+                    id: state.selectedPanel.id,
+                    panel: state.selectedPanel,
+                    uv: { x: state.selectedUv.x, y: state.selectedUv.y },
+                    rgb: state.selectedRgb,
+                    faceIndex: state.selectedFace,
+                    hitPoint: hitPoint || null,
+                    t: Date.now()
+                });
+            }
+
             // Debug log
             const panelId = state.selectedPanel?.id ?? 'NO_MATCH';
             const uvStr = state.selectedUv ? `${state.selectedUv.x.toFixed(3)},${state.selectedUv.y.toFixed(3)}` : 'null';
             const rgbStr = state.selectedRgb ? `${state.selectedRgb.r},${state.selectedRgb.g},${state.selectedRgb.b}` : 'null';
             console.log(`[ON PANEL PICKED] panel=${panelId} uv=${uvStr} rgb=${rgbStr}`);
+            logTerminal(`PID: ${panelId} | uv=${uvStr} | rgb=${rgbStr}`);
         }
 
         function resolvePanelAtUv(uv) {
@@ -4149,11 +4517,55 @@
                 showNotification('Reloading assets...');
                 await autoLoadAssetsFromFolder(state.selectedFolder);
             });
+
+            // Allow user to open the assets folder as a file dialog so they can *see* files (JSON filter available)
+            els.btnOpenAssets?.addEventListener('click', async () => {
+                try {
+                    if (!window.api?.pickAssetsFile) {
+                        showNotification('This option requires Electron');
+                        return;
+                    }
+                    const file = await window.api.pickAssetsFile();
+                    if (!file) return;
+                    // Derive folder from file path
+                    const folder = file.replace(/[/\\][^/\\]+$/, '\\');
+                    state.selectedFolder = folder;
+                    logTerminal(`FILE SELECTED: ${file}`);
+                    showNotification('FOLDER SELECTED (via file)');
+                    await autoLoadAssetsFromFolder(folder);
+                } catch (e) {
+                    console.error('Open assets failed:', e);
+                    showNotification('OPEN ASSETS FAILED');
+                }
+            });
             els.btnApprove?.addEventListener('click', () => {
                 approveCurrent();
             });
             els.btnMirror?.addEventListener('click', () => {
-                mirrorLastApproved();
+                mirrorApprovedPanels();
+            });
+            // Mask switching
+            els.maskViewSelect?.addEventListener('change', async () => {
+                const maskView = String(els.maskViewSelect.value || 'panel_top');
+                showNotification(`MASK: ${maskView}`);
+                logTerminal(`MASK VIEW: ${maskView}`);
+
+                // Reload only the mask (keep panels + glb)
+                const base = state.selectedFolder ? normalizeAssetsBase(state.selectedFolder) : (window.api ? './web/assets/' : './assets/');
+                const ok = await tryLoadMaskCandidates(base, maskView);
+                if (ok) {
+                    showNotification('MASK LOADED');
+                } else {
+                    showNotification('MASK NOT FOUND');
+                }
+            });
+
+            els.btnReloadMask?.addEventListener('click', async () => {
+                const maskView = String(els.maskViewSelect?.value || 'panel_top');
+                const base = state.selectedFolder ? normalizeAssetsBase(state.selectedFolder) : (window.api ? './web/assets/' : './assets/');
+                showNotification('RELOADING MASK...');
+                const ok = await tryLoadMaskCandidates(base, maskView);
+                showNotification(ok ? 'MASK LOADED' : 'MASK NOT FOUND');
             });
         }
 
